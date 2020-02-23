@@ -34,12 +34,34 @@ class Stock {
             group.leave()
         }
     }
+    
+    func getIncomeStatement(group: DispatchGroup) {
+
+        group.enter()
+        URLSession.shared.objectDatatask(type: BalanceSheet.self, url: Endpoints.balanceSheet(tickerID: ticker.simId).url) { [weak self] data, response, error in
+            guard let self = self, let data = data else {
+                if let error = error { print(error.localizedDescription) }
+                group.leave()
+                return }
+            self.balanceSheet = data
+            group.leave()
+        }
+    }
 }
 
 struct BalanceSheet: Codable {
     var periodEndDate: String?
     var industryTemplate: String?
     var values: [BalanceSheetValue]?
+    
+    var totalCash: Int {
+        return values?.filter { $0.uid == "1" }.first?.valueCalculated ?? 0
+    }
+
+    
+    var totalLiabilities: Int {
+        return values?.filter { $0.uid == "73" }.first?.valueCalculated ?? 0
+    }
 }
 
 struct BalanceSheetValue: Codable {
