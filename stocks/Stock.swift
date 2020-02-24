@@ -6,69 +6,118 @@
 //  Copyright © 2020 Martin Peshevski. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct Ticker: Codable {
-    var simId: Int
-    var ticker: String?
-    var name: String?
+protocol StockDataDelegate: class {
+    func didFinishDownloading(_ stock: Stock)
 }
 
 class Stock {
     var ticker: Ticker
-    var balanceSheet: BalanceSheet?
-
+    var keyMetricsOverTime: [KeyMetrics]?
+    var growthMetrics: [GrowthMetrics]?
+    var group = DispatchGroup()
+    weak var delegate: StockDataDelegate?
+    
     init(ticker: Ticker) {
         self.ticker = ticker
     }
-
-    func getBalanceSheet(group: DispatchGroup) {
-
-        group.enter()
-        URLSession.shared.objectDatatask(type: BalanceSheet.self, url: Endpoints.balanceSheet(tickerID: ticker.simId).url) { [weak self] data, response, error in
+    
+    func getKeyMetrics(completion: ((Bool) -> ())? = nil) {
+        URLSession.shared.datatask(type: KeyMetricsArray.self, url: Endpoints.keyMetrics(ticker: ticker.symbol).url) { [weak self] data, response, error in
             guard let self = self, let data = data else {
-                if let error = error { print(error.localizedDescription) }
-                group.leave()
+                completion?(false)
                 return }
-            self.balanceSheet = data
-            group.leave()
+            
+            self.keyMetricsOverTime = data.metrics
+            completion?(error == nil)
         }
     }
     
-    func getIncomeStatement(group: DispatchGroup) {
-
-        group.enter()
-        URLSession.shared.objectDatatask(type: BalanceSheet.self, url: Endpoints.balanceSheet(tickerID: ticker.simId).url) { [weak self] data, response, error in
+    func getGrowthMetrics(completion: ((Bool) -> ())? = nil) {
+        URLSession.shared.datatask(type: GrowthMetricsArray.self, url: Endpoints.growthMetrics(ticker: ticker.symbol).url) { [weak self] data, response, error in
             guard let self = self, let data = data else {
-                if let error = error { print(error.localizedDescription) }
-                group.leave()
+                completion?(false)
                 return }
-            self.balanceSheet = data
-            group.leave()
+            
+            self.growthMetrics = data.metrics
+            completion?(error == nil)
         }
     }
+    
+    func load() {
+//        group = DispatchGroup()
+//        group.enter()
+        getKeyMetrics() { completed in
+            DispatchQueue.main.async { self.delegate?.didFinishDownloading(self) }
+//            self.group.leave()
+        }
+//        group.enter()
+//        getGrowthMetrics() { completed in self.group.leave() }
+//        group.notify(queue: .main) {
+//            DispatchQueue.main.async { self.delegate?.didFinishDownloading(self) }
+//        }
+    }
 }
 
-struct BalanceSheet: Codable {
-    var periodEndDate: String?
-    var industryTemplate: String?
-    var values: [BalanceSheetValue]?
-    
-    var totalCash: Int {
-        return values?.filter { $0.uid == "1" }.first?.valueCalculated ?? 0
-    }
+struct TickerArray: Codable {
+    var symbolsList: [Ticker]
+}
+struct Ticker: Codable {
+    var symbol: String
+    var name: String?
+    var price: Float
+}
 
+struct IntrinsicValue: Codable {
+    var symbol: String?
+    var date: String
+    var dcf: Float
+    var price: Float
     
-    var totalLiabilities: Int {
-        return values?.filter { $0.uid == "73" }.first?.valueCalculated ?? 0
+    var ivColor: UIColor {
+        return dcf > price ? .red : .green
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case symbol, price = "Stock Price", date, dcf
     }
 }
 
-struct BalanceSheetValue: Codable {
-    var tid: String
-    var uid: String
-    var standardisedName: String
-    var parent_tid: String
-    var valueCalculated: Int
-//    var checkPossible: String
+struct KeyMetricsArray: Codable {
+    var metrics: [KeyMetrics]?
+}
+struct KeyMetrics: Codable {
+    var date: String
+    var netIncomePerShare: String
+    var operatingCFPerShare: String
+    var freeCFPerShare: String
+    var dividendYield: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case date
+        case netIncomePerShare = "Net Income per Share"
+        case operatingCFPerShare = "Operating Cash Flow per Share"
+        case freeCFPerShare = "Free Cash Flow per Share"
+        case dividendYield = "Dividend Yield"
+    }
+}
+
+struct GrowthMetricsArray: Codable {
+    var metrics: [GrowthMetrics]?
+}
+struct GrowthMetrics: Codable {
+    var date: String
+    var fiveYearRev: String
+    var tenYearRev: String
+    var fiveYearNetIncome: String
+    var tenYearNetIncome: String
+    
+    private enum CodingKeys: String, CodingKey {
+           case date
+           case fiveYearRev = "5Y Revenue Growth (per Share)"
+           case tenYearRev = "10Y Revenue Growth (per Share)"
+           case fiveYearNetIncome = "5Y Net Income Growth (per Share)"
+           case tenYearNetIncome = "10Y Net Income Growth (per Share)"
+       }
 }

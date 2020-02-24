@@ -16,22 +16,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        URLSession.shared.datatask(type: Ticker.self, url: Endpoints.tickers.url) { [weak self] data, response, error in
+        URLSession.shared.datatask(type: TickerArray.self, url: Endpoints.tickers.url) { [weak self] data, response, error in
             guard let self = self, let data = data else {
-                if let error = error { print(" error getting Tickers: \(error.localizedDescription)")}
+                if let error = error { print(" error getting Tickers: \(error.localizedDescription)") }
                 return }
-            self.tickers = data.filter { return $0.ticker != nil }.sorted { return $0.ticker! < $1.ticker! }
-            self.tickers.forEach { self.stocks.append(Stock(ticker: $0))}
+            self.tickers = data.symbolsList.sorted { return $0.symbol < $1.symbol }
+            self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
 
-            let group = DispatchGroup()
-
-            for i in 0..<3 { self.stocks[i].getBalanceSheet(group: group) }
-            group.notify(queue: .main) {
-                DispatchQueue.main.async { self.tableView.reloadData() }
-            }
+            for stock in self.stocks { stock.load() }
         }
     }
 }

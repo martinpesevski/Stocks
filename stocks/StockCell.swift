@@ -8,36 +8,34 @@
 
 import UIKit
 
-class StockCell: UITableViewCell {
+class StockCell: UITableViewCell, StockDataDelegate {
     @IBOutlet var tickerLabel: UILabel!
     @IBOutlet var tickerName: UILabel!
     
     @IBOutlet var statementsStack: UIStackView!
+    @IBOutlet var intrinsicValueLabel: UILabel!
+    @IBOutlet var priceLabel: UILabel!
+    
     
     func setup(stock: Stock) {
-        tickerLabel.text = stock.ticker.ticker
+        stock.delegate = self
+        tickerLabel.text = stock.ticker.symbol
         tickerName.text = stock.ticker.name
+        priceLabel.text = String(format:"%.02f", stock.ticker.price)
         
-        let cash = stock.balanceSheet?.totalCash
-        let liabilities = stock.balanceSheet?.totalLiabilities
-        
-        if cash != nil && cash != 0{
-            print("cash")
-        }
-//        if let values = stock.balanceSheet?.values {
-//            for value in values {
-//                let valueLabel = UILabel()
-//                valueLabel.textAlignment = .right
-//                valueLabel.textColor = .black
-//                valueLabel.text = value.standardisedName
-//                statementsStack.addArrangedSubview(valueLabel)
-//            }
-//        }
+        setup(iv: stock.keyMetricsOverTime?[0])
     }
     
-    override func prepareForReuse() {
-        for view in statementsStack.arrangedSubviews {
-            statementsStack.removeArrangedSubview(view)
+    func setup(iv: KeyMetrics?) {
+        guard let iv = iv else {
+            intrinsicValueLabel.text = "N/A"            
+            return
         }
+        intrinsicValueLabel.text = iv.netIncomePerShare
+        setNeedsLayout()
+    }
+    
+    func didFinishDownloading(_ stock: Stock) {
+        setup(iv: stock.keyMetricsOverTime?[0])
     }
 }
