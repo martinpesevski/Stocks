@@ -8,10 +8,6 @@
 
 import Foundation
 
-extension String {
-    static let apiKey: String = "api-key=yMkcG8wIzSWHaoSXkgmHjPEHSA95JTvq"
-}
-
 enum Endpoints {
     case tickers
     case keyMetrics(ticker: String)

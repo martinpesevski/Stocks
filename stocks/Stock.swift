@@ -13,13 +13,24 @@ protocol StockDataDelegate: class {
 }
 
 class Stock {
+    static let exchanges = ["New York Stock Exchange", "Nasdaq Global Select", "NYSE"]
+
     var ticker: Ticker
     var keyMetricsOverTime: [KeyMetrics]?
     var growthMetrics: [GrowthMetrics]?
     var group = DispatchGroup()
-    weak var delegate: StockDataDelegate?
     var intrinsicValue: Float?
-    
+
+    var discount: Float? {
+        guard let intrinsicValue = intrinsicValue else { return nil }
+        return (intrinsicValue - ticker.price) / intrinsicValue
+    }
+
+    var color: UIColor {
+        guard let intrinsicValue = intrinsicValue else { return .red }
+        return intrinsicValue * 0.3 > ticker.price ? .green : .red
+    }
+
     init(ticker: Ticker) {
         self.ticker = ticker
     }
@@ -41,7 +52,7 @@ class Stock {
                 completion?(false)
                 return }
             
-            self.growthMetrics = data.metrics
+            self.growthMetrics = data.growth
             completion?(error == nil)
         }
     }
@@ -60,17 +71,22 @@ class Stock {
     
     func calculateIntrinsicValue() {
         guard let keyMetrics = self.keyMetricsOverTime, let growthMetrics = growthMetrics else { return }
-        
+
         var discountedCashFlow = Float(keyMetrics[0].operatingCFPerShare) ?? 0
+        var cashFlow = discountedCashFlow
+        var discountedCashFlowSum: Float = 0
         let growthRate = growthMetrics[0].fiveYearNetIncome
-        let discountRate: Float = 0.06
-        for i in 0..<min(keyMetrics.count, growthMetrics.count) {
+        let originalDiscountRate: Float = 0.06
+        var discountRate = 1 + originalDiscountRate
+        for i in 1...10 {
             let growth = 1 + (Float(growthRate) ?? 0)
-            let discount = Float(i) * discountRate
-            discountedCashFlow = (discountedCashFlow * growth) / discount
+            discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate)
+            cashFlow = (cashFlow * growth)
+            discountedCashFlow = cashFlow / discountRate
+            discountedCashFlowSum += discountedCashFlow
         }
         
-        self.intrinsicValue = discountedCashFlow
+        self.intrinsicValue = discountedCashFlowSum
     }
 }
 
@@ -81,6 +97,12 @@ struct Ticker: Codable {
     var symbol: String
     var name: String?
     var price: Float
+    var exchange: String?
+
+    var isValid: Bool {
+        guard let exchange = exchange else { return false }
+        return Stock.exchanges.contains(exchange)
+    }
 }
 
 struct IntrinsicValue: Codable {
@@ -118,7 +140,8 @@ struct KeyMetrics: Codable {
 }
 
 struct GrowthMetricsArray: Codable {
-    var metrics: [GrowthMetrics]?
+    var symbol: String
+    var growth: [GrowthMetrics]?
 }
 struct GrowthMetrics: Codable {
     var date: String

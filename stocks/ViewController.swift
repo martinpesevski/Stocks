@@ -20,31 +20,20 @@ class ViewController: UIViewController {
             guard let self = self, let data = data else {
                 if let error = error { print(" error getting Tickers: \(error.localizedDescription)") }
                 return }
-            self.tickers = data.symbolsList.sorted { return $0.symbol < $1.symbol }
+            self.tickers = data.symbolsList.filter { $0.isValid }.sorted { return $0.symbol < $1.symbol }
             self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            
-            self.stocks[21].load {
-                DispatchQueue.main.async {
-                    self.tableView.reloadRows(at: [IndexPath(row: 21, section: 0)], with: .fade)
+
+            for (index, stock) in self.stocks.enumerated() {
+                stock.load {
+                    DispatchQueue.main.async {
+                        (self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? StockCell)?.setup(stock: stock)
+                    }
                 }
             }
-
-//            for (index, stock) in self.stocks.enumerated() {
-//                let queue = DispatchGroup()
-//                queue.enter()
-//                stock.load {
-//                    queue.leave()
-//                }
-//                queue.notify(queue: .main) {
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-//                    }
-//                }
-//            }
         }
     }
 }
