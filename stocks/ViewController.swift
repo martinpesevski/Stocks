@@ -27,12 +27,25 @@ class ViewController: UIViewController {
                 self.tableView.reloadData()
             }
 
+            let group = DispatchGroup()
             for (index, stock) in self.stocks.enumerated() {
+                group.enter()
                 stock.load {
+                    group.leave()
                     DispatchQueue.main.async {
                         (self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? StockCell)?.setup(stock: stock)
                     }
                 }
+            }
+            group.notify(queue: .main) {
+                self.stocks = self.stocks.filter {
+                    $0.intrinsicValue != nil &&
+                        $0.intrinsicValue! > 0 &&
+                        Float($0.growthMetrics![0].fiveYearNetIncome) != nil &&
+                        Float($0.growthMetrics![0].fiveYearNetIncome)! > 0
+                }
+                self.stocks.sort { $0.discount! > $1.discount!}
+                self.tableView.reloadData()
             }
         }
     }
