@@ -18,6 +18,7 @@ class Stock {
     var growthMetrics: [GrowthMetrics]?
     var group = DispatchGroup()
     weak var delegate: StockDataDelegate?
+    var intrinsicValue: Float?
     
     init(ticker: Ticker) {
         self.ticker = ticker
@@ -45,18 +46,31 @@ class Stock {
         }
     }
     
-    func load() {
-//        group = DispatchGroup()
-//        group.enter()
-        getKeyMetrics() { completed in
-            DispatchQueue.main.async { self.delegate?.didFinishDownloading(self) }
-//            self.group.leave()
+    func load(completion: @escaping ()->()) {
+        group = DispatchGroup()
+        group.enter()
+        getKeyMetrics() { completed in self.group.leave() }
+        group.enter()
+        getGrowthMetrics() { completed in self.group.leave() }
+        group.notify(queue: .main) {
+            self.calculateIntrinsicValue()
+            DispatchQueue.main.async { completion() }
         }
-//        group.enter()
-//        getGrowthMetrics() { completed in self.group.leave() }
-//        group.notify(queue: .main) {
-//            DispatchQueue.main.async { self.delegate?.didFinishDownloading(self) }
-//        }
+    }
+    
+    func calculateIntrinsicValue() {
+        guard let keyMetrics = self.keyMetricsOverTime, let growthMetrics = growthMetrics else { return }
+        
+        var discountedCashFlow = Float(keyMetrics[0].operatingCFPerShare) ?? 0
+        let growthRate = growthMetrics[0].fiveYearNetIncome
+        let discountRate: Float = 0.06
+        for i in 0..<min(keyMetrics.count, growthMetrics.count) {
+            let growth = 1 + (Float(growthRate) ?? 0)
+            let discount = Float(i) * discountRate
+            discountedCashFlow = (discountedCashFlow * growth) / discount
+        }
+        
+        self.intrinsicValue = discountedCashFlow
     }
 }
 

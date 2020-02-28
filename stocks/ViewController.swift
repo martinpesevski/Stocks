@@ -26,8 +26,25 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+            
+            self.stocks[21].load {
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [IndexPath(row: 21, section: 0)], with: .fade)
+                }
+            }
 
-            for stock in self.stocks { stock.load() }
+//            for (index, stock) in self.stocks.enumerated() {
+//                let queue = DispatchGroup()
+//                queue.enter()
+//                stock.load {
+//                    queue.leave()
+//                }
+//                queue.notify(queue: .main) {
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+//                    }
+//                }
+//            }
         }
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StockCell: UITableViewCell, StockDataDelegate {
+class StockCell: UITableViewCell {
     @IBOutlet var tickerLabel: UILabel!
     @IBOutlet var tickerName: UILabel!
     
@@ -18,24 +18,10 @@ class StockCell: UITableViewCell, StockDataDelegate {
     
     
     func setup(stock: Stock) {
-        stock.delegate = self
+//        stock.delegate = self
         tickerLabel.text = stock.ticker.symbol
         tickerName.text = stock.ticker.name
         priceLabel.text = String(format:"%.02f", stock.ticker.price)
-        
-        setup(iv: stock.keyMetricsOverTime?[0])
-    }
-    
-    func setup(iv: KeyMetrics?) {
-        guard let iv = iv else {
-            intrinsicValueLabel.text = "N/A"            
-            return
-        }
-        intrinsicValueLabel.text = iv.netIncomePerShare
-        setNeedsLayout()
-    }
-    
-    func didFinishDownloading(_ stock: Stock) {
-        setup(iv: stock.keyMetricsOverTime?[0])
+        intrinsicValueLabel.text = "\(String(describing: stock.intrinsicValue))"
     }
 }
