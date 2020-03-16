@@ -52,7 +52,7 @@ class Stock {
         guard let marketCap = keyMetricsOverTime?[0].marketCap.floatValue else { return nil }
 
         if marketCap < 1000000000 { return .small }
-        if marketCap < 10000000000 { return .medium }
+        if marketCap < 50000000000 { return .medium }
         return .large
     }
 

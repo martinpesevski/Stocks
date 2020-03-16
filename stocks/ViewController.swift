@@ -16,39 +16,70 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        URLSession.shared.datatask(type: TickerArray.self, url: Endpoints.tickers.url) { [weak self] data, response, error in
-            guard let self = self, let data = data else {
-                if let error = error { print(" error getting Tickers: \(error.localizedDescription)") }
-                return }
-            self.tickers = data.symbolsList.filter { $0.isValid }.sorted { return $0.symbol < $1.symbol }
-            self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-
-            let group = DispatchGroup()
-            for (index, stock) in self.stocks.enumerated() {
-                group.enter()
-                stock.load {
-                    group.leave()
-                    DispatchQueue.main.async {
-                        (self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? StockCell)?.setup(stock: stock)
-                    }
-                }
-            }
-            group.notify(queue: .main) {
-                self.stocks = self.stocks.filter {
-                    $0.intrinsicValue != nil &&
-                        $0.intrinsicValue! > 0 &&
-                        ($0.growthMetrics?[0].fiveYearNetIncome.floatValue ?? 0) > 0 &&
-                        $0.marketCap == .large &&
-                        $0.profitability == .profitable
-                }
-                self.stocks.sort { $0.discount! > $1.discount! }
-                self.tableView.reloadData()
-            }
+        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
+            load()
+            return
         }
+
+        parseJson(data: data) { array, error in
+            guard let array = array else { return }
+            self.setupStocks(data: array)
+        }
+    }
+
+    func load() {
+        URLSession.shared.dataTask(with: Endpoints.tickers.url) {
+            [weak self] data, response, error in
+
+            guard let self = self, let data = data else {
+                return }
+
+            UserDefaults.standard.set(data, forKey: "tickerData")
+            self.parseJson(data: data) { array, error in
+                if let array = array { self.setupStocks(data: array)}
+                if let error = error { NSLog("error loading tickers" + error.localizedDescription) }
+            }
+        }.resume()
+    }
+
+    func parseJson(data: Data, completion: @escaping (TickerArray?, Error?) -> ()) {
+        do {
+            let object = try JSONDecoder().decode(TickerArray.self, from: data)
+            completion(object, nil)
+        } catch let error as NSError {
+           completion(nil, error)
+        }
+    }
+
+    func setupStocks(data: TickerArray) {
+        self.tickers = data.symbolsList.filter { $0.isValid }.sorted { return $0.symbol < $1.symbol }
+         self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
+
+         DispatchQueue.main.async {
+             self.tableView.reloadData()
+         }
+
+         let group = DispatchGroup()
+         for (index, stock) in self.stocks.enumerated() {
+             group.enter()
+             stock.load {
+                 group.leave()
+                 DispatchQueue.main.async {
+                     (self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? StockCell)?.setup(stock: stock)
+                 }
+             }
+         }
+         group.notify(queue: .main) {
+             self.stocks = self.stocks.filter {
+                 $0.intrinsicValue != nil &&
+                     $0.intrinsicValue! > 0 &&
+                     ($0.growthMetrics?[0].fiveYearNetIncome.floatValue ?? 0) > 0 &&
+                     $0.marketCap == .large &&
+                     $0.profitability == .profitable
+             }
+             self.stocks.sort { $0.discount! > $1.discount! }
+             self.tableView.reloadData()
+         }
     }
 }
 
