@@ -41,10 +41,11 @@ class ViewController: UIViewController {
                 self.stocks = self.stocks.filter {
                     $0.intrinsicValue != nil &&
                         $0.intrinsicValue! > 0 &&
-                        Float($0.growthMetrics![0].fiveYearNetIncome) != nil &&
-                        Float($0.growthMetrics![0].fiveYearNetIncome)! > 0
+                        ($0.growthMetrics?[0].fiveYearNetIncome.floatValue ?? 0) > 0 &&
+                        $0.marketCap == .large &&
+                        $0.profitability == .profitable
                 }
-                self.stocks.sort { $0.discount! > $1.discount!}
+                self.stocks.sort { $0.discount! > $1.discount! }
                 self.tableView.reloadData()
             }
         }
