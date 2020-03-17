@@ -107,7 +107,11 @@ struct Ticker: Codable {
     }
 }
 
-struct Quote: Codable {
+struct Quote: Codable, StockIdentifiable {
+    static func stockIdentifier(_ ticker: String) -> String {
+        return "quote\(ticker)"
+    }
+
     var symbol: String?
     var profile: Profile
 }

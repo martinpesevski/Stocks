@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct GrowthMetricsArray: Codable {
+struct GrowthMetricsArray: Codable, StockIdentifiable {
+    static func stockIdentifier(_ ticker: String) -> String {
+        return "growthMetrics\(ticker)"
+    }
+
     var symbol: String?
     var growth: [GrowthMetrics]?
 }

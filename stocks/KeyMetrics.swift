@@ -7,8 +7,14 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
-struct KeyMetricsArray: Codable {
+struct KeyMetricsArray: Codable, StockIdentifiable {
+    static func stockIdentifier(_ ticker: String) -> String {
+        return "keyMetrics\(ticker)"
+    }
+
     var metrics: [KeyMetrics]?
 }
 struct KeyMetrics: Codable {
@@ -27,6 +33,10 @@ struct KeyMetrics: Codable {
         case dividendYield = "Dividend Yield"
         case marketCap = "Market Cap"
     }
+}
+
+protocol StockIdentifiable {
+    static func stockIdentifier(_ ticker: String) -> String
 }
 
 extension String {

@@ -21,7 +21,7 @@ class ViewController: UIViewController {
             return
         }
 
-        parseJson(data: data) { array, error in
+        ViewController.parseJson(type: TickerArray.self, data: data) { array, error in
             guard let array = array else { return }
             self.setupStocks(data: array)
         }
@@ -35,16 +35,16 @@ class ViewController: UIViewController {
                 return }
 
             UserDefaults.standard.set(data, forKey: "tickerData")
-            self.parseJson(data: data) { array, error in
+            ViewController.parseJson(type: TickerArray.self, data: data) { array, error in
                 if let array = array { self.setupStocks(data: array)}
                 if let error = error { NSLog("error loading tickers" + error.localizedDescription) }
             }
         }.resume()
     }
 
-    func parseJson(data: Data, completion: @escaping (TickerArray?, Error?) -> ()) {
+    static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {
         do {
-            let object = try JSONDecoder().decode(TickerArray.self, from: data)
+            let object: T = try JSONDecoder().decode(T.self, from: data)
             completion(object, nil)
         } catch let error as NSError {
             completion(nil, error)
