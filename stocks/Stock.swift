@@ -27,10 +27,18 @@ class Stock {
     static let exchanges = ["New York Stock Exchange", "Nasdaq Global Select", "NYSE"]
 
     var ticker: Ticker
+    var quote: Quote?
     var keyMetricsOverTime: [KeyMetrics]?
     var growthMetrics: [GrowthMetrics]?
     var group = DispatchGroup()
     var intrinsicValue: Float?
+
+    var isValid: Bool {
+        intrinsicValue != nil &&
+        intrinsicValue! > 0 &&
+        marketCap == .large &&
+        profitability == .profitable
+    }
 
     var discount: Float? {
         guard let intrinsicValue = intrinsicValue else { return nil }
@@ -39,7 +47,9 @@ class Stock {
 
     var color: UIColor {
         guard let intrinsicValue = intrinsicValue else { return .red }
-        return intrinsicValue * 0.3 > ticker.price ? .green : .red
+        if intrinsicValue * 0.3 > ticker.price { return .green }
+        if intrinsicValue > ticker.price { return .systemYellow }
+        return .red
     }
 
     var profitability: Profitability? {
@@ -49,7 +59,7 @@ class Stock {
     }
 
     var marketCap: MarketCap? {
-        guard let marketCap = keyMetricsOverTime?[0].marketCap.floatValue else { return nil }
+        guard let marketCap = quote?.profile.mktCap?.floatValue else { return nil }
 
         if marketCap < 1000000000 { return .small }
         if marketCap < 50000000000 { return .medium }
@@ -62,7 +72,7 @@ class Stock {
     
     func calculateIntrinsicValue() {
         guard let operatingCashFlow = self.keyMetricsOverTime?[0].operatingCFPerShare.floatValue,
-            let rate = growthMetrics?[0].fiveYearNetIncome.floatValue else { return }
+            let rate = growthMetrics?[0].tenYearOCF.floatValue else { return }
 
         var discountedCashFlow = operatingCashFlow
         var cashFlow = discountedCashFlow
@@ -95,4 +105,25 @@ struct Ticker: Codable {
         guard let exchange = exchange else { return false }
         return Stock.exchanges.contains(exchange)
     }
+}
+
+struct Quote: Codable {
+    var symbol: String?
+    var profile: Profile
+}
+struct Profile: Codable {
+    var price: Float?
+    var beta: String?
+    var volAvg: String?
+    var mktCap: String?
+    var exchange: String?
+    var changes: Float?
+    var changesPercentage: String?
+    var companyName: String?
+    var industry: String?
+    var sector: String?
+    var website: String?
+    var description: String?
+    var ceo: String?
+    var image: String?
 }

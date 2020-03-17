@@ -31,10 +31,23 @@ extension Stock {
         }
     }
 
+    func getQuote(completion: ((Bool) -> ())? = nil) {
+        URLSession.shared.datatask(type: Quote.self, url: Endpoints.quote(ticker: ticker.symbol).url) { [weak self] data, response, error in
+            guard let self = self, let data = data else {
+                completion?(false)
+                return }
+
+            self.quote = data
+            completion?(error == nil)
+        }
+    }
+
     func load(completion: @escaping ()->()) {
         group = DispatchGroup()
         group.enter()
         getKeyMetrics() { completed in self.group.leave() }
+        group.enter()
+        getQuote() { completed in self.group.leave() }
         group.enter()
         getGrowthMetrics() { completed in self.group.leave() }
         group.notify(queue: .main) {

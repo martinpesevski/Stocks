@@ -9,7 +9,7 @@
 import Foundation
 
 struct GrowthMetricsArray: Codable {
-    var symbol: String
+    var symbol: String?
     var growth: [GrowthMetrics]?
 }
 struct GrowthMetrics: Codable {
@@ -18,6 +18,8 @@ struct GrowthMetrics: Codable {
     var tenYearRev: String
     var fiveYearNetIncome: String
     var tenYearNetIncome: String
+    var fiveYearOCF: String
+    var tenYearOCF: String
 
     private enum CodingKeys: String, CodingKey {
         case date
@@ -25,5 +27,7 @@ struct GrowthMetrics: Codable {
         case tenYearRev = "10Y Revenue Growth (per Share)"
         case fiveYearNetIncome = "5Y Net Income Growth (per Share)"
         case tenYearNetIncome = "10Y Net Income Growth (per Share)"
+        case fiveYearOCF = "5Y Operating CF Growth (per Share)"
+        case tenYearOCF = "10Y Operating CF Growth (per Share)"
     }
 }
