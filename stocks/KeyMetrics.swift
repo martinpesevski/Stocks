@@ -34,11 +34,3 @@ struct KeyMetrics: Codable {
         case marketCap = "Market Cap"
     }
 }
-
-protocol StockIdentifiable {
-    static func stockIdentifier(_ ticker: String) -> String
-}
-
-extension String {
-    var floatValue: Float? { Float(self) }
-}

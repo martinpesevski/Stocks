@@ -12,7 +12,7 @@ extension Stock {
     func getKeyMetrics(completion: ((Bool) -> ())? = nil) {
         if let name = ticker.name,
             let keyMetricsData = UserDefaults.standard.data(forKey: KeyMetricsArray.stockIdentifier(name)) {
-            ViewController.parseJson(type: KeyMetricsArray.self, data: keyMetricsData) { arr, error in
+            DataParser.parseJson(type: KeyMetricsArray.self, data: keyMetricsData) { arr, error in
                 if let arr = arr {
                     self.keyMetricsOverTime = arr.metrics
                     completion?(true)
@@ -41,7 +41,7 @@ extension Stock {
     func getGrowthMetrics(completion: ((Bool) -> ())? = nil) {
         if let name = ticker.name,
             let growthMetricsData = UserDefaults.standard.data(forKey: GrowthMetricsArray.stockIdentifier(name)) {
-            ViewController.parseJson(type: GrowthMetricsArray.self, data: growthMetricsData) { arr, error in
+            DataParser.parseJson(type: GrowthMetricsArray.self, data: growthMetricsData) { arr, error in
                 if let arr = arr {
                     self.growthMetrics = arr.growth
                     completion?(true)
@@ -70,7 +70,7 @@ extension Stock {
     func getQuote(completion: ((Bool) -> ())? = nil) {
         if let name = ticker.name,
             let quotes = UserDefaults.standard.data(forKey: Quote.stockIdentifier(name)) {
-            ViewController.parseJson(type: Quote.self, data: quotes) { quote, error in
+            DataParser.parseJson(type: Quote.self, data: quotes) { quote, error in
                 if let quote = quote {
                     self.quote = quote
                     completion?(true)

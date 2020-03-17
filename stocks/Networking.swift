@@ -34,15 +34,27 @@ extension URLSession {
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else { return completion(nil, response, error) }
 
-            do {
-                if let identifier = identifier {
-                    UserDefaults.standard.set(data, forKey: T.stockIdentifier(identifier))
+            if let identifier = identifier {
+                UserDefaults.standard.set(data, forKey: T.stockIdentifier(identifier))
+            }
+
+            DataParser.parseJson(type: T.self, data: data) { data, error in
+                switch (data, error) {
+                case (let data, nil): completion(data, response, error)
+                default: completion(nil, response, error)
                 }
-                let object = try JSONDecoder().decode(T.self, from: data)
-                completion(object, response, error)
-            } catch let error as NSError {
-               completion(nil, response, error)
             }
         }.resume()
+    }
+}
+
+class DataParser {
+    static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {
+        do {
+            let object: T = try JSONDecoder().decode(T.self, from: data)
+            completion(object, nil)
+        } catch let error as NSError {
+            completion(nil, error)
+        }
     }
 }
