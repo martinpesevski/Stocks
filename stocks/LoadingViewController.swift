@@ -17,22 +17,23 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        animationView.animation = Animation.named("loading6")
-        animationView.loopMode = .loop
-        animationView.play()
-        
-        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
-            load()
-            return
-        }
-        
-        DispatchQueue.global(qos: .background).async {
-            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
-                guard let array = array else { return }
-                self.setupStocks(data: array)
-            }
-        }
+        self.performSegue(withIdentifier: "dashboard", sender: self)
+
+//        animationView.animation = Animation.named("loading")
+//        animationView.loopMode = .loop
+//        animationView.play()
+//
+//        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
+//            load()
+//            return
+//        }
+//
+//        DispatchQueue.global(qos: .background).async {
+//            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
+//                guard let array = array else { return }
+//                self.setupStocks(data: array)
+//            }
+//        }
     }
     
     func load() {

@@ -8,6 +8,7 @@ target 'stocks' do
   # Pods for stocks
 
 	pod 'lottie-ios'
+  pod 'SnapKit', '~> 5.0.0'
 
   target 'stocksTests' do
     inherit! :search_paths
