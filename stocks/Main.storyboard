@@ -74,15 +74,15 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Nc-kX-yeR" customClass="FilterView" customModule="stocks" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="123.5"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xrg-fL-AYT" customClass="FilterView" customModule="stocks" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="133.5" width="374" height="123"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MPe-yl-CWp" customClass="FilterView" customModule="stocks" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="266.5" width="374" height="123.5"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                         </subviews>
                                     </stackView>
@@ -91,11 +91,11 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JzB-0d-bsb" customClass="FilterView" customModule="stocks" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="59"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CbO-wi-EeU" customClass="FilterView" customModule="stocks" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="69" width="374" height="59"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                         </subviews>
                                     </stackView>
@@ -142,7 +142,96 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0tO-wj-03F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1462" y="82"/>
+            <point key="canvasLocation" x="1474" y="82"/>
+        </scene>
+        <!--Sort View Controller-->
+        <scene sceneID="Smd-5Q-s6C">
+            <objects>
+                <viewController storyboardIdentifier="sortVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lM3-W4-X8a" customClass="SortViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XAy-sG-jcO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ubU-1K-ejC">
+                                <rect key="frame" x="20" y="64" width="374" height="778"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="850" verticalCompressionResistancePriority="1000" text="How would you like to sort your stocks?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHV-vH-BKd">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="255" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ro6-Gr-lM2">
+                                        <rect key="frame" x="0.0" y="110" width="374" height="568"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G0M-c7-Slj" customClass="SortView" customModule="stocks" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="Pcu-yc-uJX"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbc-SV-4r3" customClass="SortView" customModule="stocks" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="110" width="374" height="100"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="vo2-GR-ezE"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oY0-nm-gZg" customClass="SortView" customModule="stocks" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="220" width="374" height="100"/>
+                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="6s9-cx-NhM"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" verticalHuggingPriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="fe0-iQ-Gaf">
+                                                <rect key="frame" x="0.0" y="330" width="374" height="238"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2D-Eh-F6a">
+                                        <rect key="frame" x="0.0" y="728" width="374" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Hqq-74-5Xd"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onDone:" destination="lM3-W4-X8a" eventType="touchUpInside" id="Dr6-KS-wPs"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="zCn-Sx-sMz" firstAttribute="trailing" secondItem="ubU-1K-ejC" secondAttribute="trailing" constant="20" id="PFd-50-Iak"/>
+                            <constraint firstItem="ubU-1K-ejC" firstAttribute="top" secondItem="zCn-Sx-sMz" secondAttribute="top" constant="20" id="Shr-DK-jG7"/>
+                            <constraint firstItem="ubU-1K-ejC" firstAttribute="leading" secondItem="zCn-Sx-sMz" secondAttribute="leading" constant="20" id="v0X-zJ-kmx"/>
+                            <constraint firstItem="ubU-1K-ejC" firstAttribute="bottom" secondItem="zCn-Sx-sMz" secondAttribute="bottom" constant="-20" id="yUh-jQ-r6f"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zCn-Sx-sMz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="goP-ED-7VY"/>
+                    <connections>
+                        <outlet property="marketCap" destination="oY0-nm-gZg" id="ued-Bp-jrj"/>
+                        <outlet property="name" destination="sbc-SV-4r3" id="om4-vf-53o"/>
+                        <outlet property="valueDifference" destination="G0M-c7-Slj" id="cM7-lJ-z03"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8TX-nq-cJd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1474" y="-597"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -284,7 +373,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2264" y="67"/>
+            <point key="canvasLocation" x="2377" y="102"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="K55-nv-htF">

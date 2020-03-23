@@ -89,7 +89,6 @@ class FilterView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        backgroundColor = .systemGray6
         layer.cornerRadius = 8
         
         addSubview(content)
