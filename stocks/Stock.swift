@@ -34,11 +34,12 @@ class Stock {
     var intrinsicValue: Float?
 
     func isValid(filters: [Filter]) -> Bool {
-        guard intrinsicValue != nil && intrinsicValue! > 0 else { return false }
+        guard let iv = intrinsicValue, iv > 0 else { return false }
         guard !filters.isEmpty else { return true }
         
-        var validCap = false
-        var validProfitability = false
+        var validCap = !filters.hasMarketCap
+        var validProfitability = !filters.hasProfitability
+
         for filter in filters {
             if let filterCap = filter.marketCap {
                 validCap = filterCap == marketCap
@@ -102,44 +103,4 @@ class Stock {
         
         self.intrinsicValue = discountedCashFlowSum
     }
-}
-
-struct TickerArray: Codable {
-    var symbolsList: [Ticker]
-}
-struct Ticker: Codable {
-    var symbol: String
-    var name: String?
-    var price: Float
-    var exchange: String?
-
-    var isValid: Bool {
-        guard let exchange = exchange else { return false }
-        return Stock.exchanges.contains(exchange)
-    }
-}
-
-struct Quote: Codable, StockIdentifiable {
-    static func stockIdentifier(_ ticker: String) -> String {
-        return "quote\(ticker)"
-    }
-
-    var symbol: String?
-    var profile: Profile
-}
-struct Profile: Codable {
-    var price: Float?
-    var beta: String?
-    var volAvg: String?
-    var mktCap: String?
-    var exchange: String?
-    var changes: Float?
-    var changesPercentage: String?
-    var companyName: String?
-    var industry: String?
-    var sector: String?
-    var website: String?
-    var description: String?
-    var ceo: String?
-    var image: String?
 }

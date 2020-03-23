@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,9 @@
 		524560BB23FC7687003686BE /* stocksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524560BA23FC7687003686BE /* stocksUITests.swift */; };
 		524560C923FDD7FC003686BE /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524560C823FDD7FC003686BE /* Stock.swift */; };
 		524560CB23FDDB68003686BE /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524560CA23FDDB68003686BE /* Networking.swift */; };
+		52D9B1B924292C9700E67BF2 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1B824292C9700E67BF2 /* Ticker.swift */; };
+		52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BA24292CCF00E67BF2 /* Profile.swift */; };
+		52D9B1BD24292D0B00E67BF2 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BC24292D0B00E67BF2 /* Filter.swift */; };
 		7DD5A1FDE5DFCD8967111942 /* libPods-stocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F35A739DB781D1654E1208E /* libPods-stocks.a */; };
 		927A4DE7B8AF9349302C9918 /* libPods-stocksTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 616EE2A5511A8D1C972F84C3 /* libPods-stocksTests.a */; };
 		C71E95B12401EE81005A2DC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C71E95AF2401EE81005A2DC7 /* Main.storyboard */; };
@@ -69,6 +72,9 @@
 		524560BC23FC7687003686BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		524560C823FDD7FC003686BE /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		524560CA23FDDB68003686BE /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		52D9B1B824292C9700E67BF2 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
+		52D9B1BA24292CCF00E67BF2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		52D9B1BC24292D0B00E67BF2 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		54B16BC799C59D4AD48E7138 /* Pods-stocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks.release.xcconfig"; path = "Target Support Files/Pods-stocks/Pods-stocks.release.xcconfig"; sourceTree = "<group>"; };
 		5EDB18D3CFC466D51413DDD1 /* Pods-stocks-stocksUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-stocksUITests.debug.xcconfig"; path = "Target Support Files/Pods-stocks-stocksUITests/Pods-stocks-stocksUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		616EE2A5511A8D1C972F84C3 /* libPods-stocksTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-stocksTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,12 +163,15 @@
 				5245609C23FC7685003686BE /* ListViewController.swift */,
 				C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */,
 				C71E95C62426BE09005A2DC7 /* FilterView.swift */,
+				52D9B1BC24292D0B00E67BF2 /* Filter.swift */,
 				C71E95B82421BA25005A2DC7 /* LoadingViewController.swift */,
 				524560C823FDD7FC003686BE /* Stock.swift */,
 				52108CDC241FCB5E000A472B /* Stock+Api.swift */,
 				52108CD8241FCA39000A472B /* KeyMetrics.swift */,
-				52108D272421661E000A472B /* Util.swift */,
+				52D9B1BA24292CCF00E67BF2 /* Profile.swift */,
+				52D9B1B824292C9700E67BF2 /* Ticker.swift */,
 				52108CDA241FCA7C000A472B /* GrowthMetrics.swift */,
+				52108D272421661E000A472B /* Util.swift */,
 				C71E95B02401EE81005A2DC7 /* LaunchScreen.storyboard */,
 				C71E95B32401F122005A2DC7 /* StockCell.swift */,
 				C71E95AF2401EE81005A2DC7 /* Main.storyboard */,
@@ -414,6 +423,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C71E95C72426BE09005A2DC7 /* FilterView.swift in Sources */,
+				52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */,
 				52108CDB241FCA7C000A472B /* GrowthMetrics.swift in Sources */,
 				5245609D23FC7685003686BE /* ListViewController.swift in Sources */,
 				524560CB23FDDB68003686BE /* Networking.swift in Sources */,
@@ -422,8 +432,10 @@
 				524560C923FDD7FC003686BE /* Stock.swift in Sources */,
 				C71E95C52426BDBF005A2DC7 /* FilterViewController.swift in Sources */,
 				52108CD9241FCA39000A472B /* KeyMetrics.swift in Sources */,
+				52D9B1B924292C9700E67BF2 /* Ticker.swift in Sources */,
 				52108D282421661F000A472B /* Util.swift in Sources */,
 				C71E95B92421BA25005A2DC7 /* LoadingViewController.swift in Sources */,
+				52D9B1BD24292D0B00E67BF2 /* Filter.swift in Sources */,
 				52108CDD241FCB5E000A472B /* Stock+Api.swift in Sources */,
 				5245609B23FC7685003686BE /* SceneDelegate.swift in Sources */,
 			);

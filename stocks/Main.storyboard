@@ -69,7 +69,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jvh-9e-k1O">
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="255" ambiguous="YES" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jvh-9e-k1O">
                                         <rect key="frame" x="0.0" y="110" width="374" height="390"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Nc-kX-yeR" customClass="FilterView" customModule="stocks" customModuleProvider="target">

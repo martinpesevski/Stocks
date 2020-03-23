@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import UIKit
-import CoreData
 
 struct KeyMetricsArray: Codable, StockIdentifiable {
     static func stockIdentifier(_ ticker: String) -> String {
