@@ -45,7 +45,7 @@
                     <navigationItem key="navigationItem" id="OMv-VB-0l8"/>
                     <connections>
                         <outlet property="animationView" destination="Dbo-3o-7Y5" id="aiz-t6-9Ra"/>
-                        <segue destination="MP7-iU-emL" kind="show" identifier="dashboard" id="bKp-Wd-s6R"/>
+                        <segue destination="MP7-iU-emL" kind="show" identifier="filter" id="bKp-Wd-s6R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gDE-DY-mi6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -114,6 +114,9 @@
                                                 <integer key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onDone:" destination="MP7-iU-emL" eventType="touchUpInside" id="mdJ-EK-SY1"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -141,10 +144,10 @@
             </objects>
             <point key="canvasLocation" x="1462" y="82"/>
         </scene>
-        <!--View Controller-->
+        <!--List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ListViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,11 +224,54 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="RcT-Qn-wNf"/>
                                 </connections>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="EZS-Mb-kPF">
+                                <rect key="frame" x="274" y="792" width="120" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCy-Bt-O8w">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="jDw-YO-bhu"/>
+                                            <constraint firstAttribute="width" constant="50" id="tdZ-9l-Zhv"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="sort"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onSort:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zEs-aC-kfd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-P3-vhR">
+                                        <rect key="frame" x="70" y="0.0" width="50" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="7kC-rM-LVb"/>
+                                            <constraint firstAttribute="width" constant="50" id="bpd-iK-sKW"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="filter"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2U4-09-67g"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="chC-pw-hRt" secondAttribute="trailing" id="0Rk-Ro-68y"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EZS-Mb-kPF" secondAttribute="bottom" constant="20" id="DlN-ma-1I9"/>
                             <constraint firstItem="chC-pw-hRt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="EPu-9X-xk8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="EZS-Mb-kPF" secondAttribute="trailing" constant="20" id="FMd-9a-2Q5"/>
                             <constraint firstItem="chC-pw-hRt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="REy-Ab-Icc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="chC-pw-hRt" secondAttribute="bottom" id="dfR-Vi-5Nz"/>
                         </constraints>
@@ -258,4 +304,8 @@
             <point key="canvasLocation" x="-155.07246376811597" y="101.78571428571428"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="filter" width="24" height="24"/>
+        <image name="sort" width="24" height="24"/>
+    </resources>
 </document>

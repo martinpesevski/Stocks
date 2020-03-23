@@ -33,11 +33,23 @@ class Stock {
     var group = DispatchGroup()
     var intrinsicValue: Float?
 
-    var isValid: Bool {
-        intrinsicValue != nil &&
-        intrinsicValue! > 0 &&
-        marketCap == .large &&
-        profitability == .profitable
+    func isValid(filters: [Filter]) -> Bool {
+        guard intrinsicValue != nil && intrinsicValue! > 0 else { return false }
+        guard !filters.isEmpty else { return true }
+        
+        var validCap = false
+        var validProfitability = false
+        for filter in filters {
+            if let filterCap = filter.marketCap {
+                validCap = filterCap == marketCap
+            }
+            
+            if let filterProfitability = filter.profitability {
+                validProfitability = filterProfitability == profitability
+            }
+        }
+        
+        return validProfitability && validCap
     }
 
     var discount: Float? {

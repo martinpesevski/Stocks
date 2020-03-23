@@ -17,23 +17,23 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.performSegue(withIdentifier: "dashboard", sender: self)
+//        self.performSegue(withIdentifier: "filter", sender: self)
 
-//        animationView.animation = Animation.named("loading")
-//        animationView.loopMode = .loop
-//        animationView.play()
-//
-//        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
-//            load()
-//            return
-//        }
-//
-//        DispatchQueue.global(qos: .background).async {
-//            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
-//                guard let array = array else { return }
-//                self.setupStocks(data: array)
-//            }
-//        }
+        animationView.animation = Animation.named("loading")
+        animationView.loopMode = .loop
+        animationView.play()
+
+        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
+            load()
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
+                guard let array = array else { return }
+                self.setupStocks(data: array)
+            }
+        }
     }
     
     func load() {
@@ -61,17 +61,15 @@ class LoadingViewController: UIViewController {
             }
         }
         group.notify(queue: .main) {
-            self.stocks = self.stocks.filter { $0.isValid }
-            self.stocks.sort { $0.discount! > $1.discount! }
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "dashboard", sender: self)
+                self.performSegue(withIdentifier: "filter", sender: self)
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dashboard = segue.destination as? ViewController {
-            dashboard.stocks = stocks
+        if let filter = segue.destination as? FilterViewController {
+            filter.stocks = stocks
         }
     }
 }

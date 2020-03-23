@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ListViewController.swift
 //  stocks
 //
 //  Created by Martin Peshevski on 2/18/20.
@@ -8,13 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var stocks: [Stock] = []
+    var filteredStocks: [Stock] = []
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+    }
+    
+    @IBAction func onFilter(_ sender: Any) {
+        let filter = FilterViewController(modal: true)
+        filter.stocks = stocks
+        present(filter, animated: true, completion: nil)
+    }
+    
+    @IBAction func onSort(_ sender: Any) {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

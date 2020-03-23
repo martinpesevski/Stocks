@@ -17,6 +17,8 @@ class FilterView: UIView {
         }
     }
     
+    var filter: Filter?
+    
     lazy var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
@@ -71,7 +73,7 @@ class FilterView: UIView {
     }()
     
     func setup(filter: Filter) {
-        backgroundColor = .systemGray6
+        self.filter = filter
         title.text = filter.title
         explanation.text = filter.explanation
         isSelected = UserDefaults.standard.bool(forKey: filter.title)
@@ -79,16 +81,17 @@ class FilterView: UIView {
     
     @objc func onTap() {
         isSelected = !isSelected
-        if let text = title.text {
+        if let text = filter?.title {
             UserDefaults.standard.set(isSelected, forKey: text)
         }
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.translatesAutoresizingMaskIntoConstraints = false
         
+        backgroundColor = .systemGray6
         layer.cornerRadius = 8
+        
         addSubview(content)
         addSubview(button)
         
@@ -103,6 +106,23 @@ enum Filter {
     case smallCap
     case profitable
     case unprofitable
+    
+    var marketCap: Stock.MarketCap? {
+        switch self {
+        case .largeCap: return .large
+        case .midCap: return .medium
+        case .smallCap: return .small
+        default: return nil
+        }
+    }
+    
+    var profitability: Stock.Profitability? {
+        switch self {
+        case .profitable: return .profitable
+        case .unprofitable: return .unprofitable
+        default: return nil
+        }
+    }
     
     var title: String {
         switch self {
