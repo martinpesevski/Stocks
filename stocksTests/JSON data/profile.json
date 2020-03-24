@@ -1,0 +1,21 @@
+{
+  "symbol" : "AAPL",
+  "profile" : {
+    "price" : 220.27,
+    "beta" : "1.228499",
+    "volAvg" : "45556632",
+    "mktCap" : "9.6378696E11",
+    "lastDiv" : "2.92",
+    "range" : "170.27-327.85",
+    "changes" : -8.97,
+    "changesPercentage" : "(-3.91%)",
+    "companyName" : "Apple Inc.",
+    "exchange" : "Nasdaq Global Select",
+    "industry" : "Computer Hardware",
+    "website" : "http://www.apple.com",
+    "description" : "Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications.",
+    "ceo" : "Timothy D. Cook",
+    "sector" : "Technology",
+    "image" : "https://financialmodelingprep.com/images-New-jpg/AAPL.jpg"
+  }
+}

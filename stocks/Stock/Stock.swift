@@ -31,10 +31,10 @@ class Stock {
     var keyMetricsOverTime: [KeyMetrics]?
     var growthMetrics: [GrowthMetrics]?
     var group = DispatchGroup()
-    var intrinsicValue: Float?
+    var intrinsicValue: IntrinsicValue?
 
     func isValid(filters: [Filter]) -> Bool {
-        guard let iv = intrinsicValue, iv > 0 else { return false }
+        guard let iv = intrinsicValue?.value, iv > 0 else { return false }
         guard !filters.isEmpty else { return true }
         
         var validCap = !filters.hasMarketCap
@@ -54,21 +54,27 @@ class Stock {
     }
 
     var discount: Float? {
-        guard let intrinsicValue = intrinsicValue else { return nil }
+        guard let intrinsicValue = intrinsicValue?.value else { return nil }
         return (intrinsicValue - ticker.price) / intrinsicValue
     }
 
     var color: UIColor {
-        guard let intrinsicValue = intrinsicValue else { return .red }
+        guard let intrinsicValue = intrinsicValue?.value else { return .red }
         if intrinsicValue * 0.3 > ticker.price { return .green }
         if intrinsicValue > ticker.price { return .systemYellow }
         return .red
     }
 
     var profitability: Profitability? {
-        guard let netIncome = keyMetricsOverTime?[0].netIncomePerShare.floatValue else { return nil }
+        guard let keyMetricsOverTime = keyMetricsOverTime, !keyMetricsOverTime.isEmpty else { return nil }
 
-        return netIncome > 0 ? .profitable : .unprofitable
+        var netIncomeAverage: Float = 0
+        for metric in keyMetricsOverTime {
+            netIncomeAverage += metric.netIncomePerShare.floatValue ?? 0
+        }
+        netIncomeAverage /= Float(keyMetricsOverTime.count)
+
+        return netIncomeAverage > 0 ? .profitable : .unprofitable
     }
 
     var marketCap: MarketCap? {
@@ -87,20 +93,71 @@ class Stock {
         guard let operatingCashFlow = self.keyMetricsOverTime?[0].operatingCFPerShare.floatValue,
             let rate = growthMetrics?[0].tenYearOCF.floatValue else { return }
 
-        var discountedCashFlow = operatingCashFlow
-        var cashFlow = discountedCashFlow
-        var discountedCashFlowSum: Float = 0
-        let growthRate = rate
-        let originalDiscountRate: Float = 0.06
-        var discountRate = 1 + originalDiscountRate
-        for i in 1...10 {
-            let growth = 1 + growthRate
-            discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate)
-            cashFlow = (cashFlow * growth)
-            discountedCashFlow = cashFlow / discountRate
-            discountedCashFlowSum += discountedCashFlow
-        }
+//        var discountedCashFlow = operatingCashFlow
+//        var cashFlow = discountedCashFlow
+//        var discountedCashFlowSum: Float = 0
+//        let growthRate = rate
+//        let originalDiscountRate: Float = 0.06
+//        var discountRate = 1 + originalDiscountRate
+//        for i in 1...10 {
+//            let growth = 1 + growthRate
+//            discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate)
+//            cashFlow = (cashFlow * growth)
+//            discountedCashFlow = cashFlow / discountRate
+//            discountedCashFlowSum += discountedCashFlow
+//        }
         
-        self.intrinsicValue = discountedCashFlowSum
+        self.intrinsicValue = IntrinsicValue(cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
+    }
+}
+
+struct IntrinsicValue {
+    enum DiscountRate: Float {
+        case low = 0.06
+        case medium = 0.075
+        case high = 0.09
+    }
+
+    var discountRates: [Float] = []
+    var discountedCashFlows: [Float] = []
+    var regularCashFlows: [Float] = []
+    var growthRate: Float = 0
+    var value: Float = 0
+
+    init(cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
+        discountRates = calculateDiscountRates(discountRate)
+        regularCashFlows = calculateFutureCashFlows(cashFlow: ocf)
+        discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
+        self.growthRate = growthRate
+
+        value = discountedCashFlows.reduce(0, +)
+    }
+
+    func calculateDiscountRates(_ originalDiscountRate: DiscountRate) -> [Float] {
+        var discountRate = 1 + originalDiscountRate.rawValue
+        var rates: [Float] = []
+        for i in 1...10 {
+            discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate.rawValue)
+            rates.append(discountRate)
+        }
+
+        return rates
+    }
+
+    func calculateFutureCashFlows(cashFlow: Float) -> [Float] {
+        var cashFlows: [Float] = []
+        for i in 1...10 {
+            cashFlows.append(cashFlow * Float(i))
+        }
+        return cashFlows
+    }
+
+    func calculateDiscountedCashFlows(cashFlows: [Float], discountRates: [Float]) -> [Float] {
+        var discountedCashFlows: [Float] = []
+        for i in 0..<10 {
+            let cashFlow = cashFlows[i] * discountRates[i]
+            discountedCashFlows.append(cashFlow)
+        }
+        return discountedCashFlows
     }
 }

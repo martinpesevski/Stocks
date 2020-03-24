@@ -1,12 +1,14 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
-OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.modulemap"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"SnapKit" -l"lottie-ios" -framework "CoreGraphics" -framework "QuartzCore" -framework "UIKit"
-OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.modulemap"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Nimble" "${PODS_ROOT}/Headers/Public/Quick"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Nimble" "${PODS_CONFIGURATION_BUILD_DIR}/Quick" "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
+OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Nimble/Nimble.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Quick/Quick.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.modulemap"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Nimble" -l"Quick" -l"SnapKit" -l"lottie-ios" -framework "CoreGraphics" -framework "QuartzCore" -framework "UIKit" -framework "XCTest" -weak_framework "XCTest"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Nimble/Nimble.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Quick/Quick.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.modulemap"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
-SWIFT_INCLUDE_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
+SWIFT_INCLUDE_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Nimble" "${PODS_CONFIGURATION_BUILD_DIR}/Quick" "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
 USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

@@ -22,7 +22,7 @@ class StockCell: UITableViewCell {
         tickerName.text = stock.ticker.name
         priceLabel.text = String(format:"%.02f", stock.ticker.price)
         intrinsicValueLabel.textColor = stock.color
-        if let iv = stock.intrinsicValue {
+        if let iv = stock.intrinsicValue?.value {
             intrinsicValueLabel.text = String(format: "%.02f", iv)
         } else {
             intrinsicValueLabel.text = "N/A"

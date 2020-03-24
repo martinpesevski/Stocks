@@ -15,3 +15,18 @@ protocol StockIdentifiable {
 extension String {
     var floatValue: Float? { Float(self) }
 }
+
+class DataParser {
+    static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {
+        do {
+            let object: T = try JSONDecoder().decode(T.self, from: data)
+            completion(object, nil)
+        } catch let error as NSError {
+            completion(nil, error)
+        }
+    }
+
+    static func parseTJson<T: Codable>(type: T.Type, data: Data) -> T? {
+        return try? JSONDecoder().decode(T.self, from: data)
+    }
+}

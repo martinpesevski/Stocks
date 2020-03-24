@@ -10,13 +10,20 @@ target 'stocks' do
 	pod 'lottie-ios'
   pod 'SnapKit', '~> 5.0.0'
 
+  def testing_pods
+      pod 'Quick'
+      pod 'Nimble'
+  end
+
   target 'stocksTests' do
     inherit! :search_paths
     # Pods for testing
+    testing_pods
   end
 
   target 'stocksUITests' do
     # Pods for testing
+    testing_pods
   end
 
 end

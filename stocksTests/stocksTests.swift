@@ -6,29 +6,81 @@
 //  Copyright © 2020 Martin Peshevski. All rights reserved.
 //
 
-import XCTest
+import Quick
+import Nimble
 @testable import stocks
 
-class stocksTests: XCTestCase {
+class StockSpec: QuickSpec {
+    override func spec() {
+        var stock: Stock!
+        var keyMetrics: KeyMetricsArray?
+        var growthMetrics: GrowthMetricsArray?
+        var quote: Quote?
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+        beforeEach {
+            let bundle = Bundle(for: type(of: self))
+            let ticker = Ticker(symbol: "AAPL", name: "Apple", price: 123.45, exchange: "NYSE")
+            stock = Stock(ticker: ticker)
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+            guard let growthPath = bundle.path(forResource: "growth-metrics", ofType: "json"),
+                let data = try? Data(contentsOf: URL(fileURLWithPath: growthPath), options: .mappedIfSafe) else { return }
+            growthMetrics = DataParser.parseTJson(type: GrowthMetricsArray.self, data: data)
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+            guard let profilePath = bundle.path(forResource: "profile", ofType: "json"),
+                let profileData = try? Data(contentsOf: URL(fileURLWithPath: profilePath), options: .mappedIfSafe) else { return }
+            quote = DataParser.parseTJson(type: Quote.self, data: profileData)
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+            guard let keyMetricsPath = bundle.path(forResource: "key-metrics", ofType: "json"),
+                let keyMetricsData = try? Data(contentsOf: URL(fileURLWithPath: keyMetricsPath), options: .mappedIfSafe) else { return }
+            keyMetrics = DataParser.parseTJson(type: KeyMetricsArray.self, data: keyMetricsData)
+        }
+
+        describe("Ticker data") {
+            it("sets the correct ticker data") {
+                expect(stock.ticker.name).to(equal("Apple"))
+            }
+        }
+
+        describe("Profile") {
+            it("parses profile correctly") {
+                expect(quote?.symbol).to(equal("AAPL"))
+            }
+
+            it("calculates stock market cap correctly") {
+                stock.quote = quote
+                expect(stock.marketCap).to(equal(.large))
+            }
+        }
+
+        describe("Key metrics") {
+            it("parses key metrics correctly") {
+                expect(keyMetrics?.metrics?.count).to(equal(11))
+            }
+
+            it("calculates profitability correctly") {
+                stock.keyMetricsOverTime = keyMetrics?.metrics
+                expect(stock.profitability).to(equal(.profitable))
+            }
+        }
+
+        describe("Growth metrics") {
+            it("parses growth metrics correctly") {
+                expect(growthMetrics?.symbol).to(equal("AAPL"))
+                expect(growthMetrics?.growth?.count).to(equal(11))
+            }
+        }
+
+        describe("intrinsic value calculation") {
+            beforeEach {
+                stock.growthMetrics = growthMetrics?.growth
+                stock.quote = quote
+                stock.keyMetricsOverTime = keyMetrics?.metrics
+                stock.calculateIntrinsicValue()
+            }
+
+            it("calculates the correct intrinsic value") {
+                expect(stock.intrinsicValue?.value).to(equal(400))
+            }
         }
     }
-
 }

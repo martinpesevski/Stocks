@@ -1,5 +1,6 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Nimble" "${PODS_ROOT}/Headers/Public/Quick"
 LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
 OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.modulemap"
 OTHER_LDFLAGS = $(inherited) -ObjC -l"SnapKit" -l"lottie-ios" -framework "CoreGraphics" -framework "QuartzCore" -framework "UIKit"

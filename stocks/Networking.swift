@@ -47,14 +47,3 @@ extension URLSession {
         }.resume()
     }
 }
-
-class DataParser {
-    static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {
-        do {
-            let object: T = try JSONDecoder().decode(T.self, from: data)
-            completion(object, nil)
-        } catch let error as NSError {
-            completion(nil, error)
-        }
-    }
-}
