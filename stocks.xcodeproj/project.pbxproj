@@ -20,6 +20,7 @@
 		524560BB23FC7687003686BE /* stocksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524560BA23FC7687003686BE /* stocksUITests.swift */; };
 		524560C923FDD7FC003686BE /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524560C823FDD7FC003686BE /* Stock.swift */; };
 		524560CB23FDDB68003686BE /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524560CA23FDDB68003686BE /* Networking.swift */; };
+		52A5E017242BDCDF00C25872 /* IntrinsicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5E016242BDCDF00C25872 /* IntrinsicValue.swift */; };
 		52D9B1B924292C9700E67BF2 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1B824292C9700E67BF2 /* Ticker.swift */; };
 		52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BA24292CCF00E67BF2 /* Profile.swift */; };
 		52D9B1BD24292D0B00E67BF2 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BC24292D0B00E67BF2 /* Filter.swift */; };
@@ -79,6 +80,7 @@
 		524560BC23FC7687003686BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		524560C823FDD7FC003686BE /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		524560CA23FDDB68003686BE /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		52A5E016242BDCDF00C25872 /* IntrinsicValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicValue.swift; sourceTree = "<group>"; };
 		52D9B1B824292C9700E67BF2 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		52D9B1BA24292CCF00E67BF2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		52D9B1BC24292D0B00E67BF2 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			children = (
 				C71E95B32401F122005A2DC7 /* StockCell.swift */,
 				524560C823FDD7FC003686BE /* Stock.swift */,
+				52A5E016242BDCDF00C25872 /* IntrinsicValue.swift */,
 				52108CDC241FCB5E000A472B /* Stock+Api.swift */,
 				52108CD8241FCA39000A472B /* KeyMetrics.swift */,
 				52D9B1BA24292CCF00E67BF2 /* Profile.swift */,
@@ -476,6 +479,7 @@
 				52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */,
 				52108CDB241FCA7C000A472B /* GrowthMetrics.swift in Sources */,
 				52D9B1BF242932F300E67BF2 /* SortViewController.swift in Sources */,
+				52A5E017242BDCDF00C25872 /* IntrinsicValue.swift in Sources */,
 				5245609D23FC7685003686BE /* ListViewController.swift in Sources */,
 				524560CB23FDDB68003686BE /* Networking.swift in Sources */,
 				52D9B1C22429351500E67BF2 /* SortView.swift in Sources */,

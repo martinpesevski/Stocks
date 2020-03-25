@@ -14,7 +14,7 @@ extension Stock {
             let keyMetricsData = UserDefaults.standard.data(forKey: KeyMetricsArray.stockIdentifier(name)) {
             DataParser.parseJson(type: KeyMetricsArray.self, data: keyMetricsData) { arr, error in
                 if let arr = arr {
-                    self.keyMetricsOverTime = arr.metrics
+                    self.keyMetricsOverTime = arr
                     completion?(true)
                 } else if let error = error {
                     NSLog("key metrics load failed: \(error.localizedDescription)")
@@ -32,7 +32,7 @@ extension Stock {
                     completion?(false)
                     return }
 
-                self.keyMetricsOverTime = data.metrics
+                self.keyMetricsOverTime = data
                 completion?(error == nil)
             }
         }

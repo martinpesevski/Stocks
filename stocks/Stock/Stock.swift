@@ -28,7 +28,7 @@ class Stock {
 
     var ticker: Ticker
     var quote: Quote?
-    var keyMetricsOverTime: [KeyMetrics]?
+    var keyMetricsOverTime: KeyMetricsArray?
     var growthMetrics: [GrowthMetrics]?
     var group = DispatchGroup()
     var intrinsicValue: IntrinsicValue?
@@ -66,7 +66,7 @@ class Stock {
     }
 
     var profitability: Profitability? {
-        guard let keyMetricsOverTime = keyMetricsOverTime, !keyMetricsOverTime.isEmpty else { return nil }
+        guard let keyMetricsOverTime = keyMetricsOverTime?.metrics, !keyMetricsOverTime.isEmpty else { return nil }
 
         var netIncomeAverage: Float = 0
         for metric in keyMetricsOverTime {
@@ -90,62 +90,10 @@ class Stock {
     }
     
     func calculateIntrinsicValue() {
-        guard let operatingCashFlow = self.keyMetricsOverTime?[0].operatingCFPerShare.floatValue,
-            let rate = growthMetrics?[0].fiveYearOCF.floatValue else { return }
+        guard let operatingCashFlow = self.keyMetricsOverTime?.metrics?[0].operatingCFPerShare.floatValue,
+            let rate = keyMetricsOverTime?.averageOCFGrowth else { return }
         let growthRate = min(rate, 0.15)
         
         self.intrinsicValue = IntrinsicValue(cashFlow: operatingCashFlow, growthRate: growthRate, discountRate: .low)
-    }
-}
-
-struct IntrinsicValue {
-    enum DiscountRate: Float {
-        case low = 0.06
-        case medium = 0.075
-        case high = 0.09
-    }
-
-    var discountRates: [Float] = []
-    var discountedCashFlows: [Float] = []
-    var regularCashFlows: [Float] = []
-    var growthRate: Float = 0
-    var value: Float = 0
-
-    init(cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
-        discountRates = calculateDiscountRates(discountRate)
-        regularCashFlows = calculateFutureCashFlows(cashFlow: ocf, growth: growthRate)
-        discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
-        self.growthRate = growthRate
-
-        value = discountedCashFlows.reduce(0, +)
-    }
-
-    func calculateDiscountRates(_ originalDiscountRate: DiscountRate) -> [Float] {
-        var discountRate = 1 + originalDiscountRate.rawValue
-        var rates: [Float] = []
-        for i in 1...10 {
-            discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate.rawValue)
-            rates.append(discountRate)
-        }
-
-        return rates
-    }
-
-    func calculateFutureCashFlows(cashFlow: Float, growth: Float) -> [Float] {
-        var cashFlows: [Float] = []
-        for i in 0..<10 {
-            let previousCashFlow = cashFlows.isEmpty ? cashFlow : cashFlows[i-1]
-            cashFlows.append(previousCashFlow * (1 + growth))
-        }
-        return cashFlows
-    }
-
-    func calculateDiscountedCashFlows(cashFlows: [Float], discountRates: [Float]) -> [Float] {
-        var discountedCashFlows: [Float] = []
-        for i in 0..<10 {
-            let cashFlow = cashFlows[i] / discountRates[i]
-            discountedCashFlows.append(cashFlow)
-        }
-        return discountedCashFlows
     }
 }

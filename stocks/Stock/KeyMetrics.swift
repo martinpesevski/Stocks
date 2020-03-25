@@ -14,6 +14,16 @@ struct KeyMetricsArray: Codable, StockIdentifiable {
     }
 
     var metrics: [KeyMetrics]?
+
+    var averageOCFGrowth: Float? {
+        guard let metrics = metrics else { return nil }
+        let ocfMetrics = metrics.compactMap { $0.ocf }.sorted { $0 < $1 }
+        var total: Float = 0
+        for (index, value) in ocfMetrics.enumerated() where index > 0 {
+            total += (value - ocfMetrics[index - 1]) / value
+        }
+        return total / Float(ocfMetrics.count)
+    }
 }
 struct KeyMetrics: Codable {
     var date: String
@@ -30,5 +40,9 @@ struct KeyMetrics: Codable {
         case freeCFPerShare = "Free Cash Flow per Share"
         case dividendYield = "Dividend Yield"
         case marketCap = "Market Cap"
+    }
+
+    var ocf: Float? {
+        return Float(operatingCFPerShare)
     }
 }

@@ -58,7 +58,7 @@ class StockSpec: QuickSpec {
             }
 
             it("calculates profitability correctly") {
-                stock.keyMetricsOverTime = keyMetrics?.metrics
+                stock.keyMetricsOverTime = keyMetrics
                 expect(stock.profitability).to(equal(.profitable))
             }
         }
@@ -74,7 +74,7 @@ class StockSpec: QuickSpec {
             beforeEach {
                 stock.growthMetrics = growthMetrics?.growth
                 stock.quote = quote
-                stock.keyMetricsOverTime = keyMetrics?.metrics
+                stock.keyMetricsOverTime = keyMetrics
                 stock.calculateIntrinsicValue()
             }
 
@@ -84,6 +84,10 @@ class StockSpec: QuickSpec {
 
             it("calculates the correct discount rates") {
                 expect(stock.intrinsicValue?.discountRates).to(equal([1.06, 1.1235999, 1.1910158, 1.2624767, 1.3382252, 1.4185187, 1.5036297, 1.5938474, 1.6894782, 1.7908467]))
+            }
+
+            it("calculates the correct OCF growth") {
+                expect(keyMetrics?.averageOCFGrowth).to(equal(0.21050048))
             }
 
             it("calculates the correct discounted cash flows") {
