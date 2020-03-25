@@ -78,8 +78,20 @@ class StockSpec: QuickSpec {
                 stock.calculateIntrinsicValue()
             }
 
+            it("calculates the correct future cash flows") {
+                expect(stock.intrinsicValue?.regularCashFlows).to(equal([17.280752, 19.872864, 22.853792, 26.28186, 30.224138, 34.75776, 39.97142, 45.967133, 52.8622, 60.79153]))
+            }
+
+            it("calculates the correct discount rates") {
+                expect(stock.intrinsicValue?.discountRates).to(equal([1.06, 1.1235999, 1.1910158, 1.2624767, 1.3382252, 1.4185187, 1.5036297, 1.5938474, 1.6894782, 1.7908467]))
+            }
+
+            it("calculates the correct discounted cash flows") {
+                expect(stock.intrinsicValue?.discountedCashFlows).to(equal([16.302597, 17.686779, 19.188488, 20.8177, 22.58524, 24.502857, 26.583288, 28.84036, 31.28907, 33.94569]))
+            }
+
             it("calculates the correct intrinsic value") {
-                expect(stock.intrinsicValue?.value).to(equal(400))
+                expect(stock.intrinsicValue?.value).to(equal(241.74205))
             }
         }
     }

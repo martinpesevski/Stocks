@@ -91,23 +91,10 @@ class Stock {
     
     func calculateIntrinsicValue() {
         guard let operatingCashFlow = self.keyMetricsOverTime?[0].operatingCFPerShare.floatValue,
-            let rate = growthMetrics?[0].tenYearOCF.floatValue else { return }
-
-//        var discountedCashFlow = operatingCashFlow
-//        var cashFlow = discountedCashFlow
-//        var discountedCashFlowSum: Float = 0
-//        let growthRate = rate
-//        let originalDiscountRate: Float = 0.06
-//        var discountRate = 1 + originalDiscountRate
-//        for i in 1...10 {
-//            let growth = 1 + growthRate
-//            discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate)
-//            cashFlow = (cashFlow * growth)
-//            discountedCashFlow = cashFlow / discountRate
-//            discountedCashFlowSum += discountedCashFlow
-//        }
+            let rate = growthMetrics?[0].fiveYearOCF.floatValue else { return }
+        let growthRate = min(rate, 0.15)
         
-        self.intrinsicValue = IntrinsicValue(cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
+        self.intrinsicValue = IntrinsicValue(cashFlow: operatingCashFlow, growthRate: growthRate, discountRate: .low)
     }
 }
 
@@ -126,7 +113,7 @@ struct IntrinsicValue {
 
     init(cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
         discountRates = calculateDiscountRates(discountRate)
-        regularCashFlows = calculateFutureCashFlows(cashFlow: ocf)
+        regularCashFlows = calculateFutureCashFlows(cashFlow: ocf, growth: growthRate)
         discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
         self.growthRate = growthRate
 
@@ -144,10 +131,11 @@ struct IntrinsicValue {
         return rates
     }
 
-    func calculateFutureCashFlows(cashFlow: Float) -> [Float] {
+    func calculateFutureCashFlows(cashFlow: Float, growth: Float) -> [Float] {
         var cashFlows: [Float] = []
-        for i in 1...10 {
-            cashFlows.append(cashFlow * Float(i))
+        for i in 0..<10 {
+            let previousCashFlow = cashFlows.isEmpty ? cashFlow : cashFlows[i-1]
+            cashFlows.append(previousCashFlow * (1 + growth))
         }
         return cashFlows
     }
@@ -155,7 +143,7 @@ struct IntrinsicValue {
     func calculateDiscountedCashFlows(cashFlows: [Float], discountRates: [Float]) -> [Float] {
         var discountedCashFlows: [Float] = []
         for i in 0..<10 {
-            let cashFlow = cashFlows[i] * discountRates[i]
+            let cashFlow = cashFlows[i] / discountRates[i]
             discountedCashFlows.append(cashFlow)
         }
         return discountedCashFlows
