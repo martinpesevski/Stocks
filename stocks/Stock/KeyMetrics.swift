@@ -24,7 +24,13 @@ struct KeyMetricsArray: Codable, StockIdentifiable {
         }
         return total / Float(ocfMetrics.count)
     }
+
+    var projectedFutureGrowth: Float? {
+        guard let averageOCFGrowth = averageOCFGrowth else { return nil }
+        return min(averageOCFGrowth, 0.15)
+    }
 }
+
 struct KeyMetrics: Codable {
     var date: String
     var netIncomePerShare: String

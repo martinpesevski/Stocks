@@ -72,7 +72,7 @@ extension Sequence where Iterator.Element == Stock
         switch sort {
         case .name: return self.sorted { $0.ticker.symbol < $1.ticker.symbol }
         case .marketCap: return self.sorted { ($0.quote?.profile.mktCap?.floatValue)! < ($1.quote?.profile.mktCap?.floatValue)! }
-        case .difference: return self.sorted { $0.discount! > $1.discount! }
+        case .difference: return self.sorted { $0.intrinsicValue!.discount > $1.intrinsicValue!.discount }
         }
     }
 }

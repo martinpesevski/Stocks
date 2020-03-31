@@ -369,6 +369,7 @@
                     <navigationItem key="navigationItem" id="lp5-Ws-jg0"/>
                     <connections>
                         <outlet property="tableView" destination="chC-pw-hRt" id="t6N-GJ-1zC"/>
+                        <segue destination="CRB-dh-0O8" kind="show" identifier="detail" id="cfJ-sq-bR1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -391,6 +392,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzC-eq-Td6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-155.07246376811597" y="101.78571428571428"/>
+        </scene>
+        <!--Stock Detail View Controller-->
+        <scene sceneID="yv4-VU-Vpe">
+            <objects>
+                <viewController id="CRB-dh-0O8" customClass="StockDetailViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MqQ-D8-abi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="paz-yH-Yym">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="LT3-qS-IP6" firstAttribute="bottom" secondItem="paz-yH-Yym" secondAttribute="bottom" id="CB2-5o-JRb"/>
+                            <constraint firstItem="LT3-qS-IP6" firstAttribute="trailing" secondItem="paz-yH-Yym" secondAttribute="trailing" id="KAn-uW-fsJ"/>
+                            <constraint firstItem="paz-yH-Yym" firstAttribute="top" secondItem="LT3-qS-IP6" secondAttribute="top" id="X6m-oN-0mS"/>
+                            <constraint firstItem="paz-yH-Yym" firstAttribute="leading" secondItem="LT3-qS-IP6" secondAttribute="leading" id="alg-oS-zaE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LT3-qS-IP6"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pvT-FT-pUb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dgz-mi-V01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3158" y="102"/>
         </scene>
     </scenes>
     <resources>

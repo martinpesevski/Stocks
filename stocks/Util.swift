@@ -6,7 +6,7 @@
 //  Copyright © 2020 Martin Peshevski. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol StockIdentifiable {
     static func stockIdentifier(_ ticker: String) -> String
@@ -28,5 +28,29 @@ class DataParser {
 
     static func parseTJson<T: Codable>(type: T.Type, data: Data) -> T? {
         return try? JSONDecoder().decode(T.self, from: data)
+    }
+}
+
+extension UILabel {
+    convenience init(text: String? = nil, font: UIFont = UIFont.systemFont(ofSize: 15), alignment: NSTextAlignment = .left, color: UIColor = .white) {
+        self.init()
+        self.text = text
+        self.font = font
+        self.textAlignment = alignment
+        self.textColor = color
+    }
+}
+
+extension UIStackView {
+    convenience init(views: [UIView], axis: NSLayoutConstraint.Axis, distribution: Distribution? = nil, alignment: Alignment? = nil, spacing: CGFloat = 0, layoutInsets: UIEdgeInsets? = nil) {
+        self.init(arrangedSubviews: views)
+        if let distribution = distribution { self.distribution = distribution }
+        if let alignment = alignment { self.alignment = alignment }
+        self.spacing = spacing
+        self.axis = axis
+        if let insets = layoutInsets {
+            self.isLayoutMarginsRelativeArrangement = true
+            self.layoutMargins = insets
+        }
     }
 }

@@ -44,7 +44,7 @@ class FilterViewController: UIViewController {
         }
         
         filteredStocks = stocks.filter { $0.isValid(filters: filters) }
-        filteredStocks.sort { $0.discount! > $1.discount! }
+        filteredStocks.sort { $0.intrinsicValue!.discount > $1.intrinsicValue!.discount }
 
         if isModal {
             delegate?.didFinishFiltering(stocks: stocks, filteredStocks: filteredStocks)

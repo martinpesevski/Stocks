@@ -29,6 +29,16 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredStocks.count
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "detail", sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? StockDetailViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
+
+        destination.stock = filteredStocks[indexPath.row]
+    }
 }
 
 extension ListViewController: SortControllerDelegate, FilterDelegate {

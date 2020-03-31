@@ -6,7 +6,7 @@
 //  Copyright © 2020 Martin Peshevski. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct IntrinsicValue {
     enum DiscountRate: Float {
@@ -15,13 +15,15 @@ struct IntrinsicValue {
         case high = 0.09
     }
 
+    var stockPrice: Float
     var discountRates: [Float] = []
     var discountedCashFlows: [Float] = []
     var regularCashFlows: [Float] = []
     var growthRate: Float = 0
     var value: Float = 0
 
-    init(cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
+    init(price: Float, cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
+        stockPrice = price
         discountRates = calculateDiscountRates(discountRate)
         regularCashFlows = calculateFutureCashFlows(cashFlow: ocf, growth: growthRate)
         discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
@@ -57,5 +59,15 @@ struct IntrinsicValue {
             discountedCashFlows.append(cashFlow)
         }
         return discountedCashFlows
+    }
+
+    var discount: Float {
+        return ((value - stockPrice) / value) * 100
+    }
+
+    var color: UIColor {
+        if value * 0.3 > stockPrice { return .green }
+        if value > stockPrice { return .systemYellow }
+        return .red
     }
 }

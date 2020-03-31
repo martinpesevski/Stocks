@@ -21,4 +21,12 @@ struct Ticker: Codable {
         guard let exchange = exchange else { return false }
         return Stock.exchanges.contains(exchange)
     }
+
+    var detailName: String {
+        if let name = name {
+            return "\(name) (\(symbol))"
+        } else {
+            return symbol
+        }
+    }
 }

@@ -50,7 +50,13 @@ class LoadingViewController: UIViewController {
     }
     
     func setupStocks(data: TickerArray) {
-        self.tickers = data.symbolsList.filter { $0.isValid }.sorted { return $0.symbol < $1.symbol }
+        self.tickers = [Ticker(symbol: "AAPL", name: "Apple inc", price: 260, exchange: "NYSE"),
+        Ticker(symbol: "FB", name: "Apple inc", price: 160, exchange: "NYSE"),
+        Ticker(symbol: "TSLA", name: "Tesla", price: 560, exchange: "NYSE"),
+        Ticker(symbol: "CCL", name: "Carnival", price: 15, exchange: "NYSE"),
+        Ticker(symbol: "AMZN", name: "Amazon", price: 1900, exchange: "NYSE"),
+        Ticker(symbol: "TPR", name: "Tapestry", price: 13, exchange: "NYSE")]
+//        self.tickers = data.symbolsList.filter { $0.isValid }.sorted { return $0.symbol < $1.symbol }
         self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
 
         let group = DispatchGroup()

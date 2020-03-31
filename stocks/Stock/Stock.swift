@@ -53,18 +53,6 @@ class Stock {
         return validProfitability && validCap
     }
 
-    var discount: Float? {
-        guard let intrinsicValue = intrinsicValue?.value else { return nil }
-        return (intrinsicValue - ticker.price) / intrinsicValue
-    }
-
-    var color: UIColor {
-        guard let intrinsicValue = intrinsicValue?.value else { return .red }
-        if intrinsicValue * 0.3 > ticker.price { return .green }
-        if intrinsicValue > ticker.price { return .systemYellow }
-        return .red
-    }
-
     var profitability: Profitability? {
         guard let keyMetricsOverTime = keyMetricsOverTime?.metrics, !keyMetricsOverTime.isEmpty else { return nil }
 
@@ -91,9 +79,8 @@ class Stock {
     
     func calculateIntrinsicValue() {
         guard let operatingCashFlow = self.keyMetricsOverTime?.metrics?[0].operatingCFPerShare.floatValue,
-            let rate = keyMetricsOverTime?.averageOCFGrowth else { return }
-        let growthRate = min(rate, 0.15)
-        
-        self.intrinsicValue = IntrinsicValue(cashFlow: operatingCashFlow, growthRate: growthRate, discountRate: .low)
+            let rate = keyMetricsOverTime?.projectedFutureGrowth else { return }
+
+        self.intrinsicValue = IntrinsicValue(price: ticker.price, cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
     }
 }
