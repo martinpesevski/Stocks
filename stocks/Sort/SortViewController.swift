@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SortControllerDelegate: class {
-    func didSort(stocks: [Stock])
+    func didSort()
 }
 
 class SortViewController: UIViewController, SortViewDelegate {
@@ -18,7 +18,7 @@ class SortViewController: UIViewController, SortViewDelegate {
     @IBOutlet weak var marketCap: SortView!
 
     weak var delegate: SortControllerDelegate?
-    var stocks: [Stock] = []
+    var viewModel: StocksViewModel!
 
     override func viewDidLoad() {
         valueDifference.setup(sort: .difference)
@@ -31,8 +31,8 @@ class SortViewController: UIViewController, SortViewDelegate {
     }
 
     func didSelect(sort: Sort) {
-        stocks = stocks.customSort(sort)
-        delegate?.didSort(stocks: stocks)
+        viewModel.stocks = viewModel.stocks.customSort(sort)
+        delegate?.didSort()
         dismiss(animated: true, completion: nil)
     }
 

@@ -9,25 +9,44 @@
 import UIKit
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var stocks: [Stock] = []
-    var filteredStocks: [Stock] = []
+    var viewModel: StocksViewModel!
+
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search artists"
+        self.navigationItem.searchController = searchController
+        self.definesPresentationContext = true
+
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         tableView.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.tintColor = .white
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! StockCell
-        let stock = filteredStocks[indexPath.row]
+        let stock = viewModel.filteredStocks[indexPath.row]
         cell.setup(stock: stock)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredStocks.count
+        return viewModel.filteredStocks.count
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -37,7 +56,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? StockDetailViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
 
-        destination.stock = filteredStocks[indexPath.row]
+        destination.stock = viewModel.filteredStocks[indexPath.row]
     }
 }
 
@@ -47,14 +66,12 @@ extension ListViewController: SortControllerDelegate, FilterDelegate {
         guard let filter = storyboard.instantiateViewController(withIdentifier: "filterVC") as? FilterViewController else { return }
 
         filter.isModal = true
-        filter.stocks = stocks
+        filter.viewModel = viewModel
         filter.delegate = self
         present(filter, animated: true, completion: nil)
     }
 
-    func didFinishFiltering(stocks: [Stock], filteredStocks: [Stock]) {
-        self.stocks = stocks
-        self.filteredStocks = filteredStocks
+    func didFinishFiltering() {
         tableView.reloadData()
     }
 
@@ -62,13 +79,19 @@ extension ListViewController: SortControllerDelegate, FilterDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let sort = storyboard.instantiateViewController(withIdentifier: "sortVC") as? SortViewController else { return }
 
-        sort.stocks = filteredStocks
+        sort.viewModel = viewModel
         sort.delegate = self
         present(sort, animated: true, completion: nil)
     }
 
-    func didSort(stocks: [Stock]) {
-        self.filteredStocks = stocks
+    func didSort() {
+        tableView.reloadData()
+    }
+}
+
+extension ListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        viewModel.search(searchController.searchBar.text)
         tableView.reloadData()
     }
 }

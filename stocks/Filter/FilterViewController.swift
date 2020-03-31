@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FilterDelegate: class {
-    func didFinishFiltering(stocks: [Stock], filteredStocks: [Stock])
+    func didFinishFiltering()
 }
 
 class FilterViewController: UIViewController {
@@ -24,8 +24,7 @@ class FilterViewController: UIViewController {
 
     lazy var filterViews: [FilterView] = [largeCap, midCap, smallCap, profitable, unprofitable]
     var filters: [Filter] = []
-    var stocks: [Stock] = []
-    var filteredStocks: [Stock] = []
+    var viewModel: StocksViewModel!
     var isModal = false
     
     override func viewDidLoad() {
@@ -42,12 +41,11 @@ class FilterViewController: UIViewController {
         for view in filterViews where view.isSelected {
             if let filter = view.filter { filters.append(filter) }
         }
-        
-        filteredStocks = stocks.filter { $0.isValid(filters: filters) }
-        filteredStocks.sort { $0.intrinsicValue!.discount > $1.intrinsicValue!.discount }
+
+        viewModel.filter(filters: filters)
 
         if isModal {
-            delegate?.didFinishFiltering(stocks: stocks, filteredStocks: filteredStocks)
+            delegate?.didFinishFiltering()
             dismiss(animated: true, completion: nil)
         } else {
             performSegue(withIdentifier: "list", sender: self)
@@ -56,7 +54,6 @@ class FilterViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? ListViewController else { return }
-        destination.stocks = stocks
-        destination.filteredStocks = filteredStocks
+        destination.viewModel = viewModel
     }
 }

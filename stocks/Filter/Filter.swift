@@ -14,6 +14,7 @@ enum Filter {
     case smallCap
     case profitable
     case unprofitable
+    case search(_ text: String)
 
     var marketCap: Stock.MarketCap? {
         switch self {
@@ -39,6 +40,7 @@ enum Filter {
         case .smallCap: return "Small Cap"
         case .profitable: return "Profitable"
         case .unprofitable: return "Unprofitable"
+        case .search: return ""
         }
     }
 
@@ -49,6 +51,7 @@ enum Filter {
         case .smallCap: return "Companies smaller than $1 billion"
         case .profitable: return "Companies that reported profit on average in the past 10 years"
         case .unprofitable: return "Companies that reported loss on average in the past 10 years"
+        case .search: return ""
         }
     }
 }

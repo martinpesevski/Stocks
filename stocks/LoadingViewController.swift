@@ -75,7 +75,8 @@ class LoadingViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let filter = segue.destination as? FilterViewController {
-            filter.stocks = stocks
+            let viewModel = StocksViewModel(stocks: stocks)
+            filter.viewModel = viewModel
         }
     }
 }
