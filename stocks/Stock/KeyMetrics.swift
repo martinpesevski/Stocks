@@ -29,6 +29,19 @@ struct KeyMetricsArray: Codable, StockIdentifiable {
         guard let averageOCFGrowth = averageOCFGrowth else { return nil }
         return min(averageOCFGrowth, 0.15)
     }
+
+    var profitability: Profitability? {
+        guard let metrics = metrics, !metrics.isEmpty else { return nil }
+
+        var netIncomeAverage: Float = 0
+        let netIncomes = metrics.compactMap { $0.netIncomePerShare.floatValue }
+        for value in netIncomes {
+            netIncomeAverage += value
+        }
+        netIncomeAverage /= Float(netIncomes.count)
+
+        return netIncomeAverage > 0 ? .profitable : .unprofitable
+    }
 }
 
 struct KeyMetrics: Codable {

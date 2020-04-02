@@ -15,6 +15,14 @@ struct Quote: Codable, StockIdentifiable {
 
     var symbol: String?
     var profile: Profile
+
+    var marketCap: MarketCap? {
+        guard let marketCap = profile.mktCap?.doubleValue else { return nil }
+
+        if marketCap < 1000000000 { return .small }
+        if marketCap < 50000000000 { return .medium }
+        return .large
+    }
 }
 
 struct Profile: Codable {

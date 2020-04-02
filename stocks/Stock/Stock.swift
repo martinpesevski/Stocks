@@ -12,33 +12,33 @@ protocol StockDataDelegate: class {
     func didFinishDownloading(_ stock: Stock)
 }
 
+enum MarketCap {
+    case small
+    case medium
+    case large
+
+    var filter: Filter {
+        switch self {
+        case .small: return .smallCap
+        case .medium: return .midCap
+        case .large: return .largeCap
+        }
+    }
+}
+
+enum Profitability {
+    case profitable
+    case unprofitable
+
+    var filter: Filter {
+        switch self {
+        case .profitable: return .profitable
+        case .unprofitable: return .unprofitable
+        }
+    }
+}
+
 class Stock {
-    enum MarketCap {
-        case small
-        case medium
-        case large
-
-        var filter: Filter {
-            switch self {
-            case .small: return .smallCap
-            case .medium: return .midCap
-            case .large: return .largeCap
-            }
-        }
-    }
-
-    enum Profitability {
-        case profitable
-        case unprofitable
-
-        var filter: Filter {
-            switch self {
-            case .profitable: return .profitable
-            case .unprofitable: return .unprofitable
-            }
-        }
-    }
-
     static let exchanges = ["New York Stock Exchange", "Nasdaq Global Select", "NYSE"]
 
     var ticker: Ticker
@@ -61,29 +61,9 @@ class Stock {
 
     var filters: [Filter] {
         var arr: [Filter] = []
-        if let profitability = profitability { arr.append(profitability.filter) }
-        if let marketCap = marketCap { arr.append(marketCap.filter) }
+        if let profitability = keyMetricsOverTime?.profitability { arr.append(profitability.filter) }
+        if let marketCap = quote?.marketCap { arr.append(marketCap.filter) }
         return arr
-    }
-
-    var profitability: Profitability? {
-        guard let keyMetricsOverTime = keyMetricsOverTime?.metrics, !keyMetricsOverTime.isEmpty else { return nil }
-
-        var netIncomeAverage: Float = 0
-        for metric in keyMetricsOverTime {
-            netIncomeAverage += metric.netIncomePerShare.floatValue ?? 0
-        }
-        netIncomeAverage /= Float(keyMetricsOverTime.count)
-
-        return netIncomeAverage > 0 ? .profitable : .unprofitable
-    }
-
-    var marketCap: MarketCap? {
-        guard let marketCap = quote?.profile.mktCap?.floatValue else { return nil }
-
-        if marketCap < 1000000000 { return .small }
-        if marketCap < 50000000000 { return .medium }
-        return .large
     }
 
     init(ticker: Ticker) {

@@ -14,6 +14,7 @@ protocol StockIdentifiable {
 
 extension String {
     var floatValue: Float? { Float(self) }
+    var doubleValue: Double? { Double(self) }
 }
 
 class DataParser {

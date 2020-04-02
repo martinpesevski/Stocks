@@ -16,7 +16,7 @@ enum Filter: Equatable {
     case unprofitable
     case search(_ text: String)
 
-    var marketCap: Stock.MarketCap? {
+    var marketCap: MarketCap? {
         switch self {
         case .largeCap: return .large
         case .midCap: return .medium
@@ -25,7 +25,7 @@ enum Filter: Equatable {
         }
     }
 
-    var profitability: Stock.Profitability? {
+    var profitability: Profitability? {
         switch self {
         case .profitable: return .profitable
         case .unprofitable: return .unprofitable
