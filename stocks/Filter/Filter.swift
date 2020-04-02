@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Filter {
+enum Filter: Equatable {
     case largeCap
     case midCap
     case smallCap

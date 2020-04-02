@@ -17,11 +17,26 @@ class Stock {
         case small
         case medium
         case large
+
+        var filter: Filter {
+            switch self {
+            case .small: return .smallCap
+            case .medium: return .midCap
+            case .large: return .largeCap
+            }
+        }
     }
 
     enum Profitability {
         case profitable
         case unprofitable
+
+        var filter: Filter {
+            switch self {
+            case .profitable: return .profitable
+            case .unprofitable: return .unprofitable
+            }
+        }
     }
 
     static let exchanges = ["New York Stock Exchange", "Nasdaq Global Select", "NYSE"]
@@ -36,21 +51,19 @@ class Stock {
     func isValid(filters: [Filter]) -> Bool {
         guard let iv = intrinsicValue?.value, iv > 0 else { return false }
         guard !filters.isEmpty else { return true }
-        
-        var validCap = !filters.hasMarketCap
-        var validProfitability = !filters.hasProfitability
 
-        for filter in filters {
-            if let filterCap = filter.marketCap {
-                validCap = filterCap == marketCap
-            }
-            
-            if let filterProfitability = filter.profitability {
-                validProfitability = filterProfitability == profitability
-            }
+        for filter in self.filters where !filters.contains(filter) {
+            if filter.profitability != nil && filters.hasProfitability { return false }
+            if filter.marketCap != nil && filters.hasMarketCap { return false }
         }
-        
-        return validProfitability && validCap
+        return true
+    }
+
+    var filters: [Filter] {
+        var arr: [Filter] = []
+        if let profitability = profitability { arr.append(profitability.filter) }
+        if let marketCap = marketCap { arr.append(marketCap.filter) }
+        return arr
     }
 
     var profitability: Profitability? {

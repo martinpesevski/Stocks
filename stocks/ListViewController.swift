@@ -19,7 +19,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search artists"
+        searchController.searchBar.placeholder = "Search stocks"
         self.navigationItem.searchController = searchController
         self.definesPresentationContext = true
 
@@ -31,8 +31,14 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = .white
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
