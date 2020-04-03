@@ -24,6 +24,20 @@ enum MarketCap {
         case .large: return .largeCap
         }
     }
+
+    var queryStringValue: String {
+        switch self {
+        case .small: return "marketCapLowerThan=1000000000"
+        case .medium: return "marketCapMoreThan=1000000000&marketCapLowerThan=50000000000"
+        case .large: return "marketCapMoreThan=50000000000"
+        }
+    }
+
+    static func fromValue(_ value: Double) -> MarketCap {
+        if value < 1000000000 { return .small }
+        if value < 50000000000 { return .medium }
+        return .large
+    }
 }
 
 enum Profitability {

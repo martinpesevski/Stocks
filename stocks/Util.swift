@@ -39,6 +39,8 @@ extension UILabel {
         self.font = font
         self.textAlignment = alignment
         self.textColor = color
+        self.numberOfLines = 0
+        self.lineBreakMode = .byWordWrapping
     }
 }
 

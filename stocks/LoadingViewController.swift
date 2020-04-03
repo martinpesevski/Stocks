@@ -23,40 +23,40 @@ class LoadingViewController: UIViewController {
         animationView.loopMode = .loop
         animationView.play()
 
-        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
+//        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
             load()
-            return
+//            return
+//        }
+//
+//        DispatchQueue.global(qos: .background).async {
+//            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
+//                guard let array = array else { return }
+//                self.setupStocks(data: array)
+//            }
         }
 
-        DispatchQueue.global(qos: .background).async {
-            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
-                guard let array = array else { return }
-                self.setupStocks(data: array)
-            }
-        }
-    }
     
     func load() {
-        URLSession.shared.dataTask(with: Endpoints.tickers.url) {
+        URLSession.shared.dataTask(with: Endpoints.stockScreener(sector: "tech", marketCap: .large).url) {
             [weak self] data, response, error in
             guard let self = self, let data = data else { return }
 
             UserDefaults.standard.set(data, forKey: "tickerData")
-            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
+            DataParser.parseJson(type: [Ticker].self, data: data) { array, error in
                 if let array = array { self.setupStocks(data: array)}
                 if let error = error { NSLog("error loading tickers" + error.localizedDescription) }
             }
         }.resume()
     }
     
-    func setupStocks(data: TickerArray) {
-        self.tickers = [Ticker(symbol: "AAPL", name: "Apple inc", price: 260, exchange: "NYSE"),
-        Ticker(symbol: "FB", name: "Apple inc", price: 160, exchange: "NYSE"),
-        Ticker(symbol: "TSLA", name: "Tesla", price: 560, exchange: "NYSE"),
-        Ticker(symbol: "CCL", name: "Carnival", price: 15, exchange: "NYSE"),
-        Ticker(symbol: "AMZN", name: "Amazon", price: 1900, exchange: "NYSE"),
-        Ticker(symbol: "TPR", name: "Tapestry", price: 13, exchange: "NYSE")]
-//        self.tickers = data.symbolsList.filter { $0.isValid }.sorted { return $0.symbol < $1.symbol }
+    func setupStocks(data: [Ticker]) {
+//        self.tickers = [Ticker(symbol: "AAPL", name: "Apple inc", price: 260, exchange: "NYSE"),
+//        Ticker(symbol: "FB", name: "Apple inc", price: 160, exchange: "NYSE"),
+//        Ticker(symbol: "TSLA", name: "Tesla", price: 560, exchange: "NYSE"),
+//        Ticker(symbol: "CCL", name: "Carnival", price: 15, exchange: "NYSE"),
+//        Ticker(symbol: "AMZN", name: "Amazon", price: 1900, exchange: "NYSE"),
+//        Ticker(symbol: "TPR", name: "Tapestry", price: 13, exchange: "NYSE")]
+        self.tickers = data.sorted { return $0.symbol < $1.symbol }
         self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
 
         let group = DispatchGroup()

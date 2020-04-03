@@ -12,19 +12,11 @@ class StockDetailViewController: UIViewController {
     var stock: Stock? {
         didSet {
             guard let stock = stock else { return }
-            nameLabel.text = stock.ticker.detailName
-            priceLabel.text = String(format: "Current price:     $%.2f", stock.ticker.price)
 
-            if let intrinsicValue = stock.intrinsicValue {
-                intrinsicValueNumber.text = String(format: "$%.2f", intrinsicValue.value)
-                intrinsicValueNumber.textColor = intrinsicValue.color
-                intrinsicValueDiscount.text = String(format: "Discount: %.2f%%", intrinsicValue.discount)
-                intrinsicValueDiscount.textColor = intrinsicValue.color
-            } else {
-                intrinsicValueNumber.text = "N/A"
+            stock.load { [weak self] in
+                guard let self = self else { return }
+                self.setup(stock: stock)
             }
-
-            growthTable.keyMetrics = stock.keyMetricsOverTime
         }
     }
 
@@ -72,5 +64,21 @@ class StockDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    func setup(stock: Stock) {
+        nameLabel.text = stock.ticker.detailName
+        priceLabel.text = String(format: "Current price:     $%.2f", stock.ticker.price)
+
+        if let intrinsicValue = stock.intrinsicValue {
+            intrinsicValueNumber.text = String(format: "$%.2f", intrinsicValue.value)
+            intrinsicValueNumber.textColor = intrinsicValue.color
+            intrinsicValueDiscount.text = String(format: "Discount: %.2f%%", intrinsicValue.discount)
+            intrinsicValueDiscount.textColor = intrinsicValue.color
+        } else {
+            intrinsicValueNumber.text = "N/A"
+        }
+
+        growthTable.keyMetrics = stock.keyMetricsOverTime
     }
 }

@@ -19,7 +19,7 @@ class StockCell: UITableViewCell {
     
     func setup(stock: Stock) {
         tickerLabel.text = stock.ticker.symbol
-        tickerName.text = stock.ticker.name
+        tickerName.text = stock.ticker.companyName
         priceLabel.text = String(format:"%.02f", stock.ticker.price)
         if let iv = stock.intrinsicValue {
             intrinsicValueLabel.text = String(format: "%.02f", iv.value)

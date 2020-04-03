@@ -10,7 +10,7 @@ import Foundation
 
 extension Stock {
     func getKeyMetrics(completion: ((Bool) -> ())? = nil) {
-        if let name = ticker.name,
+        if let name = ticker.companyName,
             let keyMetricsData = UserDefaults.standard.data(forKey: KeyMetricsArray.stockIdentifier(name)) {
             DataParser.parseJson(type: KeyMetricsArray.self, data: keyMetricsData) { arr, error in
                 if let arr = arr {
@@ -25,7 +25,7 @@ extension Stock {
             }
         } else {
             URLSession.shared.datatask(type: KeyMetricsArray.self,
-                                       identifier: ticker.name,
+                                       identifier: ticker.companyName,
                                        url: Endpoints.keyMetrics(ticker: ticker.symbol).url) {
                                         [weak self] data, response, error in
                 guard let self = self, let data = data else {
@@ -39,7 +39,7 @@ extension Stock {
     }
 
     func getGrowthMetrics(completion: ((Bool) -> ())? = nil) {
-        if let name = ticker.name,
+        if let name = ticker.companyName,
             let growthMetricsData = UserDefaults.standard.data(forKey: GrowthMetricsArray.stockIdentifier(name)) {
             DataParser.parseJson(type: GrowthMetricsArray.self, data: growthMetricsData) { arr, error in
                 if let arr = arr {
@@ -54,7 +54,7 @@ extension Stock {
             }
         } else {
             URLSession.shared.datatask(type: GrowthMetricsArray.self,
-                                       identifier: ticker.name,
+                                       identifier: ticker.companyName,
                                        url: Endpoints.growthMetrics(ticker: ticker.symbol).url) {
                                         [weak self] data, response, error in
                 guard let self = self, let data = data else {
@@ -68,7 +68,7 @@ extension Stock {
     }
 
     func getQuote(completion: ((Bool) -> ())? = nil) {
-        if let name = ticker.name,
+        if let name = ticker.companyName,
             let quotes = UserDefaults.standard.data(forKey: Quote.stockIdentifier(name)) {
             DataParser.parseJson(type: Quote.self, data: quotes) { quote, error in
                 if let quote = quote {
@@ -82,7 +82,7 @@ extension Stock {
                 }
             }
         } else {
-            URLSession.shared.datatask(type: Quote.self, identifier: ticker.name, url: Endpoints.quote(ticker: ticker.symbol).url) { [weak self] data, response, error in
+            URLSession.shared.datatask(type: Quote.self, identifier: ticker.companyName, url: Endpoints.quote(ticker: ticker.symbol).url) { [weak self] data, response, error in
                 guard let self = self, let data = data else {
                     completion?(false)
                     return }

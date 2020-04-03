@@ -13,20 +13,33 @@ struct TickerArray: Codable {
 }
 struct Ticker: Codable {
     var symbol: String
-    var name: String?
+    var companyName: String?
+    var marketCap: Float
+    var sector: String
+    var beta: Float
     var price: Float
-    var exchange: String?
+    var volume: Float
 
-    var isValid: Bool {
-        guard let exchange = exchange else { return false }
-        return Stock.exchanges.contains(exchange)
-    }
+//    var isValid: Bool {
+//        guard let exchange = exchange else { return false }
+//        return Stock.exchanges.contains(exchange)
+//    }
 
     var detailName: String {
-        if let name = name {
+        if let name = companyName {
             return "\(name) (\(symbol))"
         } else {
             return symbol
         }
     }
+}
+
+struct Screener: Codable {
+    var symbol: String
+    var companyName: String
+    var marketCap: String
+    var sector: String
+    var beta: String
+    var price: String
+    var volume: String
 }

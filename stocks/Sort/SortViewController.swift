@@ -31,7 +31,7 @@ class SortViewController: UIViewController, SortViewDelegate {
     }
 
     func didSelect(sort: Sort) {
-        viewModel.stocks = viewModel.stocks.customSort(sort)
+        viewModel.filteredStocks = viewModel.filteredStocks.customSort(sort)
         delegate?.didSort()
         dismiss(animated: true, completion: nil)
     }
