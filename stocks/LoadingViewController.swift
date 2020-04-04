@@ -37,7 +37,7 @@ class LoadingViewController: ViewController {
 
     
     func load() {
-        URLSession.shared.dataTask(with: Endpoints.stockScreener(sector: "tech", marketCap: .large).url) {
+        URLSession.shared.dataTask(with: Endpoints.stockScreener(sector: "tech", marketCap: "marketCapLowerThan=1000000000").url) {
             [weak self] data, response, error in
             guard let self = self, let data = data else { return }
 
@@ -63,7 +63,7 @@ class LoadingViewController: ViewController {
         group.notify(queue: .main) {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                let cap = FilterViewController(viewModel: StocksViewModel(stocks: self.stocks))
+                let cap = FilterViewController(viewModel: StocksViewModel())
                 self.show(cap, sender: self)
             }
         }

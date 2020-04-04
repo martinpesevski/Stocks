@@ -14,7 +14,7 @@ enum Endpoints {
     case growthMetrics(ticker: String)
     case quote(ticker: String)
     case intrinsicValue(ticker: String)
-    case stockScreener(sector: String?, marketCap: MarketCap?)
+    case stockScreener(sector: String?, marketCap: String?)
     
     var url: URL {
         switch self {
@@ -26,9 +26,9 @@ enum Endpoints {
         case .stockScreener(sector: let sector, marketCap: let marketCap):
             switch (sector, marketCap) {
             case (let sector?, let marketCap?):
-                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&\(marketCap.queryStringValue)&apikey=bbfe8c1a2f7574cc1fac10b5eeb35d73") ?? URL(fileURLWithPath: "")
+                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&\(marketCap)&apikey=bbfe8c1a2f7574cc1fac10b5eeb35d73") ?? URL(fileURLWithPath: "")
             case (nil, let marketCap?):
-                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?\(marketCap.queryStringValue)&apikey=bbfe8c1a2f7574cc1fac10b5eeb35d73") ?? URL(fileURLWithPath: "")
+                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?\(marketCap)&apikey=bbfe8c1a2f7574cc1fac10b5eeb35d73") ?? URL(fileURLWithPath: "")
             case (let sector?, nil):
                 return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&apikey=bbfe8c1a2f7574cc1fac10b5eeb35d73") ?? URL(fileURLWithPath: "")
             default:

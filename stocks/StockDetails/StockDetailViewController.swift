@@ -8,14 +8,12 @@
 
 import UIKit
 
-class StockDetailViewController: UIViewController {
-    var stock: Stock? {
+class StockDetailViewController: ViewController {
+    var stock: Stock {
         didSet {
-            guard let stock = stock else { return }
-
             stock.load { [weak self] in
                 guard let self = self else { return }
-                self.setup(stock: stock)
+                self.setup(stock: self.stock)
             }
         }
     }
@@ -30,42 +28,32 @@ class StockDetailViewController: UIViewController {
 
     lazy var growthTable = GrowthTable()
 
-    lazy var stockStack: UIStackView = {
-        let stack = UIStackView(views: [nameLabel, priceLabel, ivStack, growthTable], axis: .vertical, alignment: .fill, spacing: 10,
+    lazy var stockStack: ScrollableStackView = {
+        let stack = ScrollableStackView(views: [nameLabel, priceLabel, ivStack, growthTable], alignment: .fill, spacing: 10,
         layoutInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         stack.setCustomSpacing(25, after: nameLabel)
         stack.setCustomSpacing(25, after: ivStack)
         return stack
     }()
 
-    lazy var scrollview: UIScrollView = {
-        let scroll = UIScrollView()
-        scroll.addSubview(stockStack)
-        stockStack.snp.makeConstraints { make in
-            make.edges.width.equalToSuperview()
-        }
-        return scroll
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(scrollview)
-        scrollview.snp.makeConstraints { make in
+        view.addSubview(stockStack)
+        stockStack.snp.makeConstraints { make in
             make.edges.equalTo(view.layoutMargins)
         }
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = .label
+    
+    init(stock: Stock) {
+        self.stock = stock
+        super.init(nibName: nil, bundle: nil)
+        
+        stock.load { [weak self] in
+            guard let self = self else { return }
+            self.setup(stock: stock)
+        }
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-
+    
     func setup(stock: Stock) {
         nameLabel.text = stock.ticker.detailName
         priceLabel.text = String(format: "Current price:     $%.2f", stock.ticker.price)
@@ -80,5 +68,9 @@ class StockDetailViewController: UIViewController {
         }
 
         growthTable.keyMetrics = stock.keyMetricsOverTime
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

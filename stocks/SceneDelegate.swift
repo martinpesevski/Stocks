@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let filterVC = FilterViewController(viewModel: StocksViewModel(stocks: []))
+        let filterVC = FilterViewController(viewModel: StocksViewModel())
         let nav = NavigationController(rootViewController: filterVC)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()

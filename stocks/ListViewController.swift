@@ -33,6 +33,9 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in make.edges.equalTo(view.layoutMarginsGuide)}
+        
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -55,11 +58,6 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
         navigationItem.hidesSearchBarWhenScrolling = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! StockCell
         let stock = viewModel.filteredStocks[indexPath.row]
@@ -72,13 +70,8 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "detail", sender: self)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? StockDetailViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
-
-        destination.stock = viewModel.filteredStocks[indexPath.row]
+        let detailVC = StockDetailViewController(stock: viewModel.filteredStocks[indexPath.row])
+        show(detailVC, sender: self)
     }
 }
 

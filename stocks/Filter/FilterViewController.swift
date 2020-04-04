@@ -53,14 +53,18 @@ class FilterViewController: FilterPageViewController {
     }
     
     override func onDone() {
-        viewModel.filter(filter: filter)
-
         if isModal {
             delegate?.didFinishFiltering()
             dismiss(animated: true, completion: nil)
         } else {
-            let listVC = ListViewController(viewModel: viewModel)
-            show(listVC, sender: self)
+            viewModel.load { [weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+//                    self.viewModel.filter(filter: self.filter)
+                    let listVC = ListViewController(viewModel: self.viewModel)
+                    self.show(listVC, sender: self)
+                }
+            }
         }
     }
     
@@ -76,6 +80,7 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
     }
     
     func didSelectSector(_ filters: [SectorFilter]) {
+        filter.sectorFilters = filters
         sector.filter = .sector(filters: filters)
     }
     

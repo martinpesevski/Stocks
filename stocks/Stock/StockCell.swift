@@ -9,13 +9,26 @@
 import UIKit
 
 class StockCell: UITableViewCell {
-    @IBOutlet var tickerLabel: UILabel!
-    @IBOutlet var tickerName: UILabel!
+    lazy var tickerLabel = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold))
+    lazy var tickerName = UILabel(font: UIFont.systemFont(ofSize: 15))
     
-    @IBOutlet var statementsStack: UIStackView!
-    @IBOutlet var intrinsicValueLabel: UILabel!
-    @IBOutlet var priceLabel: UILabel!
+    lazy var tickerStack = UIStackView(views: [tickerLabel, tickerName], axis: .vertical, alignment: .leading, spacing: 5)
+    lazy var intrinsicValueLabel = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold))
+    lazy var priceLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
+    lazy var numbersStack = UIStackView(views: [intrinsicValueLabel, priceLabel], axis: .vertical, alignment: .trailing, spacing: 5)
+
+    lazy var content = UIStackView(views: [tickerStack, numbersStack], axis: .horizontal,
+                                   distribution: .fillEqually,
+                                   alignment: .fill,
+                                   spacing: 5,
+                                   layoutInsets: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10))
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        addSubview(content)
+        content.snp.makeConstraints { make in make.edges.equalToSuperview() }
+    }
     
     func setup(stock: Stock) {
         tickerLabel.text = stock.ticker.symbol
@@ -27,5 +40,9 @@ class StockCell: UITableViewCell {
         } else {
             intrinsicValueLabel.text = "N/A"
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

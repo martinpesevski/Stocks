@@ -41,6 +41,10 @@
 		C71E3878243813D600E9A84B /* FilterSectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E3877243813D600E9A84B /* FilterSectorViewController.swift */; };
 		C71E387A2438175D00E9A84B /* FilterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E38792438175D00E9A84B /* FilterPageViewController.swift */; };
 		C71E387C24381CEB00E9A84B /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E387B24381CEB00E9A84B /* Base.swift */; };
+		C71E387E243830BC00E9A84B /* SectorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E387D243830BC00E9A84B /* SectorFilter.swift */; };
+		C71E3880243830E500E9A84B /* ProfitabilityFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E387F243830E500E9A84B /* ProfitabilityFilter.swift */; };
+		C71E38822438310000E9A84B /* CapFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E38812438310000E9A84B /* CapFilter.swift */; };
+		C71E38842438312200E9A84B /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E38832438312200E9A84B /* FilterType.swift */; };
 		C71E95B22401EE81005A2DC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C71E95B02401EE81005A2DC7 /* LaunchScreen.storyboard */; };
 		C71E95B42401F122005A2DC7 /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95B32401F122005A2DC7 /* StockCell.swift */; };
 		C71E95B92421BA25005A2DC7 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95B82421BA25005A2DC7 /* LoadingViewController.swift */; };
@@ -111,6 +115,10 @@
 		C71E3877243813D600E9A84B /* FilterSectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSectorViewController.swift; sourceTree = "<group>"; };
 		C71E38792438175D00E9A84B /* FilterPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPageViewController.swift; sourceTree = "<group>"; };
 		C71E387B24381CEB00E9A84B /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
+		C71E387D243830BC00E9A84B /* SectorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorFilter.swift; sourceTree = "<group>"; };
+		C71E387F243830E500E9A84B /* ProfitabilityFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfitabilityFilter.swift; sourceTree = "<group>"; };
+		C71E38812438310000E9A84B /* CapFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapFilter.swift; sourceTree = "<group>"; };
+		C71E38832438312200E9A84B /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		C71E95B02401EE81005A2DC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C71E95B32401F122005A2DC7 /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		C71E95B82421BA25005A2DC7 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +255,10 @@
 				C71E3871243800BB00E9A84B /* FilterView.swift */,
 				C71E3873243801BF00E9A84B /* DrillDownView.swift */,
 				52D9B1BC24292D0B00E67BF2 /* Filter.swift */,
+				C71E38832438312200E9A84B /* FilterType.swift */,
+				C71E38812438310000E9A84B /* CapFilter.swift */,
+				C71E387D243830BC00E9A84B /* SectorFilter.swift */,
+				C71E387F243830E500E9A84B /* ProfitabilityFilter.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -511,11 +523,14 @@
 			files = (
 				C71E95C72426BE09005A2DC7 /* AccessoryView.swift in Sources */,
 				52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */,
+				C71E38842438312200E9A84B /* FilterType.swift in Sources */,
 				52108CDB241FCA7C000A472B /* GrowthMetrics.swift in Sources */,
 				52D9B1BF242932F300E67BF2 /* SortViewController.swift in Sources */,
+				C71E38822438310000E9A84B /* CapFilter.swift in Sources */,
 				C71E3872243800BB00E9A84B /* FilterView.swift in Sources */,
 				52A5E017242BDCDF00C25872 /* IntrinsicValue.swift in Sources */,
 				C71E387C24381CEB00E9A84B /* Base.swift in Sources */,
+				C71E3880243830E500E9A84B /* ProfitabilityFilter.swift in Sources */,
 				5245609D23FC7685003686BE /* ListViewController.swift in Sources */,
 				524560CB23FDDB68003686BE /* Networking.swift in Sources */,
 				52D9B1C22429351500E67BF2 /* SortView.swift in Sources */,
@@ -538,6 +553,7 @@
 				52D9B1BD24292D0B00E67BF2 /* Filter.swift in Sources */,
 				52108CDD241FCB5E000A472B /* Stock+Api.swift in Sources */,
 				5245609B23FC7685003686BE /* SceneDelegate.swift in Sources */,
+				C71E387E243830BC00E9A84B /* SectorFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
