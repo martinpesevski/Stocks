@@ -9,9 +9,26 @@
 import UIKit
 
 class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
-    var viewModel: StocksViewModel!
+    var viewModel: StocksViewModel
 
-    @IBOutlet var tableView: UITableView!
+    lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.delegate = self
+        table.dataSource = self
+        table.register(StockCell.self, forCellReuseIdentifier: "stockCell")
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+
+        return table
+    }()
+    
+    init(viewModel: StocksViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,17 +37,16 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search stocks"
-        self.navigationItem.searchController = searchController
-        self.definesPresentationContext = true
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesBackButton = true
+        definesPresentationContext = true
 
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         tableView.reloadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = .label
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
@@ -67,7 +83,7 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
 }
 
 extension ListViewController: SortControllerDelegate, FilterDelegate {
-    @IBAction func onFilter(_ sender: Any) {
+    @objc func onFilter(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let filter = storyboard.instantiateViewController(withIdentifier: "filterVC") as? FilterViewController else { return }
 
@@ -81,7 +97,7 @@ extension ListViewController: SortControllerDelegate, FilterDelegate {
         tableView.reloadData()
     }
 
-    @IBAction func onSort(_ sender: Any) {
+    @objc func onSort(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let sort = storyboard.instantiateViewController(withIdentifier: "sortVC") as? SortViewController else { return }
 

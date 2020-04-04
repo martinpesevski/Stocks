@@ -59,8 +59,7 @@ class FilterViewController: FilterPageViewController {
             delegate?.didFinishFiltering()
             dismiss(animated: true, completion: nil)
         } else {
-            let listVC = ListViewController()
-            listVC.viewModel = viewModel
+            let listVC = ListViewController(viewModel: viewModel)
             show(listVC, sender: self)
         }
     }
