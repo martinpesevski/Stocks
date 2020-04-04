@@ -14,21 +14,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // If this scene's self.window is nil then set a new UIWindow object to it.
-        self.window = self.window ?? UIWindow()
-
-        // Set this scene's window's background color.
-        self.window!.backgroundColor = UIColor.red
-
-        // Create a ViewController object and set it as the scene's window's root view controller.
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
         let filterVC = FilterViewController(viewModel: StocksViewModel(stocks: []))
         let nav = NavigationController(rootViewController: filterVC)
-        self.window!.rootViewController = nav
-
-        // Make this scene's window be visible.
-        self.window!.makeKeyAndVisible()
-
-        guard scene is UIWindowScene else { return }
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
