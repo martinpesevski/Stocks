@@ -12,48 +12,84 @@ protocol FilterDelegate: class {
     func didFinishFiltering()
 }
 
-class FilterViewController: UIViewController {
-    
-    @IBOutlet var largeCap: FilterView!
-    @IBOutlet var midCap: FilterView!
-    @IBOutlet var smallCap: FilterView!
-    @IBOutlet var profitable: FilterView!
-    @IBOutlet var unprofitable: FilterView!
+class FilterViewController: FilterPageViewController {
+    lazy var marketCapController = FilterCapViewController()
+    lazy var sectorController = FilterSectorViewController()
+    lazy var profitabilityController = FilterProfitabilityViewController()
 
+    lazy var marketCap = DrillDownView(filter: .marketCap(filters: [.largeCap]))
+    lazy var sector = DrillDownView(filter: .sector(filters: [.tech]))
+    lazy var profitability = DrillDownView(filter: .profitability(filters: [.profitable]))
+    
     weak var delegate: FilterDelegate?
 
-    lazy var filterViews: [FilterView] = [largeCap, midCap, smallCap, profitable, unprofitable]
-    var filters: [Filter] = []
+    lazy var filterViews: [DrillDownView] = [marketCap, sector, profitability]
+    var filter: Filter = Filter()
     var viewModel: StocksViewModel!
     var isModal = false
+    
+    init(viewModel: StocksViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        marketCap.delegate = self
+        sector.delegate = self
+        profitability.delegate = self
+        
+        marketCapController.delegate = self
+        sectorController.delegate = self
+        profitabilityController.delegate = self
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        largeCap.setup(filter: .largeCap)
-        midCap.setup(filter: .midCap)
-        smallCap.setup(filter: .smallCap)
-        profitable.setup(filter: .profitable)
-        unprofitable.setup(filter: .unprofitable)
+        header.text = "We would like to know what kind of companies you're intrested in."
+        
+        content.addArrangedSubview(marketCap)
+        content.addArrangedSubview(sector)
+        content.addArrangedSubview(profitability)
+        content.addArrangedSubview(UIView())
     }
     
-    @IBAction func onDone(_ sender: Any) {
-        for view in filterViews where view.isSelected {
-            if let filter = view.filter { filters.append(filter) }
-        }
-
-        viewModel.filter(filters: filters)
+    override func onDone() {
+        viewModel.filter(filter: filter)
 
         if isModal {
             delegate?.didFinishFiltering()
             dismiss(animated: true, completion: nil)
         } else {
-            performSegue(withIdentifier: "list", sender: self)
+            let listVC = ListViewController()
+            listVC.viewModel = viewModel
+            show(listVC, sender: self)
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? ListViewController else { return }
-        destination.viewModel = viewModel
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProfitabilityDelegate, FilterSectorDelegate {
+    func didSelectCap(_ filters: [CapFilter]) {
+        filter.capFilters = filters
+        marketCap.filter = .marketCap(filters: filters)
+    }
+    
+    func didSelectSector(_ filters: [SectorFilter]) {
+        sector.filter = .sector(filters: filters)
+    }
+    
+    func didSelectProfitability(_ filters: [ProfitabilityFilter]) {
+        filter.profitabilityFilters = filters
+        profitability.filter = .profitability(filters: filters)
+    }
+    
+    func didSelect(filter: FilterType) {
+        switch filter {
+        case .marketCap: show(marketCapController, sender: self)
+        case .profitability: show(profitabilityController, sender: self)
+        case .sector: show(sectorController, sender: self)
+        }
     }
 }

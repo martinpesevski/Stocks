@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
     var viewModel: StocksViewModel!
 
     @IBOutlet var tableView: UITableView!
@@ -30,7 +30,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = .label
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     

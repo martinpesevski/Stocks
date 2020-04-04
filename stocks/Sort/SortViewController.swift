@@ -12,7 +12,7 @@ protocol SortControllerDelegate: class {
     func didSort()
 }
 
-class SortViewController: UIViewController, SortViewDelegate {
+class SortViewController: ViewController, SortViewDelegate {
     @IBOutlet weak var valueDifference: SortView!
     @IBOutlet weak var name: SortView!
     @IBOutlet weak var marketCap: SortView!

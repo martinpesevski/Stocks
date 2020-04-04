@@ -66,8 +66,8 @@ struct IntrinsicValue {
     }
 
     var color: UIColor {
-        if value * 0.3 > stockPrice { return .green }
+        if value * 0.3 > stockPrice { return .systemGreen }
         if value > stockPrice { return .systemYellow }
-        return .red
+        return .systemRed
     }
 }

@@ -17,7 +17,7 @@ enum MarketCap {
     case medium
     case large
 
-    var filter: Filter {
+    var filter: CapFilter {
         switch self {
         case .small: return .smallCap
         case .medium: return .midCap
@@ -44,7 +44,7 @@ enum Profitability {
     case profitable
     case unprofitable
 
-    var filter: Filter {
+    var filter: ProfitabilityFilter {
         switch self {
         case .profitable: return .profitable
         case .unprofitable: return .unprofitable
@@ -62,22 +62,17 @@ class Stock {
     var group = DispatchGroup()
     var intrinsicValue: IntrinsicValue?
 
-    func isValid(filters: [Filter]) -> Bool {
+    func isValid(filter: Filter) -> Bool {
         guard let iv = intrinsicValue?.value, iv > 0 else { return false }
-        guard !filters.isEmpty else { return true }
-
-        for filter in self.filters where !filters.contains(filter) {
-            if filter.profitability != nil && filters.hasProfitability { return false }
-            if filter.marketCap != nil && filters.hasMarketCap { return false }
-        }
-        return true
+        
+        return filter.isValid(self.filter)
     }
 
-    var filters: [Filter] {
-        var arr: [Filter] = []
-        if let profitability = keyMetricsOverTime?.profitability { arr.append(profitability.filter) }
-        if let marketCap = quote?.marketCap { arr.append(marketCap.filter) }
-        return arr
+    var filter: Filter {
+        var ftr: Filter = Filter()
+        if let profitability = keyMetricsOverTime?.profitability { ftr.profitabilityFilters = [profitability.filter] }
+        if let marketCap = quote?.marketCap { ftr.capFilters = [marketCap.filter] }
+        return ftr
     }
 
     init(ticker: Ticker) {

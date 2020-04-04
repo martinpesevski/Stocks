@@ -9,7 +9,7 @@
 import Foundation
 
 class StocksViewModel {
-    var filters: [Filter] = []
+    var filter: Filter = Filter()
     var searchText = ""
     var stocks: [Stock]
     var filteredStocks: [Stock]
@@ -19,9 +19,9 @@ class StocksViewModel {
         self.filteredStocks = stocks
     }
 
-    func filter(filters: [Filter], shouldSearch: Bool = true) {
-        self.filters = filters
-        filteredStocks = stocks.filter { $0.isValid(filters: filters) }
+    func filter(filter: Filter, shouldSearch: Bool = true) {
+        self.filter = filter
+        filteredStocks = stocks.filter { $0.isValid(filter: filter) }
         filteredStocks.sort { $0.intrinsicValue!.discount > $1.intrinsicValue!.discount }
         if shouldSearch { search(searchText, shouldFilter: false) }
     }
@@ -29,11 +29,11 @@ class StocksViewModel {
     func search(_ text: String?, shouldFilter: Bool = true) {
         guard let text = text, !text.isEmpty else {
             searchText = ""
-            filter(filters: self.filters, shouldSearch: false)
+            filter(filter: self.filter, shouldSearch: false)
             return
         }
         searchText = text
-        if shouldFilter { filter(filters: self.filters, shouldSearch: false)}
+        if shouldFilter { filter(filter: self.filter, shouldSearch: false)}
         filteredStocks = filteredStocks.filter { $0.ticker.detailName.uppercased().contains(text.uppercased()) }
     }
 }

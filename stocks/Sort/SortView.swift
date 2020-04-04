@@ -12,51 +12,28 @@ protocol SortViewDelegate: class {
     func didSelect(sort: Sort)
 }
 
-class SortView: UIView {
-    var sort: Sort?
+class SortView: AccessoryView {
+    var sort: Sort
     weak var delegate: SortViewDelegate?
 
-    lazy var title: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    lazy var button: UIButton = {
-        let btn = UIButton()
-        btn.addTarget(self, action: #selector(onTap), for: .touchUpInside)
-        return btn
-    }()
-
     func setup(sort: Sort) {
-        self.sort = sort
         title.text = sort.rawValue
     }
 
-    @objc func onTap() {
-        guard let sort = sort else { return }
+    override func onTap() {
         delegate?.didSelect(sort: sort)
     }
-
+    
+    init(sort: Sort) {
+        self.sort = sort
+        super.init()
+        
+        title.text = sort.rawValue
+        explanation.removeFromSuperview()
+    }
+    
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-
-        layer.cornerRadius = 8
-
-        addSubview(title)
-        addSubview(button)
-
-        title.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(10)
-        }
-
-        button.snp.makeConstraints { make in make.edges.equalToSuperview() }
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

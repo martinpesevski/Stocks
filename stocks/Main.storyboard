@@ -1,152 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H5t-V9-obA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Loading View Controller-->
-        <scene sceneID="2hl-1A-9vj">
-            <objects>
-                <viewController id="RaY-sk-J8A" customClass="LoadingViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4bu-FK-vua">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ew0-AI-RTR">
-                                <rect key="frame" x="82" y="306" width="250" height="294"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dbo-3o-7Y5" customClass="AnimationView" customModule="Lottie">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="250" id="Uar-gv-Et8"/>
-                                            <constraint firstAttribute="height" constant="250" id="lzi-Hx-LzJ"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fetching stock market data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAN-ED-x0P">
-                                        <rect key="frame" x="0.0" y="270" width="250" height="24"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="ew0-AI-RTR" firstAttribute="centerX" secondItem="9s1-Qu-FjJ" secondAttribute="centerX" id="UrY-Cw-6BO"/>
-                            <constraint firstItem="ew0-AI-RTR" firstAttribute="centerY" secondItem="9s1-Qu-FjJ" secondAttribute="centerY" id="m3W-5Z-vZ2"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="9s1-Qu-FjJ"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="OMv-VB-0l8"/>
-                    <connections>
-                        <outlet property="animationView" destination="Dbo-3o-7Y5" id="aiz-t6-9Ra"/>
-                        <segue destination="MP7-iU-emL" kind="show" identifier="filter" id="bKp-Wd-s6R"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gDE-DY-mi6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="630" y="82"/>
-        </scene>
-        <!--Filter View Controller-->
-        <scene sceneID="1J7-gz-nNg">
-            <objects>
-                <viewController storyboardIdentifier="filterVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MP7-iU-emL" customClass="FilterViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Q2u-zi-o1x">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="IZ2-fn-isG">
-                                <rect key="frame" x="20" y="64" width="374" height="778"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="850" verticalCompressionResistancePriority="1000" text="What kind of stocks are you interested in?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WkR-uQ-ucq">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="255" ambiguous="YES" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jvh-9e-k1O">
-                                        <rect key="frame" x="0.0" y="110" width="374" height="390"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Nc-kX-yeR" customClass="FilterView" customModule="stocks" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="123.5"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xrg-fL-AYT" customClass="FilterView" customModule="stocks" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="133.5" width="374" height="123"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MPe-yl-CWp" customClass="FilterView" customModule="stocks" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="266.5" width="374" height="123.5"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6zX-sV-9IT">
-                                        <rect key="frame" x="0.0" y="550" width="374" height="128"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JzB-0d-bsb" customClass="FilterView" customModule="stocks" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="59"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CbO-wi-EeU" customClass="FilterView" customModule="stocks" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="69" width="374" height="59"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                        </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0t-az-Cop">
-                                        <rect key="frame" x="0.0" y="728" width="374" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="zXk-1y-g0M"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="onDone:" destination="MP7-iU-emL" eventType="touchUpInside" id="mdJ-EK-SY1"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="IZ2-fn-isG" firstAttribute="top" secondItem="BeH-be-8MO" secondAttribute="top" constant="20" id="StJ-I5-cIg"/>
-                            <constraint firstItem="IZ2-fn-isG" firstAttribute="leading" secondItem="BeH-be-8MO" secondAttribute="leading" constant="20" id="egA-bJ-u4n"/>
-                            <constraint firstItem="BeH-be-8MO" firstAttribute="trailing" secondItem="IZ2-fn-isG" secondAttribute="trailing" constant="20" id="nj9-l4-WWs"/>
-                            <constraint firstItem="IZ2-fn-isG" firstAttribute="bottom" secondItem="BeH-be-8MO" secondAttribute="bottom" constant="-20" id="yi1-HT-ZEQ"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="BeH-be-8MO"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="cKn-N1-Yf9"/>
-                    <connections>
-                        <outlet property="largeCap" destination="7Nc-kX-yeR" id="zsg-pK-BCq"/>
-                        <outlet property="midCap" destination="Xrg-fL-AYT" id="6pV-rD-C8m"/>
-                        <outlet property="profitable" destination="JzB-0d-bsb" id="a0T-s2-ate"/>
-                        <outlet property="smallCap" destination="MPe-yl-CWp" id="a3o-BE-UPE"/>
-                        <outlet property="unprofitable" destination="CbO-wi-EeU" id="B5J-0W-SFH"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="list" id="Ki6-gN-8Y9"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0tO-wj-03F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1474" y="82"/>
-        </scene>
         <!--Sort View Controller-->
         <scene sceneID="Smd-5Q-s6C">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8TX-nq-cJd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="sortVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lM3-W4-X8a" customClass="SortViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XAy-sG-jcO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -229,7 +93,6 @@
                         <outlet property="valueDifference" destination="G0M-c7-Slj" id="cM7-lJ-z03"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8TX-nq-cJd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1474" y="-597"/>
         </scene>
@@ -376,33 +239,16 @@
             </objects>
             <point key="canvasLocation" x="2377" y="102"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="K55-nv-htF">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="H5t-V9-obA" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NZD-ff-eIE">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="RaY-sk-J8A" kind="relationship" relationship="rootViewController" id="ueq-JB-2PC"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pzC-eq-Td6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-155.07246376811597" y="101.78571428571428"/>
-        </scene>
         <!--Stock Detail View Controller-->
         <scene sceneID="yv4-VU-Vpe">
             <objects>
                 <viewController id="CRB-dh-0O8" customClass="StockDetailViewController" customModule="stocks" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MqQ-D8-abi">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="paz-yH-Yym">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

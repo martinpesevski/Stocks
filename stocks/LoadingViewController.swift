@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 
-class LoadingViewController: UIViewController {
+class LoadingViewController: ViewController {
     var tickers: [Ticker] = []
     var stocks: [Stock] = []
 
@@ -17,8 +17,8 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.performSegue(withIdentifier: "filter", sender: self)
-
+        
+        navigationController?.view.backgroundColor = .systemBackground
         animationView.animation = Animation.named("loading")
         animationView.loopMode = .loop
         animationView.play()
@@ -50,12 +50,6 @@ class LoadingViewController: UIViewController {
     }
     
     func setupStocks(data: [Ticker]) {
-//        self.tickers = [Ticker(symbol: "AAPL", name: "Apple inc", price: 260, exchange: "NYSE"),
-//        Ticker(symbol: "FB", name: "Apple inc", price: 160, exchange: "NYSE"),
-//        Ticker(symbol: "TSLA", name: "Tesla", price: 560, exchange: "NYSE"),
-//        Ticker(symbol: "CCL", name: "Carnival", price: 15, exchange: "NYSE"),
-//        Ticker(symbol: "AMZN", name: "Amazon", price: 1900, exchange: "NYSE"),
-//        Ticker(symbol: "TPR", name: "Tapestry", price: 13, exchange: "NYSE")]
         self.tickers = data.sorted { return $0.symbol < $1.symbol }
         self.tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
 
@@ -67,16 +61,11 @@ class LoadingViewController: UIViewController {
             }
         }
         group.notify(queue: .main) {
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "filter", sender: self)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                let cap = FilterViewController(viewModel: StocksViewModel(stocks: self.stocks))
+                self.show(cap, sender: self)
             }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let filter = segue.destination as? FilterViewController {
-            let viewModel = StocksViewModel(stocks: stocks)
-            filter.viewModel = viewModel
         }
     }
 }

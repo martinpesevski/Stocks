@@ -33,7 +33,7 @@ class DataParser {
 }
 
 extension UILabel {
-    convenience init(text: String? = nil, font: UIFont = UIFont.systemFont(ofSize: 15), alignment: NSTextAlignment = .left, color: UIColor = .white) {
+    convenience init(text: String? = nil, font: UIFont = UIFont.systemFont(ofSize: 15), alignment: NSTextAlignment = .left, color: UIColor = .label) {
         self.init()
         self.text = text
         self.font = font
