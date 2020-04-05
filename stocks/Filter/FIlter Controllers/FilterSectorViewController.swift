@@ -54,10 +54,6 @@ class FilterSectorViewController: FilterPageViewController, SectorFilterViewDele
         content.addArrangedSubview(UIView())
     }
     
-    override func onDone() {
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
     func didChangeSelection(view: SectorFilterView, isSelected: Bool) {
         delegate?.didChangeSelectionSector(view.sector, isSelected: isSelected)
     }

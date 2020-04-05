@@ -41,10 +41,6 @@ class FilterCapViewController: FilterPageViewController, FilterViewDelegate {
         content.addArrangedSubview(UIView())
     }
     
-    override func onDone() {
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
     func didChangeSelection(view: FilterView, isSelected: Bool) {
         if view == largeCap { delegate?.didChangeSelectionCap(.largeCap, isSelected: isSelected) }
         if view == midCap { delegate?.didChangeSelectionCap(.midCap, isSelected: isSelected) }

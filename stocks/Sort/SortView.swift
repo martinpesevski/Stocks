@@ -16,20 +16,18 @@ class SortView: AccessoryView {
     var sort: Sort
     weak var delegate: SortViewDelegate?
 
-    func setup(sort: Sort) {
-        title.text = sort.rawValue
-    }
-
     override func onTap() {
         delegate?.didSelect(sort: sort)
     }
     
-    init(sort: Sort) {
+    init(sort: Sort, delegate: SortViewDelegate? = nil) {
         self.sort = sort
+        self.delegate = delegate
         super.init()
         
         title.text = sort.rawValue
         explanation.removeFromSuperview()
+        snp.makeConstraints { make in make.height.equalTo(100) }
     }
     
     required init?(coder: NSCoder) {
@@ -48,11 +46,7 @@ extension Sequence where Iterator.Element == Stock
     func customSort(_ sort: Sort) -> [Stock] {
         switch sort {
         case .name: return self.sorted { $0.ticker.symbol < $1.ticker.symbol }
-        case .marketCap: return self.sorted { (first, second) -> Bool in
-            guard let firstMC = first.quote?.profile.mktCap?.floatValue,
-                let secondMC = second.quote?.profile.mktCap?.floatValue else { return false }
-            return firstMC > secondMC
-        }
+        case .marketCap: return self.sorted { $0.ticker.marketCap > $1.ticker.marketCap }
         case .difference: return self.sorted  { (first, second) -> Bool in
             guard let firstIV = first.intrinsicValue?.value, let secondIV = second.intrinsicValue?.value else { return false }
             return firstIV > secondIV

@@ -37,6 +37,8 @@ class StocksViewModel {
             completion()
             return
         }
+        self.stocks = []
+
         let group = DispatchGroup()
 
         for endpoint in endpoints {

@@ -61,21 +61,21 @@ class FilterViewController: FilterPageViewController {
     }
     
     override func onDone() {
-
+        
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(filter) {
             UserDefaults.standard.set(encoded, forKey: "filter")
         }
         
         self.viewModel.filter = filter
-        if isModal {
-            delegate?.didFinishFiltering()
-            dismiss(animated: true, completion: nil)
-        } else {
-            viewModel.load { [weak self] in
-                guard let self = self else { return }
-                self.viewModel.filter(filter: self.filter)
-                DispatchQueue.main.async {
+        viewModel.load { [weak self] in
+            guard let self = self else { return }
+            self.viewModel.filter(filter: self.filter)
+            DispatchQueue.main.async {
+                if self.isModal {
+                    self.delegate?.didFinishFiltering()
+                    self.dismiss(animated: true, completion: nil)
+                } else {
                     let listVC = ListViewController(viewModel: self.viewModel)
                     self.show(listVC, sender: self)
                 }

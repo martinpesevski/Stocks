@@ -38,14 +38,6 @@ class FilterProfitabilityViewController: FilterPageViewController, FilterViewDel
         content.addArrangedSubview(UIView())
     }
     
-    override func onDone() {
-        var filters: [ProfitabilityFilter] = []
-        if profitable.isSelected { filters.append(.profitable) }
-        if unprofitable.isSelected { filters.append(.unprofitable) }
-        
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
     func didChangeSelection(view: FilterView, isSelected: Bool) {
         if view == profitable { delegate?.didChangeSelectionProfitability(.profitable, isSelected: isSelected) }
         if view == unprofitable { delegate?.didChangeSelectionProfitability(.unprofitable, isSelected: isSelected) }

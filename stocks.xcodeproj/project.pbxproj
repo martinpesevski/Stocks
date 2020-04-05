@@ -35,6 +35,7 @@
 		60D749EBF4A48F3803E98D25 /* libPods-stocksTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E76B730FB576BAD6DEF581 /* libPods-stocksTests.a */; };
 		92C0897CFEBDC29404B746F1 /* libPods-stocks-stocksUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BEED2B0C5428882824089A4 /* libPods-stocks-stocksUITests.a */; };
 		C71BBD0024393D4B00486528 /* SectorFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71BBCFF24393D4B00486528 /* SectorFilterView.swift */; };
+		C71BBD03243A68F000486528 /* ListViewController+SortFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */; };
 		C71E38702437971C00E9A84B /* FilterCapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E386F2437971C00E9A84B /* FilterCapViewController.swift */; };
 		C71E3872243800BB00E9A84B /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E3871243800BB00E9A84B /* FilterView.swift */; };
 		C71E3874243801BF00E9A84B /* DrillDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E3873243801BF00E9A84B /* DrillDownView.swift */; };
@@ -110,6 +111,7 @@
 		5EDB18D3CFC466D51413DDD1 /* Pods-stocks-stocksUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-stocksUITests.debug.xcconfig"; path = "Target Support Files/Pods-stocks-stocksUITests/Pods-stocks-stocksUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6E0C904E4B027EAAE4395C5B /* Pods-stocksTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.debug.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C71BBCFF24393D4B00486528 /* SectorFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorFilterView.swift; sourceTree = "<group>"; };
+		C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController+SortFilter.swift"; sourceTree = "<group>"; };
 		C71E386F2437971C00E9A84B /* FilterCapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCapViewController.swift; sourceTree = "<group>"; };
 		C71E3871243800BB00E9A84B /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		C71E3873243801BF00E9A84B /* DrillDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillDownView.swift; sourceTree = "<group>"; };
@@ -200,7 +202,7 @@
 			children = (
 				5245609823FC7685003686BE /* AppDelegate.swift */,
 				5245609A23FC7685003686BE /* SceneDelegate.swift */,
-				5245609C23FC7685003686BE /* ListViewController.swift */,
+				C71BBD01243A68A300486528 /* ListViewController */,
 				C71E95B82421BA25005A2DC7 /* LoadingViewController.swift */,
 				529B645B2433C64B00C806C0 /* StocksViewModel.swift */,
 				52D65F2B2433ABC400647074 /* StockDetails */,
@@ -248,20 +250,9 @@
 		52D9B1C02429350300E67BF2 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */,
-				C71E38792438175D00E9A84B /* FilterPageViewController.swift */,
-				C71E386F2437971C00E9A84B /* FilterCapViewController.swift */,
-				C71E38752438134300E9A84B /* FilterProfitabilityViewController.swift */,
-				C71E3877243813D600E9A84B /* FilterSectorViewController.swift */,
-				C71E95C62426BE09005A2DC7 /* AccessoryView.swift */,
-				C71E3871243800BB00E9A84B /* FilterView.swift */,
-				C71BBCFF24393D4B00486528 /* SectorFilterView.swift */,
-				C71E3873243801BF00E9A84B /* DrillDownView.swift */,
-				52D9B1BC24292D0B00E67BF2 /* Filter.swift */,
-				C71E38832438312200E9A84B /* FilterType.swift */,
-				C71E38812438310000E9A84B /* CapFilter.swift */,
-				C71E387D243830BC00E9A84B /* SectorFilter.swift */,
-				C71E387F243830E500E9A84B /* ProfitabilityFilter.swift */,
+				C71BBD04243A69CB00486528 /* FIlter Controllers */,
+				C71BBD05243A69DC00486528 /* Filter views */,
+				C71BBD06243A69F700486528 /* Filter Enums */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -278,7 +269,6 @@
 		52D9B1C424293EF000E67BF2 /* Stock */ = {
 			isa = PBXGroup;
 			children = (
-				C71E95B32401F122005A2DC7 /* StockCell.swift */,
 				524560C823FDD7FC003686BE /* Stock.swift */,
 				52A5E016242BDCDF00C25872 /* IntrinsicValue.swift */,
 				52108CDC241FCB5E000A472B /* Stock+Api.swift */,
@@ -308,6 +298,51 @@
 				13E76B730FB576BAD6DEF581 /* libPods-stocksTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C71BBD01243A68A300486528 /* ListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5245609C23FC7685003686BE /* ListViewController.swift */,
+				C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */,
+				C71E95B32401F122005A2DC7 /* StockCell.swift */,
+			);
+			path = ListViewController;
+			sourceTree = "<group>";
+		};
+		C71BBD04243A69CB00486528 /* FIlter Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */,
+				C71E38792438175D00E9A84B /* FilterPageViewController.swift */,
+				C71E386F2437971C00E9A84B /* FilterCapViewController.swift */,
+				C71E38752438134300E9A84B /* FilterProfitabilityViewController.swift */,
+				C71E3877243813D600E9A84B /* FilterSectorViewController.swift */,
+			);
+			path = "FIlter Controllers";
+			sourceTree = "<group>";
+		};
+		C71BBD05243A69DC00486528 /* Filter views */ = {
+			isa = PBXGroup;
+			children = (
+				C71E95C62426BE09005A2DC7 /* AccessoryView.swift */,
+				C71E3871243800BB00E9A84B /* FilterView.swift */,
+				C71BBCFF24393D4B00486528 /* SectorFilterView.swift */,
+				C71E3873243801BF00E9A84B /* DrillDownView.swift */,
+			);
+			path = "Filter views";
+			sourceTree = "<group>";
+		};
+		C71BBD06243A69F700486528 /* Filter Enums */ = {
+			isa = PBXGroup;
+			children = (
+				52D9B1BC24292D0B00E67BF2 /* Filter.swift */,
+				C71E38832438312200E9A84B /* FilterType.swift */,
+				C71E38812438310000E9A84B /* CapFilter.swift */,
+				C71E387D243830BC00E9A84B /* SectorFilter.swift */,
+				C71E387F243830E500E9A84B /* ProfitabilityFilter.swift */,
+			);
+			path = "Filter Enums";
 			sourceTree = "<group>";
 		};
 		C71E95B52421B8E3005A2DC7 /* Animations */ = {
@@ -528,6 +563,7 @@
 				52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */,
 				C71E38842438312200E9A84B /* FilterType.swift in Sources */,
 				52108CDB241FCA7C000A472B /* GrowthMetrics.swift in Sources */,
+				C71BBD03243A68F000486528 /* ListViewController+SortFilter.swift in Sources */,
 				52D9B1BF242932F300E67BF2 /* SortViewController.swift in Sources */,
 				C71E38822438310000E9A84B /* CapFilter.swift in Sources */,
 				C71E3872243800BB00E9A84B /* FilterView.swift in Sources */,

@@ -17,23 +17,39 @@ class StockCell: UITableViewCell {
     lazy var priceLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
     lazy var numbersStack = UIStackView(views: [intrinsicValueLabel, priceLabel], axis: .vertical, alignment: .trailing, spacing: 5)
 
-    lazy var content = UIStackView(views: [tickerStack, numbersStack], axis: .horizontal,
+    lazy var contentStack = UIStackView(views: [tickerStack, numbersStack], axis: .horizontal,
                                    distribution: .fillEqually,
                                    alignment: .fill,
                                    spacing: 5,
                                    layoutInsets: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10))
+    lazy var content: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
+        view.backgroundColor = .systemGray6
+        
+        return view
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+                
+        selectionStyle = .none
+        content.addSubview(contentStack)
+        contentStack.snp.makeConstraints { make in make.edges.equalToSuperview() }
         
         addSubview(content)
-        content.snp.makeConstraints { make in make.edges.equalToSuperview() }
+        content.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(5)
+            make.leading.trailing.equalToSuperview()
+        }
     }
     
     func setup(stock: Stock) {
         tickerLabel.text = stock.ticker.symbol
         tickerName.text = stock.ticker.companyName
         priceLabel.text = String(format:"%.02f", stock.ticker.price)
+        
         if let iv = stock.intrinsicValue {
             intrinsicValueLabel.text = String(format: "%.02f", iv.value)
             intrinsicValueLabel.textColor = iv.color

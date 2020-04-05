@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
+class ListViewController: ViewController {
     var viewModel: StocksViewModel
 
     lazy var tableView: UITableView = {
@@ -17,25 +17,56 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
         table.dataSource = self
         table.register(StockCell.self, forCellReuseIdentifier: "stockCell")
         table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
-
+        table.separatorStyle = .none
+        
         return table
     }()
+    
+    lazy var filterButton: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .systemGreen
+        btn.setImage(UIImage(named: "filter")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        btn.tintColor = .label
+        btn.layer.cornerRadius = 25
+        btn.snp.makeConstraints { make in make.width.height.equalTo(50) }
+        btn.addTarget(self, action: #selector(onFilter), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var sortButton: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .systemGreen
+        btn.setImage(UIImage(named: "sort")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        btn.tintColor = .label
+        btn.layer.cornerRadius = 25
+        btn.snp.makeConstraints { make in make.width.height.equalTo(50) }
+        btn.addTarget(self, action: #selector(onSort), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var sortFilterStack = UIStackView(views: [sortButton, filterButton], axis: .horizontal, spacing: 10)
     
     init(viewModel: StocksViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in make.edges.equalTo(view.layoutMarginsGuide)}
+        view.addSubview(sortFilterStack)
         
+        setConstraints()
+        tableView.reloadData()
+    }
+    
+    func setConstraints() {
+        tableView.snp.makeConstraints { make in make.edges.equalTo(view.layoutMarginsGuide)}
+        sortFilterStack.snp.makeConstraints { make in make.bottom.trailing.equalTo(view.layoutMarginsGuide).inset(20) }
+    }
+    
+    func setupSearch() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -44,8 +75,6 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
         navigationItem.searchController = searchController
         navigationItem.hidesBackButton = true
         definesPresentationContext = true
-
-        tableView.reloadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -58,6 +87,12 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
         navigationItem.hidesSearchBarWhenScrolling = true
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! StockCell
         let stock = viewModel.filteredStocks[indexPath.row]
@@ -72,41 +107,5 @@ class ListViewController: ViewController, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = StockDetailViewController(stock: viewModel.filteredStocks[indexPath.row])
         show(detailVC, sender: self)
-    }
-}
-
-extension ListViewController: SortControllerDelegate, FilterDelegate {
-    @objc func onFilter(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let filter = storyboard.instantiateViewController(withIdentifier: "filterVC") as? FilterViewController else { return }
-
-        filter.isModal = true
-        filter.viewModel = viewModel
-        filter.delegate = self
-        present(filter, animated: true, completion: nil)
-    }
-
-    func didFinishFiltering() {
-        tableView.reloadData()
-    }
-
-    @objc func onSort(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let sort = storyboard.instantiateViewController(withIdentifier: "sortVC") as? SortViewController else { return }
-
-        sort.viewModel = viewModel
-        sort.delegate = self
-        present(sort, animated: true, completion: nil)
-    }
-
-    func didSort() {
-        tableView.reloadData()
-    }
-}
-
-extension ListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        viewModel.search(searchController.searchBar.text)
-        tableView.reloadData()
     }
 }

@@ -45,8 +45,6 @@ enum Profitability {
 }
 
 class Stock {
-    static let exchanges = ["New York Stock Exchange", "Nasdaq Global Select", "NYSE"]
-
     var ticker: Ticker
     var quote: Quote?
     var keyMetricsOverTime: KeyMetricsArray?
