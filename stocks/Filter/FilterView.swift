@@ -1,9 +1,14 @@
 import UIKit
 import SnapKit
 
+protocol FilterViewDelegate: class {
+    func didChangeSelection(view: FilterView, isSelected: Bool)
+}
+
 class FilterView: AccessoryView {
     var filter: TitleDescription
-
+    weak var delegate: FilterViewDelegate?
+    
     lazy var selectionBox: UIImageView = {
         let view = UIImageView(image: UIImage.init(named: "checkbox-empty"))
         view.tintColor = .label
@@ -20,11 +25,12 @@ class FilterView: AccessoryView {
     
     override func onTap() {
         isSelected = !isSelected
-        UserDefaults.standard.set(isSelected, forKey: filter.title)
+        delegate?.didChangeSelection(view: self, isSelected: isSelected)
     }
     
-    init(filter: TitleDescription) {
+    init(filter: TitleDescription, delegate: FilterViewDelegate? = nil) {
         self.filter = filter
+        self.delegate = delegate
         super.init()
 
         content.addArrangedSubview(selectionBox)

@@ -63,7 +63,7 @@ class Stock {
     var filter: Filter {
         var ftr: Filter = Filter()
         if let profitability = keyMetricsOverTime?.profitability { ftr.profitabilityFilters = [profitability.filter] }
-        if let marketCap = quote?.marketCap { ftr.capFilters = [marketCap.filter] }
+        ftr.capFilters = [ticker.marketCapType.filter]
         return ftr
     }
 

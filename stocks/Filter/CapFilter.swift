@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CapFilter: TitleDescription, Equatable {
+enum CapFilter: String, TitleDescription, Equatable, Codable {
     case largeCap
     case midCap
     case smallCap

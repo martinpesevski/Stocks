@@ -9,16 +9,25 @@
 import UIKit
 
 protocol FilterCapDelegate: class {
-    func didSelectCap(_ filters: [CapFilter])
+    func didChangeSelectionCap(_ filter: CapFilter, isSelected: Bool)
 }
 
-class FilterCapViewController: FilterPageViewController {
+class FilterCapViewController: FilterPageViewController, FilterViewDelegate {
     weak var delegate: FilterCapDelegate?
     
-    lazy var largeCap = FilterView(filter: CapFilter.largeCap)
-    lazy var midCap = FilterView(filter: CapFilter.midCap)
-    lazy var smallCap = FilterView(filter: CapFilter.smallCap)
+    var selectedCap: [CapFilter]? {
+        didSet {
+            guard let cap = selectedCap else { return }
+            
+            if cap.contains(.largeCap) { largeCap.isSelected = true }
+            if cap.contains(.midCap) { midCap.isSelected = true }
+            if cap.contains(.smallCap) { smallCap.isSelected = true }
+        }
+    }
     
+    lazy var largeCap = FilterView(filter: CapFilter.largeCap, delegate: self)
+    lazy var midCap = FilterView(filter: CapFilter.midCap, delegate: self)
+    lazy var smallCap = FilterView(filter: CapFilter.smallCap, delegate: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +42,13 @@ class FilterCapViewController: FilterPageViewController {
     }
     
     override func onDone() {
-        var filters: [CapFilter] = []
-        if largeCap.isSelected { filters.append(.largeCap) }
-        if midCap.isSelected { filters.append(.midCap) }
-        if smallCap.isSelected { filters.append(.smallCap) }
-
-        delegate?.didSelectCap(filters)
         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func didChangeSelection(view: FilterView, isSelected: Bool) {
+        if view == largeCap { delegate?.didChangeSelectionCap(.largeCap, isSelected: isSelected) }
+        if view == midCap { delegate?.didChangeSelectionCap(.midCap, isSelected: isSelected) }
+        if view == smallCap { delegate?.didChangeSelectionCap(.smallCap, isSelected: isSelected) }
     }
 }
 

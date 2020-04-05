@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SectorFilter: TitleDescription, Equatable {
+enum SectorFilter: String, TitleDescription, Equatable, Codable {
     case energy
     case basicMaterials
     case industrials

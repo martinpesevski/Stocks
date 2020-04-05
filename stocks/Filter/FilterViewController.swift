@@ -17,25 +17,33 @@ class FilterViewController: FilterPageViewController {
     lazy var sectorController = FilterSectorViewController()
     lazy var profitabilityController = FilterProfitabilityViewController()
 
-    lazy var marketCap = DrillDownView(filter: .marketCap(filters: [.largeCap]))
-    lazy var sector = DrillDownView(filter: .sector(filters: [.tech]))
-    lazy var profitability = DrillDownView(filter: .profitability(filters: [.profitable]))
+    lazy var marketCap = DrillDownView(filter: .marketCap(filters: filter.capFilters), delegate: self)
+    lazy var sector = DrillDownView(filter: .sector(filters: filter.sectorFilters), delegate: self)
+    lazy var profitability = DrillDownView(filter: .profitability(filters: filter.profitabilityFilters), delegate: self)
     
     weak var delegate: FilterDelegate?
 
     lazy var filterViews: [DrillDownView] = [marketCap, sector, profitability]
-    var filter: Filter = Filter()
+    lazy var filter: Filter = {
+        if let ftrData = UserDefaults.standard.object(forKey: "filter") as? Data,
+            let ftr = try? JSONDecoder().decode(Filter.self, from: ftrData) {
+            return ftr
+        } else {
+            var ftr = Filter()
+            ftr.capFilters = [.largeCap]
+            ftr.sectorFilters = [.tech]
+            ftr.profitabilityFilters = [.profitable]
+            return ftr
+        }
+    }()
+    
     var viewModel: StocksViewModel!
     var isModal = false
     
     init(viewModel: StocksViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        marketCap.delegate = self
-        sector.delegate = self
-        profitability.delegate = self
-        
+
         marketCapController.delegate = self
         sectorController.delegate = self
         profitabilityController.delegate = self
@@ -53,14 +61,21 @@ class FilterViewController: FilterPageViewController {
     }
     
     override func onDone() {
+
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(filter) {
+            UserDefaults.standard.set(encoded, forKey: "filter")
+        }
+        
+        self.viewModel.filter = filter
         if isModal {
             delegate?.didFinishFiltering()
             dismiss(animated: true, completion: nil)
         } else {
             viewModel.load { [weak self] in
                 guard let self = self else { return }
+                self.viewModel.filter(filter: self.filter)
                 DispatchQueue.main.async {
-//                    self.viewModel.filter(filter: self.filter)
                     let listVC = ListViewController(viewModel: self.viewModel)
                     self.show(listVC, sender: self)
                 }
@@ -74,26 +89,44 @@ class FilterViewController: FilterPageViewController {
 }
 
 extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProfitabilityDelegate, FilterSectorDelegate {
-    func didSelectCap(_ filters: [CapFilter]) {
-        filter.capFilters = filters
-        marketCap.filter = .marketCap(filters: filters)
+    func didChangeSelectionCap(_ filter: CapFilter, isSelected: Bool) {
+        if isSelected {
+            self.filter.capFilters.append(filter)
+        } else if let index = self.filter.capFilters.firstIndex(of: filter) {
+            self.filter.capFilters.remove(at: index)
+        }
+        marketCap.filter = .marketCap(filters: self.filter.capFilters)
     }
     
-    func didSelectSector(_ filters: [SectorFilter]) {
-        filter.sectorFilters = filters
-        sector.filter = .sector(filters: filters)
+    func didChangeSelectionSector(_ filter: SectorFilter, isSelected: Bool) {
+        if isSelected {
+            self.filter.sectorFilters.append(filter)
+        } else if let index = self.filter.sectorFilters.firstIndex(of: filter) {
+            self.filter.sectorFilters.remove(at: index)
+        }
+        sector.filter = .sector(filters: self.filter.sectorFilters)
     }
     
-    func didSelectProfitability(_ filters: [ProfitabilityFilter]) {
-        filter.profitabilityFilters = filters
-        profitability.filter = .profitability(filters: filters)
+    func didChangeSelectionProfitability(_ filter: ProfitabilityFilter, isSelected: Bool) {
+        if isSelected {
+            self.filter.profitabilityFilters.append(filter)
+        } else if let index = self.filter.profitabilityFilters.firstIndex(of: filter) {
+            self.filter.profitabilityFilters.remove(at: index)
+        }
+        profitability.filter = .profitability(filters: self.filter.profitabilityFilters)
     }
     
     func didSelect(filter: FilterType) {
         switch filter {
-        case .marketCap: show(marketCapController, sender: self)
-        case .profitability: show(profitabilityController, sender: self)
-        case .sector: show(sectorController, sender: self)
+        case .marketCap:
+            marketCapController.selectedCap = self.filter.capFilters
+            show(marketCapController, sender: self)
+        case .profitability:
+            profitabilityController.selectedProfitability = self.filter.profitabilityFilters
+            show(profitabilityController, sender: self)
+        case .sector:
+            sectorController.selectedSectors = self.filter.sectorFilters
+            show(sectorController, sender: self)
         }
     }
 }

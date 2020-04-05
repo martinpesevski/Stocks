@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Filter: Equatable {
+struct Filter: Equatable, Codable {
     var capFilters: [CapFilter] = []
     var profitabilityFilters: [ProfitabilityFilter] = []
     var sectorFilters: [SectorFilter] = []

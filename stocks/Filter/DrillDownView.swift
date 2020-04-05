@@ -24,8 +24,9 @@ class DrillDownView: AccessoryView {
         delegate?.didSelect(filter: filter)
     }
     
-    init(filter: FilterType) {
+    init(filter: FilterType, delegate: DrillDownDelegate? = nil) {
         self.filter = filter
+        self.delegate = delegate
         super.init()
 
         content.addArrangedSubview(drillDown)

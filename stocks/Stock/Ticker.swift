@@ -14,16 +14,15 @@ struct TickerArray: Codable {
 struct Ticker: Codable {
     var symbol: String
     var companyName: String?
-    var marketCap: Float
+    var marketCap: Double
     var sector: String
     var beta: Float
     var price: Float
     var volume: Float
-
-//    var isValid: Bool {
-//        guard let exchange = exchange else { return false }
-//        return Stock.exchanges.contains(exchange)
-//    }
+    
+    var marketCapType: MarketCap {
+        return MarketCap.fromValue(marketCap)
+    }
 
     var detailName: String {
         if let name = companyName {

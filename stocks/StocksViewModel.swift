@@ -37,49 +37,51 @@ class StocksViewModel {
             completion()
             return
         }
-        
+        let group = DispatchGroup()
+
         for endpoint in endpoints {
+            group.enter()
             URLSession.shared.dataTask(with: endpoint.url) { [weak self] data, response, error in
                 guard let self = self, let data = data else {
-                    completion()
+                    group.leave()
                     return
                     
                 }
                 
-                //                UserDefaults.standard.set(data, forKey: "tickerData")
                 DataParser.parseJson(type: [Ticker].self, data: data) { array, error in
                     if let array = array {
-                        self.setupStocks(data: array)
-                        completion()
+                        self.setupStocks(data: array) {
+                            group.leave()
+                        }
                         return
                     }
                     if let error = error {
                         NSLog("error loading tickers" + error.localizedDescription)
-                        completion()
+                        group.leave()
                     }
                 }
             }.resume()
         }
+        
+        group.notify(queue: .main) {
+            completion()
+        }
     }
     
-    func setupStocks(data: [Ticker]) {
+    func setupStocks(data: [Ticker], completion: @escaping () -> Void) {
         let tickers = data.sorted { return $0.symbol < $1.symbol }
         tickers.forEach { self.stocks.append(Stock(ticker: $0)) }
         self.filteredStocks = self.stocks
 
-//        let group = DispatchGroup()
-//        for stock in self.stocks {
-//            group.enter()
-//            stock.load {
-//                group.leave()
-//            }
-//        }
-//        group.notify(queue: .main) {
-//            DispatchQueue.main.async { [weak self] in
-//                guard let self = self else { return }
-//                let cap = FilterViewController(viewModel: StocksViewModel())
-//                self.show(cap, sender: self)
-//            }
-//        }
+        let group = DispatchGroup()
+        for stock in self.stocks {
+            group.enter()
+            stock.load {
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            completion()
+        }
     }
 }

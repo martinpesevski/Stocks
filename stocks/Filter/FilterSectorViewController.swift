@@ -9,25 +9,34 @@
 import UIKit
 
 protocol FilterSectorDelegate: class {
-    func didSelectSector(_ filters: [SectorFilter])
+    func didChangeSelectionSector(_ filter: SectorFilter, isSelected: Bool)
 }
 
-class FilterSectorViewController: FilterPageViewController {
+class FilterSectorViewController: FilterPageViewController, SectorFilterViewDelegate {
     weak var delegate: FilterSectorDelegate?
+    var selectedSectors: [SectorFilter]? {
+        didSet {
+            guard let sectors = selectedSectors else { return }
+            
+            for sector in sectorViews {
+                if sectors.contains(sector.sector) { sector.isSelected = true }
+            }
+        }
+    }
     
-    lazy var energy = FilterView(filter: SectorFilter.energy)
-    lazy var basicMaterials = FilterView(filter: SectorFilter.basicMaterials)
-    lazy var industrials = FilterView(filter: SectorFilter.industrials)
-    lazy var consumerCyclical = FilterView(filter: SectorFilter.consumerCyclical)
-    lazy var consumerDefensive = FilterView(filter: SectorFilter.consumerDefensive)
-    lazy var healthcare = FilterView(filter: SectorFilter.healthcare)
-    lazy var financial = FilterView(filter: SectorFilter.financial)
-    lazy var tech = FilterView(filter: SectorFilter.tech)
-    lazy var communications = FilterView(filter: SectorFilter.communicationServices)
-    lazy var utilities = FilterView(filter: SectorFilter.utilities)
-    lazy var realEstate = FilterView(filter: SectorFilter.realEstate)
+    lazy var energy = SectorFilterView(filter: SectorFilter.energy, delegate: self)
+    lazy var basicMaterials = SectorFilterView(filter: SectorFilter.basicMaterials, delegate: self)
+    lazy var industrials = SectorFilterView(filter: SectorFilter.industrials, delegate: self)
+    lazy var consumerCyclical = SectorFilterView(filter: SectorFilter.consumerCyclical, delegate: self)
+    lazy var consumerDefensive = SectorFilterView(filter: SectorFilter.consumerDefensive, delegate: self)
+    lazy var healthcare = SectorFilterView(filter: SectorFilter.healthcare, delegate: self)
+    lazy var financial = SectorFilterView(filter: SectorFilter.financial, delegate: self)
+    lazy var tech = SectorFilterView(filter: SectorFilter.tech, delegate: self)
+    lazy var communications = SectorFilterView(filter: SectorFilter.communicationServices, delegate: self)
+    lazy var utilities = SectorFilterView(filter: SectorFilter.utilities, delegate: self)
+    lazy var realEstate = SectorFilterView(filter: SectorFilter.realEstate, delegate: self)
     
-    var sectorViews: [FilterView] {
+    var sectorViews: [SectorFilterView] {
         [energy, basicMaterials, industrials, consumerCyclical, consumerDefensive, healthcare,
          financial, tech, communications, utilities, realEstate]
     }
@@ -38,38 +47,19 @@ class FilterSectorViewController: FilterPageViewController {
         header.text = "Which industrial sector would you prefer to research?"
         button.setTitle("Save", for: .normal)
 
-        content.addArrangedSubview(energy)
-        content.addArrangedSubview(basicMaterials)
-        content.addArrangedSubview(industrials)
-        content.addArrangedSubview(consumerCyclical)
-        content.addArrangedSubview(consumerDefensive)
-        content.addArrangedSubview(healthcare)
-        content.addArrangedSubview(financial)
-        content.addArrangedSubview(tech)
-        content.addArrangedSubview(communications)
-        content.addArrangedSubview(utilities)
-        content.addArrangedSubview(realEstate)
+        for view in sectorViews {
+            content.addArrangedSubview(view)
+        }
 
         content.addArrangedSubview(UIView())
     }
     
     override func onDone() {
-        var filters: [SectorFilter] = []
-        if energy.isSelected { filters.append(.energy) }
-        if basicMaterials.isSelected { filters.append(.basicMaterials) }
-        if industrials.isSelected { filters.append(.industrials) }
-        if consumerCyclical.isSelected { filters.append(.consumerCyclical) }
-        if consumerDefensive.isSelected { filters.append(.consumerDefensive) }
-        if healthcare.isSelected { filters.append(.healthcare) }
-        if financial.isSelected { filters.append(.financial) }
-        if tech.isSelected { filters.append(.tech) }
-        if communications.isSelected { filters.append(.communicationServices) }
-        if utilities.isSelected { filters.append(.utilities) }
-        if realEstate.isSelected { filters.append(.realEstate) }
-        
-
-        delegate?.didSelectSector(filters)
         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func didChangeSelection(view: SectorFilterView, isSelected: Bool) {
+        delegate?.didChangeSelectionSector(view.sector, isSelected: isSelected)
     }
 }
 

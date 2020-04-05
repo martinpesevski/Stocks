@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ProfitabilityFilter: TitleDescription, Equatable {
+enum ProfitabilityFilter: String, TitleDescription, Equatable, Codable {
     case profitable
     case unprofitable
     

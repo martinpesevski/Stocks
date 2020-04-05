@@ -9,14 +9,23 @@
 import UIKit
 
 protocol FilterProfitabilityDelegate: class {
-    func didSelectProfitability(_ filters: [ProfitabilityFilter])
+    func didChangeSelectionProfitability(_ filter: ProfitabilityFilter, isSelected: Bool)
 }
 
-class FilterProfitabilityViewController: FilterPageViewController {
+class FilterProfitabilityViewController: FilterPageViewController, FilterViewDelegate {
     weak var delegate: FilterProfitabilityDelegate?
     
-    lazy var profitable = FilterView(filter: ProfitabilityFilter.profitable)
-    lazy var unprofitable = FilterView(filter: ProfitabilityFilter.unprofitable)
+    var selectedProfitability: [ProfitabilityFilter]? {
+        didSet {
+            guard let prof = selectedProfitability else { return }
+            
+            if prof.contains(.profitable) { profitable.isSelected = true }
+            if prof.contains(.unprofitable) { unprofitable.isSelected = true }
+        }
+    }
+    
+    lazy var profitable = FilterView(filter: ProfitabilityFilter.profitable, delegate: self)
+    lazy var unprofitable = FilterView(filter: ProfitabilityFilter.unprofitable, delegate: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +43,12 @@ class FilterProfitabilityViewController: FilterPageViewController {
         if profitable.isSelected { filters.append(.profitable) }
         if unprofitable.isSelected { filters.append(.unprofitable) }
         
-        delegate?.didSelectProfitability(filters)
         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func didChangeSelection(view: FilterView, isSelected: Bool) {
+        if view == profitable { delegate?.didChangeSelectionProfitability(.profitable, isSelected: isSelected) }
+        if view == unprofitable { delegate?.didChangeSelectionProfitability(.unprofitable, isSelected: isSelected) }
     }
 }
 

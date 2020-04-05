@@ -94,14 +94,7 @@ extension Stock {
     }
 
     func load(completion: @escaping ()->()) {
-        group = DispatchGroup()
-        group.enter()
-        getKeyMetrics() { completed in self.group.leave() }
-        group.enter()
-        getQuote() { completed in self.group.leave() }
-        group.enter()
-        getGrowthMetrics() { completed in self.group.leave() }
-        group.notify(queue: .main) {
+        getKeyMetrics() { completed in
             self.calculateIntrinsicValue()
             DispatchQueue.main.async { completion() }
         }
