@@ -30,7 +30,13 @@ class GrowthTable: UIStackView {
 
     var cellsArray: [GrowthTableCell] = []
 
-    lazy var titleLabel = UILabel(text: "OCF growth per share", font: UIFont.systemFont(ofSize: 20, weight: .bold))
+    lazy var titleView: AccessoryView = {
+        let view = AccessoryView(accessoryType: .rightArrow)
+        view.title.text = "OCF growth per share"
+        
+        return view
+    }()
+    
     lazy var pastGrowth: UILabel = {
         let label = UILabel(text: "past average OCF growth per year:")
         label.numberOfLines = 0
@@ -52,7 +58,7 @@ class GrowthTable: UIStackView {
     init() {
         super.init(frame: .zero)
         isHidden = true
-        addArrangedSubview(titleLabel)
+        addArrangedSubview(titleView)
 
         addArrangedSubview(pastGrowthStack)
         addArrangedSubview(futureGrowthStack)
@@ -60,7 +66,7 @@ class GrowthTable: UIStackView {
         axis = .vertical
         spacing = 10
 
-        titleLabel.backgroundColor = .darkGray
+        titleView.backgroundColor = .darkGray
     }
 
     required init(coder: NSCoder) {

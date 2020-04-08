@@ -13,13 +13,6 @@ class DrillDownView: AccessoryView {
     }
     weak var delegate: DrillDownDelegate?
     
-    lazy var drillDown: UIImageView = {
-        let view = UIImageView(image: UIImage.init(named: "right"))
-        view.tintColor = .label
-        view.snp.makeConstraints { make in make.width.height.equalTo(36) }
-        return view
-    }()
-    
     override func onTap() {
         delegate?.didSelect(filter: filter)
     }
@@ -27,9 +20,8 @@ class DrillDownView: AccessoryView {
     init(filter: FilterType, delegate: DrillDownDelegate? = nil) {
         self.filter = filter
         self.delegate = delegate
-        super.init()
+        super.init(accessoryType: .rightArrow)
 
-        content.addArrangedSubview(drillDown)
         setup(filter)
     }
     

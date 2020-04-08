@@ -10,6 +10,45 @@ import UIKit
 import SnapKit
 
 class AccessoryView: UIView {
+    enum AccessoryType {
+        case rightArrow
+        case downArrow
+        case upArrow
+        case checkboxFull
+        case checkboxEmpty
+        
+        var image: UIImage? {
+            switch self {
+            case .rightArrow: return UIImage(named: "right")
+            case .downArrow: return UIImage(named: "down")
+            case .upArrow: return UIImage(named: "up")
+            case .checkboxFull: return UIImage(named: "checkbox")
+            case .checkboxEmpty: return UIImage(named: "checkbox-empty")
+            }
+        }
+        
+        var tintColor: UIColor {
+            switch self {
+            case .checkboxFull: return .systemGreen
+            default: return .label
+            }
+        }
+    }
+    
+    lazy var accessoryView: UIImageView = {
+        let view = UIImageView(image: UIImage.init(named: "right"))
+        view.tintColor = .label
+        view.snp.makeConstraints { make in make.width.height.equalTo(36) }
+        return view
+    }()
+    
+    var accessoryType: AccessoryType? {
+        didSet {
+            accessoryView.image = accessoryType?.image
+            accessoryView.tintColor = accessoryType?.tintColor
+        }
+    }
+    
     lazy var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
@@ -60,8 +99,11 @@ class AccessoryView: UIView {
         // override in subclasses
     }
     
-    init() {
+    init(accessoryType: AccessoryType? = nil) {
+        self.accessoryType = accessoryType
         super.init(frame: .zero)
+
+        if accessoryType != nil { content.addArrangedSubview(accessoryView) }
         
         layer.cornerRadius = 8
         backgroundColor = .systemGray5
