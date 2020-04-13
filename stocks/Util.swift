@@ -57,3 +57,21 @@ extension UIStackView {
         }
     }
 }
+
+extension Collection {
+    subscript(safe i: Index) -> Iterator.Element? {
+        return self.indices.contains(i) ? self[i] : nil
+    }
+}
+
+extension UIView {
+    func addSeparator() {
+        let separator = UIView()
+        separator.backgroundColor = .systemGray3
+        addSubview(separator)
+        separator.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+    }
+}

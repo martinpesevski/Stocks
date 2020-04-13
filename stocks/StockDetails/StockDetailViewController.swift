@@ -26,10 +26,14 @@ class StockDetailViewController: ViewController {
     lazy var ivNumberStack = UIStackView(views: [intrinsicValueNumber, intrinsicValueDiscount], axis: .vertical, spacing: 5)
     lazy var ivStack = UIStackView(views: [intrinsicValueLabel, ivNumberStack], axis: .horizontal, spacing: 10)
 
+    lazy var financials = AccessoryView("Financials", accessoryType: .rightArrow)
+    lazy var growth = AccessoryView("Growth", accessoryType: .rightArrow)
+    lazy var intrinsicValue = AccessoryView("Intrinsic Value", accessoryType: .rightArrow)
+
     lazy var growthTable = GrowthTable()
 
     lazy var stockStack: ScrollableStackView = {
-        let stack = ScrollableStackView(views: [nameLabel, priceLabel, ivStack, growthTable], alignment: .fill, spacing: 10,
+        let stack = ScrollableStackView(views: [nameLabel, priceLabel, ivStack, financials, growth, intrinsicValue], alignment: .fill, spacing: 10,
         layoutInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         stack.setCustomSpacing(25, after: nameLabel)
         stack.setCustomSpacing(25, after: ivStack)
@@ -42,16 +46,18 @@ class StockDetailViewController: ViewController {
         stockStack.snp.makeConstraints { make in
             make.edges.equalTo(view.layoutMargins)
         }
+        
+        stock.load { [weak self] in
+            guard let self = self else { return }
+            self.setup(stock: self.stock)
+        }
+        
+        financials.button.addTarget(self, action: #selector(onFinancials), for: .touchUpInside)
     }
     
     init(stock: Stock) {
         self.stock = stock
         super.init(nibName: nil, bundle: nil)
-        
-        stock.load { [weak self] in
-            guard let self = self else { return }
-            self.setup(stock: stock)
-        }
     }
     
     func setup(stock: Stock) {
@@ -68,6 +74,12 @@ class StockDetailViewController: ViewController {
         }
 
         growthTable.keyMetrics = stock.keyMetricsOverTime
+    }
+    
+    @objc func onFinancials() {
+        guard let balanceSheet = stock.balanceSheets?[safe: 0] else { return }
+        let vc = BalanceSheetViewController(balanceSheet: balanceSheet)
+        show(vc, sender: self)
     }
     
     required init?(coder: NSCoder) {

@@ -22,6 +22,40 @@ class NavigationController: UINavigationController {
     }
 }
 
+class KeyValueView: UIStackView {
+    lazy var keyLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
+    lazy var valueLabel = UILabel(font: UIFont.systemFont(ofSize: 15), alignment: .right)
+    lazy var background: UIView = {
+        let bg = UIView()
+        bg.layer.cornerRadius = 5
+        bg.layer.masksToBounds = true
+        bg.backgroundColor = .systemGray6
+        bg.addSeparator()
+        
+        return bg
+    }()
+    
+    init(key: String, value: String) {
+        super.init(frame: .zero)
+        
+        addSubview(background)
+        background.snp.makeConstraints { make in make.edges.equalToSuperview() }
+        
+        addArrangedSubview(keyLabel)
+        addArrangedSubview(valueLabel)
+        axis = .horizontal
+        layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        isLayoutMarginsRelativeArrangement = true
+        
+        keyLabel.text = key
+        valueLabel.text = value
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class ScrollableStackView: UIStackView {
     var stockStack: UIStackView
 

@@ -99,12 +99,13 @@ class AccessoryView: UIView {
         // override in subclasses
     }
     
-    init(accessoryType: AccessoryType? = nil) {
+    init(_ title: String? = nil, accessoryType: AccessoryType? = nil) {
         self.accessoryType = accessoryType
         super.init(frame: .zero)
 
         if accessoryType != nil { content.addArrangedSubview(accessoryView) }
-        
+        self.title.text = title
+
         layer.cornerRadius = 8
         backgroundColor = .systemGray5
         

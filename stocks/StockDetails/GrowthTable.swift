@@ -31,26 +31,16 @@ class GrowthTable: UIStackView {
     var cellsArray: [GrowthTableCell] = []
 
     lazy var titleView: AccessoryView = {
-        let view = AccessoryView(accessoryType: .rightArrow)
+        let view = AccessoryView(accessoryType: .downArrow)
         view.title.text = "OCF growth per share"
         
         return view
     }()
     
-    lazy var pastGrowth: UILabel = {
-        let label = UILabel(text: "past average OCF growth per year:")
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
+    lazy var pastGrowth = UILabel(text: "past average OCF growth per year:")
     lazy var pastGrowthNumber = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold), alignment: .right)
     lazy var pastGrowthStack = UIStackView.init(views: [pastGrowth, pastGrowthNumber], axis: .horizontal, spacing: 10)
-    lazy var futureGrowth: UILabel = {
-        let label = UILabel(text: "estimated future average OCF growth per year:")
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
+    lazy var futureGrowth = UILabel(text: "estimated future average OCF growth per year:")
 
     lazy var futureGrowthNumber = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold), alignment: .right)
     lazy var futureGrowthStack = UIStackView.init(views: [futureGrowth, futureGrowthNumber], axis: .horizontal, spacing: 10)

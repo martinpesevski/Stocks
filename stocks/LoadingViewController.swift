@@ -56,7 +56,7 @@ class LoadingViewController: ViewController {
         let group = DispatchGroup()
         for stock in self.stocks {
             group.enter()
-            stock.load {
+            stock.getKeyMetrics() { _ in
                 group.leave()
             }
         }

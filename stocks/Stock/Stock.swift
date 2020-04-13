@@ -49,8 +49,8 @@ class Stock {
     var quote: Quote?
     var keyMetricsOverTime: KeyMetricsArray?
     var growthMetrics: [GrowthMetrics]?
-    var group = DispatchGroup()
     var intrinsicValue: IntrinsicValue?
+    var balanceSheets: [BalanceSheet]?
 
     func isValid(filter: Filter) -> Bool {
         guard let iv = intrinsicValue?.value, iv > 0 else { return false }

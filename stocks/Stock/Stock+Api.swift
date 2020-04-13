@@ -15,6 +15,7 @@ extension Stock {
             DataParser.parseJson(type: KeyMetricsArray.self, data: keyMetricsData) { arr, error in
                 if let arr = arr {
                     self.keyMetricsOverTime = arr
+                    self.calculateIntrinsicValue()
                     completion?(true)
                 } else if let error = error {
                     NSLog("key metrics load failed: \(error.localizedDescription)")
@@ -25,7 +26,6 @@ extension Stock {
             }
         } else {
             URLSession.shared.datatask(type: KeyMetricsArray.self,
-                                       identifier: ticker.companyName,
                                        url: Endpoints.keyMetrics(ticker: ticker.symbol).url) {
                                         [weak self] data, response, error in
                 guard let self = self, let data = data else {
@@ -37,66 +37,34 @@ extension Stock {
             }
         }
     }
+    
+    func getFinancials(completion: ((Bool) -> ())? = nil) {
+        URLSession.shared.datatask(type: [BalanceSheet].self,
+                                   url: Endpoints.balanceSheetAnnual(ticker: ticker.symbol).url) {
+                                    [weak self] data, response, error in
+            guard let self = self, let data = data else {
+                completion?(false)
+                return }
 
-    func getGrowthMetrics(completion: ((Bool) -> ())? = nil) {
-        if let name = ticker.companyName,
-            let growthMetricsData = UserDefaults.standard.data(forKey: GrowthMetricsArray.stockIdentifier(name)) {
-            DataParser.parseJson(type: GrowthMetricsArray.self, data: growthMetricsData) { arr, error in
-                if let arr = arr {
-                    self.growthMetrics = arr.growth
-                    completion?(true)
-                } else if let error = error {
-                    NSLog("growth metrics load failed: \(error.localizedDescription)")
-                    completion?(false)
-                } else {
-                    completion?(false)
-                }
-            }
-        } else {
-            URLSession.shared.datatask(type: GrowthMetricsArray.self,
-                                       identifier: ticker.companyName,
-                                       url: Endpoints.growthMetrics(ticker: ticker.symbol).url) {
-                                        [weak self] data, response, error in
-                guard let self = self, let data = data else {
-                    completion?(false)
-                    return }
-
-                self.growthMetrics = data.growth
-                completion?(error == nil)
-            }
+            self.balanceSheets = data
+            completion?(error == nil)
         }
     }
 
-    func getQuote(completion: ((Bool) -> ())? = nil) {
-        if let name = ticker.companyName,
-            let quotes = UserDefaults.standard.data(forKey: Quote.stockIdentifier(name)) {
-            DataParser.parseJson(type: Quote.self, data: quotes) { quote, error in
-                if let quote = quote {
-                    self.quote = quote
-                    completion?(true)
-                } else if let error = error {
-                    NSLog("growth metrics load failed: \(error.localizedDescription)")
-                    completion?(false)
-                } else {
-                    completion?(false)
-                }
-            }
-        } else {
-            URLSession.shared.datatask(type: Quote.self, identifier: ticker.companyName, url: Endpoints.quote(ticker: ticker.symbol).url) { [weak self] data, response, error in
-                guard let self = self, let data = data else {
-                    completion?(false)
-                    return }
-
-                self.quote = data
-                completion?(error == nil)
-            }
-        }
-    }
-
-    func load(completion: @escaping ()->()) {
+    func load(completion: @escaping () -> ()) {
+        let group = DispatchGroup()
+        group.enter()
         getKeyMetrics() { completed in
-            self.calculateIntrinsicValue()
-            DispatchQueue.main.async { completion() }
+            group.leave()
+        }
+        
+        group.enter()
+        getFinancials() { _ in
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion()
         }
     }
 }
