@@ -25,6 +25,7 @@
 		52A5E019242BEFB000C25872 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5E018242BEFB000C25872 /* StockDetailViewController.swift */; };
 		52D0CC4A2446377800C36300 /* CashFlows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC492446377800C36300 /* CashFlows.swift */; };
 		52D0CC4C244643E300C36300 /* CashFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC4B244643E300C36300 /* CashFlowViewController.swift */; };
+		52D0CC4E24464EE400C36300 /* PeriodicValueChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */; };
 		52D65F2D2433AC0C00647074 /* GrowthTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D65F2C2433AC0C00647074 /* GrowthTable.swift */; };
 		52D9B1B924292C9700E67BF2 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1B824292C9700E67BF2 /* Ticker.swift */; };
 		52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BA24292CCF00E67BF2 /* Profile.swift */; };
@@ -107,6 +108,7 @@
 		52A5E018242BEFB000C25872 /* StockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		52D0CC492446377800C36300 /* CashFlows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashFlows.swift; sourceTree = "<group>"; };
 		52D0CC4B244643E300C36300 /* CashFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashFlowViewController.swift; sourceTree = "<group>"; };
+		52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodicValueChangeViewController.swift; sourceTree = "<group>"; };
 		52D65F2C2433AC0C00647074 /* GrowthTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthTable.swift; sourceTree = "<group>"; };
 		52D9B1B824292C9700E67BF2 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		52D9B1BA24292CCF00E67BF2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			children = (
 				52A5E018242BEFB000C25872 /* StockDetailViewController.swift */,
 				C708ED112444E6E100FC9425 /* FinancialsViewController.swift */,
+				52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */,
 				52D65F2C2433AC0C00647074 /* GrowthTable.swift */,
 				C708ED0F2444C2F800FC9425 /* BalanceSheetViewController.swift */,
 				C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */,
@@ -593,6 +596,7 @@
 				C71E3872243800BB00E9A84B /* FilterView.swift in Sources */,
 				52A5E017242BDCDF00C25872 /* IntrinsicValue.swift in Sources */,
 				C71E387C24381CEB00E9A84B /* Base.swift in Sources */,
+				52D0CC4E24464EE400C36300 /* PeriodicValueChangeViewController.swift in Sources */,
 				C71E3880243830E500E9A84B /* ProfitabilityFilter.swift in Sources */,
 				5245609D23FC7685003686BE /* ListViewController.swift in Sources */,
 				524560CB23FDDB68003686BE /* Networking.swift in Sources */,

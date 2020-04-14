@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CashFlowViewController: ViewController {
+class CashFlowViewController: ViewController, MetricKeyValueDelegate {
     let cashFlows: CashFlowsArray
 
     lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
@@ -24,10 +24,23 @@ class CashFlowViewController: ViewController {
         guard let metrics = cashFlows.financials?[safe: 0]?.metrics else { return }
 
         for metric in metrics {
-            guard let key = metric.metricType?.text else { return }
-            let cell = KeyValueView(key: key, value: "\(metric.value)")
+            let cell = MetricKeyValueView(metric: metric)
+            cell.delegate = self
             content.addArrangedSubview(cell)
         }
+    }
+
+    func didSelectMetric(_ metric: Metric) {
+        guard let financials = cashFlows.financials else { return }
+        var mapped: [PeriodicFinancialModel] = []
+        for financial in financials {
+            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value))
+            }
+        }
+
+        let vc = PeriodicValueChangeViewController(ticker: cashFlows.symbol, metricType: metric.text, periodicChange: mapped)
+        show(vc, sender: self)
     }
 
     override func viewDidLoad() {

@@ -13,12 +13,14 @@ struct CashFlowsArray: Codable {
     var financials: [CashFlow]?
 }
 
-struct CashFlowFinancialMetric<T: Codable>: Codable {
-    let value: T
+struct CashFlowFinancialMetric: Codable, Metric {
+    let value: String
     var metricType: CashFlowMetricType?
 
+    var text: String { metricType?.text ?? ""}
+
     init(from decoder: Decoder) throws {
-        value = try decoder.singleValueContainer().decode(T.self)
+        value = try decoder.singleValueContainer().decode(String.self)
         if decoder.codingPath.count > 2 {
             metricType = CashFlowMetricType(rawValue: decoder.codingPath[2].stringValue)
         }
@@ -27,23 +29,23 @@ struct CashFlowFinancialMetric<T: Codable>: Codable {
 
 struct CashFlow: Codable {
     var date: String
-    var depreciationAmortization: CashFlowFinancialMetric<String>
-    var stockBasedCompensation: CashFlowFinancialMetric<String>
-    var operatincCashFlow: CashFlowFinancialMetric<String>
-    var capitalExpenditure: CashFlowFinancialMetric<String>
-    var acquisitionsDisposals: CashFlowFinancialMetric<String>
-    var investmentPurchasesSales: CashFlowFinancialMetric<String>
-    var investingCashFlow: CashFlowFinancialMetric<String>
-    var issuanceRepaymentOfDebt: CashFlowFinancialMetric<String>
-    var issuanceBuybackOfShares: CashFlowFinancialMetric<String>
-    var dividentPayments: CashFlowFinancialMetric<String>
-    var financingCashFlow: CashFlowFinancialMetric<String>
-    var efectOfForex: CashFlowFinancialMetric<String>
-    var netCashFlow: CashFlowFinancialMetric<String>
-    var freeCashFlow: CashFlowFinancialMetric<String>
-    var netCashOverMarketCap: CashFlowFinancialMetric<String>
+    var depreciationAmortization: CashFlowFinancialMetric
+    var stockBasedCompensation: CashFlowFinancialMetric
+    var operatincCashFlow: CashFlowFinancialMetric
+    var capitalExpenditure: CashFlowFinancialMetric
+    var acquisitionsDisposals: CashFlowFinancialMetric
+    var investmentPurchasesSales: CashFlowFinancialMetric
+    var investingCashFlow: CashFlowFinancialMetric
+    var issuanceRepaymentOfDebt: CashFlowFinancialMetric
+    var issuanceBuybackOfShares: CashFlowFinancialMetric
+    var dividentPayments: CashFlowFinancialMetric
+    var financingCashFlow: CashFlowFinancialMetric
+    var efectOfForex: CashFlowFinancialMetric
+    var netCashFlow: CashFlowFinancialMetric
+    var freeCashFlow: CashFlowFinancialMetric
+    var netCashOverMarketCap: CashFlowFinancialMetric
 
-    var metrics: [CashFlowFinancialMetric<String>] {
+    var metrics: [CashFlowFinancialMetric] {
         [depreciationAmortization, stockBasedCompensation, operatincCashFlow, capitalExpenditure, acquisitionsDisposals, investmentPurchasesSales, investingCashFlow, issuanceRepaymentOfDebt, issuanceBuybackOfShares, dividentPayments, financingCashFlow, efectOfForex, netCashFlow, freeCashFlow, netCashOverMarketCap]
     }
 

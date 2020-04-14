@@ -8,7 +8,31 @@
 
 import UIKit
 
-class IncomeStatementViewController: ViewController {
+protocol MetricKeyValueDelegate: class {
+    func didSelectMetric(_ metric: Metric)
+}
+
+class MetricKeyValueView: KeyValueView {
+    weak var delegate: MetricKeyValueDelegate?
+    let metric: Metric
+
+    init(metric: Metric) {
+        self.metric = metric
+        super.init(key: metric.text, value: metric.value)
+
+        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+    }
+
+    @objc func onTap() {
+        delegate?.didSelectMetric(metric)
+    }
+
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class IncomeStatementViewController: ViewController, MetricKeyValueDelegate {
     let incomeStatements: IncomeStatementsArray
     
     lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
@@ -24,12 +48,25 @@ class IncomeStatementViewController: ViewController {
         guard let metrics = incomeStatements.financials?[safe: 0]?.metrics else { return }
         
         for metric in metrics {
-            guard let key = metric.metricType?.text else { return }
-            let cell = KeyValueView(key: key, value: "\(metric.value)")
+            let cell = MetricKeyValueView(metric: metric)
+            cell.delegate = self
             content.addArrangedSubview(cell)
         }
     }
-    
+
+    func didSelectMetric(_ metric: Metric) {
+        guard let financials = incomeStatements.financials else { return }
+        var mapped: [PeriodicFinancialModel] = []
+        for financial in financials {
+            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value))
+            }
+        }
+
+        let vc = PeriodicValueChangeViewController(ticker: incomeStatements.symbol, metricType: metric.text, periodicChange: mapped)
+        show(vc, sender: self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

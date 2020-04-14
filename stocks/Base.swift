@@ -25,6 +25,7 @@ class NavigationController: UINavigationController {
 class KeyValueView: UIStackView {
     lazy var keyLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
     lazy var valueLabel = UILabel(font: UIFont.systemFont(ofSize: 15), alignment: .right)
+    lazy var button = UIButton()
     lazy var background: UIView = {
         let bg = UIView()
         bg.layer.cornerRadius = 5
@@ -43,6 +44,10 @@ class KeyValueView: UIStackView {
         
         addArrangedSubview(keyLabel)
         addArrangedSubview(valueLabel)
+        addSubview(button)
+        button.snp.makeConstraints { make in make.edges.equalToSuperview() }
+
+
         axis = .horizontal
         layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         isLayoutMarginsRelativeArrangement = true
