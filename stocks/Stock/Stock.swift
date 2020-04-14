@@ -52,6 +52,7 @@ class Stock {
     var intrinsicValue: IntrinsicValue?
     var balanceSheets: [BalanceSheet]?
     var incomeStatements: IncomeStatementsArray?
+    var cashFlows: CashFlowsArray?
 
     func isValid(filter: Filter) -> Bool {
         guard let iv = intrinsicValue?.value, iv > 0 else { return false }

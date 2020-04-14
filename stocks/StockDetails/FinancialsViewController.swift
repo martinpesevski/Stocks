@@ -32,7 +32,8 @@ class FinancialsViewController: ViewController {
         
         incomeStatement.button.addTarget(self, action: #selector(onIncomeStatement), for: .touchUpInside)
         balanceSheet.button.addTarget(self, action: #selector(onBalanceSheet), for: .touchUpInside)
-        
+        cashFlow.button.addTarget(self, action: #selector(onCashFlow), for: .touchUpInside)
+
         view.addSubview(content)
         content.snp.makeConstraints { make in make.edges.equalTo(view.layoutMarginsGuide) }
     }
@@ -50,8 +51,8 @@ class FinancialsViewController: ViewController {
     }
     
     @objc func onCashFlow() {
-        guard let balanceSheet = stock.balanceSheets?[safe: 0] else { return }
-        let vc = BalanceSheetViewController(balanceSheet: balanceSheet)
+        guard let cashFlows = stock.cashFlows else { return }
+        let vc = CashFlowViewController(cashFlows: cashFlows)
         show(vc, sender: self)
     }
     

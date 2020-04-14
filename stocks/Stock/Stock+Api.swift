@@ -65,6 +65,19 @@ extension Stock {
         }
     }
 
+    func getCashFlows(completion: ((Bool) -> ())? = nil) {
+        URLSession.shared.datatask(type: CashFlowsArray.self,
+                                   url: Endpoints.cashFlowAnnual(ticker: ticker.symbol).url) {
+                                    [weak self] data, response, error in
+            guard let self = self, let data = data else {
+                completion?(false)
+                return }
+
+            self.cashFlows = data
+            completion?(error == nil)
+        }
+    }
+
     func load(completion: @escaping () -> ()) {
         let group = DispatchGroup()
         group.enter()
@@ -74,6 +87,11 @@ extension Stock {
         
         group.enter()
         getIncomeStatement() { _ in
+            group.leave()
+        }
+
+        group.enter()
+        getCashFlows() { _ in
             group.leave()
         }
         

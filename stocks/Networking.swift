@@ -30,7 +30,7 @@ enum Endpoints {
         case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)") ?? URL(fileURLWithPath: "")
         case .balanceSheetAnnual(ticker: let ticker): return URL(string: "https://fmpcloud.io/api/v3/balance-sheet-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://fmpcloud.io/api/v3/cash-flow-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
             switch (sector, marketCap) {
             case (let sector?, let marketCap?):
