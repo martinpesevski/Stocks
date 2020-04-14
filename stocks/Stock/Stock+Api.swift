@@ -38,7 +38,7 @@ extension Stock {
         }
     }
     
-    func getFinancials(completion: ((Bool) -> ())? = nil) {
+    func getBalanceSheet(completion: ((Bool) -> ())? = nil) {
         URLSession.shared.datatask(type: [BalanceSheet].self,
                                    url: Endpoints.balanceSheetAnnual(ticker: ticker.symbol).url) {
                                     [weak self] data, response, error in
@@ -47,6 +47,19 @@ extension Stock {
                 return }
 
             self.balanceSheets = data
+            completion?(error == nil)
+        }
+    }
+    
+    func getIncomeStatement(completion: ((Bool) -> ())? = nil) {
+        URLSession.shared.datatask(type: IncomeStatementsArray.self,
+                                   url: Endpoints.incomeStatementAnnual(ticker: ticker.symbol).url) {
+                                    [weak self] data, response, error in
+            guard let self = self, let data = data else {
+                completion?(false)
+                return }
+
+            self.incomeStatements = data
             completion?(error == nil)
         }
     }
@@ -59,7 +72,7 @@ extension Stock {
         }
         
         group.enter()
-        getFinancials() { _ in
+        getIncomeStatement() { _ in
             group.leave()
         }
         

@@ -16,19 +16,19 @@ enum FiscalPeriod: String, Codable {
     case fourthQuarter = "Q4"
 }
 
-struct FinancialMetric<T: Codable>: Codable {
+struct BalanceSheetFinancialMetric<T: Codable>: Codable {
     let value: T
-    var metricType: FinancialMetricType?
+    var metricType: BalanceSheetMetricType?
     
     init(from decoder: Decoder) throws {
         value = try decoder.singleValueContainer().decode(T.self)
         if decoder.codingPath.count > 1 {
-            metricType = FinancialMetricType(rawValue: decoder.codingPath[1].stringValue )
+            metricType = BalanceSheetMetricType(rawValue: decoder.codingPath[1].stringValue)
         }
     }
 }
 
-enum FinancialMetricType: String, Codable {
+enum BalanceSheetMetricType: String, Codable {
     case cashAndCashEquivalents = "cashAndCashEquivalents"
     case shortTermInvestments = "shortTermInvestments"
     case cashAndShortTermInvestments = "cashAndShortTermInvestments"
@@ -118,47 +118,47 @@ struct BalanceSheet: Codable, StockIdentifiable {
     var date: String
     var symbol: String
     var period: FiscalPeriod
-    var cashAndCashEquivalents: FinancialMetric<Double>
-    var shortTermInvestments: FinancialMetric<Double>
-    var cashAndShortTermInvestments: FinancialMetric<Double>
-    var netReceivables: FinancialMetric<Double>
-    var inventory: FinancialMetric<Double>
-    var otherCurrentAssets: FinancialMetric<Double>
-    var totalCurrentAssets: FinancialMetric<Double>
-    var propertyPlantEquipmentNet: FinancialMetric<Double>
-    var goodwill: FinancialMetric<Double>
-    var intangibleAssets: FinancialMetric<Double>
-    var goodwillAndIntangibleAssets: FinancialMetric<Double>
-    var longTermInvestments: FinancialMetric<Double>
-    var taxAssets: FinancialMetric<Double>
-    var otherNonCurrentAssets: FinancialMetric<Double>
-    var totalNonCurrentAssets: FinancialMetric<Double>
-    var otherAssets: FinancialMetric<Double>
-    var totalAssets: FinancialMetric<Double>
-    var accountPayables: FinancialMetric<Double>
-    var shortTermDebt: FinancialMetric<Double>
-    var taxPayables: FinancialMetric<Double>
-    var deferredRevenue: FinancialMetric<Double>
-    var otherCurrentLiabilities: FinancialMetric<Double>
-    var totalCurrentLiabilities: FinancialMetric<Double>
-    var longTermDebt: FinancialMetric<Double>
-    var deferredRevenueNonCurrent: FinancialMetric<Double>
-    var deferrredTaxLiabilitiesNonCurrent: FinancialMetric<Double>
-    var otherNonCurrentLiabilities: FinancialMetric<Double>
-    var totalNonCurrentLiabilities: FinancialMetric<Double>
-    var otherLiabilities: FinancialMetric<Double>
-    var totalLiabilities: FinancialMetric<Double>
-    var commonStock: FinancialMetric<Double>
-    var retainedEarnings: FinancialMetric<Double>
-    var accumulatedOtherComprehensiveIncomeLoss: FinancialMetric<Double>
-    var othertotalStockholdersEquity: FinancialMetric<Double>
-    var totalStockholdersEquity: FinancialMetric<Double>
-    var totalLiabilitiesAndStockholdersEquity: FinancialMetric<Double>
-    var totalInvestments: FinancialMetric<Double>
-    var totalDebt: FinancialMetric<Double>
-    var netDebt: FinancialMetric<Double>
+    var cashAndCashEquivalents: BalanceSheetFinancialMetric<Double>
+    var shortTermInvestments: BalanceSheetFinancialMetric<Double>
+    var cashAndShortTermInvestments: BalanceSheetFinancialMetric<Double>
+    var netReceivables: BalanceSheetFinancialMetric<Double>
+    var inventory: BalanceSheetFinancialMetric<Double>
+    var otherCurrentAssets: BalanceSheetFinancialMetric<Double>
+    var totalCurrentAssets: BalanceSheetFinancialMetric<Double>
+    var propertyPlantEquipmentNet: BalanceSheetFinancialMetric<Double>
+    var goodwill: BalanceSheetFinancialMetric<Double>
+    var intangibleAssets: BalanceSheetFinancialMetric<Double>
+    var goodwillAndIntangibleAssets: BalanceSheetFinancialMetric<Double>
+    var longTermInvestments: BalanceSheetFinancialMetric<Double>
+    var taxAssets: BalanceSheetFinancialMetric<Double>
+    var otherNonCurrentAssets: BalanceSheetFinancialMetric<Double>
+    var totalNonCurrentAssets: BalanceSheetFinancialMetric<Double>
+    var otherAssets: BalanceSheetFinancialMetric<Double>
+    var totalAssets: BalanceSheetFinancialMetric<Double>
+    var accountPayables: BalanceSheetFinancialMetric<Double>
+    var shortTermDebt: BalanceSheetFinancialMetric<Double>
+    var taxPayables: BalanceSheetFinancialMetric<Double>
+    var deferredRevenue: BalanceSheetFinancialMetric<Double>
+    var otherCurrentLiabilities: BalanceSheetFinancialMetric<Double>
+    var totalCurrentLiabilities: BalanceSheetFinancialMetric<Double>
+    var longTermDebt: BalanceSheetFinancialMetric<Double>
+    var deferredRevenueNonCurrent: BalanceSheetFinancialMetric<Double>
+    var deferrredTaxLiabilitiesNonCurrent: BalanceSheetFinancialMetric<Double>
+    var otherNonCurrentLiabilities: BalanceSheetFinancialMetric<Double>
+    var totalNonCurrentLiabilities: BalanceSheetFinancialMetric<Double>
+    var otherLiabilities: BalanceSheetFinancialMetric<Double>
+    var totalLiabilities: BalanceSheetFinancialMetric<Double>
+    var commonStock: BalanceSheetFinancialMetric<Double>
+    var retainedEarnings: BalanceSheetFinancialMetric<Double>
+    var accumulatedOtherComprehensiveIncomeLoss: BalanceSheetFinancialMetric<Double>
+    var othertotalStockholdersEquity: BalanceSheetFinancialMetric<Double>
+    var totalStockholdersEquity: BalanceSheetFinancialMetric<Double>
+    var totalLiabilitiesAndStockholdersEquity: BalanceSheetFinancialMetric<Double>
+    var totalInvestments: BalanceSheetFinancialMetric<Double>
+    var totalDebt: BalanceSheetFinancialMetric<Double>
+    var netDebt: BalanceSheetFinancialMetric<Double>
     
-    var metrics: [FinancialMetric<Double>] {
+    var metrics: [BalanceSheetFinancialMetric<Double>] {
         [cashAndCashEquivalents, shortTermInvestments, cashAndShortTermInvestments, netReceivables, inventory, otherCurrentAssets, totalCurrentAssets, propertyPlantEquipmentNet, goodwill, intangibleAssets, goodwillAndIntangibleAssets, longTermInvestments, taxAssets, otherNonCurrentAssets, totalNonCurrentAssets, otherAssets, totalAssets, accountPayables, shortTermDebt, taxPayables, deferredRevenue, otherCurrentLiabilities, totalCurrentLiabilities, longTermDebt, deferredRevenueNonCurrent, deferrredTaxLiabilitiesNonCurrent, otherNonCurrentLiabilities, totalNonCurrentLiabilities, otherLiabilities, totalLiabilities, commonStock, retainedEarnings, accumulatedOtherComprehensiveIncomeLoss, othertotalStockholdersEquity, totalStockholdersEquity, totalLiabilitiesAndStockholdersEquity, totalInvestments, totalDebt, netDebt]
     }
     

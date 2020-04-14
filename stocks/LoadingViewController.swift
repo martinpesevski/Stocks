@@ -44,7 +44,7 @@ class LoadingViewController: ViewController {
             UserDefaults.standard.set(data, forKey: "tickerData")
             DataParser.parseJson(type: [Ticker].self, data: data) { array, error in
                 if let array = array { self.setupStocks(data: array)}
-                if let error = error { NSLog("error loading tickers" + error.localizedDescription) }
+                if let error = error { NSLog("error loading tickers: " + error.localizedDescription) }
             }
         }.resume()
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-let apiKey = "bbfe8c1a2f7574cc1fac10b5eeb35d73"
+let apiKey = "24000acc2bb9d552b74092e7f0c288c8"
 
 enum Endpoints {
     case tickers
@@ -29,7 +29,7 @@ enum Endpoints {
         case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)") ?? URL(fileURLWithPath: "")
         case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)") ?? URL(fileURLWithPath: "")
         case .balanceSheetAnnual(ticker: let ticker): return URL(string: "https://fmpcloud.io/api/v3/balance-sheet-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://fmpcloud.io/api/v3/income-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)") ?? URL(fileURLWithPath: "")
         case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://fmpcloud.io/api/v3/cash-flow-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
             switch (sector, marketCap) {
