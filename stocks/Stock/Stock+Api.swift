@@ -33,6 +33,7 @@ extension Stock {
                     return }
 
                 self.keyMetricsOverTime = data
+                self.calculateIntrinsicValue()
                 completion?(error == nil)
             }
         }
