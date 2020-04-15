@@ -27,6 +27,7 @@
 		52D0CC4C244643E300C36300 /* CashFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC4B244643E300C36300 /* CashFlowViewController.swift */; };
 		52D0CC4E24464EE400C36300 /* PeriodicValueChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */; };
 		52D0CC502447577300C36300 /* SimpleGrowthChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC4F2447577300C36300 /* SimpleGrowthChart.swift */; };
+		52D0CC5424476D0100C36300 /* StockDetailHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D0CC5324476D0100C36300 /* StockDetailHelpers.swift */; };
 		52D65F2D2433AC0C00647074 /* GrowthTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D65F2C2433AC0C00647074 /* GrowthTable.swift */; };
 		52D9B1B924292C9700E67BF2 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1B824292C9700E67BF2 /* Ticker.swift */; };
 		52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BA24292CCF00E67BF2 /* Profile.swift */; };
@@ -111,6 +112,7 @@
 		52D0CC4B244643E300C36300 /* CashFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashFlowViewController.swift; sourceTree = "<group>"; };
 		52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodicValueChangeViewController.swift; sourceTree = "<group>"; };
 		52D0CC4F2447577300C36300 /* SimpleGrowthChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGrowthChart.swift; sourceTree = "<group>"; };
+		52D0CC5324476D0100C36300 /* StockDetailHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailHelpers.swift; sourceTree = "<group>"; };
 		52D65F2C2433AC0C00647074 /* GrowthTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthTable.swift; sourceTree = "<group>"; };
 		52D9B1B824292C9700E67BF2 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		52D9B1BA24292CCF00E67BF2 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */,
 				52D0CC4B244643E300C36300 /* CashFlowViewController.swift */,
 				52D0CC4F2447577300C36300 /* SimpleGrowthChart.swift */,
+				52D0CC5324476D0100C36300 /* StockDetailHelpers.swift */,
 			);
 			path = StockDetails;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */,
 				5245609B23FC7685003686BE /* SceneDelegate.swift in Sources */,
 				C71E387E243830BC00E9A84B /* SectorFilter.swift in Sources */,
+				52D0CC5424476D0100C36300 /* StockDetailHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

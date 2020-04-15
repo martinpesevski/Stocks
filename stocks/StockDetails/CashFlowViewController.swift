@@ -8,18 +8,14 @@
 
 import UIKit
 
-class CashFlowViewController: ViewController, MetricKeyValueDelegate {
+class CashFlowViewController: StackViewController, MetricKeyValueDelegate {
     let cashFlows: CashFlowsArray
-
-    lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
-    lazy var subtitleView = UILabel(text: "Cash flow statement", font: UIFont.systemFont(ofSize: 17, weight: .bold))
-    lazy var content = ScrollableStackView(views: [titleView, subtitleView], spacing: 10)
 
     init(cashFlows: CashFlowsArray) {
         self.cashFlows = cashFlows
-        super.init(nibName: nil, bundle: nil)
+        super.init()
         titleView.text = cashFlows.symbol
-        content.setCustomSpacing(25, after: subtitleView)
+        subtitleView.text = "Cash flow statement"
 
         guard let metrics = cashFlows.financials?[safe: 0]?.metrics else { return }
 
@@ -34,21 +30,16 @@ class CashFlowViewController: ViewController, MetricKeyValueDelegate {
     func didSelectMetric(_ metric: Metric) {
         guard let financials = cashFlows.financials else { return }
         var mapped: [PeriodicFinancialModel] = []
+        let periodicValues = cashFlows.periodicValues(metric: metric)
         for financial in financials {
-            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value))
+            for (index, mtc) in financial.metrics.enumerated() where mtc.metricType?.text == metric.text {
+                let percentage = ((periodicValues[index] - (periodicValues[safe: index - 1] ?? 0)) / periodicValues[index]) * 100
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentage))
             }
         }
 
         let vc = PeriodicValueChangeViewController(ticker: cashFlows.symbol, metricType: metric.text, periodicChange: mapped)
         show(vc, sender: self)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.view.addSubview(content)
-        content.snp.makeConstraints { make in make.edges.equalTo(view.layoutMarginsGuide) }
     }
 
     required init?(coder: NSCoder) {

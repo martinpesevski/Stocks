@@ -11,30 +11,42 @@ import UIKit
 struct PeriodicFinancialModel {
     var period: String
     var value: String
+    var percentChange: Double
+
+    var percentChangeString: String { return String.init(format: "%.2f%%", percentChange) }
+    var percentColor: UIColor { return percentChange < 0 ? UIColor.systemRed : UIColor.systemGreen }
 }
 
-class PeriodicValueChangeViewController: ViewController {
-    lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
-    lazy var subtitleView = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
-    lazy var content = ScrollableStackView(views: [titleView, subtitleView], spacing: 10)
+class PercentChangeKeyValueView: KeyValueView {
+    lazy var percentLabel = UILabel(font: UIFont.systemFont(ofSize: 12), alignment: .right)
+    lazy var valueStack = UIStackView(views: [], axis: .vertical, spacing: 5)
+    init(model: PeriodicFinancialModel) {
+        super.init(key: model.period, value: model.value)
+        valueLabel.removeFromSuperview()
+        percentLabel.text = model.percentChangeString
+        percentLabel.textColor = model.percentColor
 
-    init(ticker: String, metricType: String, periodicChange: [PeriodicFinancialModel]) {
-        super.init(nibName: nil, bundle: nil)
-        titleView.text = ticker
-        subtitleView.text = metricType
-        content.setCustomSpacing(25, after: subtitleView)
+        valueStack.addArrangedSubview(valueLabel)
+        valueStack.addArrangedSubview(percentLabel)
 
-        for metric in periodicChange {
-            let cell = KeyValueView(key: metric.period, value: metric.value)
-            content.addArrangedSubview(cell)
-        }
+        addArrangedSubview(valueStack)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
-        self.view.addSubview(content)
-        content.snp.makeConstraints { make in make.edges.equalTo(view.layoutMarginsGuide) }
+class PeriodicValueChangeViewController: StackViewController {
+    init(ticker: String, metricType: String, periodicChange: [PeriodicFinancialModel]) {
+        super.init()
+        titleView.text = ticker
+        subtitleView.text = metricType
+
+        for metric in periodicChange {
+            let cell = PercentChangeKeyValueView(model: metric)
+            content.addArrangedSubview(cell)
+        }
     }
 
     required init?(coder: NSCoder) {

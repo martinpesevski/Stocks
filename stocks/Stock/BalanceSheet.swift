@@ -71,9 +71,10 @@ struct BalanceSheetArray: Codable {
     var financials: [BalanceSheet]?
 
     func periodicValues(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (sheet1, sheet2) -> Bool in
-            return sheet1.date < sheet2.date
+        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
+            return first.date < second.date
         }) else { return [] }
+        
         var mapped: [Double] = []
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
