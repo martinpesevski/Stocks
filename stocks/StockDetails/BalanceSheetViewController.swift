@@ -25,6 +25,7 @@ class BalanceSheetViewController: ViewController, MetricKeyValueDelegate {
 
         for metric in metrics {
             let cell = MetricKeyValueView(metric: metric)
+            cell.chart.setData(balanceSheets.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
         }

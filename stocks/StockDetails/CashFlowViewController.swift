@@ -25,6 +25,7 @@ class CashFlowViewController: ViewController, MetricKeyValueDelegate {
 
         for metric in metrics {
             let cell = MetricKeyValueView(metric: metric)
+            cell.chart.setData(cashFlows.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
         }

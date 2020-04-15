@@ -15,11 +15,13 @@ protocol MetricKeyValueDelegate: class {
 class MetricKeyValueView: KeyValueView {
     weak var delegate: MetricKeyValueDelegate?
     let metric: Metric
+    lazy var chart = SimpleGrowthChart()
 
     init(metric: Metric) {
         self.metric = metric
         super.init(key: metric.text, value: metric.value)
-
+        valueLabel.removeFromSuperview()
+        addArrangedSubview(chart)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
@@ -49,6 +51,7 @@ class IncomeStatementViewController: ViewController, MetricKeyValueDelegate {
         
         for metric in metrics {
             let cell = MetricKeyValueView(metric: metric)
+            cell.chart.setData(incomeStatements.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
         }

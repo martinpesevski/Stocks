@@ -9,6 +9,7 @@ target 'stocks' do
 
 	pod 'lottie-ios'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Charts'
 
   def testing_pods
       pod 'Quick'

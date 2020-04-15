@@ -11,6 +11,20 @@ import Foundation
 struct CashFlowsArray: Codable {
     var symbol: String
     var financials: [CashFlow]?
+
+    func periodicValues(metric: Metric) -> [Double] {
+        guard let financials = financials?.sorted(by: { (sheet1, sheet2) -> Bool in
+            return sheet1.date < sheet2.date
+        }) else { return [] }
+        var mapped: [Double] = []
+        for financial in financials {
+            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+                mapped.append(mtc.value.doubleValue ?? 0)
+            }
+        }
+
+        return mapped
+    }
 }
 
 struct CashFlowFinancialMetric: Codable, Metric {

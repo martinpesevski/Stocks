@@ -16,6 +16,20 @@ protocol Metric {
 struct IncomeStatementsArray: Codable {
     var symbol: String
     var financials: [IncomeStatement]?
+
+    func periodicValues(metric: Metric) -> [Double] {
+        guard let financials = financials?.sorted(by: { (sheet1, sheet2) -> Bool in
+            return sheet1.date < sheet2.date
+        }) else { return [] }
+        var mapped: [Double] = []
+        for financial in financials {
+            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+                mapped.append(mtc.value.doubleValue ?? 0)
+            }
+        }
+
+        return mapped
+    }
 }
 
 struct IncomeStatementFinancialMetric: Codable, Metric {
@@ -69,47 +83,6 @@ struct IncomeStatement: Codable {
     var metrics: [IncomeStatementFinancialMetric] {
         [revenue, revenueGrowth, costOfRevenue, grossProfit, rndExpenses, sgnaExpense, operatingExpense, operatingIncome, interestExpense, earningsBeforeTax, incomeTaxExpense, netIncomeNonInterest, netIncomeDiscontinuedOps, netIncome, preferredDividends, netIncomeComonStock, eps, epsDiluted, weightedAvgSharesOut, weightedAvgSharesOutDil, dividendPerShare, grossMargin, ebitdaMargin, ebitMargin, profitMargin, freeCashFlowMargin, ebitda, ebit, consolidatedIncome, earningsBeforeTaxMargin, netProfitMargin]
     }
-    
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        date = try values.decode(String.self, forKey: .date)
-//        revenue = try values.decode(IncomeStatementFinancialMetric.self, forKey: .revenue)
-//        revenueGrowth = try values.decode(IncomeStatementFinancialMetric.self, forKey: .revenueGrowth)
-//        costOfRevenue = try values.decode(IncomeStatementFinancialMetric.self, forKey: .costOfRevenue)
-//        grossProfit = try values.decode(IncomeStatementFinancialMetric.self, forKey: .grossProfit)
-//        rndExpenses = try values.decode(IncomeStatementFinancialMetric.self, forKey: .rndExpenses)
-//        sgnaExpense = try values.decode(IncomeStatementFinancialMetric.self, forKey: .sgnaExpense)
-//        operatingExpense = try values.decode(IncomeStatementFinancialMetric.self, forKey: .operatingExpense)
-//        operatingIncome = try values.decode(IncomeStatementFinancialMetric.self, forKey: .operatingIncome)
-//        interestExpense = try values.decode(IncomeStatementFinancialMetric.self, forKey: .interestExpense)
-//        earningsBeforeTax = try values.decode(IncomeStatementFinancialMetric.self, forKey: .earningsBeforeTax)
-//        incomeTaxExpense = try values.decode(IncomeStatementFinancialMetric.self, forKey: .incomeTaxExpense)
-//        netIncomeNonInterest = try values.decode(IncomeStatementFinancialMetric.self, forKey: .netIncomeNonInterest)
-//        netIncomeDiscontinuedOps = try values.decode(IncomeStatementFinancialMetric.self, forKey: .netIncomeDiscontinuedOps)
-//        netIncome = try values.decode(IncomeStatementFinancialMetric.self, forKey: .netIncome)
-//        preferredDividends = try values.decode(IncomeStatementFinancialMetric.self, forKey: .preferredDividends)
-//        netIncomeComonStock = try values.decode(IncomeStatementFinancialMetric.self, forKey: .netIncomeComonStock)
-//        eps = try values.decode(IncomeStatementFinancialMetric.self, forKey: .eps)
-//        epsDiluted = try values.decode(IncomeStatementFinancialMetric.self, forKey: .epsDiluted)
-//        weightedAvgSharesOut = try values.decode(IncomeStatementFinancialMetric.self, forKey: .weightedAvgSharesOut)
-//        weightedAvgSharesOutDil = try values.decode(IncomeStatementFinancialMetric.self, forKey: .weightedAvgSharesOutDil)
-//        dividendPerShare = try values.decode(IncomeStatementFinancialMetric.self, forKey: .dividendPerShare)
-//        grossMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .grossMargin)
-//        ebitdaMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .ebitdaMargin)
-//        ebitMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .ebitMargin)
-//        profitMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .profitMargin)
-//        freeCashFlowMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .freeCashFlowMargin)
-//        ebitda = try values.decode(IncomeStatementFinancialMetric.self, forKey: .ebitda)
-//        ebit = try values.decode(IncomeStatementFinancialMetric.self, forKey: .ebit)
-//        consolidatedIncome = try values.decode(IncomeStatementFinancialMetric.self, forKey: .consolidatedIncome)
-//        earningsBeforeTaxMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .earningsBeforeTaxMargin)
-//        netProfitMargin = try values.decode(IncomeStatementFinancialMetric.self, forKey: .netProfitMargin)
-//    }
-//
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(revenue, forKey: .revenue)
-//    }
     
     private enum CodingKeys: String, CodingKey {
         case date = "date"
