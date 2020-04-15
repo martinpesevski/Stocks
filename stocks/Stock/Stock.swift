@@ -50,7 +50,7 @@ class Stock {
     var keyMetricsOverTime: KeyMetricsArray?
     var growthMetrics: [GrowthMetrics]?
     var intrinsicValue: IntrinsicValue?
-    var balanceSheets: [BalanceSheet]?
+    var balanceSheets: BalanceSheetArray?
     var incomeStatements: IncomeStatementsArray?
     var cashFlows: CashFlowsArray?
 

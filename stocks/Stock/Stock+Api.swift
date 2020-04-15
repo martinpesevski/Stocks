@@ -40,7 +40,7 @@ extension Stock {
     }
     
     func getBalanceSheet(completion: ((Bool) -> ())? = nil) {
-        URLSession.shared.datatask(type: [BalanceSheet].self,
+        URLSession.shared.datatask(type: BalanceSheetArray.self,
                                    url: Endpoints.balanceSheetAnnual(ticker: ticker.symbol).url) {
                                     [weak self] data, response, error in
             guard let self = self, let data = data else {
@@ -87,6 +87,11 @@ extension Stock {
         
         group.enter()
         getIncomeStatement() { _ in
+            group.leave()
+        }
+
+        group.enter()
+        getBalanceSheet() { _ in
             group.leave()
         }
 

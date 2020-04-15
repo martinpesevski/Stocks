@@ -16,153 +16,127 @@ enum FiscalPeriod: String, Codable {
     case fourthQuarter = "Q4"
 }
 
-struct BalanceSheetFinancialMetric<T: Codable>: Codable {
-    let value: T
+struct BalanceSheetFinancialMetric: Codable, Metric {
+    let value: String
     var metricType: BalanceSheetMetricType?
-    
+
+    var text: String { metricType?.text ?? "" }
+
     init(from decoder: Decoder) throws {
-        value = try decoder.singleValueContainer().decode(T.self)
-        if decoder.codingPath.count > 1 {
-            metricType = BalanceSheetMetricType(rawValue: decoder.codingPath[1].stringValue)
+        value = try decoder.singleValueContainer().decode(String.self)
+        if decoder.codingPath.count > 2 {
+            metricType = BalanceSheetMetricType(rawValue: decoder.codingPath[2].stringValue)
         }
     }
 }
 
 enum BalanceSheetMetricType: String, Codable {
-    case cashAndCashEquivalents = "cashAndCashEquivalents"
-    case shortTermInvestments = "shortTermInvestments"
-    case cashAndShortTermInvestments = "cashAndShortTermInvestments"
-    case netReceivables = "netReceivables"
-    case inventory = "inventory"
-    case otherCurrentAssets = "otherCurrentAssets"
-    case totalCurrentAssets = "totalCurrentAssets"
-    case propertyPlantEquipmentNet = "propertyPlantEquipmentNet"
-    case goodwill = "goodwill"
-    case intangibleAssets = "intangibleAssets"
-    case goodwillAndIntangibleAssets = "goodwillAndIntangibleAssets"
-    case longTermInvestments = "longTermInvestments"
-    case taxAssets = "taxAssets"
-    case otherNonCurrentAssets = "otherNonCurrentAssets"
-    case totalNonCurrentAssets = "totalNonCurrentAssets"
-    case otherAssets = "otherAssets"
-    case totalAssets = "totalAssets"
-    case accountPayables = "accountPayables"
-    case shortTermDebt = "shortTermDebt"
-    case taxPayables = "taxPayables"
-    case deferredRevenue = "deferredRevenue"
-    case otherCurrentLiabilities = "otherCurrentLiabilities"
-    case totalCurrentLiabilities = "totalCurrentLiabilities"
-    case longTermDebt = "longTermDebt"
-    case deferredRevenueNonCurrent = "deferredRevenueNonCurrent"
-    case deferrredTaxLiabilitiesNonCurrent = "deferrredTaxLiabilitiesNonCurrent"
-    case otherNonCurrentLiabilities = "otherNonCurrentLiabilities"
-    case totalNonCurrentLiabilities = "totalNonCurrentLiabilities"
-    case otherLiabilities = "otherLiabilities"
-    case totalLiabilities = "totalLiabilities"
-    case commonStock = "commonStock"
-    case retainedEarnings = "retainedEarnings"
-    case accumulatedOtherComprehensiveIncomeLoss = "accumulatedOtherComprehensiveIncomeLoss"
-    case othertotalStockholdersEquity = "othertotalStockholdersEquity"
-    case totalStockholdersEquity = "totalStockholdersEquity"
-    case totalLiabilitiesAndStockholdersEquity = "totalLiabilitiesAndStockholdersEquity"
-    case totalInvestments = "totalInvestments"
-    case totalDebt = "totalDebt"
-    case netDebt = "netDebt"
+    case cashAndCashEquivalents = "Cash and cash equivalents"
+    case shortTermInvestments = "Short-term investments"
+    case cashAndShortTermInvestments = "Cash and short-term investments"
+    case netReceivables = "Receivables"
+    case inventory = "Inventories"
+    case totalCurrentAssets = "Total current assets"
+    case propertyPlantEquipmentNet = "Property, Plant & Equipment Net"
+    case goodwillAndIntangibleAssets = "Goodwill and Intangible Assets"
+    case longTermInvestments = "Long-term investments"
+    case taxAssets = "Tax assets"
+    case totalNonCurrentAssets = "Total non-current assets"
+    case totalAssets = "Total assets"
+    case accountPayables = "Payables"
+    case shortTermDebt = "Short-term debt"
+    case totalCurrentLiabilities = "Total current liabilities"
+    case longTermDebt = "Long-term debt"
+    case totalDebt = "Total debt"
+    case deferredRevenue = "Deferred revenue"
+    case taxLiabilities = "Tax Liabilities"
+    case depositLiabilities = "Deposit Liabilities"
+    case totalNonCurrentLiabilities = "Total non-current liabilities"
+    case totalLiabilities = "Total liabilities"
+    case otherComprehensiveIncome = "Other comprehensive income"
+    case retainedEarnings = "Retained earnings (deficit)"
+    case totalStockholdersEquity = "Total shareholders equity"
+    case totalInvestments = "Investments"
+    case netDebt = "Net Debt"
+    case otherAssets = "Other Assets"
+    case otherLiabilities = "Other Liabilities"
     
     var text: String {
-        switch self {
-        case .cashAndCashEquivalents: return "Cash and cash equivalents"
-        case .shortTermInvestments: return "Short term investments"
-        case .cashAndShortTermInvestments: return "Cash and short term investments"
-        case .netReceivables: return "Net receivables"
-        case .inventory: return "Inventory"
-        case .otherCurrentAssets: return "Other current assets"
-        case .totalCurrentAssets: return "Total current assets"
-        case .propertyPlantEquipmentNet: return "Property plant equipment net"
-        case .goodwill: return "Goodwill"
-        case .intangibleAssets: return "Intangible assets"
-        case .goodwillAndIntangibleAssets: return "Goodwill and intangible assets"
-        case .longTermInvestments: return "Long term investments"
-        case .taxAssets: return "Tax assets"
-        case .otherNonCurrentAssets: return "Other non current assets"
-        case .totalNonCurrentAssets: return "Total non current assets"
-        case .otherAssets: return "Other assets"
-        case .totalAssets: return "Total assets"
-        case .accountPayables: return "Account payables"
-        case .shortTermDebt: return "Short term debt"
-        case .taxPayables: return "Tax payables"
-        case .deferredRevenue: return "Deferred revenue"
-        case .otherCurrentLiabilities: return "Other current liabilities"
-        case .totalCurrentLiabilities: return "Total current liabilities"
-        case .longTermDebt: return "Long term debt"
-        case .deferredRevenueNonCurrent: return "Deferred revenue non current"
-        case .deferrredTaxLiabilitiesNonCurrent: return "Deferrred tax liabilities non current"
-        case .otherNonCurrentLiabilities: return "Other non current liabilities"
-        case .totalNonCurrentLiabilities: return "Total non current liabilities"
-        case .otherLiabilities: return "Other liabilities"
-        case .totalLiabilities: return "Total liabilities"
-        case .commonStock: return "Common stock"
-        case .retainedEarnings: return "Retained earnings"
-        case .accumulatedOtherComprehensiveIncomeLoss: return "Accumulated other comprehensive income/loss"
-        case .othertotalStockholdersEquity: return "Other total stockholders equity"
-        case .totalStockholdersEquity: return "Total stockholders equity"
-        case .totalLiabilitiesAndStockholdersEquity: return "Total liabilities and stockholders equity"
-        case .totalInvestments: return "Total investments"
-        case .totalDebt: return "Total debt"
-        case .netDebt: return "Net debt"
-        }
+       return rawValue
     }
 }
 
-struct BalanceSheet: Codable, StockIdentifiable {
-    var date: String
+struct BalanceSheetArray: Codable {
     var symbol: String
-    var period: FiscalPeriod
-    var cashAndCashEquivalents: BalanceSheetFinancialMetric<Double>
-    var shortTermInvestments: BalanceSheetFinancialMetric<Double>
-    var cashAndShortTermInvestments: BalanceSheetFinancialMetric<Double>
-    var netReceivables: BalanceSheetFinancialMetric<Double>
-    var inventory: BalanceSheetFinancialMetric<Double>
-    var otherCurrentAssets: BalanceSheetFinancialMetric<Double>
-    var totalCurrentAssets: BalanceSheetFinancialMetric<Double>
-    var propertyPlantEquipmentNet: BalanceSheetFinancialMetric<Double>
-    var goodwill: BalanceSheetFinancialMetric<Double>
-    var intangibleAssets: BalanceSheetFinancialMetric<Double>
-    var goodwillAndIntangibleAssets: BalanceSheetFinancialMetric<Double>
-    var longTermInvestments: BalanceSheetFinancialMetric<Double>
-    var taxAssets: BalanceSheetFinancialMetric<Double>
-    var otherNonCurrentAssets: BalanceSheetFinancialMetric<Double>
-    var totalNonCurrentAssets: BalanceSheetFinancialMetric<Double>
-    var otherAssets: BalanceSheetFinancialMetric<Double>
-    var totalAssets: BalanceSheetFinancialMetric<Double>
-    var accountPayables: BalanceSheetFinancialMetric<Double>
-    var shortTermDebt: BalanceSheetFinancialMetric<Double>
-    var taxPayables: BalanceSheetFinancialMetric<Double>
-    var deferredRevenue: BalanceSheetFinancialMetric<Double>
-    var otherCurrentLiabilities: BalanceSheetFinancialMetric<Double>
-    var totalCurrentLiabilities: BalanceSheetFinancialMetric<Double>
-    var longTermDebt: BalanceSheetFinancialMetric<Double>
-    var deferredRevenueNonCurrent: BalanceSheetFinancialMetric<Double>
-    var deferrredTaxLiabilitiesNonCurrent: BalanceSheetFinancialMetric<Double>
-    var otherNonCurrentLiabilities: BalanceSheetFinancialMetric<Double>
-    var totalNonCurrentLiabilities: BalanceSheetFinancialMetric<Double>
-    var otherLiabilities: BalanceSheetFinancialMetric<Double>
-    var totalLiabilities: BalanceSheetFinancialMetric<Double>
-    var commonStock: BalanceSheetFinancialMetric<Double>
-    var retainedEarnings: BalanceSheetFinancialMetric<Double>
-    var accumulatedOtherComprehensiveIncomeLoss: BalanceSheetFinancialMetric<Double>
-    var othertotalStockholdersEquity: BalanceSheetFinancialMetric<Double>
-    var totalStockholdersEquity: BalanceSheetFinancialMetric<Double>
-    var totalLiabilitiesAndStockholdersEquity: BalanceSheetFinancialMetric<Double>
-    var totalInvestments: BalanceSheetFinancialMetric<Double>
-    var totalDebt: BalanceSheetFinancialMetric<Double>
-    var netDebt: BalanceSheetFinancialMetric<Double>
+    var financials: [BalanceSheet]?
+}
+
+struct BalanceSheet: Codable {
+    var date: String
+    var cashAndCashEquivalents: BalanceSheetFinancialMetric
+    var shortTermInvestments: BalanceSheetFinancialMetric
+    var cashAndShortTermInvestments: BalanceSheetFinancialMetric
+    var netReceivables: BalanceSheetFinancialMetric
+    var inventory: BalanceSheetFinancialMetric
+    var totalCurrentAssets: BalanceSheetFinancialMetric
+    var propertyPlantEquipmentNet: BalanceSheetFinancialMetric
+    var goodwillAndIntangibleAssets: BalanceSheetFinancialMetric
+    var longTermInvestments: BalanceSheetFinancialMetric
+    var taxAssets: BalanceSheetFinancialMetric
+    var totalNonCurrentAssets: BalanceSheetFinancialMetric
+    var totalAssets: BalanceSheetFinancialMetric
+    var accountPayables: BalanceSheetFinancialMetric
+    var shortTermDebt: BalanceSheetFinancialMetric
+    var totalCurrentLiabilities: BalanceSheetFinancialMetric
+    var longTermDebt: BalanceSheetFinancialMetric
+    var totalDebt: BalanceSheetFinancialMetric
+    var deferredRevenue: BalanceSheetFinancialMetric
+    var taxLiabilities: BalanceSheetFinancialMetric
+    var depositLiabilities: BalanceSheetFinancialMetric
+    var totalNonCurrentLiabilities: BalanceSheetFinancialMetric
+    var totalLiabilities: BalanceSheetFinancialMetric
+    var otherComprehensiveIncome: BalanceSheetFinancialMetric
+    var retainedEarnings: BalanceSheetFinancialMetric
+    var totalStockholdersEquity: BalanceSheetFinancialMetric
+    var totalInvestments: BalanceSheetFinancialMetric
+    var netDebt: BalanceSheetFinancialMetric
+    var otherAssets: BalanceSheetFinancialMetric
+    var otherLiabilities: BalanceSheetFinancialMetric
     
-    var metrics: [BalanceSheetFinancialMetric<Double>] {
-        [cashAndCashEquivalents, shortTermInvestments, cashAndShortTermInvestments, netReceivables, inventory, otherCurrentAssets, totalCurrentAssets, propertyPlantEquipmentNet, goodwill, intangibleAssets, goodwillAndIntangibleAssets, longTermInvestments, taxAssets, otherNonCurrentAssets, totalNonCurrentAssets, otherAssets, totalAssets, accountPayables, shortTermDebt, taxPayables, deferredRevenue, otherCurrentLiabilities, totalCurrentLiabilities, longTermDebt, deferredRevenueNonCurrent, deferrredTaxLiabilitiesNonCurrent, otherNonCurrentLiabilities, totalNonCurrentLiabilities, otherLiabilities, totalLiabilities, commonStock, retainedEarnings, accumulatedOtherComprehensiveIncomeLoss, othertotalStockholdersEquity, totalStockholdersEquity, totalLiabilitiesAndStockholdersEquity, totalInvestments, totalDebt, netDebt]
+    var metrics: [BalanceSheetFinancialMetric] {
+        [cashAndCashEquivalents, shortTermInvestments, cashAndShortTermInvestments, netReceivables, inventory, totalCurrentAssets, propertyPlantEquipmentNet, goodwillAndIntangibleAssets, longTermInvestments, taxAssets, totalNonCurrentAssets, totalAssets, accountPayables, shortTermDebt, totalCurrentLiabilities, longTermDebt, deferredRevenue, taxLiabilities, depositLiabilities, totalNonCurrentLiabilities, totalLiabilities, otherComprehensiveIncome, retainedEarnings, totalStockholdersEquity, totalInvestments, netDebt, otherAssets, otherLiabilities]
     }
-    
-    static func stockIdentifier(_ ticker: String) -> String {
-        return "balance sheet \(ticker)"
+
+    private enum CodingKeys: String, CodingKey {
+        case date = "date"
+        case cashAndCashEquivalents = "Cash and cash equivalents"
+        case shortTermInvestments = "Short-term investments"
+        case cashAndShortTermInvestments = "Cash and short-term investments"
+        case netReceivables = "Receivables"
+        case inventory = "Inventories"
+        case totalCurrentAssets = "Total current assets"
+        case propertyPlantEquipmentNet = "Property, Plant & Equipment Net"
+        case goodwillAndIntangibleAssets = "Goodwill and Intangible Assets"
+        case longTermInvestments = "Long-term investments"
+        case taxAssets = "Tax assets"
+        case totalNonCurrentAssets = "Total non-current assets"
+        case totalAssets = "Total assets"
+        case accountPayables = "Payables"
+        case shortTermDebt = "Short-term debt"
+        case totalCurrentLiabilities = "Total current liabilities"
+        case longTermDebt = "Long-term debt"
+        case totalDebt = "Total debt"
+        case deferredRevenue = "Deferred revenue"
+        case taxLiabilities = "Tax Liabilities"
+        case depositLiabilities = "Deposit Liabilities"
+        case totalNonCurrentLiabilities = "Total non-current liabilities"
+        case totalLiabilities = "Total liabilities"
+        case otherComprehensiveIncome = "Other comprehensive income"
+        case retainedEarnings = "Retained earnings (deficit)"
+        case totalStockholdersEquity = "Total shareholders equity"
+        case totalInvestments = "Investments"
+        case netDebt = "Net Debt"
+        case otherAssets = "Other Assets"
+        case otherLiabilities = "Other Liabilities"
     }
 }

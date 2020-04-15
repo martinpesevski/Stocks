@@ -45,8 +45,8 @@ class FinancialsViewController: ViewController {
     }
     
     @objc func onBalanceSheet() {
-        guard let balanceSheet = stock.balanceSheets?[safe: 0] else { return }
-        let vc = BalanceSheetViewController(balanceSheet: balanceSheet)
+        guard let balanceSheets = stock.balanceSheets else { return }
+        let vc = BalanceSheetViewController(balanceSheets: balanceSheets)
         show(vc, sender: self)
     }
     
