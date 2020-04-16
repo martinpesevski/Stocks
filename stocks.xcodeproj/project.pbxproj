@@ -258,16 +258,24 @@
 			path = stocksUITests;
 			sourceTree = "<group>";
 		};
-		52D65F2B2433ABC400647074 /* StockDetails */ = {
+		52D0CC552448C04700C36300 /* Financial view controllers */ = {
 			isa = PBXGroup;
 			children = (
-				52A5E018242BEFB000C25872 /* StockDetailViewController.swift */,
 				C708ED112444E6E100FC9425 /* FinancialsViewController.swift */,
-				52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */,
-				52D65F2C2433AC0C00647074 /* GrowthTable.swift */,
 				C708ED0F2444C2F800FC9425 /* BalanceSheetViewController.swift */,
 				C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */,
 				52D0CC4B244643E300C36300 /* CashFlowViewController.swift */,
+			);
+			path = "Financial view controllers";
+			sourceTree = "<group>";
+		};
+		52D65F2B2433ABC400647074 /* StockDetails */ = {
+			isa = PBXGroup;
+			children = (
+				52D0CC552448C04700C36300 /* Financial view controllers */,
+				52A5E018242BEFB000C25872 /* StockDetailViewController.swift */,
+				52D65F2C2433AC0C00647074 /* GrowthTable.swift */,
+				52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */,
 				52D0CC4F2447577300C36300 /* SimpleGrowthChart.swift */,
 				52D0CC5324476D0100C36300 /* StockDetailHelpers.swift */,
 			);
