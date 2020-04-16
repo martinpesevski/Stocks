@@ -75,3 +75,16 @@ extension UIView {
         }
     }
 }
+
+class ExponentRemoverFormatter: NumberFormatter {
+    static var shared = ExponentRemoverFormatter()
+
+    override init() {
+        super.init()
+        numberStyle = .decimal
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

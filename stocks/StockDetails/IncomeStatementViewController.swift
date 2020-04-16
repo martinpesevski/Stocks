@@ -30,10 +30,10 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
     func didSelectMetric(_ metric: Metric) {
         guard let financials = incomeStatements.financials else { return }
         var mapped: [PeriodicFinancialModel] = []
-        let periodicValues = incomeStatements.periodicValues(metric: metric)
+        let percentages = incomeStatements.percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: 0))
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
 

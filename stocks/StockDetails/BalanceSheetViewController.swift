@@ -30,11 +30,10 @@ class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
     func didSelectMetric(_ metric: Metric) {
         guard let financials = balanceSheets.financials else { return }
         var mapped: [PeriodicFinancialModel] = []
-        let periodicValues = balanceSheets.periodicValues(metric: metric)
+        let percentages = balanceSheets.percentageIncrease(metric: metric)
         for financial in financials {
             for (index, mtc) in financial.metrics.enumerated() where mtc.metricType?.text == metric.text {
-                let percentage = ((periodicValues[index] - (periodicValues[safe: index - 1] ?? 0)) / periodicValues[index]) * 100
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentage))
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
 

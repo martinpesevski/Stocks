@@ -31,6 +31,25 @@ struct IncomeStatementsArray: Codable {
 
         return mapped
     }
+
+    func percentageIncrease(metric: Metric) -> [Double] {
+        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
+            return first.date < second.date
+        }) else { return [] }
+
+        var mapped: [Double] = []
+        var previousValue: Double = 0
+        for financial in financials {
+            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+                let value = mtc.value.doubleValue ?? 0
+                let percentage = previousValue == 0 ? 0 : (-(previousValue - value)/previousValue) * 100
+                previousValue = value
+                mapped.append(percentage)
+            }
+        }
+
+        return mapped.reversed()
+    }
 }
 
 struct IncomeStatementFinancialMetric: Codable, Metric {
@@ -40,7 +59,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     var text: String { metricType?.text ?? "" }
 
     init(from decoder: Decoder) throws {
-        value = try decoder.singleValueContainer().decode(String.self)
+        value = "\(ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self)) ?? 0)"
         if decoder.codingPath.count > 2 {
             metricType = IncomeStatementMetricType(rawValue: decoder.codingPath[2].stringValue)
         }
