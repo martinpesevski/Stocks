@@ -11,7 +11,7 @@ import UIKit
 class StackViewController: ViewController {
     lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
     lazy var subtitleView = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
-    lazy var content = ScrollableStackView(views: [titleView, subtitleView], spacing: 10)
+    lazy var content = ScrollableStackView(views: [titleView, subtitleView], spacing: 10, layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
 
     init() {
         super.init(nibName: nil, bundle: nil)

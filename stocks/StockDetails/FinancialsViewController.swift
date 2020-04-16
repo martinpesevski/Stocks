@@ -17,7 +17,7 @@ class FinancialsViewController: ViewController {
     lazy var balanceSheet = AccessoryView("Balance sheet", accessoryType: .rightArrow)
     lazy var cashFlow = AccessoryView("Cash flow", accessoryType: .rightArrow)
     
-    lazy var content = ScrollableStackView(views: [titleLabel, descriptionLabel, incomeStatement, balanceSheet, cashFlow], spacing: 10)
+    lazy var content = ScrollableStackView(views: [titleLabel, descriptionLabel, incomeStatement, balanceSheet, cashFlow], spacing: 10, layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
     
     init(stock: Stock) {
         self.stock = stock

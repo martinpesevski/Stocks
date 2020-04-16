@@ -19,9 +19,22 @@ class StockDetailViewController: ViewController {
     }
 
     lazy var nameLabel = UILabel(font: UIFont.systemFont(ofSize: 30, weight: .bold))
-    lazy var priceLabel = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold))
+    lazy var priceLabel = UILabel(text: "Current price:", font: UIFont.systemFont(ofSize: 20, weight: .bold))
+    lazy var priceNumberLabel : UILabel = {
+        let lbl = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold), alignment: .right)
+        lbl.adjustsFontSizeToFitWidth = true
+        lbl.numberOfLines = 1
+        return lbl
+    }()
     lazy var intrinsicValueLabel = UILabel(text: "Intrinsic Value:", font: UIFont.systemFont(ofSize: 20, weight: .bold))
-    lazy var intrinsicValueNumber = UILabel(font: UIFont.systemFont(ofSize: 30, weight: .bold))
+    lazy var intrinsicValueNumber: UILabel = {
+        let lbl = UILabel(font: UIFont.systemFont(ofSize: 30, weight: .bold), alignment: .right)
+        lbl.adjustsFontSizeToFitWidth = true
+        lbl.numberOfLines = 1
+        return lbl
+    }()
+
+    lazy var priceStack = UIStackView(views: [priceLabel, priceNumberLabel], axis: .horizontal, spacing: 10)
     lazy var intrinsicValueDiscount = UILabel(font: UIFont.systemFont(ofSize: 15), alignment: .right)
     lazy var ivNumberStack = UIStackView(views: [intrinsicValueNumber, intrinsicValueDiscount], axis: .vertical, spacing: 5)
     lazy var ivStack = UIStackView(views: [intrinsicValueLabel, ivNumberStack], axis: .horizontal, spacing: 10)
@@ -33,7 +46,7 @@ class StockDetailViewController: ViewController {
     lazy var growthTable = GrowthTable()
 
     lazy var stockStack: ScrollableStackView = {
-        let stack = ScrollableStackView(views: [nameLabel, priceLabel, ivStack, financials, growth, intrinsicValue], alignment: .fill, spacing: 10,
+        let stack = ScrollableStackView(views: [nameLabel, priceStack, ivStack, financials, growth, intrinsicValue], alignment: .fill, spacing: 10,
         layoutInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         stack.setCustomSpacing(25, after: nameLabel)
         stack.setCustomSpacing(25, after: ivStack)
@@ -62,7 +75,8 @@ class StockDetailViewController: ViewController {
     
     func setup(stock: Stock) {
         nameLabel.text = stock.ticker.detailName
-        priceLabel.text = String(format: "Current price:     $%.2f", stock.ticker.price)
+        priceNumberLabel.text = String(format: "$%.2f", stock.ticker.price)
+
 
         if let intrinsicValue = stock.intrinsicValue {
             intrinsicValueNumber.text = String(format: "$%.2f", intrinsicValue.value)

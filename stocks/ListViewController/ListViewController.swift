@@ -16,7 +16,7 @@ class ListViewController: ViewController {
         table.delegate = self
         table.dataSource = self
         table.register(StockCell.self, forCellReuseIdentifier: "stockCell")
-        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        table.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 100, right: 0)
         table.separatorStyle = .none
         
         return table
