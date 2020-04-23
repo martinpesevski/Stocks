@@ -32,12 +32,15 @@ enum Endpoints {
         case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)") ?? URL(fileURLWithPath: "")
         case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
+
             switch (sector, marketCap) {
             case (let sector?, let marketCap?):
+                guard let sector = sector.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return URL(fileURLWithPath: "") }
                 return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&\(marketCap)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             case (nil, let marketCap?):
                 return URL(string: "https://fmpcloud.io/api/v3/stock-screener?\(marketCap)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             case (let sector?, nil):
+                guard let sector = sector.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return URL(fileURLWithPath: "") }
                 return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             default:
                 return URL(string: "https://fmpcloud.io/api/v3/stock-screener?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
