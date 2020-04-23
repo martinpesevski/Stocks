@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5245609423FC7685003686BE"
-               BuildableName = "stocks.app"
-               BlueprintName = "stocks"
-               ReferencedContainer = "container:stocks.xcodeproj">
+               BuildableName = "Stocker.app"
+               BlueprintName = "Stocker"
+               ReferencedContainer = "container:Stocker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "524560AA23FC7687003686BE"
-               BuildableName = "stocksTests.xctest"
-               BlueprintName = "stocksTests"
-               ReferencedContainer = "container:stocks.xcodeproj">
+               BuildableName = "StockerTests.xctest"
+               BlueprintName = "StockerTests"
+               ReferencedContainer = "container:Stocker.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "524560B523FC7687003686BE"
-               BuildableName = "stocksUITests.xctest"
-               BlueprintName = "stocksUITests"
-               ReferencedContainer = "container:stocks.xcodeproj">
+               BuildableName = "StockerUITests.xctest"
+               BlueprintName = "StockerUITests"
+               ReferencedContainer = "container:Stocker.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5245609423FC7685003686BE"
-            BuildableName = "stocks.app"
-            BlueprintName = "stocks"
-            ReferencedContainer = "container:stocks.xcodeproj">
+            BuildableName = "Stocker.app"
+            BlueprintName = "Stocker"
+            ReferencedContainer = "container:Stocker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -82,9 +82,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5245609423FC7685003686BE"
-            BuildableName = "stocks.app"
-            BlueprintName = "stocks"
-            ReferencedContainer = "container:stocks.xcodeproj">
+            BuildableName = "Stocker.app"
+            BlueprintName = "Stocker"
+            ReferencedContainer = "container:Stocker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
