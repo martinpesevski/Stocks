@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 protocol FilterDelegate: class {
     func didFinishFiltering()
@@ -120,7 +121,9 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
         switch filter {
         case .marketCap:
             marketCapController.selectedCap = self.filter.capFilters
-            show(marketCapController, sender: self)
+//            show(marketCapController, sender: self)
+            let vc = SubscriptionViewController()
+            present(vc, animated: true, completion: nil)
         case .profitability:
             profitabilityController.selectedProfitability = self.filter.profitabilityFilters
             show(profitabilityController, sender: self)
@@ -128,5 +131,22 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
             sectorController.selectedSectors = self.filter.sectorFilters
             show(sectorController, sender: self)
         }
+    }
+}
+
+extension FilterViewController: SKProductsRequestDelegate, SKPaymentQueueDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        print(response)
+        let product = response.products[0]
+        let payment = SKMutablePayment(product: product)
+        payment.applicationUsername = "Stocker Pro"
+        let queue = SKPaymentQueue.default()
+        queue.delegate = self
+        queue.add(payment)
+    }
+    
+    func paymentQueue(_ paymentQueue: SKPaymentQueue, shouldContinue transaction: SKPaymentTransaction, in newStorefront: SKStorefront) -> Bool {
+        if transaction.transactionState == SKPaymentTransactionState.purchased { print("HOORAY") } else { print("BOOO") }
+        return true
     }
 }

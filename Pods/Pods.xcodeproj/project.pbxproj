@@ -524,7 +524,7 @@
 		0A7BF246EACFE451AA23EA2D1CB24E7F /* ZoomViewJob.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZoomViewJob.swift; path = Source/Charts/Jobs/ZoomViewJob.swift; sourceTree = "<group>"; };
 		0C370798D982335C6B0F40CD8D6DC571 /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		0D5AFD16FB612FF6B9C4A902E0938EB5 /* Vectors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Vectors.swift; path = "lottie-swift/src/Public/Primitives/Vectors.swift"; sourceTree = "<group>"; };
-		0D631E9908483F9525A6B3F36F16CC61 /* libQuick.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libQuick.a; path = libQuick.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D631E9908483F9525A6B3F36F16CC61 /* libQuick.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libQuick.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8A09232E98058F5F72F24808D53A44 /* LayerTransformNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayerTransformNode.swift; path = "lottie-swift/src/Private/LayerContainers/Utility/LayerTransformNode.swift"; sourceTree = "<group>"; };
 		0E88F7ADAE753A74ACCDC044F9CD3C0F /* BarLineScatterCandleBubbleChartData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BarLineScatterCandleBubbleChartData.swift; path = Source/Charts/Data/Implementations/Standard/BarLineScatterCandleBubbleChartData.swift; sourceTree = "<group>"; };
 		0F2BAEAAEE9F4641134C510871CD98D9 /* SourceLocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SourceLocation.swift; path = Sources/Nimble/Utils/SourceLocation.swift; sourceTree = "<group>"; };
@@ -648,7 +648,7 @@
 		508891F2554A570C1588BA0769FEDD47 /* String+C99ExtendedIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+C99ExtendedIdentifier.swift"; path = "Sources/Quick/String+C99ExtendedIdentifier.swift"; sourceTree = "<group>"; };
 		50C4BB3068B225402CAA5A7B29BA8F4E /* Marker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = "lottie-swift/src/Private/Model/Objects/Marker.swift"; sourceTree = "<group>"; };
 		51B50C2B1525917DCDA7A915B341E6A8 /* QuickSelectedTestSuiteBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickSelectedTestSuiteBuilder.swift; path = Sources/Quick/QuickSelectedTestSuiteBuilder.swift; sourceTree = "<group>"; };
-		51BA97E8B5085EFFB47BC9C0B785CEA7 /* liblottie-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "liblottie-ios.a"; path = "liblottie-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BA97E8B5085EFFB47BC9C0B785CEA7 /* liblottie-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblottie-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52069BDE92817B8566A4D840222AC421 /* World+DSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "World+DSL.swift"; path = "Sources/Quick/DSL/World+DSL.swift"; sourceTree = "<group>"; };
 		52533953F8873969D4F7BBE324154304 /* BeGreaterThan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeGreaterThan.swift; path = Sources/Nimble/Matchers/BeGreaterThan.swift; sourceTree = "<group>"; };
 		52C78F0680663D627DB1F8D94FFEA307 /* CandleChartDataSet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CandleChartDataSet.swift; path = Source/Charts/Data/Implementations/Standard/CandleChartDataSet.swift; sourceTree = "<group>"; };
@@ -756,10 +756,10 @@
 		93EEA766F8E3B0C9A9B36BF1C18FF3EF /* EndWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EndWith.swift; path = Sources/Nimble/Matchers/EndWith.swift; sourceTree = "<group>"; };
 		96144062E995B5F891C6780A1E73AEA5 /* FillRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FillRenderer.swift; path = "lottie-swift/src/Private/NodeRenderSystem/Nodes/OutputNodes/Renderables/FillRenderer.swift"; sourceTree = "<group>"; };
 		96FA21659B7B47E2CA63469689531FF0 /* Trim.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Trim.swift; path = "lottie-swift/src/Private/Model/ShapeItems/Trim.swift"; sourceTree = "<group>"; };
-		9731FFD9E343B471E1D1FA214BF059F7 /* libPods-stocks-stocksUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-stocks-stocksUITests.a"; path = "libPods-stocks-stocksUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9731FFD9E343B471E1D1FA214BF059F7 /* libPods-stocks-stocksUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-stocks-stocksUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		973917424609508F4C736B0A6252AEBE /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Source/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		977C40EBFADCDA5E3427BD37DD063A77 /* SatisfyAnyOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SatisfyAnyOf.swift; path = Sources/Nimble/Matchers/SatisfyAnyOf.swift; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* libSnapKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSnapKit.a; path = libSnapKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* libSnapKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSnapKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		980B5255ABBFC68AE65C066FAB7825A9 /* DSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DSL.m; path = Sources/NimbleObjectiveC/DSL.m; sourceTree = "<group>"; };
 		98EA5040AD8D3CF7023D18A3B88FB79B /* DefaultAxisValueFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultAxisValueFormatter.swift; path = Source/Charts/Formatters/DefaultAxisValueFormatter.swift; sourceTree = "<group>"; };
 		98FBC5A3C577CB216772F25E9C3F07AF /* RadarChartDataSet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RadarChartDataSet.swift; path = Source/Charts/Data/Implementations/Standard/RadarChartDataSet.swift; sourceTree = "<group>"; };
@@ -770,7 +770,7 @@
 		9BC2C74CCE436D288541AD52543B06DC /* PieChartData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PieChartData.swift; path = Source/Charts/Data/Implementations/Standard/PieChartData.swift; sourceTree = "<group>"; };
 		9C3967721FC416445090C2AD6A10B3E4 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Source/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
 		9CB818355FFC65ED60D4CDD48B108BA9 /* PieRadarChartViewBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PieRadarChartViewBase.swift; path = Source/Charts/Charts/PieRadarChartViewBase.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DBA5FBFAAD3167BC74E707609EEF24E /* NMBExceptionCapture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NMBExceptionCapture.m; path = Sources/NimbleObjectiveC/NMBExceptionCapture.m; sourceTree = "<group>"; };
 		9E943EF327E708A42B710935F4360BA0 /* FillI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FillI.swift; path = "lottie-swift/src/Private/Model/ShapeItems/FillI.swift"; sourceTree = "<group>"; };
 		9EE98B39E1A710AD07EF6C438272E0AE /* BeginWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeginWith.swift; path = Sources/Nimble/Matchers/BeginWith.swift; sourceTree = "<group>"; };
@@ -779,13 +779,13 @@
 		A0548C6268ED39BE0D3816CE5BDC1BEE /* ShapeLayerModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShapeLayerModel.swift; path = "lottie-swift/src/Private/Model/Layers/ShapeLayerModel.swift"; sourceTree = "<group>"; };
 		A0E93CF5B77D784CD41EC672A022437D /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		A0F1A3A3679E3E00F081CCDD5C71B36E /* Quick-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Quick-prefix.pch"; sourceTree = "<group>"; };
-		A1C1B977ED8804E8AEEC884E7359EE58 /* libCharts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCharts.a; path = libCharts.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1C1B977ED8804E8AEEC884E7359EE58 /* libCharts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCharts.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1F3B88B5CECD48F46CB639CAE18E2BC /* Nimble-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Nimble-dummy.m"; sourceTree = "<group>"; };
 		A200E1A7D2A11FADDB97018A919F7245 /* KeypathSearchable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeypathSearchable.swift; path = "lottie-swift/src/Private/NodeRenderSystem/NodeProperties/Protocols/KeypathSearchable.swift"; sourceTree = "<group>"; };
 		A211B810C2438857DC23C468DE8F929C /* DefaultValueFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultValueFormatter.swift; path = Source/Charts/Formatters/DefaultValueFormatter.swift; sourceTree = "<group>"; };
-		A213B38E4A90212535FB3EE427487747 /* libPods-stocksTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-stocksTests.a"; path = "libPods-stocksTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A213B38E4A90212535FB3EE427487747 /* libPods-stocksTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-stocksTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A25A28D9A998FBE730F60BC22B41BCE0 /* Charts-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Charts-dummy.m"; sourceTree = "<group>"; };
-		A35945B23A3C3F054C9247B1493E570D /* libPods-stocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-stocks.a"; path = "libPods-stocks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A35945B23A3C3F054C9247B1493E570D /* libPods-stocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-stocks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A40C34425C860C53EB0BBE6DAEC1ACA2 /* ScatterChartRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScatterChartRenderer.swift; path = Source/Charts/Renderers/ScatterChartRenderer.swift; sourceTree = "<group>"; };
 		A5A5DE7FD7A3FB866C87B349D2E6ACC5 /* GradientFillNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GradientFillNode.swift; path = "lottie-swift/src/Private/NodeRenderSystem/Nodes/RenderNodes/GradientFillNode.swift"; sourceTree = "<group>"; };
 		A5CC8BA7A2EDCE635F17E808256AB3CF /* SnapKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SnapKit-dummy.m"; sourceTree = "<group>"; };
@@ -794,7 +794,7 @@
 		A723C420159A6B9F1AE71D49069FA47D /* QuickTestSuite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickTestSuite.swift; path = Sources/Quick/QuickTestSuite.swift; sourceTree = "<group>"; };
 		A785DB4A79710BA8ECAB78A452AE2EC6 /* AnimatorNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnimatorNode.swift; path = "lottie-swift/src/Private/NodeRenderSystem/Protocols/AnimatorNode.swift"; sourceTree = "<group>"; };
 		A845C09FCCEECBFC6A54E28F45C46E14 /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Source/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
-		A8B187A2A7853C12C6D4027F92B2FD5D /* mach_excServer.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mach_excServer.c; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.c; sourceTree = "<group>"; };
+		A8B187A2A7853C12C6D4027F92B2FD5D /* mach_excServer.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mach_excServer.c; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.c; sourceTree = "<group>"; };
 		A94ECBAC506BCDA4F1B925928FDF38D3 /* UIColorExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = "lottie-swift/src/Public/iOS/UIColorExtension.swift"; sourceTree = "<group>"; };
 		A999C25FEF31E4EAB4D56DC5E6D50D34 /* Pods-stocks-stocksUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-stocks-stocksUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		A9EAE5DBBB1D6215FAF327817C3040A9 /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Source/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
@@ -831,7 +831,7 @@
 		BA09D3A33822D5AC1EC822605D4EF83A /* FailureMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FailureMessage.swift; path = Sources/Nimble/FailureMessage.swift; sourceTree = "<group>"; };
 		BAD09BC6D8ADC7460534D47FD952B59E /* GradientStrokeRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GradientStrokeRenderer.swift; path = "lottie-swift/src/Private/NodeRenderSystem/Nodes/OutputNodes/Renderables/GradientStrokeRenderer.swift"; sourceTree = "<group>"; };
 		BAD13FAD863E1CBE622117BC6536D9E2 /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Sources/Quick/Filter.swift; sourceTree = "<group>"; };
-		BAE263041362D074978BB3B577DF0A05 /* libNimble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libNimble.a; path = libNimble.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAE263041362D074978BB3B577DF0A05 /* libNimble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNimble.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB40B8FBF16D975CF1774CA081C6A53D /* Equal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Equal.swift; path = Sources/Nimble/Matchers/Equal.swift; sourceTree = "<group>"; };
 		BC7DDC8E0126B7275659733A1414B58C /* Callsite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Callsite.swift; path = Sources/Quick/Callsite.swift; sourceTree = "<group>"; };
 		BD20767B1058D70B516E36AC3707EEB2 /* ThrowError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThrowError.swift; path = Sources/Nimble/Matchers/ThrowError.swift; sourceTree = "<group>"; };
@@ -1219,7 +1219,6 @@
 				011A61F6E3B6B5A076136A15EC86C811 /* XCTestSuite+QuickTestSuiteBuilder.m */,
 				5FD10778EF1D9A89B20CF9B180A3AEDB /* Support Files */,
 			);
-			name = Quick;
 			path = Quick;
 			sourceTree = "<group>";
 		};
@@ -1398,7 +1397,6 @@
 				F87D11A5199B5CFAACED583423037345 /* VectorsExtensions.swift */,
 				99164738A5069504249540F521AFCCEF /* Support Files */,
 			);
-			name = "lottie-ios";
 			path = "lottie-ios";
 			sourceTree = "<group>";
 		};
@@ -1515,7 +1513,6 @@
 				8FCB2F18D5349DA4952A51F63A5D2B31 /* XCTestObservationCenter+Register.m */,
 				B3F32E1D92CD91C0F64663C05551F2DF /* Support Files */,
 			);
-			name = Nimble;
 			path = Nimble;
 			sourceTree = "<group>";
 		};
@@ -1540,7 +1537,6 @@
 				062B6D2008D71009E15537B69D322E3C /* Core */,
 				251461463F05AC2A4AFE77776C147FB2 /* Support Files */,
 			);
-			name = Charts;
 			path = Charts;
 			sourceTree = "<group>";
 		};
@@ -1599,7 +1595,6 @@
 				C032C0DCFE3E57088C95CD09922A60DE /* UILayoutSupport+Extensions.swift */,
 				2C7C4D44F02A4E36327AC6C48FE667E6 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1893,7 +1888,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1130;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 9.3";
@@ -2675,7 +2670,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Quick/Quick-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULEMAP_FILE = Headers/Public/Quick/Quick.modulemap;
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -2936,7 +2931,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Quick/Quick-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULEMAP_FILE = Headers/Public/Quick/Quick.modulemap;
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";

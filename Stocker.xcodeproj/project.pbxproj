@@ -62,6 +62,9 @@
 		C71E95C32421C0E5005A2DC7 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = C71E95C12421C0E5005A2DC7 /* loading.json */; };
 		C71E95C52426BDBF005A2DC7 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */; };
 		C71E95C72426BE09005A2DC7 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95C62426BE09005A2DC7 /* AccessoryView.swift */; };
+		C74ABB54245229C3002FF441 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74ABB53245229C3002FF441 /* SubscriptionViewController.swift */; };
+		C74ABB5724573F5E002FF441 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74ABB5624573F5E002FF441 /* SubscriptionManager.swift */; };
+		C74ABB5A245740C6002FF441 /* SubscriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74ABB59245740C6002FF441 /* SubscriptionCell.swift */; };
 		C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +151,9 @@
 		C71E95C12421C0E5005A2DC7 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		C71E95C62426BE09005A2DC7 /* AccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
+		C74ABB53245229C3002FF441 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
+		C74ABB5624573F5E002FF441 /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
+		C74ABB59245740C6002FF441 /* SubscriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCell.swift; sourceTree = "<group>"; };
 		C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatementViewController.swift; sourceTree = "<group>"; };
 		E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.release.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.release.xcconfig"; sourceTree = "<group>"; };
 		F14FA1D88A985D5EF8E765CD /* Pods-stocks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks.debug.xcconfig"; path = "Target Support Files/Pods-stocks/Pods-stocks.debug.xcconfig"; sourceTree = "<group>"; };
@@ -224,14 +230,13 @@
 				5245609A23FC7685003686BE /* SceneDelegate.swift */,
 				C71BBD01243A68A300486528 /* ListViewController */,
 				C71E95B82421BA25005A2DC7 /* LoadingViewController.swift */,
+				C74ABB5824574093002FF441 /* Subscription */,
 				529B645B2433C64B00C806C0 /* StocksViewModel.swift */,
 				52D65F2B2433ABC400647074 /* StockDetails */,
 				52D9B1C324293EDD00E67BF2 /* Sort */,
 				52D9B1C02429350300E67BF2 /* Filter */,
 				52D9B1C424293EF000E67BF2 /* Stock */,
-				52108D272421661E000A472B /* Util.swift */,
-				C71E387B24381CEB00E9A84B /* Base.swift */,
-				524560CA23FDDB68003686BE /* Networking.swift */,
+				C74ABB5524573F4B002FF441 /* Util */,
 				C71E95B02401EE81005A2DC7 /* LaunchScreen.storyboard */,
 				524560A123FC7687003686BE /* Assets.xcassets */,
 				524560A623FC7687003686BE /* Info.plist */,
@@ -389,6 +394,26 @@
 				C71E95C12421C0E5005A2DC7 /* loading.json */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		C74ABB5524573F4B002FF441 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				52108D272421661E000A472B /* Util.swift */,
+				C71E387B24381CEB00E9A84B /* Base.swift */,
+				524560CA23FDDB68003686BE /* Networking.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		C74ABB5824574093002FF441 /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+				C74ABB5624573F5E002FF441 /* SubscriptionManager.swift */,
+				C74ABB53245229C3002FF441 /* SubscriptionViewController.swift */,
+				C74ABB59245740C6002FF441 /* SubscriptionCell.swift */,
+			);
+			path = Subscription;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -619,6 +644,7 @@
 				52D0CC4C244643E300C36300 /* CashFlowViewController.swift in Sources */,
 				52A5E019242BEFB000C25872 /* StockDetailViewController.swift in Sources */,
 				52D0CC4A2446377800C36300 /* CashFlows.swift in Sources */,
+				C74ABB5A245740C6002FF441 /* SubscriptionCell.swift in Sources */,
 				52D65F2D2433AC0C00647074 /* GrowthTable.swift in Sources */,
 				C71E95B42401F122005A2DC7 /* StockCell.swift in Sources */,
 				5245609923FC7685003686BE /* AppDelegate.swift in Sources */,
@@ -639,9 +665,11 @@
 				52D9B1BD24292D0B00E67BF2 /* Filter.swift in Sources */,
 				52108CDD241FCB5E000A472B /* Stock+Api.swift in Sources */,
 				C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */,
+				C74ABB54245229C3002FF441 /* SubscriptionViewController.swift in Sources */,
 				5245609B23FC7685003686BE /* SceneDelegate.swift in Sources */,
 				C71E387E243830BC00E9A84B /* SectorFilter.swift in Sources */,
 				52D0CC5424476D0100C36300 /* StockDetailHelpers.swift in Sources */,
+				C74ABB5724573F5E002FF441 /* SubscriptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
