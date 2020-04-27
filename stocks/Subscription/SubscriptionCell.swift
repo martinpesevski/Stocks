@@ -48,7 +48,14 @@ enum SubscriptionType {
     var hidesDiscountLabel: Bool {
         switch self {
         case .monthly: return true
-        case .yearly(let state): return state == .available
+        case .yearly(let state): return state == .subscribed
+        }
+    }
+    
+    var productIdentifier: String {
+        switch self {
+        case .monthly: return "com.mpeshevski.stocker.monthly"
+        case .yearly: return "com.mpeshevski.stocker.yearly"
         }
     }
 }
@@ -75,14 +82,16 @@ class SubscriptionCell: AccessoryView {
         explanation.isHidden = true
         content.insertArrangedSubview(imageView, at: 0)
         content.addArrangedSubview(labelStack)
+            
+        setup(subscriptionType: subscriptionType)
         
         snp.makeConstraints { make in make.height.equalTo(70) }
     }
     
-    func setup(subscriptionType: SubscriptionType) {
+    func setup(subscriptionType: SubscriptionType, label: String = "") {
         discountLabel.isHidden = subscriptionType.hidesDiscountLabel
         backgroundColor = subscriptionType.backgroundColor
-        if subscriptionType.state == .subscribed { label.text = "Restore purchase" }
+        self.label.text = label
     }
     
     required init?(coder: NSCoder) {

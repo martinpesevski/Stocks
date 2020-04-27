@@ -14,12 +14,8 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
     
     var products: [SKProduct]? {
         didSet {
-            guard let products = products else { return }
-            
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                if let first = products[safe: 0] { self.monthly.label.text = "\(first.priceLocale.currencySymbol ?? "")\(first.price)"}
-                if let second = products[safe: 1] { self.yearly.label.text = "\(second.priceLocale.currencySymbol ?? "")\(second.price)"}
+                self?.reloadCells()
             }
         }
     }
@@ -36,6 +32,15 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
         return cell
     }()
     
+    lazy var restorePurchases: UIButton = {
+        let btn = UIButton()
+        btn.addTarget(self, action: #selector(onRestore), for: .touchUpInside)
+        btn.setTitle("Restore purchases", for: .normal)
+        btn.setTitleColor(.systemGreen, for: .normal)
+        btn.titleLabel?.textAlignment = .center
+        return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.delegate = self
@@ -45,7 +50,9 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
         
         content.addArrangedSubview(monthly)
         content.addArrangedSubview(yearly)
-        
+        content.setCustomSpacing(20, after: yearly)
+        content.addArrangedSubview(restorePurchases)
+
         modalPresentationStyle = .overFullScreen
         
         manager.loadProducts()
@@ -59,5 +66,36 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
     @objc func onYearly() {
         guard let product = products?[safe: 1] else { return }
         manager.purchase(product)
+    }
+    
+    @objc func onRestore() {
+        manager.restore()
+    }
+    
+    func didFinishPurchasing() {
+        reloadCells()
+    }
+    
+    func didFinishRestoring() {
+        let alert = UIAlertController(title: "Success!", message: "You have successfully restored your purchases.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        Router.topViewController()?.present(alert, animated: true, completion: nil)
+        reloadCells()
+    }
+    
+    func reloadCells() {
+        var monthlyLabel = "Subscribed"
+        if let first = products?[safe: 0], manager.monthlySubscription.state == .available {
+            monthlyLabel = "\(first.priceLocale.currencySymbol ?? "")\(first.price)"
+        }
+        monthly.setup(subscriptionType: manager.monthlySubscription, label: monthlyLabel)
+
+        var yearlyLabel = "Subscribed"
+        if let second = products?[safe: 1], manager.yearlySubscription.state == .available {
+            yearlyLabel = "\(second.priceLocale.currencySymbol ?? "")\(second.price)"
+        }
+        yearly.setup(subscriptionType: manager.yearlySubscription, label: yearlyLabel)
     }
 }
