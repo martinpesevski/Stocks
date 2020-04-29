@@ -12,16 +12,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let vc = WelcomeViewController()
+        let auth = AuthenticationManager()
+//        let vc = WelcomeViewController()
 //        let vc = FilterViewController(viewModel: StocksViewModel())
-        let nav = NavigationController(rootViewController: vc)
-        window?.rootViewController = nav
+//        let nav = NavigationController(rootViewController: vc)
+        window?.rootViewController = auth.authViewController
         window?.makeKeyAndVisible()
     }
 
