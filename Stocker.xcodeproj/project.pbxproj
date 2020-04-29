@@ -465,7 +465,6 @@
 				5245609123FC7685003686BE /* Sources */,
 				5245609223FC7685003686BE /* Frameworks */,
 				5245609323FC7685003686BE /* Resources */,
-				657A3C54FD4F6121F45E01D7 /* [CP] Copy Pods Resources */,
 				DD5FF929456AE47CAA634ED7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -505,7 +504,6 @@
 				524560B223FC7687003686BE /* Sources */,
 				524560B323FC7687003686BE /* Frameworks */,
 				524560B423FC7687003686BE /* Resources */,
-				670C92FDECE4A78A9DD21A9D /* [CP] Copy Pods Resources */,
 				99928BEC8F17E6E38DD43E49 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -613,40 +611,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		657A3C54FD4F6121F45E01D7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker/Pods-Stocker-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker/Pods-Stocker-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stocker/Pods-Stocker-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		670C92FDECE4A78A9DD21A9D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		99928BEC8F17E6E38DD43E49 /* [CP] Embed Pods Frameworks */ = {

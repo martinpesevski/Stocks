@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: ViewController {
-    lazy var username: UITextField = {
+    lazy var email: UITextField = {
         let tv = UITextField()
-        tv.placeholder = "Username"
+        tv.placeholder = "Email"
         return tv
     }()
     
@@ -30,7 +31,7 @@ class LoginViewController: ViewController {
         return v
     }()
     
-    lazy var content = ScrollableStackView(views: [username, password], spacing: 10)
+    lazy var content = ScrollableStackView(views: [email, password], spacing: 10)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,15 @@ class LoginViewController: ViewController {
     }
     
     @objc func onLogIn() {
-        
+        guard let email = email.text, let password = password.text else { return }
+
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+          guard let self = self else { return }
+          if let error = error {
+              print("error sign up: \(error.localizedDescription)")
+          } else if authResult != nil {
+              self.navigationController?.viewControllers = [FilterViewController(viewModel: StocksViewModel())]
+          }
+        }
     }
 }

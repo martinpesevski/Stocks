@@ -10,8 +10,7 @@ target 'Stocker' do
 	pod 'lottie-ios'
   pod 'SnapKit', '~> 5.0.0'
   pod 'Charts'
-  pod 'Firebase/Core'
-  pod 'FirebaseUI'
+  pod 'Firebase/Auth'
 
   def testing_pods
       pod 'Quick'

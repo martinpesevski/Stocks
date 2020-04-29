@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import FirebaseUI
 
-class WelcomeViewController: FUIAuthPickerViewController {
+class WelcomeViewController: ViewController {
     lazy var signUp: AccessoryView = {
         let v =  AccessoryView("Sign up")
         v.backgroundColor = UIColor.systemGreen
