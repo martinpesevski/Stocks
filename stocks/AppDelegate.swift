@@ -29,4 +29,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+
+    /*
+     Problems to remember with Sonia
+
+     - Not allowing me to take a nap, punching me hard in the back to wake me up and kicking me out of the house
+     - Hiding my headphones after I told her that I want to use them while I’m vacuuming
+     - Saying it is her house and threatening to kick me out
+     - Saying that I need to go to my home country if We divorce
+     - Starting a fight over very little things like me not saying hi as soon as I enter the door even though she refuses to even kiss me, forcing me to go out and come back in to act the way she wants me to
+     - Constant insults, saying that I’m fat and unattractive, that nobody could ever love me, that I am a useless human being, that I’m a disgrace
+     - Getting angry and throwing things at me ( plates, glasses, vases ), made holes in the floor and the door and then made me fix them.
+     - Throwing my phone multiple times to the walls and ground
+     - Taking my phone and laptop and locking herself in a room to “punish” me for making a mistake
+     - Saying that I am to blame in every fight and she is always perfect.
+     - Threatening to take all my things if we divorce.
+     - Saying that she doesn’t love me.
+     - Treating me like a child
+     - Expecting everything to happen her way
+     - Not giving me alone time, making me feel suffocated
+     - Making me feel unloved, bashing me and insulting me for everything single mistake I make, threatening to leave, saying she is better off without me.
+     - Constant verbal abuse
+     - Smacking on the head, flicking nose and other ways to purposely inflict pain
+     - multiple punches in the back of the head while in a fit of rage
+     - Purposely holding my bag in the car so I miss the metro and be late to work.
+     - Threatening to get all my things and send me back to my country
+     - Threatening to lie about me abusing her in court
+     - Threatening to lie about the marriage
+     - Calling me lazy for not finishing my app in the morning and saying she will find someone better one day
+     - Forcing me to drink a slushee that the dog licked even though I said I didn’t want it
+     - Purposely kept me away from gaming, even though I informed her I want to do it in advance, guilting me by saying I don’t love her if I do it.
+     - Said I didn’t talk to her all evening even though I spent 3+ hours with her, part of which was talking
+     - Made me give up everything I’m paying for fun (games, going out with friends) for four months because I paid too much for my medical expenses even though I’m making 140k a year and this cost only $500.
+     - Backing out on her word that I can game and watch videos before bed. Kicking me out of the room for watching videos while she is asleep. Yanking headphones out of my ears to force me to stop watching. Saying that agreements don’t matter to her anymore and she doesn’t care.
+     - Forcing me to get a new dog even though I don’t want any more animals
+     - constantly controlling me (cannot play dota, cannot go to bed late, cannot have coffee on weekends, cannot have the food I want)
+     - starting a fight about an ornament on a house - complaining that I don’t listen to her and she knows better than me about the US
+     - starting a fight because I walked on the street in front of a closed school (saying that I dont listen to her and she knows more than me when I told her that it is not illegal)
+     - Turning off the wifi while I’m gaming to force me to do what she wants - happened multiple times
+     */
 }
