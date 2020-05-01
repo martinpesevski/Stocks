@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class SignUpViewController: ViewController {
     lazy var email: UITextField = {
@@ -58,7 +59,12 @@ class SignUpViewController: ViewController {
             guard let self = self else { return }
             if let error = error {
                 print("error sign up: \(error.localizedDescription)")
-            } else if authResult != nil {
+            } else if let res = authResult {
+                DatabaseManager.shared.usersHandle.child(res.user.uid)
+                    .setValue(["username": res.user.displayName ?? "",
+                               "subscribed": false,
+                               "subscriptionEndDate": ""])
+
                 self.navigationController?.viewControllers = [FilterViewController(viewModel: StocksViewModel())]
             }
         }

@@ -46,7 +46,7 @@ class ListViewController: ViewController {
     
     lazy var sortFilterStack = UIStackView(views: [sortButton, filterButton], axis: .horizontal, spacing: 10)
     
-    init(viewModel: StocksViewModel) {
+    init(viewModel: StocksViewModel = StocksViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -7,6 +7,7 @@
 //
 import Firebase
 import Foundation
+import FirebaseAuth
 
 class AuthenticationManager: NSObject {
     override init() {
@@ -15,8 +16,14 @@ class AuthenticationManager: NSObject {
     }
     
     var authViewController: UINavigationController? {
-        let welcome = WelcomeViewController()
-        let nav = UINavigationController(rootViewController: welcome)
+        guard Auth.auth().currentUser != nil else {
+            let welcome = WelcomeViewController()
+            let nav = UINavigationController(rootViewController: welcome)
+            return nav
+        }
+
+        let list = FilterViewController()
+        let nav = UINavigationController(rootViewController: list)
         return nav
     }
 }

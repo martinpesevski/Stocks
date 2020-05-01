@@ -41,7 +41,7 @@ class FilterViewController: FilterPageViewController {
     var viewModel: StocksViewModel!
     var isModal = false
     
-    init(viewModel: StocksViewModel) {
+    init(viewModel: StocksViewModel = StocksViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 

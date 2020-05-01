@@ -13,7 +13,7 @@ enum SubscriptionState {
     case available
 }
 
-enum SubscriptionType {
+enum SubscriptionType: Equatable {
     case monthly(state: SubscriptionState)
     case yearly(state: SubscriptionState)
     

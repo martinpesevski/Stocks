@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import FirebaseDatabase
 
 protocol SubscriptionManagerDelegate: class {
     var products: [SKProduct]? { get set }
@@ -22,17 +23,24 @@ class SubscriptionManager: NSObject, SKPaymentTransactionObserver, SKProductsReq
         super.init()
         self.delegate = delegate
     }
-    
-    var monthlySubscription: SubscriptionType {
-        return UserDefaults.standard.bool(forKey: SubscriptionType.monthly(state: .subscribed).productIdentifier) ? .monthly(state: .subscribed) : .monthly(state: .available)
-    }
-    
-    var yearlySubscription: SubscriptionType {
-        return UserDefaults.standard.bool(forKey: SubscriptionType.yearly(state: .subscribed).productIdentifier) ? .yearly(state: .subscribed) : .yearly(state: .available)
+
+    func getSubscriptionType(completion: @escaping (SubscriptionType?) -> ()) {
+        DatabaseManager.shared.userHandle?.child("subscriptionType").observe(DataEventType.value, with: { snapshot in
+            guard let subType = snapshot.value as? String else {
+                completion(nil)
+                return
+            }
+
+            switch subType {
+            case "Monthly subscription": completion(.monthly(state: .subscribed))
+            case "Yearly subscription": completion(.yearly(state: .subscribed))
+            default: completion(nil)
+            }
+        })
     }
     
     func loadProducts() {
-        let request = SKProductsRequest(productIdentifiers: Set(arrayLiteral: monthlySubscription.productIdentifier, yearlySubscription.productIdentifier))
+        let request = SKProductsRequest(productIdentifiers: Set(arrayLiteral: SubscriptionType.monthly(state: .available).productIdentifier, SubscriptionType.yearly(state: .available).productIdentifier))
         request.delegate = self
         request.start()
     }
@@ -83,13 +91,12 @@ class SubscriptionManager: NSObject, SKPaymentTransactionObserver, SKProductsReq
     }
     
     func save(_ id: String, state: SubscriptionState) {
-        let subType = id == yearlySubscription.productIdentifier ? SubscriptionType.yearly(state: state) : SubscriptionType.monthly(state: state)
-        
-        UserDefaults.standard.set(subType.state == .subscribed, forKey: subType.productIdentifier)
+        let subType = id == SubscriptionType.yearly(state: state).productIdentifier ? SubscriptionType.yearly(state: state) : SubscriptionType.monthly(state: state)
+        DatabaseManager.shared.userHandle?.setValue(["subscribed": subType.state == .subscribed,
+                                                     "subscriptionType": subType.title])
         switch subType {
-        case .monthly:  UserDefaults.standard.set(false, forKey: yearlySubscription.productIdentifier)
-        case .yearly:  UserDefaults.standard.set(false, forKey: monthlySubscription.productIdentifier)
+        case .monthly:  DatabaseManager.shared.userHandle?.setValue(["subscribed": false, "subscriptionType": nil])
+        case .yearly:  DatabaseManager.shared.userHandle?.setValue(["subscribed": false, "subscriotionType": nil])
         }
-        UserDefaults.standard.synchronize()
     }
 }

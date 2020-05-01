@@ -86,16 +86,18 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
     }
     
     func reloadCells() {
-        var monthlyLabel = "Subscribed"
-        if let first = products?[safe: 0], manager.monthlySubscription.state == .available {
-            monthlyLabel = "\(first.priceLocale.currencySymbol ?? "")\(first.price)"
-        }
-        monthly.setup(subscriptionType: manager.monthlySubscription, label: monthlyLabel)
+        manager.getSubscriptionType { type in
+            var monthlyLabel = "Subscribed"
+            if let first = self.products?[safe: 0], let type = type, type == SubscriptionType.monthly(state: .available) {
+                monthlyLabel = "\(first.priceLocale.currencySymbol ?? "")\(first.price)"
+            }
+            monthly.setup(subscriptionType: manager.monthlySubscription, label: monthlyLabel)
 
-        var yearlyLabel = "Subscribed"
-        if let second = products?[safe: 1], manager.yearlySubscription.state == .available {
-            yearlyLabel = "\(second.priceLocale.currencySymbol ?? "")\(second.price)"
+            var yearlyLabel = "Subscribed"
+            if let second = products?[safe: 1], manager.yearlySubscription.state == .available {
+                yearlyLabel = "\(second.priceLocale.currencySymbol ?? "")\(second.price)"
+            }
+            yearly.setup(subscriptionType: manager.yearlySubscription, label: yearlyLabel)
         }
-        yearly.setup(subscriptionType: manager.yearlySubscription, label: yearlyLabel)
     }
 }

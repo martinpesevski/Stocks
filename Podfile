@@ -11,6 +11,7 @@ target 'Stocker' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Charts'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 
   def testing_pods
       pod 'Quick'
