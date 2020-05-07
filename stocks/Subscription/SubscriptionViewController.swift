@@ -21,13 +21,13 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
     }
     
     lazy var monthly: SubscriptionCell = {
-        let cell = SubscriptionCell(subscriptionType: manager.monthlySubscription)
+        let cell = SubscriptionCell()
         cell.button.addTarget(self, action: #selector(onMonthly), for: .touchUpInside)
         return cell
     }()
 
     lazy var yearly: SubscriptionCell = {
-        let cell = SubscriptionCell(subscriptionType: manager.yearlySubscription)
+        let cell = SubscriptionCell()
         cell.button.addTarget(self, action: #selector(onYearly), for: .touchUpInside)
         return cell
     }()
@@ -86,18 +86,30 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
     }
     
     func reloadCells() {
-        manager.getSubscriptionType { type in
-            var monthlyLabel = "Subscribed"
-            if let first = self.products?[safe: 0], let type = type, type == SubscriptionType.monthly(state: .available) {
-                monthlyLabel = "\(first.priceLocale.currencySymbol ?? "")\(first.price)"
+        manager.getSubscriptionType { [weak self] type in
+            guard let self = self else { return }
+            guard let type = type else {
+                self.setup(monthly: .available, yearly: .available)
+                return
             }
-            monthly.setup(subscriptionType: manager.monthlySubscription, label: monthlyLabel)
-
-            var yearlyLabel = "Subscribed"
-            if let second = products?[safe: 1], manager.yearlySubscription.state == .available {
-                yearlyLabel = "\(second.priceLocale.currencySymbol ?? "")\(second.price)"
+            
+            switch type {
+            case .monthly(state: let state): self.setup(monthly: state, yearly: .available)
+            case .yearly(state: let state): self.setup(monthly: .available, yearly: state)
             }
-            yearly.setup(subscriptionType: manager.yearlySubscription, label: yearlyLabel)
         }
+    }
+    
+    func setup(monthly: SubscriptionState, yearly: SubscriptionState) {
+        var yearlyLabel: String?
+        if let second = self.products?[safe: 1], yearly == .available {
+            yearlyLabel = second.currencyPrice
+        }
+        var monthlyLabel: String?
+        if let first = products?[safe: 0], monthly == .available {
+            monthlyLabel = first.currencyPrice
+        }
+        self.yearly.setup(subscriptionType: .yearly(state: yearly), label: yearlyLabel)
+        self.monthly.setup(subscriptionType: .monthly(state: monthly), label: monthlyLabel)
     }
 }

@@ -94,9 +94,5 @@ class SubscriptionManager: NSObject, SKPaymentTransactionObserver, SKProductsReq
         let subType = id == SubscriptionType.yearly(state: state).productIdentifier ? SubscriptionType.yearly(state: state) : SubscriptionType.monthly(state: state)
         DatabaseManager.shared.userHandle?.setValue(["subscribed": subType.state == .subscribed,
                                                      "subscriptionType": subType.title])
-        switch subType {
-        case .monthly:  DatabaseManager.shared.userHandle?.setValue(["subscribed": false, "subscriptionType": nil])
-        case .yearly:  DatabaseManager.shared.userHandle?.setValue(["subscribed": false, "subscriotionType": nil])
-        }
     }
 }

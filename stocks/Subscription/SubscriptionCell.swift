@@ -11,6 +11,13 @@ import UIKit
 enum SubscriptionState {
     case subscribed
     case available
+    
+    var title: String {
+        switch self {
+        case .available: return "Available"
+        case .subscribed: return "Subscribed"
+        }
+    }
 }
 
 enum SubscriptionType: Equatable {
@@ -73,25 +80,29 @@ class SubscriptionCell: AccessoryView {
     lazy var discountLabel = UILabel(text: "30% cheaper!",font: UIFont.systemFont(ofSize: 12), alignment: .center, color: .systemGreen)
     lazy var labelStack = UIStackView(views: [label, discountLabel], axis: .vertical, spacing: 5)
 
-    init(subscriptionType: SubscriptionType) {
-        super.init(subscriptionType.title, accessoryType: nil)
+    init() {
+        super.init(accessoryType: nil)
         
         title.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        imageView.image = subscriptionType.image
         
         explanation.isHidden = true
         content.insertArrangedSubview(imageView, at: 0)
         content.addArrangedSubview(labelStack)
-            
-        setup(subscriptionType: subscriptionType)
         
         snp.makeConstraints { make in make.height.equalTo(70) }
     }
     
-    func setup(subscriptionType: SubscriptionType, label: String = "") {
+    func setup(subscriptionType: SubscriptionType, label: String? = nil) {
+        imageView.image = subscriptionType.image
         discountLabel.isHidden = subscriptionType.hidesDiscountLabel
         backgroundColor = subscriptionType.backgroundColor
-        self.label.text = label
+        title.text = subscriptionType.title
+        
+        if let label = label {
+            self.label.text = label
+        } else if subscriptionType.state == .subscribed {
+            self.label.text = subscriptionType.state.title
+        }
     }
     
     required init?(coder: NSCoder) {

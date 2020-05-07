@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 protocol StockIdentifiable {
     static func stockIdentifier(_ ticker: String) -> String
@@ -73,6 +74,12 @@ extension UIView {
             make.bottom.leading.trailing.equalToSuperview()
             make.height.equalTo(1)
         }
+    }
+}
+
+extension SKProduct {
+    var currencyPrice: String {
+        "\(priceLocale.currencySymbol ?? "")\(price)"
     }
 }
 
