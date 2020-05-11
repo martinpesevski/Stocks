@@ -14,7 +14,7 @@ protocol FilterDelegate: class {
 }
 
 class FilterViewController: FilterPageViewController {
-    lazy var marketCapController = FilterCapViewController()
+    lazy var marketCapController = FilterCapViewController(manager: subscriptionManager)
     lazy var sectorController = FilterSectorViewController()
     lazy var profitabilityController = FilterProfitabilityViewController()
 
@@ -39,10 +39,12 @@ class FilterViewController: FilterPageViewController {
     }()
     
     var viewModel: StocksViewModel!
+    var subscriptionManager: SubscriptionManager
     var isModal = false
     
     init(viewModel: StocksViewModel = StocksViewModel()) {
         self.viewModel = viewModel
+        self.subscriptionManager = SubscriptionManager()
         super.init(nibName: nil, bundle: nil)
 
         marketCapController.delegate = self
@@ -59,6 +61,11 @@ class FilterViewController: FilterPageViewController {
         content.addArrangedSubview(sector)
         content.addArrangedSubview(profitability)
         content.addArrangedSubview(UIView())
+        
+        view.startLoading()
+        subscriptionManager.loadSubscription {
+            self.view.finishLoading()
+        }
     }
     
     override func onDone() {
@@ -69,8 +76,10 @@ class FilterViewController: FilterPageViewController {
         }
         
         self.viewModel.filter = filter
+        button.startLoading()
         viewModel.load { [weak self] in
             guard let self = self else { return }
+            self.button.finishLoading()
             self.viewModel.filter(filter: self.filter)
             DispatchQueue.main.async {
                 if self.isModal {
@@ -121,9 +130,7 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
         switch filter {
         case .marketCap:
             marketCapController.selectedCap = self.filter.capFilters
-//            show(marketCapController, sender: self)
-            let vc = SubscriptionViewController()
-            present(vc, animated: true, completion: nil)
+            show(marketCapController, sender: self)
         case .profitability:
             profitabilityController.selectedProfitability = self.filter.profitabilityFilters
             show(profitabilityController, sender: self)

@@ -16,7 +16,8 @@ class AccessoryView: UIView {
         case upArrow
         case checkboxFull
         case checkboxEmpty
-        
+        case locked
+
         var image: UIImage? {
             switch self {
             case .rightArrow: return UIImage(named: "right")
@@ -24,6 +25,7 @@ class AccessoryView: UIView {
             case .upArrow: return UIImage(named: "up")
             case .checkboxFull: return UIImage(named: "checkbox")
             case .checkboxEmpty: return UIImage(named: "checkbox-empty")
+            case .locked: return UIImage(named: "lock")
             }
         }
         
@@ -36,7 +38,7 @@ class AccessoryView: UIView {
     }
     
     lazy var accessoryView: UIImageView = {
-        let view = UIImageView(image: UIImage.init(named: "right"))
+        let view = UIImageView(image: accessoryType?.image)
         view.tintColor = .label
         view.snp.makeConstraints { make in make.width.height.equalTo(36) }
         return view

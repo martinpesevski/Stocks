@@ -12,6 +12,11 @@ import FirebaseAuth
 class AuthenticationManager: NSObject {
     override init() {
         FirebaseApp.configure()
+        let userDefaults = UserDefaults.standard
+        if !userDefaults.bool(forKey: "hasRunBefore") {
+            try? Auth.auth().signOut()
+            userDefaults.set(true, forKey: "hasRunBefore")
+        }
         super.init()
     }
     

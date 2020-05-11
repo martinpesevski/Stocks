@@ -16,26 +16,39 @@ protocol SubscriptionManagerDelegate: class {
     func didFinishRestoring()
 }
 
+struct Subscription: Codable {
+    var subscribed: String
+    var subscriptionType: String?
+    var subscriptionEndDate: String?
+}
+
 class SubscriptionManager: NSObject, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     weak var delegate: SubscriptionManagerDelegate?
+    
+    var isSubscribed: Bool = false
+    var subscriptionType: SubscriptionType?
+    var subscriptionEndDate: String?
     
     init(delegate: SubscriptionManagerDelegate? = nil) {
         super.init()
         self.delegate = delegate
+        DatabaseManager.shared.userHandle?.child("subscribed").observe(DataEventType.value, with: { snapshot in
+            self.isSubscribed = snapshot.value as? Bool ?? false
+        })
     }
-
-    func getSubscriptionType(completion: @escaping (SubscriptionType?) -> ()) {
-        DatabaseManager.shared.userHandle?.child("subscriptionType").observe(DataEventType.value, with: { snapshot in
-            guard let subType = snapshot.value as? String else {
-                completion(nil)
-                return
+    
+    func loadSubscription(completion: @escaping () -> ()) {
+        DatabaseManager.shared.userHandle?.observe(DataEventType.value, with: { snapshot in
+            guard let subscription = snapshot.value as? Dictionary<String, Any>,
+                let isSubscribed = subscription["subscribed"] as? Bool else {
+                    completion()
+                    return
             }
-
-            switch subType {
-            case "Monthly subscription": completion(.monthly(state: .subscribed))
-            case "Yearly subscription": completion(.yearly(state: .subscribed))
-            default: completion(nil)
-            }
+            
+            self.isSubscribed = isSubscribed
+            self.subscriptionType = SubscriptionType.init(title: subscription["subscriptionType"] as? String ?? "")
+            self.subscriptionEndDate = subscription["subscriptionEndDate"] as? String
+            completion()
         })
     }
     

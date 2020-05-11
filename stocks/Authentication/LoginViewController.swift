@@ -13,6 +13,9 @@ class LoginViewController: ViewController {
     lazy var email: UITextField = {
         let tv = UITextField()
         tv.placeholder = "Email"
+        tv.delegate = self
+        tv.returnKeyType = .next
+        tv.becomeFirstResponder()
         return tv
     }()
     
@@ -21,6 +24,8 @@ class LoginViewController: ViewController {
         tv.placeholder = "Password"
         tv.isSecureTextEntry = true
         tv.textContentType = .password
+        tv.delegate = self
+        tv.returnKeyType = .done
         return tv
     }()
     
@@ -55,5 +60,18 @@ class LoginViewController: ViewController {
               self.navigationController?.viewControllers = [FilterViewController(viewModel: StocksViewModel())]
           }
         }
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == email {
+            password.becomeFirstResponder()
+        } else {
+            onLogIn()
+        }
+        
+        return true
     }
 }

@@ -29,6 +29,7 @@ class FilterPageViewController: ViewController {
 
     lazy var button: DoneButton = {
         let btn = DoneButton()
+        btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(onDone), for: .touchUpInside)
         return btn
     }()

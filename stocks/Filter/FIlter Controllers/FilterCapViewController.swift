@@ -12,7 +12,7 @@ protocol FilterCapDelegate: class {
     func didChangeSelectionCap(_ filter: CapFilter, isSelected: Bool)
 }
 
-class FilterCapViewController: FilterPageViewController, FilterViewDelegate {
+class FilterCapViewController: FilterPageViewController, FilterViewDelegate, SubscriptionViewControllerDelegate {
     weak var delegate: FilterCapDelegate?
     
     var selectedCap: [CapFilter]? {
@@ -26,8 +26,26 @@ class FilterCapViewController: FilterPageViewController, FilterViewDelegate {
     }
     
     lazy var largeCap = FilterView(filter: CapFilter.largeCap, delegate: self)
-    lazy var midCap = FilterView(filter: CapFilter.midCap, delegate: self)
-    lazy var smallCap = FilterView(filter: CapFilter.smallCap, delegate: self)
+    lazy var midCap = FilterView(filter: CapFilter.midCap, delegate: self, isLocked: !subscriptionManager.isSubscribed)
+    lazy var smallCap = FilterView(filter: CapFilter.smallCap, delegate: self, isLocked: !subscriptionManager.isSubscribed)
+    
+    var selectedSubscribing: FilterView? = nil
+    
+    var subscriptionManager: SubscriptionManager
+    
+    init(manager: SubscriptionManager) {
+        self.subscriptionManager = manager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    func didDismiss() {
+        midCap.setup(isLocked: !subscriptionManager.isSubscribed, isSelected: midCap.isSelected ? true : selectedSubscribing == midCap)
+        smallCap.setup(isLocked: !subscriptionManager.isSubscribed, isSelected: smallCap.isSelected ? true : selectedSubscribing == smallCap)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +59,28 @@ class FilterCapViewController: FilterPageViewController, FilterViewDelegate {
         content.addArrangedSubview(UIView())
     }
     
-    func didChangeSelection(view: FilterView, isSelected: Bool) {
+    func didChangeSelection(view: FilterView, isSelected: Bool, isLocked: Bool) {
         if view == largeCap { delegate?.didChangeSelectionCap(.largeCap, isSelected: isSelected) }
-        if view == midCap { delegate?.didChangeSelectionCap(.midCap, isSelected: isSelected) }
-        if view == smallCap { delegate?.didChangeSelectionCap(.smallCap, isSelected: isSelected) }
+        if view == midCap {
+            if isLocked {
+                selectedSubscribing = midCap
+                let sub = SubscriptionViewController(manager: subscriptionManager)
+                sub.delegate = self
+                present(sub, animated: true, completion: nil)
+                return
+            }
+            delegate?.didChangeSelectionCap(.midCap, isSelected: isSelected)
+        }
+        if view == smallCap {
+            if isLocked {
+                selectedSubscribing = smallCap
+                let sub = SubscriptionViewController(manager: subscriptionManager)
+                sub.delegate = self
+                present(sub, animated: true, completion: nil)
+                return
+            }
+            delegate?.didChangeSelectionCap(.smallCap, isSelected: isSelected)
+        }
     }
 }
 

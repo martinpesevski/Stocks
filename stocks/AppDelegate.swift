@@ -12,7 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         return true
     }
 
@@ -60,12 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      - Forcing me to drink a slushee that the dog licked even though I said I didn’t want it
      - Purposely kept me away from gaming, even though I informed her I want to do it in advance, guilting me by saying I don’t love her if I do it.
      - Said I didn’t talk to her all evening even though I spent 3+ hours with her, part of which was talking
-     - Made me give up everything I’m paying for fun (games, going out with friends) for four months because I paid too much for my medical expenses even though I’m making 140k a year and this cost only $500.
-     - Backing out on her word that I can game and watch videos before bed. Kicking me out of the room for watching videos while she is asleep. Yanking headphones out of my ears to force me to stop watching. Saying that agreements don’t matter to her anymore and she doesn’t care.
-     - Forcing me to get a new dog even though I don’t want any more animals
-     - constantly controlling me (cannot play dota, cannot go to bed late, cannot have coffee on weekends, cannot have the food I want)
-     - starting a fight about an ornament on a house - complaining that I don’t listen to her and she knows better than me about the US
-     - starting a fight because I walked on the street in front of a closed school (saying that I dont listen to her and she knows more than me when I told her that it is not illegal)
-     - Turning off the wifi while I’m gaming to force me to do what she wants - happened multiple times
+     - January/2020 Made me give up everything I’m paying for fun (games, going out with friends) for four months because I paid too much for my medical expenses even though I’m making 140k a year and this cost only $500.
+     - February/2020 Backing out on her word that I can game and watch videos before bed. Kicking me out of the room for watching videos while she is asleep. Yanking headphones out of my ears to force me to stop watching. Saying that agreements don’t matter to her anymore and she doesn’t care.
+     - April/2020 Forcing me to get a new dog even though I don’t want any more animals
+     - April/2020 Constantly controlling me (cannot play dota, cannot go to bed late, cannot have coffee on weekends, cannot have the food I want)
+     - April/2020 starting a fight about an ornament on a house - complaining that I don’t listen to her and she knows better than me about the US
+     - April/2020 starting a fight because I walked on the street in front of a closed school (saying that I dont listen to her and she knows more than me when I told her that it is not illegal)
+     - April/2020 Turning off the wifi while I’m gaming to force me to do what she wants - happened multiple times
+     05/10/2020 - Punching me in the balls and saying it is on purpose, then trying to kick me again when I was on the floor and I instinctively lifted up my shin to defend myself from her kick and then she kicked me in the shin and complained why I tried to defend myself.
      */
 }

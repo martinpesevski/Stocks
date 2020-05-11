@@ -38,7 +38,7 @@ class FilterProfitabilityViewController: FilterPageViewController, FilterViewDel
         content.addArrangedSubview(UIView())
     }
     
-    func didChangeSelection(view: FilterView, isSelected: Bool) {
+    func didChangeSelection(view: FilterView, isSelected: Bool, isLocked: Bool) {
         if view == profitable { delegate?.didChangeSelectionProfitability(.profitable, isSelected: isSelected) }
         if view == unprofitable { delegate?.didChangeSelectionProfitability(.unprofitable, isSelected: isSelected) }
     }

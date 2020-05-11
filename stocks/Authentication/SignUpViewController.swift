@@ -14,6 +14,9 @@ class SignUpViewController: ViewController {
     lazy var email: UITextField = {
         let tv = UITextField()
         tv.placeholder = "Email"
+        tv.returnKeyType = .next
+        tv.delegate = self
+        tv.becomeFirstResponder()
         return tv
     }()
     
@@ -22,6 +25,8 @@ class SignUpViewController: ViewController {
         tv.placeholder = "Password"
         tv.isSecureTextEntry = true
         tv.textContentType = .password
+        tv.returnKeyType = .next
+        tv.delegate = self
         return tv
     }()
     
@@ -30,6 +35,8 @@ class SignUpViewController: ViewController {
         tv.placeholder = "Confirm password"
         tv.isSecureTextEntry = true
         tv.textContentType = .password
+        tv.returnKeyType = .done
+        tv.delegate = self
         return tv
     }()
     
@@ -68,5 +75,19 @@ class SignUpViewController: ViewController {
                 self.navigationController?.viewControllers = [FilterViewController(viewModel: StocksViewModel())]
             }
         }
+    }
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == email {
+            password.becomeFirstResponder()
+        } else if textField == password {
+            confirmPassword.becomeFirstResponder()
+        } else {
+            onSignUp()
+        }
+        return true
     }
 }

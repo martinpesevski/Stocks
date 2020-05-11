@@ -8,13 +8,19 @@
 
 import UIKit
 import StoreKit
+ 
+protocol SubscriptionViewControllerDelegate: class {
+    func didDismiss()
+}
 
 class SubscriptionViewController: StackViewController, SubscriptionManagerDelegate {
-    lazy var manager = SubscriptionManager()
+    var manager: SubscriptionManager
+    weak var delegate: SubscriptionViewControllerDelegate?
     
     var products: [SKProduct]? {
         didSet {
             DispatchQueue.main.async { [weak self] in
+                self?.view.finishLoading()
                 self?.reloadCells()
             }
         }
@@ -41,9 +47,15 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
         return btn
     }()
     
+    init(manager: SubscriptionManager) {
+        self.manager = manager
+        super.init()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.delegate = self
+        presentationController?.delegate = self
         
         titleView.text = "You need to be subscribed to use this feature"
         subtitleView.text = "Please select a subscription model"
@@ -55,6 +67,7 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
 
         modalPresentationStyle = .overFullScreen
         
+        view.startLoading()
         manager.loadProducts()
     }
     
@@ -86,17 +99,14 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
     }
     
     func reloadCells() {
-        manager.getSubscriptionType { [weak self] type in
-            guard let self = self else { return }
-            guard let type = type else {
-                self.setup(monthly: .available, yearly: .available)
-                return
-            }
-            
-            switch type {
-            case .monthly(state: let state): self.setup(monthly: state, yearly: .available)
-            case .yearly(state: let state): self.setup(monthly: .available, yearly: state)
-            }
+        guard let type = manager.subscriptionType else {
+            self.setup(monthly: .available, yearly: .available)
+            return
+        }
+        
+        switch type {
+        case .monthly(state: let state): self.setup(monthly: state, yearly: .available)
+        case .yearly(state: let state): self.setup(monthly: .available, yearly: state)
         }
     }
     
@@ -111,5 +121,15 @@ class SubscriptionViewController: StackViewController, SubscriptionManagerDelega
         }
         self.yearly.setup(subscriptionType: .yearly(state: yearly), label: yearlyLabel)
         self.monthly.setup(subscriptionType: .monthly(state: monthly), label: monthlyLabel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension SubscriptionViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        delegate?.didDismiss()
     }
 }

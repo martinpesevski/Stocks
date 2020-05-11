@@ -75,11 +75,44 @@ extension UIView {
             make.height.equalTo(1)
         }
     }
+    
+    func startLoading() {
+        subviews.forEach { if $0 is LoadingView { return } }
+        let view = LoadingView()
+        view.backgroundColor = backgroundColor
+        addSubview(view)
+        view.snp.makeConstraints { make in make.edges.equalToSuperview() }
+    }
+    
+    func finishLoading() {
+        subviews.forEach { view in if view is LoadingView {
+            UIView.animate(withDuration: 0.5, animations: {
+                view.alpha = 0
+            }, completion: { _ in
+                view.removeFromSuperview()
+            })
+            }
+        }
+    }
 }
 
 extension SKProduct {
     var currencyPrice: String {
         "\(priceLocale.currencySymbol ?? "")\(price)"
+    }
+}
+
+class LoadingView: UIView {
+    init() {
+        super.init(frame: .zero)
+        let loading = UIActivityIndicatorView(style: .medium)
+        loading.startAnimating()
+        addSubview(loading)
+        loading.snp.makeConstraints { make in make.center.equalToSuperview() }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

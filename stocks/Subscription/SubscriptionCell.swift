@@ -24,6 +24,14 @@ enum SubscriptionType: Equatable {
     case monthly(state: SubscriptionState)
     case yearly(state: SubscriptionState)
     
+    init?(title: String) {
+        switch title {
+        case "Monthly subscription": self = .monthly(state: .subscribed)
+        case "Yearly subscription": self = .yearly(state: .subscribed)
+        default: return nil
+        }
+    }
+    
     var title: String {
         switch self {
         case .monthly: return "Monthly subscription"
