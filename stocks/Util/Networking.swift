@@ -8,7 +8,7 @@
 
 import Foundation
 
-let apiKey = "24000acc2bb9d552b74092e7f0c288c8"
+let apiKey = "a1ac524a59cfa9a1d0b5ce91a33d52d9"
 
 enum Endpoints {
     case tickers
@@ -23,14 +23,14 @@ enum Endpoints {
 
     var url: URL {
         switch self {
-        case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/company/stock/list") ?? URL(fileURLWithPath: "")
-        case .keyMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company-key-metrics/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .balanceSheetAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)") ?? URL(fileURLWithPath: "")
-        case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)") ?? URL(fileURLWithPath: "")
+        case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/stock/list?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .keyMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company-key-metrics/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .balanceSheetAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
 
             switch (sector, marketCap) {
