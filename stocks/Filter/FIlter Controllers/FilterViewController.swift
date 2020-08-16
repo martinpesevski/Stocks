@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import Firebase
 
 protocol FilterDelegate: class {
     func didFinishFiltering()
@@ -54,6 +55,11 @@ class FilterViewController: FilterPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let logutButton = UIBarButtonItem(barButtonSystemItem: .cancel , target: self, action: #selector(logOut))
+        self.navigationItem.leftBarButtonItem = logutButton
+        
+        print("Title")
         
         header.text = "We would like to know what kind of companies you're intrested in."
         
@@ -155,5 +161,19 @@ extension FilterViewController: SKProductsRequestDelegate, SKPaymentQueueDelegat
     func paymentQueue(_ paymentQueue: SKPaymentQueue, shouldContinue transaction: SKPaymentTransaction, in newStorefront: SKStorefront) -> Bool {
         if transaction.transactionState == SKPaymentTransactionState.purchased { print("HOORAY") } else { print("BOOO") }
         return true
+    }
+    
+    @objc func logOut() {
+        let auth = Auth.auth()
+        do {
+            try auth.signOut()
+            let defaults = UserDefaults.standard
+            defaults.set(false, forKey: "isUserSignedIn")
+            self.dismiss(animated: true, completion: nil)
+        }
+        catch let signOutError{
+            print(signOutError)
+        }
+    
     }
 }

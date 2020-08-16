@@ -30,6 +30,7 @@ class FinancialsViewController: ViewController {
         super.viewDidLoad()
         content.setCustomSpacing(30, after: descriptionLabel)
         
+        
         incomeStatement.button.addTarget(self, action: #selector(onIncomeStatement), for: .touchUpInside)
         balanceSheet.button.addTarget(self, action: #selector(onBalanceSheet), for: .touchUpInside)
         cashFlow.button.addTarget(self, action: #selector(onCashFlow), for: .touchUpInside)
@@ -55,7 +56,7 @@ class FinancialsViewController: ViewController {
         let vc = CashFlowViewController(cashFlows: cashFlows)
         show(vc, sender: self)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
