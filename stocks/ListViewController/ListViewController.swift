@@ -58,6 +58,7 @@ class ListViewController: ViewController {
         view.addSubview(sortFilterStack)
         
         setConstraints()
+        setupSearch()
         tableView.reloadData()
     }
     
