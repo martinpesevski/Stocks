@@ -8,7 +8,7 @@
 
 import Foundation
 
-let apiKey = "a1ac524a59cfa9a1d0b5ce91a33d52d9"
+let apiKey = "12021c2120cb0b11c19b88200b736b06"
 
 enum Endpoints {
     case tickers
@@ -23,27 +23,27 @@ enum Endpoints {
 
     var url: URL {
         switch self {
-        case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/stock/list?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .keyMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company-key-metrics/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .balanceSheetAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
-        case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/stock/list?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .keyMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company-key-metrics/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .balanceSheetAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .incomeStatementAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/income-statement/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .cashFlowAnnual(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
 
             switch (sector, marketCap) {
             case (let sector?, let marketCap?):
                 guard let sector = sector.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return URL(fileURLWithPath: "") }
-                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&\(marketCap)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+                return URL(string: "https://financialmodelingprep.com/api/v3/stock-screener?sector=\(sector)&\(marketCap)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             case (nil, let marketCap?):
-                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?\(marketCap)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+                return URL(string: "https://financialmodelingprep.com/api/v3/stock-screener?\(marketCap)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             case (let sector?, nil):
                 guard let sector = sector.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return URL(fileURLWithPath: "") }
-                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?sector=\(sector)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+                return URL(string: "https://financialmodelingprep.com/api/v3/stock-screener?sector=\(sector)&apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             default:
-                return URL(string: "https://fmpcloud.io/api/v3/stock-screener?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+                return URL(string: "https://financialmodelingprep.com/api/v3/stock-screener?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
             }
         }
     }
