@@ -13,50 +13,21 @@ struct IntrinsicValue {
         case low = 0.06
         case medium = 0.075
         case high = 0.09
-        
-        var percentageString: String {
-            switch self {
-            case .low: return "\(DiscountRate.low.rawValue * 100)%"
-            case .medium: return "\(DiscountRate.medium.rawValue * 100)%"
-            case .high: return "\(DiscountRate.high.rawValue * 100)%"
-            }
-        }
     }
 
     var stockPrice: Float
-    var originalDiscountRate: DiscountRate {
-        didSet {
-            calculateValue()
-        }
-    }
-    var growthRate: Float = 0 {
-        didSet {
-            calculateValue()
-        }
-    }
-    var cashFlow: Float {
-        didSet {
-            calculateValue()
-        }
-    }
     var discountRates: [Float] = []
     var discountedCashFlows: [Float] = []
     var regularCashFlows: [Float] = []
+    var growthRate: Float = 0
     var value: Float = 0
 
     init(price: Float, cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
-        self.stockPrice = price
-        self.originalDiscountRate = discountRate
-        self.growthRate = growthRate
-        self.cashFlow = ocf
-        
-        calculateValue()
-    }
-    
-    mutating func calculateValue() {
-        discountRates = calculateDiscountRates(self.originalDiscountRate)
-        regularCashFlows = calculateFutureCashFlows(cashFlow: self.cashFlow, growth: self.growthRate)
+        stockPrice = price
+        discountRates = calculateDiscountRates(discountRate)
+        regularCashFlows = calculateFutureCashFlows(cashFlow: ocf, growth: growthRate)
         discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
+        self.growthRate = growthRate
 
         value = discountedCashFlows.reduce(0, +)
     }
