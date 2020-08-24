@@ -47,6 +47,7 @@ class StocksViewModel {
                 guard let self = self, let data = data else {
                     group.leave()
                     return
+                    
                 }
                 
                 DataParser.parseJson(type: [Ticker].self, data: data) { array, error in
