@@ -39,19 +39,19 @@ class FinancialsViewController: ViewController {
     }
     
     @objc func onIncomeStatement() {
-        guard let incomeStatements = stock.incomeStatements else { return }
+        guard let incomeStatements = stock.incomeStatementsAnnual else { return }
         let vc = IncomeStatementViewController(incomeStatements: incomeStatements)
         show(vc, sender: self)
     }
     
     @objc func onBalanceSheet() {
-        guard let balanceSheets = stock.balanceSheets else { return }
+        guard let balanceSheets = stock.balanceSheetsAnnual else { return }
         let vc = BalanceSheetViewController(balanceSheets: balanceSheets)
         show(vc, sender: self)
     }
     
     @objc func onCashFlow() {
-        guard let cashFlows = stock.cashFlows else { return }
+        guard let cashFlows = stock.cashFlowsAnnual else { return }
         let vc = CashFlowViewController(cashFlows: cashFlows)
         show(vc, sender: self)
     }

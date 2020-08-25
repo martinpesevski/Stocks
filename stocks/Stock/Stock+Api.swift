@@ -28,56 +28,116 @@ extension Stock {
             URLSession.shared.datatask(type: KeyMetricsArray.self,
                                        url: Endpoints.keyMetrics(ticker: ticker.symbol).url) {
                                         [weak self] data, response, error in
-                guard let self = self, let data = data else {
-                    completion?(false)
-                    return }
-
-                self.keyMetricsOverTime = data
-                self.calculateIntrinsicValue()
-                completion?(error == nil)
+                                        guard let self = self, let data = data else {
+                                            completion?(false)
+                                            return }
+                                        
+                                        self.keyMetricsOverTime = data
+                                        self.calculateIntrinsicValue()
+                                        completion?(error == nil)
             }
         }
     }
     
     func getBalanceSheet(completion: ((Bool) -> ())? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        var completed = false
         URLSession.shared.datatask(type: BalanceSheetArray.self,
-                                   url: Endpoints.balanceSheetAnnual(ticker: ticker.symbol).url) {
+                                   url: Endpoints.balanceSheet(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in
-            guard let self = self, let data = data else {
-                completion?(false)
-                return }
-
-            self.balanceSheets = data
-            completion?(error == nil)
+                                    guard let self = self, let data = data else { return }
+                                    
+                                    self.balanceSheetsAnnual = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.enter()
+        URLSession.shared.datatask(type: BalanceSheetArray.self,
+                                   url: Endpoints.balanceSheet(ticker: ticker.symbol, isAnnual: true).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.balanceSheetsAnnual = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion?(completed)
         }
     }
     
     func getIncomeStatement(completion: ((Bool) -> ())? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        var completed = false
+        
         URLSession.shared.datatask(type: IncomeStatementsArray.self,
-                                   url: Endpoints.incomeStatementAnnual(ticker: ticker.symbol).url) {
+                                   url: Endpoints.incomeStatement(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in
-            guard let self = self, let data = data else {
-                completion?(false)
-                return }
-
-            self.incomeStatements = data
-            completion?(error == nil)
+                                    guard let self = self, let data = data else { return }
+                                    
+                                    self.incomeStatementsAnnual = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.enter()
+        URLSession.shared.datatask(type: IncomeStatementsArray.self,
+                                   url: Endpoints.incomeStatement(ticker: ticker.symbol, isAnnual: false).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    self.incomeStatementsQuarterly = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion?(completed)
         }
     }
-
+    
     func getCashFlows(completion: ((Bool) -> ())? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        var completed = false
+        
         URLSession.shared.datatask(type: CashFlowsArray.self,
-                                   url: Endpoints.cashFlowAnnual(ticker: ticker.symbol).url) {
+                                   url: Endpoints.cashFlow(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in
-            guard let self = self, let data = data else {
-                completion?(false)
-                return }
-
-            self.cashFlows = data
-            completion?(error == nil)
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.cashFlowsAnnual = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.enter()
+        URLSession.shared.datatask(type: CashFlowsArray.self,
+                                   url: Endpoints.cashFlow(ticker: ticker.symbol, isAnnual: false).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.cashFlowsQuarterly = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion?(completed)
         }
     }
-
+    
     func load(completion: @escaping () -> ()) {
         let group = DispatchGroup()
         group.enter()
@@ -89,12 +149,12 @@ extension Stock {
         getIncomeStatement() { _ in
             group.leave()
         }
-
+        
         group.enter()
         getBalanceSheet() { _ in
             group.leave()
         }
-
+        
         group.enter()
         getCashFlows() { _ in
             group.leave()

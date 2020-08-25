@@ -50,9 +50,12 @@ class Stock {
     var keyMetricsOverTime: KeyMetricsArray?
     var growthMetrics: [GrowthMetrics]?
     var intrinsicValue: IntrinsicValue?
-    var balanceSheets: BalanceSheetArray?
-    var incomeStatements: IncomeStatementsArray?
-    var cashFlows: CashFlowsArray?
+    var balanceSheetsAnnual: BalanceSheetArray?
+    var balanceSheetsQuarterly: BalanceSheetArray?
+    var incomeStatementsAnnual: IncomeStatementsArray?
+    var incomeStatementsQuarterly: IncomeStatementsArray?
+    var cashFlowsAnnual: CashFlowsArray?
+    var cashFlowsQuarterly: CashFlowsArray?
 
     func isValid(filter: Filter) -> Bool {
         guard let iv = intrinsicValue?.value, iv > 0 else { return false }
