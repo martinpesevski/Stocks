@@ -9,35 +9,90 @@
 import UIKit
 
 class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
-    let balanceSheets: BalanceSheetArray
+    let balanceSheetsAnnual: BalanceSheetArray
+    let balanceSheetsQuarterly: BalanceSheetArray
+
+    let metricsAnnual: [BalanceSheetFinancialMetric]
+    let metricsQuarterly: [BalanceSheetFinancialMetric]
     
-    init(balanceSheets: BalanceSheetArray) {
-        self.balanceSheets = balanceSheets
+    lazy var picker: UISegmentedControl = {
+        let items = ["Annual", "Quarterly"]
+        let v = UISegmentedControl(items: items)
+        v.selectedSegmentIndex = 0
+        v.layer.cornerRadius = 5.0
+        v.backgroundColor = .systemGray6
+        v.tintColor = .systemGray5
+        v.selectedSegmentTintColor = .systemGreen
+
+        v.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
+        
+        return v
+    }()
+    
+    init(balanceSheetsAnnual: BalanceSheetArray, balanceSheetsQuarterly: BalanceSheetArray) {
+        self.balanceSheetsAnnual = balanceSheetsAnnual
+        self.balanceSheetsQuarterly = balanceSheetsQuarterly
+        
+        self.metricsAnnual = balanceSheetsAnnual.financials?[safe: 0]?.metrics ?? []
+        self.metricsQuarterly = balanceSheetsQuarterly.financials?[safe: 0]?.metrics ?? []
+        
         super.init()
-        titleView.text = balanceSheets.symbol
+        titleView.text = balanceSheetsAnnual.symbol
         subtitleView.text = "Balance sheet"
+        
+        content.addArrangedSubview(picker)
+        content.setCustomSpacing(25, after: picker)
 
-        guard let metrics = balanceSheets.financials?[safe: 0]?.metrics else { return }
-
-        for metric in metrics {
+        setupAnnual()
+    }
+    
+    @objc
+    private func onPeriodChanged(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0: setupAnnual()
+        case 1: setupQuarterly()
+        default: return
+        }
+    }
+    
+    private func setupAnnual() {
+        removeMetrics()
+        for metric in metricsAnnual {
             let cell = MetricKeyValueView(metric: metric)
-            cell.chart.setData(balanceSheets.periodicValues(metric: metric))
+            cell.chart.setData(balanceSheetsAnnual.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
         }
     }
+    
+    private func setupQuarterly() {
+        removeMetrics()
+        for metric in metricsQuarterly {
+            let cell = MetricKeyValueView(metric: metric)
+            cell.chart.setData(balanceSheetsQuarterly.periodicValues(metric: metric))
+            cell.delegate = self
+            content.addArrangedSubview(cell)
+        }
+    }
+    
+    private func removeMetrics() {
+        for view in content.stockStack.arrangedSubviews where
+            (view != titleView && view != subtitleView && view != picker) {
+            view.removeFromSuperview()
+        }
+    }
 
     func didSelectMetric(_ metric: Metric) {
-        guard let financials = balanceSheets.financials else { return }
+        guard let financials = balanceSheetsAnnual.financials else { return }
         var mapped: [PeriodicFinancialModel] = []
-        let percentages = balanceSheets.percentageIncrease(metric: metric)
+        let percentages = balanceSheetsAnnual.percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
 
-        let vc = PeriodicValueChangeViewController(ticker: balanceSheets.symbol, metricType: metric.text, periodicChange: mapped)
+        let vc = PeriodicValueChangeViewController(ticker: balanceSheetsAnnual.symbol, metricType: metric.text, periodicChange: mapped)
         show(vc, sender: self)
     }
     

@@ -55,13 +55,13 @@ extension Stock {
         
         group.enter()
         URLSession.shared.datatask(type: BalanceSheetArray.self,
-                                   url: Endpoints.balanceSheet(ticker: ticker.symbol, isAnnual: true).url) {
+                                   url: Endpoints.balanceSheet(ticker: ticker.symbol, isAnnual: false).url) {
                                     [weak self] data, response, error in
                                     guard let self = self, let data = data else {
                                         group.leave()
                                         return }
                                     
-                                    self.balanceSheetsAnnual = data
+                                    self.balanceSheetsQuarterly = data
                                     completed = error == nil
                                     group.leave()
         }
