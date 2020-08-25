@@ -72,6 +72,7 @@
 		C74ABB5724573F5E002FF441 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74ABB5624573F5E002FF441 /* SubscriptionManager.swift */; };
 		C74ABB5A245740C6002FF441 /* SubscriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74ABB59245740C6002FF441 /* SubscriptionCell.swift */; };
 		C764584424F30EDC00E332C0 /* IntrinsicValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C764584324F30EDC00E332C0 /* IntrinsicValueViewController.swift */; };
+		C764584624F3511E00E332C0 /* StockInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C764584524F3511E00E332C0 /* StockInfoHeader.swift */; };
 		C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */; };
 		D113D12B1AD8894724938DB3 /* Pods_StockerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */; };
 /* End PBXBuildFile section */
@@ -174,6 +175,7 @@
 		C74ABB5624573F5E002FF441 /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 		C74ABB59245740C6002FF441 /* SubscriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCell.swift; sourceTree = "<group>"; };
 		C764584324F30EDC00E332C0 /* IntrinsicValueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicValueViewController.swift; sourceTree = "<group>"; };
+		C764584524F3511E00E332C0 /* StockInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoHeader.swift; sourceTree = "<group>"; };
 		C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatementViewController.swift; sourceTree = "<group>"; };
 		E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.release.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.release.xcconfig"; sourceTree = "<group>"; };
 		F07714A4AFC2055CABEB9ADF /* Pods-StockerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockerTests.release.xcconfig"; path = "Target Support Files/Pods-StockerTests/Pods-StockerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				52A5E018242BEFB000C25872 /* StockDetailViewController.swift */,
 				C764584324F30EDC00E332C0 /* IntrinsicValueViewController.swift */,
 				52D65F2C2433AC0C00647074 /* GrowthTable.swift */,
+				C764584524F3511E00E332C0 /* StockInfoHeader.swift */,
 				52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */,
 				52D0CC4F2447577300C36300 /* SimpleGrowthChart.swift */,
 				52D0CC5324476D0100C36300 /* StockDetailHelpers.swift */,
@@ -754,6 +757,7 @@
 				C71BBD0024393D4B00486528 /* SectorFilterView.swift in Sources */,
 				C71E95C52426BDBF005A2DC7 /* FilterViewController.swift in Sources */,
 				C708ED142445E60500FC9425 /* IncomeStatement.swift in Sources */,
+				C764584624F3511E00E332C0 /* StockInfoHeader.swift in Sources */,
 				C72BEB97245763AC000E7129 /* LoginViewController.swift in Sources */,
 				C71E387A2438175D00E9A84B /* FilterPageViewController.swift in Sources */,
 				C72BEB94245761D9000E7129 /* WelcomeViewController.swift in Sources */,

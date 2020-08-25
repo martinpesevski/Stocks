@@ -66,7 +66,7 @@ class IntrinsicValueViewController: ViewController, UITextFieldDelegate {
     var growthAlertTextField: UITextField?
     
     lazy var discountRateAlert: UIAlertController = {
-        let alert = UIAlertController.init(title: "Enter discount rate %", message: "What is the discount rate you would like to use for this calculation?", preferredStyle: .actionSheet)
+        let alert = UIAlertController.init(title: "Select discount rate %", message: "What is the discount rate you would like to use for this calculation?", preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction.init(title: "Low (\(IntrinsicValue.DiscountRate.low.percentageString))", style: .default, handler: { action in
             self.intrinsicValue.originalDiscountRate = .low
@@ -101,7 +101,7 @@ class IntrinsicValueViewController: ViewController, UITextFieldDelegate {
         view.addSubview(content)
         content.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
-            make.top.equalToSuperview().inset(150)
+            make.top.equalToSuperview().inset(50)
         }
         content.setCustomSpacing(25, after: header)
         refresh()

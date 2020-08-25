@@ -35,7 +35,7 @@ class PercentChangeKeyValueView: KeyValueView {
 
     lazy var valueStack = UIStackView(views: [], axis: .vertical, spacing: 5)
     init(model: PeriodicFinancialModel) {
-        super.init(key: model.period, value: model.value)
+        super.init(key: model.period, value: model.value.roundedWithAbbreviations)
         valueLabel.removeFromSuperview()
         percentLabel.text = model.percentChangeString
         percentLabel.textColor = model.percentColor

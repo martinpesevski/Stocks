@@ -82,7 +82,6 @@ class GrowthTableCell: UIStackView {
 
         dateLabel.text = metric.date
         if let ocf = metric.ocf { ocfNumber.text = String(format: "$%.5f", ocf) } else { ocfNumber.text = "N/A" }
-
     }
 
     required init(coder: NSCoder) {

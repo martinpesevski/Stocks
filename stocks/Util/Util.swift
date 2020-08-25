@@ -18,6 +18,25 @@ extension String {
     var doubleValue: Double? { Double(self) }
 }
 
+extension String {
+    var roundedWithAbbreviations: String {
+        let negative = self.first == "-"
+        guard let number = Double(negative ? String(self.dropFirst()) : self) else { return self }
+        let thousand = number / 1000
+        let million = number / 1000000
+        
+        if million >= 100.0 {
+            return negative ? "-\((million * 10).rounded() / 10)M" : "\((million * 10).rounded() / 10)M"
+        }
+        else if thousand >= 100.0 {
+            return negative ? "-\((thousand * 10).rounded() / 10)K" : "\((thousand * 10).rounded() / 10)K"
+        }
+        else {
+            return "\(self)"
+        }
+    }
+}
+
 class DataParser {
     static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {
         do {

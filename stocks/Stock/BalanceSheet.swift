@@ -95,7 +95,9 @@ struct BalanceSheetArray: Codable {
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 let value = mtc.value.doubleValue ?? 0
-                let percentage = previousValue == 0 ? 0 : (-(previousValue - value)/previousValue) * 100
+                let percentage = previousValue == 0 ? 0 :
+                    previousValue < 0 ? ((previousValue - value) / previousValue) * 100 :
+                    (-(previousValue - value) / previousValue) * 100
                 previousValue = value
                 mapped.append(percentage)
             }
