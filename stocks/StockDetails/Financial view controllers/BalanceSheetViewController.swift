@@ -71,16 +71,16 @@ class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
     }
 
     func didSelectMetric(_ metric: Metric) {
-        guard let financials = balanceSheetsAnnual.financials else { return }
+        guard let financials = (isAnnual ? balanceSheetsAnnual : balanceSheetsQuarterly).financials else { return }
         var mapped: [PeriodicFinancialModel] = []
-        let percentages = balanceSheetsAnnual.percentageIncrease(metric: metric)
+        let percentages = (isAnnual ? balanceSheetsAnnual : balanceSheetsQuarterly).percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
 
-        let vc = PeriodicValueChangeViewController(ticker: balanceSheetsAnnual.symbol, metricType: metric.text, periodicChange: mapped)
+        let vc = PeriodicValueChangeViewController(ticker: (isAnnual ? balanceSheetsAnnual : balanceSheetsQuarterly).symbol, metricType: metric.text, periodicChange: mapped)
         show(vc, sender: self)
     }
     

@@ -9,35 +9,78 @@
 import UIKit
 
 class CashFlowViewController: StackViewController, MetricKeyValueDelegate {
-    let cashFlows: CashFlowsArray
+    let cashFlowsAnnual: CashFlowsArray
+    let cashFlowsQuarterly: CashFlowsArray
 
-    init(cashFlows: CashFlowsArray) {
-        self.cashFlows = cashFlows
+    let metricsAnnual: [CashFlowFinancialMetric]
+    let metricsQuarterly: [CashFlowFinancialMetric]
+    
+    init(cashFlowsAnnual: CashFlowsArray, cashFlowsQuarterly: CashFlowsArray) {
+        self.cashFlowsAnnual = cashFlowsAnnual
+        self.cashFlowsQuarterly = cashFlowsQuarterly
+
+        self.metricsAnnual = cashFlowsAnnual.financials?[safe: 0]?.metrics ?? []
+        self.metricsQuarterly = cashFlowsQuarterly.financials?[safe: 0]?.metrics ?? []
+        
         super.init()
-        titleView.text = cashFlows.symbol
+        titleView.text = cashFlowsAnnual.symbol
         subtitleView.text = "Cash flow statement"
+        
+        content.addArrangedSubview(picker)
+        content.setCustomSpacing(25, after: picker)
 
-        guard let metrics = cashFlows.financials?[safe: 0]?.metrics else { return }
-
-        for metric in metrics {
-            let cell = MetricKeyValueView(metric: metric)
-            cell.chart.setData(cashFlows.periodicValues(metric: metric))
-            cell.delegate = self
-            content.addArrangedSubview(cell)
-        }
+        picker.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
+        
+        setupAnnual()
     }
+    
+    @objc
+       private func onPeriodChanged(sender: UISegmentedControl) {
+           switch sender.selectedSegmentIndex {
+           case 0: setupAnnual()
+           case 1: setupQuarterly()
+           default: return
+           }
+       }
+       
+       private func setupAnnual() {
+           removeMetrics()
+           for metric in metricsAnnual {
+               let cell = MetricKeyValueView(metric: metric)
+               cell.chart.setData(cashFlowsAnnual.periodicValues(metric: metric))
+               cell.delegate = self
+               content.addArrangedSubview(cell)
+           }
+       }
+       
+       private func setupQuarterly() {
+           removeMetrics()
+           for metric in metricsQuarterly {
+               let cell = MetricKeyValueView(metric: metric)
+               cell.chart.setData(cashFlowsQuarterly.periodicValues(metric: metric))
+               cell.delegate = self
+               content.addArrangedSubview(cell)
+           }
+       }
+       
+       private func removeMetrics() {
+           for view in content.stockStack.arrangedSubviews where
+               (view != titleView && view != subtitleView && view != picker) {
+               view.removeFromSuperview()
+           }
+       }
 
     func didSelectMetric(_ metric: Metric) {
-        guard let financials = cashFlows.financials else { return }
+        guard let financials = (isAnnual ? cashFlowsAnnual : cashFlowsQuarterly).financials else { return }
         var mapped: [PeriodicFinancialModel] = []
-        let percentages = cashFlows.percentageIncrease(metric: metric)
+        let percentages = (isAnnual ? cashFlowsAnnual : cashFlowsQuarterly).percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
 
-        let vc = PeriodicValueChangeViewController(ticker: cashFlows.symbol, metricType: metric.text, periodicChange: mapped)
+        let vc = PeriodicValueChangeViewController(ticker: (isAnnual ? cashFlowsAnnual : cashFlowsQuarterly).symbol, metricType: metric.text, periodicChange: mapped)
         show(vc, sender: self)
     }
 

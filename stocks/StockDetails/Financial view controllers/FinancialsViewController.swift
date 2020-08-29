@@ -54,8 +54,9 @@ class FinancialsViewController: ViewController {
     }
     
     @objc func onCashFlow() {
-        guard let cashFlows = stock.cashFlowsAnnual else { return }
-        let vc = CashFlowViewController(cashFlows: cashFlows)
+        guard let cashFlowsAnnual = stock.cashFlowsAnnual,
+            let cashFlowsQuarterly = stock.cashFlowsQuarterly else { return }
+        let vc = CashFlowViewController(cashFlowsAnnual: cashFlowsAnnual, cashFlowsQuarterly: cashFlowsQuarterly)
         show(vc, sender: self)
     }
     
