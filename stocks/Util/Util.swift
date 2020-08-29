@@ -26,10 +26,14 @@ extension String {
         let million = number / 1000000
         
         if million >= 100.0 {
-            return negative ? "-\((million * 10).rounded() / 10)M" : "\((million * 10).rounded() / 10)M"
+            let millionRounded = (million * 10).rounded() / 10
+            let formatted = ExponentRemoverFormatter.shared.string(from: NSNumber(value: millionRounded)) ?? "\(millionRounded)"
+            return negative ? "-\(formatted)M" : "\(formatted)M"
         }
         else if thousand >= 100.0 {
-            return negative ? "-\((thousand * 10).rounded() / 10)K" : "\((thousand * 10).rounded() / 10)K"
+            let thousandRounded = (thousand * 10).rounded() / 10
+            let formatted = ExponentRemoverFormatter.shared.string(from: NSNumber(value: thousandRounded)) ?? "\(thousandRounded)"
+            return negative ? "-\(formatted)K" : "\(formatted)K"
         }
         else {
             return "\(self)"

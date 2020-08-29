@@ -131,6 +131,18 @@ extension Collection where Iterator.Element == FinancialRatios {
         self[safe: 0 as! Self.Index]?.symbol ?? ""
     }
     
+    func latestValue(metric: Metric) -> String {
+        guard let financial = self.sorted(by: { (first, second) -> Bool in
+            return first.date < second.date
+        }).first else { return "" }
+        
+        for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+            return String(format: "%.5f", mtc.value.doubleValue ?? 0)
+        }
+        
+        return ""
+    }
+    
     func periodicValues(metric: Metric) -> [Double] {
         let financials = self.sorted(by: { (first, second) -> Bool in
             return first.date < second.date

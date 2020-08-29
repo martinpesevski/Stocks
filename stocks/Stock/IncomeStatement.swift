@@ -17,6 +17,18 @@ struct IncomeStatementsArray: Codable {
     var symbol: String
     var financials: [IncomeStatement]?
 
+    func latestValue(metric: Metric) -> String {
+        guard let financial = financials?.sorted(by: { (first, second) -> Bool in
+            return first.date < second.date
+        }).first else { return "" }
+        
+        for mtc in financial.metrics where mtc.metricType?.text == metric.text {
+            return mtc.value
+        }
+        
+        return ""
+    }
+    
     func periodicValues(metric: Metric) -> [Double] {
         guard let financials = financials?.sorted(by: { (first, second) -> Bool in
             return first.date < second.date

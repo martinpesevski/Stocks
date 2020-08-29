@@ -47,6 +47,7 @@ class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsAnnual {
             let cell = MetricKeyValueView(metric: metric)
+            cell.valueLabel.text = financialRatiosAnnual.latestValue(metric: metric).roundedWithAbbreviations
             cell.chart.setData(financialRatiosAnnual.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
@@ -57,6 +58,7 @@ class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsQuarterly {
             let cell = MetricKeyValueView(metric: metric)
+            cell.valueLabel.text = financialRatiosQuarterly.latestValue(metric: metric).roundedWithAbbreviations
             cell.chart.setData(financialRatiosQuarterly.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
