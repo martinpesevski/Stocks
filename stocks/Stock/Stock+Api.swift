@@ -26,7 +26,7 @@ extension Stock {
             }
         } else {
             URLSession.shared.datatask(type: KeyMetricsArray.self,
-                                       url: Endpoints.keyMetrics(ticker: ticker.symbol).url) {
+                                       url: Endpoints.keyMetrics(ticker: ticker.symbol, isAnnual: true).url) {
                                         [weak self] data, response, error in
                                         guard let self = self, let data = data else {
                                             completion?(false)
@@ -39,6 +39,40 @@ extension Stock {
         }
     }
     
+    func getFinancialRatios(completion: ((Bool) -> ())? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        var completed = false
+        URLSession.shared.datatask(type: [FinancialRatios].self,
+                                   url: Endpoints.financialRatios(ticker: ticker.symbol, isAnnual: true).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.financialRatiosAnnual = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.enter()
+        URLSession.shared.datatask(type: [FinancialRatios].self,
+                                   url: Endpoints.financialRatios(ticker: ticker.symbol, isAnnual: false).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.financialRatiosQuarterly = data
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion?(completed)
+        }
+    }
+    
     func getBalanceSheet(completion: ((Bool) -> ())? = nil) {
         let group = DispatchGroup()
         group.enter()
@@ -46,7 +80,9 @@ extension Stock {
         URLSession.shared.datatask(type: BalanceSheetArray.self,
                                    url: Endpoints.balanceSheet(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in
-                                    guard let self = self, let data = data else { return }
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
                                     
                                     self.balanceSheetsAnnual = data
                                     completed = error == nil
@@ -79,7 +115,9 @@ extension Stock {
         URLSession.shared.datatask(type: IncomeStatementsArray.self,
                                    url: Endpoints.incomeStatement(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in
-                                    guard let self = self, let data = data else { return }
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
                                     
                                     self.incomeStatementsAnnual = data
                                     completed = error == nil
@@ -141,7 +179,12 @@ extension Stock {
     func load(completion: @escaping () -> ()) {
         let group = DispatchGroup()
         group.enter()
-        getKeyMetrics() { completed in
+        getKeyMetrics() { _ in
+            group.leave()
+        }
+        
+        group.enter()
+        getFinancialRatios() { _ in
             group.leave()
         }
         
