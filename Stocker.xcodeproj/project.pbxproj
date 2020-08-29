@@ -73,6 +73,7 @@
 		C74ABB5A245740C6002FF441 /* SubscriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74ABB59245740C6002FF441 /* SubscriptionCell.swift */; };
 		C764584424F30EDC00E332C0 /* IntrinsicValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C764584324F30EDC00E332C0 /* IntrinsicValueViewController.swift */; };
 		C764584624F3511E00E332C0 /* StockInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C764584524F3511E00E332C0 /* StockInfoHeader.swift */; };
+		C76C3EC824FAC9BD004BA76B /* FinancialRatiosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C3EC724FAC9BD004BA76B /* FinancialRatiosViewController.swift */; };
 		C7A22BC624F9B744007F93D3 /* FinancialRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */; };
 		C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */; };
 		D113D12B1AD8894724938DB3 /* Pods_StockerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */; };
@@ -177,6 +178,7 @@
 		C74ABB59245740C6002FF441 /* SubscriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCell.swift; sourceTree = "<group>"; };
 		C764584324F30EDC00E332C0 /* IntrinsicValueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicValueViewController.swift; sourceTree = "<group>"; };
 		C764584524F3511E00E332C0 /* StockInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoHeader.swift; sourceTree = "<group>"; };
+		C76C3EC724FAC9BD004BA76B /* FinancialRatiosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatiosViewController.swift; sourceTree = "<group>"; };
 		C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatios.swift; sourceTree = "<group>"; };
 		C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatementViewController.swift; sourceTree = "<group>"; };
 		E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.release.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				C708ED0F2444C2F800FC9425 /* BalanceSheetViewController.swift */,
 				C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */,
 				52D0CC4B244643E300C36300 /* CashFlowViewController.swift */,
+				C76C3EC724FAC9BD004BA76B /* FinancialRatiosViewController.swift */,
 			);
 			path = "Financial view controllers";
 			sourceTree = "<group>";
@@ -729,6 +732,7 @@
 			files = (
 				C708ED0E2444AFDD00FC9425 /* BalanceSheet.swift in Sources */,
 				C708ED102444C2F800FC9425 /* BalanceSheetViewController.swift in Sources */,
+				C76C3EC824FAC9BD004BA76B /* FinancialRatiosViewController.swift in Sources */,
 				C71E95C72426BE09005A2DC7 /* AccessoryView.swift in Sources */,
 				C764584424F30EDC00E332C0 /* IntrinsicValueViewController.swift in Sources */,
 				52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */,

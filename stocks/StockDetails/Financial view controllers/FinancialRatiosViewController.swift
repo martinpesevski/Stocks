@@ -1,31 +1,31 @@
 //
-//  IncomeStatementViewController.swift
-//  stocks
+//  FinancialRatiosViewController.swift
+//  Stocker
 //
-//  Created by Martin Peshevski on 4/14/20.
+//  Created by Martin Peshevski on 8/29/20.
 //  Copyright © 2020 Martin Peshevski. All rights reserved.
 //
 
 import UIKit
 
-class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate {
-    let incomeStatementsAnnual: IncomeStatementsArray
-    let incomeStatementsQuarterly: IncomeStatementsArray
+class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate {
+    let financialRatiosAnnual: [FinancialRatios]
+    let financialRatiosQuarterly: [FinancialRatios]
 
-    let metricsAnnual: [IncomeStatementFinancialMetric]
-    let metricsQuarterly: [IncomeStatementFinancialMetric]
+    let metricsAnnual: [FinancialRatioFinancialMetric]
+    let metricsQuarterly: [FinancialRatioFinancialMetric]
     
-    init(incomeStatementsAnnual: IncomeStatementsArray, incomeStatementsQuarterly: IncomeStatementsArray) {
-        self.incomeStatementsAnnual = incomeStatementsAnnual
-        self.incomeStatementsQuarterly = incomeStatementsQuarterly
+    init(financialRatiosAnnual: [FinancialRatios], financialRatiosQuarterly: [FinancialRatios]) {
+        self.financialRatiosAnnual = financialRatiosAnnual
+        self.financialRatiosQuarterly = financialRatiosQuarterly
         
-        self.metricsAnnual = incomeStatementsAnnual.financials?[safe: 0]?.metrics ?? []
-        self.metricsQuarterly = incomeStatementsQuarterly.financials?[safe: 0]?.metrics ?? []
+        self.metricsAnnual = financialRatiosAnnual[safe: 0]?.metrics ?? []
+        self.metricsQuarterly = financialRatiosQuarterly[safe: 0]?.metrics ?? []
         
         super.init()
-        titleView.text = incomeStatementsAnnual.symbol
-        subtitleView.text = "Income statement"
-
+        titleView.text = financialRatiosAnnual.symbol
+        subtitleView.text = "Financial ratios"
+        
         content.addArrangedSubview(picker)
         content.setCustomSpacing(25, after: picker)
 
@@ -47,7 +47,7 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsAnnual {
             let cell = MetricKeyValueView(metric: metric)
-            cell.chart.setData(incomeStatementsAnnual.periodicValues(metric: metric))
+            cell.chart.setData(financialRatiosAnnual.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
         }
@@ -57,7 +57,7 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsQuarterly {
             let cell = MetricKeyValueView(metric: metric)
-            cell.chart.setData(incomeStatementsQuarterly.periodicValues(metric: metric))
+            cell.chart.setData(financialRatiosQuarterly.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
         }
@@ -71,16 +71,15 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
     }
 
     func didSelectMetric(_ metric: Metric) {
-        guard let financials = (isAnnual ? incomeStatementsAnnual : incomeStatementsQuarterly).financials else { return }
         var mapped: [PeriodicFinancialModel] = []
-        let percentages = (isAnnual ? incomeStatementsAnnual : incomeStatementsQuarterly).percentageIncrease(metric: metric)
-        for (index, financial) in financials.enumerated() {
+        let percentages = (isAnnual ? financialRatiosAnnual : financialRatiosQuarterly).percentageIncrease(metric: metric)
+        for (index, financial) in (isAnnual ? financialRatiosAnnual : financialRatiosQuarterly).enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
 
-        let vc = PeriodicValueChangeViewController(ticker: (isAnnual ? incomeStatementsAnnual : incomeStatementsQuarterly).symbol, metricType: metric.text, periodicChange: mapped)
+        let vc = PeriodicValueChangeViewController(ticker: (isAnnual ? financialRatiosAnnual : financialRatiosQuarterly).symbol, metricType: metric.text, periodicChange: mapped)
         show(vc, sender: self)
     }
     

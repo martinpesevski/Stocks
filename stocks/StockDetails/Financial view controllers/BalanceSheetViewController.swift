@@ -15,20 +15,6 @@ class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
     let metricsAnnual: [BalanceSheetFinancialMetric]
     let metricsQuarterly: [BalanceSheetFinancialMetric]
     
-    lazy var picker: UISegmentedControl = {
-        let items = ["Annual", "Quarterly"]
-        let v = UISegmentedControl(items: items)
-        v.selectedSegmentIndex = 0
-        v.layer.cornerRadius = 5.0
-        v.backgroundColor = .systemGray6
-        v.tintColor = .systemGray5
-        v.selectedSegmentTintColor = .systemGreen
-
-        v.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
-        
-        return v
-    }()
-    
     init(balanceSheetsAnnual: BalanceSheetArray, balanceSheetsQuarterly: BalanceSheetArray) {
         self.balanceSheetsAnnual = balanceSheetsAnnual
         self.balanceSheetsQuarterly = balanceSheetsQuarterly
@@ -43,6 +29,8 @@ class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
         content.addArrangedSubview(picker)
         content.setCustomSpacing(25, after: picker)
 
+        picker.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
+        
         setupAnnual()
     }
     

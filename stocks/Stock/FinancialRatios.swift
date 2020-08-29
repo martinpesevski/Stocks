@@ -16,75 +16,125 @@ struct FinancialRatioFinancialMetric: Codable, Metric {
 
     init(from decoder: Decoder) throws {
         value = "\(try decoder.singleValueContainer().decode(Double.self))"
-        if decoder.codingPath.count > 2 {
-            metricType = FinancialRatioMetricType(rawValue: decoder.codingPath[2].stringValue)
+        if decoder.codingPath.count > 1 {
+            metricType = FinancialRatioMetricType(rawValue: decoder.codingPath[1].stringValue)
         }
     }
 }
 
 enum FinancialRatioMetricType: String, Codable {
-    case currentRatio = "Current ratio"
-    case quickRatio = "Quick ratio"
-    case cashRatio = "Cash ratio"
-    case daysOfSalesOutstanding = "Days of sales outstanding"
-    case daysOfInventoryOutstanding = "Days of inventory outstanding"
-    case operatingCycle = "Operating cycle"
-    case daysOfPayablesOutstanding = "Days of payables outstanding"
-    case cashConversionCycle = "Cash conversion cycle"
-    case grossProfitMargin = "Gross profit margin"
-    case operatingProfitMargin = "Operating profit margin"
-    case pretaxProfitMargin = "Pre-tax profit margin"
-    case netProfitMargin = "Net profit margin"
-    case effectiveTaxRate = "Effective tax rate"
-    case returnOnAssets = "ROA"
-    case returnOnEquity = "ROE"
-    case returnOnCapitalEmployed = "ROI"
-    case debtRatio = "Debt ratio"
-    case debtEquityRatio = "Debt/Equity"
-    case longTermDebtToCapitalization = "LT debt/cap"
-    case totalDebtToCapitalization = "Total debt/cap"
-    case interestCoverage = "Interest coverage"
-    case cashFlowToDebtRatio = "CF/debt"
-    case companyEquityMultiplier = "Equity multiplier"
-    case receivablesTurnover = "Receivables turnover"
-    case payablesTurnover = "Payables turnover"
-    case inventoryTurnover = "Inventory turnover"
-    case fixedAssetTurnover = "Fixed assets turnover"
-    case assetTurnover = "Asset turnover"
-    case operatingCashFlowPerShare = "OCF/Sh"
-    case freeCashFlowPerShare = "FCF/Sh"
-    case cashPerShare = "Cash/Sh"
-    case payoutRatio = "Payout ratio"
-    case operatingCashFlowSalesRatio = "OCF/Sales"
-    case freeCashFlowOperatingCashFlowRatio = "FCF/OCF"
-    case cashFlowCoverageRatios = "Cash flow coverage ratio"
-    case shortTermCoverageRatios = "Short term coverage ratio"
-    case capitalExpenditureCoverageRatio = "Cap-ex coverage ratio"
-    case dividendPaidAndCapexCoverageRatio = "Div + Cap-ex coverage ratio"
-    case priceToBookRatio = "P/B"
-    case priceToSalesRatio = "P/S"
-    case priceEarningsRatio = "P/E"
-    case priceToFreeCashFlowsRatio = "P/FCF"
-    case priceToOperatingCashFlowsRatio = "P/OCF"
-    case priceCashFlowRatio = "P/CF"
-    case priceEarningsToGrowthRatio = "PEG"
-    case dividendYield = "Dividend yield"
-    case enterpriseValueMultiple = "EV multiple"
-    case priceFairValue = "P/FV"
+    case currentRatio = "currentRatio"
+    case quickRatio = "quickRatio"
+    case cashRatio = "cashRatio"
+    case daysOfSalesOutstanding = "daysOfSalesOutstanding"
+    case daysOfInventoryOutstanding = "daysOfInventoryOutstanding"
+    case operatingCycle = "operatingCycle"
+    case daysOfPayablesOutstanding = "daysOfPayablesOutstanding"
+    case cashConversionCycle = "cashConversionCycle"
+    case grossProfitMargin = "grossProfitMargin"
+    case operatingProfitMargin = "operatingProfitMargin"
+    case pretaxProfitMargin = "pretaxProfitMargin"
+    case netProfitMargin = "netProfitMargin"
+    case effectiveTaxRate = "effectiveTaxRate"
+    case returnOnAssets = "returnOnAssets"
+    case returnOnEquity = "returnOnEquity"
+    case returnOnCapitalEmployed = "returnOnCapitalEmployed"
+    case debtRatio = "debtRatio"
+    case debtEquityRatio = "debtEquityRatio"
+    case longTermDebtToCapitalization = "longTermDebtToCapitalization"
+    case totalDebtToCapitalization = "totalDebtToCapitalization"
+    case interestCoverage = "interestCoverage"
+    case cashFlowToDebtRatio = "cashFlowToDebtRatio"
+    case companyEquityMultiplier = "companyEquityMultiplier"
+    case receivablesTurnover = "receivablesTurnover"
+    case payablesTurnover = "payablesTurnover"
+    case inventoryTurnover = "inventoryTurnover"
+    case fixedAssetTurnover = "fixedAssetTurnover"
+    case assetTurnover = "assetTurnover"
+    case operatingCashFlowPerShare = "operatingCashFlowPerShare"
+    case freeCashFlowPerShare = "freeCashFlowPerShare"
+    case cashPerShare = "cashPerShare"
+    case payoutRatio = "payoutRatio"
+    case operatingCashFlowSalesRatio = "operatingCashFlowSalesRatio"
+    case freeCashFlowOperatingCashFlowRatio = "freeCashFlowOperatingCashFlowRatio"
+    case cashFlowCoverageRatios = "cashFlowCoverageRatios"
+    case shortTermCoverageRatios = "shortTermCoverageRatios"
+    case capitalExpenditureCoverageRatio = "capitalExpenditureCoverageRatio"
+    case dividendPaidAndCapexCoverageRatio = "dividendPaidAndCapexCoverageRatio"
+    case priceToBookRatio = "priceToBookRatio"
+    case priceToSalesRatio = "priceToSalesRatio"
+    case priceEarningsRatio = "priceEarningsRatio"
+    case priceToFreeCashFlowsRatio = "priceToFreeCashFlowsRatio"
+    case priceToOperatingCashFlowsRatio = "priceToOperatingCashFlowsRatio"
+    case priceCashFlowRatio = "priceCashFlowRatio"
+    case priceEarningsToGrowthRatio = "priceEarningsToGrowthRatio"
+    case dividendYield = "dividendYield"
+    case enterpriseValueMultiple = "enterpriseValueMultiple"
+    case priceFairValue = "priceFairValue"
 
     var text: String {
-       return rawValue
+        switch self {
+        case .currentRatio: return "Current ratio"
+        case .quickRatio: return "Quick ratio"
+        case .cashRatio: return "Cash ratio"
+        case .daysOfSalesOutstanding: return "Days of sales outstanding"
+        case .daysOfInventoryOutstanding: return  "Days of inventory outstanding"
+        case .operatingCycle: return "Operating cycle"
+        case .daysOfPayablesOutstanding: return "Days of payables outstanding"
+        case .cashConversionCycle: return "Cash conversion cycle"
+        case .grossProfitMargin: return "Gross profit margin"
+        case .operatingProfitMargin: return "Operating profit margin"
+        case .pretaxProfitMargin: return "Pre-tax profit margin"
+        case .netProfitMargin: return "Net profit margin"
+        case .effectiveTaxRate: return "Effective tax rate"
+        case .returnOnAssets: return "ROA"
+        case .returnOnEquity: return "ROE"
+        case .returnOnCapitalEmployed: return "ROI"
+        case .debtRatio: return "Debt ratio"
+        case .debtEquityRatio: return "Debt/Equity"
+        case .longTermDebtToCapitalization: return "LT debt/cap"
+        case .totalDebtToCapitalization: return "Total debt/cap"
+        case .interestCoverage: return "Interest coverage"
+        case .cashFlowToDebtRatio: return "CF/debt"
+        case .companyEquityMultiplier: return "Equity multiplier"
+        case .receivablesTurnover: return "Receivables turnover"
+        case .payablesTurnover: return "Payables turnover"
+        case .inventoryTurnover: return "Inventory turnover"
+        case .fixedAssetTurnover: return "Fixed assets turnover"
+        case .assetTurnover: return "Asset turnover"
+        case .operatingCashFlowPerShare: return "OCF/Sh"
+        case .freeCashFlowPerShare: return "FCF/Sh"
+        case .cashPerShare: return "Cash/Sh"
+        case .payoutRatio: return "Payout ratio"
+        case .operatingCashFlowSalesRatio: return "OCF/Sales"
+        case .freeCashFlowOperatingCashFlowRatio: return "FCF/OCF"
+        case .cashFlowCoverageRatios: return "Cash flow coverage ratio"
+        case .shortTermCoverageRatios: return "Short term coverage ratio"
+        case .capitalExpenditureCoverageRatio: return "Cap-ex coverage ratio"
+        case .dividendPaidAndCapexCoverageRatio: return "Div + Cap-ex coverage ratio"
+        case .priceToBookRatio: return "P/B"
+        case .priceToSalesRatio: return "P/S"
+        case .priceEarningsRatio: return "P/E"
+        case .priceToFreeCashFlowsRatio: return "P/FCF"
+        case .priceToOperatingCashFlowsRatio: return "P/OCF"
+        case .priceCashFlowRatio: return "P/CF"
+        case .priceEarningsToGrowthRatio: return "PEG"
+        case .dividendYield: return "Dividend yield"
+        case .enterpriseValueMultiple: return "EV multiple"
+        case .priceFairValue: return "P/FV"
+        }
     }
 }
 
-struct FinancialRatiosArray: Codable {
-    var symbol: String
-    var financials: [FinancialRatios]?
-
+extension Collection where Iterator.Element == FinancialRatios {
+    var symbol: String {
+        self[safe: 0 as! Self.Index]?.symbol ?? ""
+    }
+    
     func periodicValues(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
+        let financials = self.sorted(by: { (first, second) -> Bool in
             return first.date < second.date
-        }) else { return [] }
+        })
         
         var mapped: [Double] = []
         for financial in financials {
@@ -97,9 +147,9 @@ struct FinancialRatiosArray: Codable {
     }
 
     func percentageIncrease(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
+        let financials = self.sorted(by: { (first, second) -> Bool in
             return first.date < second.date
-        }) else { return [] }
+        })
 
         var mapped: [Double] = []
         var previousValue: Double = 0
@@ -172,33 +222,16 @@ struct FinancialRatios: Codable {
     
     var metrics: [FinancialRatioFinancialMetric] {
         let arr: NSMutableArray = [currentRatio, quickRatio, cashRatio, daysOfSalesOutstanding, daysOfInventoryOutstanding, operatingCycle, daysOfPayablesOutstanding, cashConversionCycle, grossProfitMargin, operatingProfitMargin, pretaxProfitMargin, netProfitMargin, effectiveTaxRate, returnOnAssets, returnOnEquity, returnOnCapitalEmployed, debtRatio, debtEquityRatio, companyEquityMultiplier, receivablesTurnover, payablesTurnover, inventoryTurnover, fixedAssetTurnover, assetTurnover, operatingCashFlowPerShare, freeCashFlowPerShare, cashPerShare, operatingCashFlowSalesRatio, freeCashFlowOperatingCashFlowRatio, capitalExpenditureCoverageRatio, priceToBookRatio, priceToSalesRatio, priceEarningsRatio, priceToFreeCashFlowsRatio, priceToOperatingCashFlowsRatio, priceCashFlowRatio, priceEarningsToGrowthRatio, enterpriseValueMultiple, priceFairValue]
-        if let payoutRatio = payoutRatio {
-            arr.add(payoutRatio)
-        }
-        if let dividendPaidAndCapexCoverageRatio = dividendPaidAndCapexCoverageRatio {
-                   arr.add(dividendPaidAndCapexCoverageRatio)
-               }
-        if let dividendYield = dividendYield {
-                   arr.add(dividendYield)
-               }
-        if let cashFlowCoverageRatios = cashFlowCoverageRatios {
-                   arr.add(cashFlowCoverageRatios)
-               }
-        if let shortTermCoverageRatios = shortTermCoverageRatios {
-                   arr.add(shortTermCoverageRatios)
-               }
-        if let cashFlowToDebtRatio = cashFlowToDebtRatio {
-            arr.add(cashFlowToDebtRatio)
-        }
-        if let interestCoverage = interestCoverage {
-            arr.add(interestCoverage)
-        }
-        if let totalDebtToCapitalization = totalDebtToCapitalization {
-            arr.add(totalDebtToCapitalization)
-        }
-        if let longTermDebtToCapitalization = longTermDebtToCapitalization {
-            arr.add(longTermDebtToCapitalization)
-        }
+        
+        if let payoutRatio = payoutRatio { arr.add(payoutRatio) }
+        if let dividendPaidAndCapexCoverageRatio = dividendPaidAndCapexCoverageRatio { arr.add(dividendPaidAndCapexCoverageRatio) }
+        if let dividendYield = dividendYield { arr.add(dividendYield) }
+        if let cashFlowCoverageRatios = cashFlowCoverageRatios { arr.add(cashFlowCoverageRatios) }
+        if let shortTermCoverageRatios = shortTermCoverageRatios { arr.add(shortTermCoverageRatios) }
+        if let cashFlowToDebtRatio = cashFlowToDebtRatio { arr.add(cashFlowToDebtRatio) }
+        if let interestCoverage = interestCoverage { arr.add(interestCoverage) }
+        if let totalDebtToCapitalization = totalDebtToCapitalization { arr.add(totalDebtToCapitalization) }
+        if let longTermDebtToCapitalization = longTermDebtToCapitalization { arr.add(longTermDebtToCapitalization) }
         
         return arr as? [FinancialRatioFinancialMetric] ?? []
     }

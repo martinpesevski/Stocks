@@ -39,8 +39,9 @@ class FinancialsViewController: ViewController {
     }
     
     @objc func onIncomeStatement() {
-        guard let incomeStatements = stock.incomeStatementsAnnual else { return }
-        let vc = IncomeStatementViewController(incomeStatements: incomeStatements)
+        guard let incomeStatementsAnnual = stock.incomeStatementsAnnual,
+            let incomeStatementsQuarterly = stock.incomeStatementsQuarterly else { return }
+        let vc = IncomeStatementViewController(incomeStatementsAnnual: incomeStatementsAnnual, incomeStatementsQuarterly:  incomeStatementsQuarterly)
         show(vc, sender: self)
     }
     

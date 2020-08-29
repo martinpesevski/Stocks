@@ -12,6 +12,22 @@ class StackViewController: ViewController {
     lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
     lazy var subtitleView = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
     lazy var content = ScrollableStackView(views: [titleView, subtitleView], spacing: 10, layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
+    
+    lazy var picker: UISegmentedControl = {
+        let items = ["Annual", "Quarterly"]
+        let v = UISegmentedControl(items: items)
+        v.selectedSegmentIndex = 0
+        v.layer.cornerRadius = 5.0
+        v.backgroundColor = .systemGray6
+        v.tintColor = .systemGray5
+        v.selectedSegmentTintColor = .systemGreen
+        
+        return v
+    }()
+    
+    var isAnnual: Bool {
+        picker.selectedSegmentIndex == 0
+    }
 
     init() {
         super.init(nibName: nil, bundle: nil)

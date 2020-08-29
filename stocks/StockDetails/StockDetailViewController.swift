@@ -19,14 +19,14 @@ class StockDetailViewController: ViewController {
     }
 
     lazy var financials = AccessoryView("Financials", accessoryType: .rightArrow)
-    lazy var growth = AccessoryView("Growth", accessoryType: .rightArrow)
+    lazy var financialratios = AccessoryView("Financial ratios", accessoryType: .rightArrow)
     lazy var intrinsicValue = AccessoryView("Intrinsic Value", accessoryType: .rightArrow)
 
     lazy var growthTable = GrowthTable()
     lazy var header = StockInfoHeader()
     
     lazy var stockStack: ScrollableStackView = {
-        let stack = ScrollableStackView(views: [header, financials, growth, intrinsicValue], alignment: .fill, spacing: 10,
+        let stack = ScrollableStackView(views: [header, financials, financialratios, intrinsicValue], alignment: .fill, spacing: 10,
         layoutInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         stack.setCustomSpacing(25, after: header)
         return stack
@@ -45,6 +45,7 @@ class StockDetailViewController: ViewController {
         }
         
         financials.button.addTarget(self, action: #selector(onFinancials), for: .touchUpInside)
+        financialratios.button.addTarget(self, action: #selector(onFinancialRatios), for: .touchUpInside)
         intrinsicValue.button.addTarget(self, action: #selector(onIntrinsicValue), for: .touchUpInside)
     }
     
@@ -60,6 +61,12 @@ class StockDetailViewController: ViewController {
     
     @objc func onFinancials() {
         let vc = FinancialsViewController(stock: stock)
+        show(vc, sender: self)
+    }
+    
+    @objc func onFinancialRatios() {
+        guard let annual = stock.financialRatiosAnnual, let quarterly = stock.financialRatiosQuarterly else { return }
+        let vc = FinancialRatiosViewController(financialRatiosAnnual: annual, financialRatiosQuarterly: quarterly)
         show(vc, sender: self)
     }
     
