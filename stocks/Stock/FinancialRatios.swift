@@ -137,7 +137,7 @@ extension Collection where Iterator.Element == FinancialRatios {
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return String(format: "%.5f", mtc.value.doubleValue ?? 0)
+            return String(format: "%.2f", mtc.value.doubleValue ?? 0)
         }
         
         return ""

@@ -72,18 +72,24 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         }
     }
 
-    func didSelectMetric(_ metric: Metric) {
-        guard let financials = (isAnnual ? incomeStatementsAnnual : incomeStatementsQuarterly).financials else { return }
+    func didSelectMetric(_ metric: Metric) {        
+        let mappedAnual: [PeriodicFinancialModel] = createPeriodicChange(incomeStatements: incomeStatementsAnnual, metric: metric)
+        let mappedQuarterly: [PeriodicFinancialModel] = createPeriodicChange(incomeStatements: incomeStatementsQuarterly, metric: metric)
+
+        let vc = PeriodicValueChangeViewController(ticker: incomeStatementsQuarterly.symbol, metricType: metric.text, periodicChangeAnnual: mappedAnual, periodicChangeQuarterly: mappedQuarterly)
+        show(vc, sender: self)
+    }
+    
+    func createPeriodicChange(incomeStatements: IncomeStatementsArray, metric: Metric) -> [PeriodicFinancialModel] {
+        guard let financials = incomeStatements.financials else { return [] }
         var mapped: [PeriodicFinancialModel] = []
-        let percentages = (isAnnual ? incomeStatementsAnnual : incomeStatementsQuarterly).percentageIncrease(metric: metric)
+        let percentages = incomeStatements.percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
             }
         }
-
-        let vc = PeriodicValueChangeViewController(ticker: (isAnnual ? incomeStatementsAnnual : incomeStatementsQuarterly).symbol, metricType: metric.text, periodicChange: mapped)
-        show(vc, sender: self)
+        return mapped
     }
     
     required init?(coder: NSCoder) {

@@ -54,14 +54,54 @@ class PercentChangeKeyValueView: KeyValueView {
 }
 
 class PeriodicValueChangeViewController: StackViewController {
-    init(ticker: String, metricType: String, periodicChange: [PeriodicFinancialModel]) {
+    let periodicChangeAnnual: [PeriodicFinancialModel]
+    let periodicChangeQuarterly: [PeriodicFinancialModel]
+    
+    init(ticker: String, metricType: String, periodicChangeAnnual: [PeriodicFinancialModel], periodicChangeQuarterly: [PeriodicFinancialModel]) {
+        self.periodicChangeAnnual = periodicChangeAnnual
+        self.periodicChangeQuarterly = periodicChangeQuarterly
+        
         super.init()
         titleView.text = ticker
         subtitleView.text = metricType
 
-        for metric in periodicChange {
+        content.addArrangedSubview(picker)
+        content.setCustomSpacing(25, after: picker)
+
+        picker.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
+        
+        setupAnnual()
+    }
+    
+    @objc
+    private func onPeriodChanged(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0: setupAnnual()
+        case 1: setupQuarterly()
+        default: return
+        }
+    }
+    
+    private func setupAnnual() {
+        removeMetrics()
+        for metric in periodicChangeAnnual {
             let cell = PercentChangeKeyValueView(model: metric)
             content.addArrangedSubview(cell)
+        }
+    }
+    
+    private func setupQuarterly() {
+        removeMetrics()
+        for metric in periodicChangeQuarterly {
+            let cell = PercentChangeKeyValueView(model: metric)
+            content.addArrangedSubview(cell)
+        }
+    }
+    
+    private func removeMetrics() {
+        for view in content.stockStack.arrangedSubviews where
+            (view != titleView && view != subtitleView && view != picker) {
+            view.removeFromSuperview()
         }
     }
 

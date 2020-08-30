@@ -24,10 +24,6 @@ class StackViewController: ViewController {
         
         return v
     }()
-    
-    var isAnnual: Bool {
-        picker.selectedSegmentIndex == 0
-    }
 
     init() {
         super.init(nibName: nil, bundle: nil)
