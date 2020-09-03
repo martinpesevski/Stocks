@@ -13,6 +13,7 @@ struct FinancialRatioFinancialMetric: Codable, Metric {
     var metricType: FinancialRatioMetricType?
 
     var text: String { metricType?.text ?? "" }
+    var isPercentage: Bool { metricType?.isPercentage ?? false }
 
     init(from decoder: Decoder) throws {
         value = "\(try decoder.singleValueContainer().decode(Double.self))"
@@ -122,6 +123,13 @@ enum FinancialRatioMetricType: String, Codable {
         case .dividendYield: return "Dividend yield"
         case .enterpriseValueMultiple: return "EV multiple"
         case .priceFairValue: return "P/FV"
+        }
+    }
+    
+    var isPercentage: Bool {
+        switch self {
+        case .grossProfitMargin, .operatingProfitMargin, .pretaxProfitMargin, .netProfitMargin, .effectiveTaxRate, .returnOnAssets, .returnOnEquity, .returnOnCapitalEmployed, .dividendYield: return true
+        default: return false
         }
     }
 }

@@ -47,7 +47,9 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsAnnual {
             let cell = MetricKeyValueView(metric: metric)
-            cell.valueLabel.text = incomeStatementsAnnual.latestValue(metric: metric).roundedWithAbbreviations
+            cell.valueLabel.text = metric.isPercentage ?
+                "\((incomeStatementsAnnual.latestValue(metric: metric).floatValue ?? 0) * 100)".twoDigits + "%" :
+                incomeStatementsAnnual.latestValue(metric: metric).roundedWithAbbreviations
             cell.chart.setData(incomeStatementsAnnual.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
@@ -58,7 +60,9 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsQuarterly {
             let cell = MetricKeyValueView(metric: metric)
-            cell.valueLabel.text = incomeStatementsQuarterly.latestValue(metric: metric).roundedWithAbbreviations
+            cell.valueLabel.text = metric.isPercentage ?
+                "\((incomeStatementsQuarterly.latestValue(metric: metric).floatValue ?? 0) * 100)".twoDigits + "%" :
+                incomeStatementsQuarterly.latestValue(metric: metric).roundedWithAbbreviations
             cell.chart.setData(incomeStatementsQuarterly.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
@@ -72,7 +76,7 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         }
     }
 
-    func didSelectMetric(_ metric: Metric) {        
+    func didSelectMetric(_ metric: Metric) {
         let mappedAnual: [PeriodicFinancialModel] = createPeriodicChange(incomeStatements: incomeStatementsAnnual, metric: metric)
         let mappedQuarterly: [PeriodicFinancialModel] = createPeriodicChange(incomeStatements: incomeStatementsQuarterly, metric: metric)
 
@@ -86,7 +90,8 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         let percentages = incomeStatements.percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
+                let valueString = (mtc.metricType?.isPercentage ?? false) ? "\((mtc.value.floatValue ?? 0) * 100)".twoDigits + "%" : "\(mtc.value.roundedWithAbbreviations)"
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: valueString, percentChange: percentages[index]))
             }
         }
         return mapped

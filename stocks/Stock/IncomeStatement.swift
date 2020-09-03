@@ -69,6 +69,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     var metricType: IncomeStatementMetricType?
 
     var text: String { metricType?.text ?? "" }
+    var isPercentage: Bool { metricType?.isPercentage ?? false }
 
     init(from decoder: Decoder) throws {
         value = "\(ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self)) ?? 0)"
@@ -220,6 +221,13 @@ enum IncomeStatementMetricType: String, Codable {
         case .consolidatedIncome: return "Consolidated income"
         case .earningsBeforeTaxMargin: return "Earnings before tax margin"
         case .netProfitMargin: return "Net profit margin"
+        }
+    }
+    
+    var isPercentage: Bool {
+        switch self {
+        case .revenueGrowth, .grossMargin, .ebitMargin, .ebitdaMargin, .netProfitMargin, .freeCashFlowMargin, .earningsBeforeTaxMargin, .profitMargin: return true
+        default: return false
         }
     }
 }

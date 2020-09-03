@@ -16,9 +16,8 @@ protocol StockIdentifiable {
 extension String {
     var floatValue: Float? { Float(self) }
     var doubleValue: Double? { Double(self) }
-}
-
-extension String {
+    var twoDigits: String { String(format: "%.2f", self.floatValue ?? 0) }
+    
     var roundedWithAbbreviations: String {
         let negative = self.first == "-"
         guard let number = Double(negative ? String(self.dropFirst()) : self) else { return self }
@@ -40,7 +39,6 @@ extension String {
         }
     }
 }
-
 class DataParser {
     static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {
         do {

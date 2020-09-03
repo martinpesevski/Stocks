@@ -47,7 +47,9 @@ class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsAnnual {
             let cell = MetricKeyValueView(metric: metric)
-            cell.valueLabel.text = financialRatiosAnnual.latestValue(metric: metric).roundedWithAbbreviations
+            cell.valueLabel.text = metric.isPercentage ?
+                "\((financialRatiosAnnual.latestValue(metric: metric).floatValue ?? 0) * 100)".twoDigits + "%" :
+                financialRatiosAnnual.latestValue(metric: metric).roundedWithAbbreviations
             cell.chart.setData(financialRatiosAnnual.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
@@ -58,7 +60,9 @@ class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate
         removeMetrics()
         for metric in metricsQuarterly {
             let cell = MetricKeyValueView(metric: metric)
-            cell.valueLabel.text = financialRatiosQuarterly.latestValue(metric: metric).roundedWithAbbreviations
+            cell.valueLabel.text = metric.isPercentage ?
+                "\((financialRatiosQuarterly.latestValue(metric: metric).floatValue ?? 0) * 100)".twoDigits + "%" :
+                financialRatiosQuarterly.latestValue(metric: metric).roundedWithAbbreviations
             cell.chart.setData(financialRatiosQuarterly.periodicValues(metric: metric))
             cell.delegate = self
             content.addArrangedSubview(cell)
@@ -85,7 +89,8 @@ class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate
         let percentages = financialRatios.percentageIncrease(metric: metric)
         for (index, financial) in financialRatios.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.value, percentChange: percentages[index]))
+                let valueString = (mtc.metricType?.isPercentage ?? false) ? "\((mtc.value.floatValue ?? 0) * 100)".twoDigits + "%" : "\(mtc.value.roundedWithAbbreviations)"
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: valueString, percentChange: percentages[index]))
             }
         }
         return mapped
