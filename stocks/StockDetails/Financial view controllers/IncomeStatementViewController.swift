@@ -90,8 +90,7 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         let percentages = incomeStatements.percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                let valueString = (mtc.metricType?.isPercentage ?? false) ? "\((mtc.value.floatValue ?? 0) * 100)".twoDigits + "%" : "\(mtc.value.roundedWithAbbreviations)"
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: valueString, percentChange: percentages[index]))
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.stringValue, percentChange: percentages[index]))
             }
         }
         return mapped

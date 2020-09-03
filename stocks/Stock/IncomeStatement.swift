@@ -10,7 +10,9 @@ import Foundation
 
 protocol Metric {
     var text: String { get }
-    var value: String { get }
+    var stringValue: String { get }
+    var doubleValue: Double { get }
+    var isPercentage: Bool { get }
 }
 
 struct IncomeStatementsArray: Codable {
@@ -23,7 +25,7 @@ struct IncomeStatementsArray: Codable {
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return mtc.value
+            return mtc.stringValue
         }
         
         return ""
@@ -37,7 +39,7 @@ struct IncomeStatementsArray: Codable {
         var mapped: [Double] = []
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(mtc.value.doubleValue ?? 0)
+                mapped.append(mtc.doubleValue)
             }
         }
 
@@ -53,7 +55,7 @@ struct IncomeStatementsArray: Codable {
         var previousValue: Double = 0
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                let value = mtc.value.doubleValue ?? 0
+                let value = mtc.doubleValue
                 let percentage = previousValue == 0 ? 0 : (-(previousValue - value)/previousValue) * 100
                 previousValue = value
                 mapped.append(percentage)
@@ -65,17 +67,20 @@ struct IncomeStatementsArray: Codable {
 }
 
 struct IncomeStatementFinancialMetric: Codable, Metric {
-    var value: String
+    var stringValue: String
+    var doubleValue: Double
     var metricType: IncomeStatementMetricType?
 
     var text: String { metricType?.text ?? "" }
     var isPercentage: Bool { metricType?.isPercentage ?? false }
 
     init(from decoder: Decoder) throws {
-        value = "\(ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self)) ?? 0)"
         if decoder.codingPath.count > 2 {
             metricType = IncomeStatementMetricType(rawValue: decoder.codingPath[2].stringValue)
         }
+        doubleValue = (ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0)
+        stringValue = ""
+        stringValue = isPercentage ? "\(doubleValue * 100)".twoDigits + "%" : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)"
     }
 }
 

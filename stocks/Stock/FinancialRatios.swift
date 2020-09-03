@@ -9,17 +9,20 @@
 import Foundation
 
 struct FinancialRatioFinancialMetric: Codable, Metric {
-    let value: String
+    var stringValue: String
+    let doubleValue: Double
     var metricType: FinancialRatioMetricType?
 
     var text: String { metricType?.text ?? "" }
     var isPercentage: Bool { metricType?.isPercentage ?? false }
 
     init(from decoder: Decoder) throws {
-        value = "\(try decoder.singleValueContainer().decode(Double.self))"
         if decoder.codingPath.count > 1 {
             metricType = FinancialRatioMetricType(rawValue: decoder.codingPath[1].stringValue)
         }
+        doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
+        stringValue = ""
+        stringValue = isPercentage ? "\(doubleValue * 100)".twoDigits + "%" : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)"
     }
 }
 
@@ -145,7 +148,7 @@ extension Collection where Iterator.Element == FinancialRatios {
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return String(format: "%.2f", mtc.value.doubleValue ?? 0)
+            return String(format: "%.2f", mtc.doubleValue)
         }
         
         return ""
@@ -159,7 +162,7 @@ extension Collection where Iterator.Element == FinancialRatios {
         var mapped: [Double] = []
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(mtc.value.doubleValue ?? 0)
+                mapped.append(mtc.doubleValue)
             }
         }
 
@@ -175,7 +178,7 @@ extension Collection where Iterator.Element == FinancialRatios {
         var previousValue: Double = 0
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                let value = mtc.value.doubleValue ?? 0
+                let value = mtc.doubleValue
                 let percentage = previousValue == 0 ? 0 :
                     previousValue < 0 ? ((previousValue - value) / previousValue) * 100 :
                     (-(previousValue - value) / previousValue) * 100

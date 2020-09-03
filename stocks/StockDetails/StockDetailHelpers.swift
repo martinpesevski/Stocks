@@ -53,7 +53,7 @@ class MetricKeyValueView: KeyValueView {
 
     init(metric: Metric) {
         self.metric = metric
-        super.init(key: metric.text, value: metric.value)
+        super.init(key: metric.text, value: metric.stringValue)
         valueLabel.text = ""
         addArrangedSubview(chart)
         setCustomSpacing(15, after: valueLabel)

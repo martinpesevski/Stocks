@@ -24,23 +24,28 @@ class StockDetailViewController: ViewController {
 
     lazy var growthTable = GrowthTable()
     lazy var header = StockInfoHeader()
-    
+    lazy var preferredMetrics = PreferredMetricsTable(stock: stock, items: nil)
+
     lazy var stockStack: ScrollableStackView = {
-        let stack = ScrollableStackView(views: [header, financials, financialratios, intrinsicValue], alignment: .fill, spacing: 10,
-        layoutInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+        let stack = ScrollableStackView(views: [header, financials, financialratios, intrinsicValue, preferredMetrics], alignment: .fill, spacing: 10,
+        layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
         stack.setCustomSpacing(25, after: header)
+        stack.setCustomSpacing(25, after: intrinsicValue)
         return stack
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(stockStack)
-        stockStack.snp.makeConstraints { make in
-            make.edges.equalTo(view.layoutMargins)
-        }
         
+        self.view.startLoading()
         stock.load { [weak self] in
             guard let self = self else { return }
+            
+            self.view.finishLoading()
+            self.view.addSubview(self.stockStack)
+            self.stockStack.snp.makeConstraints { make in
+                make.edges.equalTo(self.view.layoutMargins)
+            }
             self.setup(stock: self.stock)
         }
         

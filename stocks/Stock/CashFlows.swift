@@ -18,7 +18,7 @@ struct CashFlowsArray: Codable {
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return mtc.value
+            return mtc.stringValue
         }
         
         return ""
@@ -32,7 +32,7 @@ struct CashFlowsArray: Codable {
         var mapped: [Double] = []
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(mtc.value.doubleValue ?? 0)
+                mapped.append(mtc.doubleValue)
             }
         }
 
@@ -48,7 +48,7 @@ struct CashFlowsArray: Codable {
         var previousValue: Double = 0
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                let value = mtc.value.doubleValue ?? 0
+                let value = mtc.doubleValue
                 let percentage = previousValue == 0 ? 0 : (-(previousValue - value)/previousValue) * 100
                 previousValue = value
                 mapped.append(percentage)
@@ -60,13 +60,16 @@ struct CashFlowsArray: Codable {
 }
 
 struct CashFlowFinancialMetric: Codable, Metric {
-    let value: String
+    let stringValue: String
+    let doubleValue: Double
     var metricType: CashFlowMetricType?
 
     var text: String { metricType?.text ?? ""}
+    var isPercentage: Bool = false
 
     init(from decoder: Decoder) throws {
-        value = "\(ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self)) ?? 0)"
+        doubleValue = ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0
+        stringValue = "\(doubleValue)".twoDigits.roundedWithAbbreviations
         if decoder.codingPath.count > 2 {
             metricType = CashFlowMetricType(rawValue: decoder.codingPath[2].stringValue)
         }
