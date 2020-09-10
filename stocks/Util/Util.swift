@@ -137,12 +137,39 @@ class LoadingView: UIView {
     }
 }
 
+extension UIView {
+    func fadeIn() {
+        UIView.animate(withDuration: 0.2) {
+            self.alpha = 1
+        }
+    }
+    
+    func fadeOut() {
+        UIView.animate(withDuration: 0.2) {
+            self.alpha = 0
+        }
+    }
+}
+
 class ExponentRemoverFormatter: NumberFormatter {
     static var shared = ExponentRemoverFormatter()
 
     override init() {
         super.init()
         numberStyle = .decimal
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class StockDateFormatter: DateFormatter {
+    static var shared = StockDateFormatter()
+
+    override init() {
+        super.init()
+        dateFormat = "yyyy-mm-dd"
     }
     
     required init?(coder: NSCoder) {

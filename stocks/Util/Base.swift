@@ -53,6 +53,10 @@ class KeyValueView: UIStackView {
         layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         isLayoutMarginsRelativeArrangement = true
         
+        setup(key: key, value: value)
+    }
+    
+    func setup(key: String, value: String) {
         keyLabel.text = key
         valueLabel.text = value
     }

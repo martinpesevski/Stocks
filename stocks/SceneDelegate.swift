@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,11 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let auth = AuthenticationManager()
+//        let auth = AuthenticationManager()
 //        let vc = WelcomeViewController()
-//        let vc = FilterViewController(viewModel: StocksViewModel())
-//        let nav = NavigationController(rootViewController: vc)
-        window?.rootViewController = auth.authViewController
+        FirebaseApp.configure()
+        let vc = FilterViewController(viewModel: StocksViewModel())
+        let nav = NavigationController(rootViewController: vc)
+//        window?.rootViewController = auth.authViewController
+        window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
 

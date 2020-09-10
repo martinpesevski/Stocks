@@ -86,7 +86,7 @@ class CashFlowViewController: StackViewController, MetricKeyValueDelegate {
         let percentages = cashFlows.percentageIncrease(metric: metric)
         for (index, financial) in financials.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.stringValue, percentChange: percentages[index]))
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.doubleValue, stringValue: mtc.stringValue, percentChange: percentages[index]))
             }
         }
         return mapped
