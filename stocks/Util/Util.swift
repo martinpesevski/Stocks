@@ -35,7 +35,7 @@ extension String {
             return negative ? "-\(formatted)K" : "\(formatted)K"
         }
         else {
-            return "\(self)"
+            return "\(self)".twoDigits
         }
     }
 }

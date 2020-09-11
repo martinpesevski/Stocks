@@ -75,6 +75,7 @@
 		C764584624F3511E00E332C0 /* StockInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C764584524F3511E00E332C0 /* StockInfoHeader.swift */; };
 		C76C3EC824FAC9BD004BA76B /* FinancialRatiosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C3EC724FAC9BD004BA76B /* FinancialRatiosViewController.swift */; };
 		C76C3ECA2500A16D004BA76B /* PreferredMetricsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C3EC92500A16D004BA76B /* PreferredMetricsTable.swift */; };
+		C76C3ECC250C3BC0004BA76B /* DetailedGrowthChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C3ECB250C3BC0004BA76B /* DetailedGrowthChart.swift */; };
 		C7A22BC624F9B744007F93D3 /* FinancialRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */; };
 		C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */; };
 		D113D12B1AD8894724938DB3 /* Pods_StockerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */; };
@@ -181,6 +182,7 @@
 		C764584524F3511E00E332C0 /* StockInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoHeader.swift; sourceTree = "<group>"; };
 		C76C3EC724FAC9BD004BA76B /* FinancialRatiosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatiosViewController.swift; sourceTree = "<group>"; };
 		C76C3EC92500A16D004BA76B /* PreferredMetricsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredMetricsTable.swift; sourceTree = "<group>"; };
+		C76C3ECB250C3BC0004BA76B /* DetailedGrowthChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGrowthChart.swift; sourceTree = "<group>"; };
 		C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatios.swift; sourceTree = "<group>"; };
 		C7A33FEF2445F65700B6F9C0 /* IncomeStatementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatementViewController.swift; sourceTree = "<group>"; };
 		E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.release.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				C764584524F3511E00E332C0 /* StockInfoHeader.swift */,
 				52D0CC4D24464EE400C36300 /* PeriodicValueChangeViewController.swift */,
 				52D0CC4F2447577300C36300 /* SimpleGrowthChart.swift */,
+				C76C3ECB250C3BC0004BA76B /* DetailedGrowthChart.swift */,
 				52D0CC5324476D0100C36300 /* StockDetailHelpers.swift */,
 			);
 			path = StockDetails;
@@ -786,6 +789,7 @@
 				52D9B1BD24292D0B00E67BF2 /* Filter.swift in Sources */,
 				52108CDD241FCB5E000A472B /* Stock+Api.swift in Sources */,
 				C7A33FF02445F65700B6F9C0 /* IncomeStatementViewController.swift in Sources */,
+				C76C3ECC250C3BC0004BA76B /* DetailedGrowthChart.swift in Sources */,
 				C74ABB54245229C3002FF441 /* SubscriptionViewController.swift in Sources */,
 				5245609B23FC7685003686BE /* SceneDelegate.swift in Sources */,
 				C71E387E243830BC00E9A84B /* SectorFilter.swift in Sources */,

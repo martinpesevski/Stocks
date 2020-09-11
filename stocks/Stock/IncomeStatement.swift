@@ -87,7 +87,6 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
 struct IncomeStatement: Codable {
     var date: String
     var revenue: IncomeStatementFinancialMetric
-    var revenueGrowth: IncomeStatementFinancialMetric
     var costOfRevenue: IncomeStatementFinancialMetric
     var grossProfit: IncomeStatementFinancialMetric
     var rndExpenses: IncomeStatementFinancialMetric
@@ -119,13 +118,12 @@ struct IncomeStatement: Codable {
     var netProfitMargin: IncomeStatementFinancialMetric
     
     var metrics: [IncomeStatementFinancialMetric] {
-        [revenue, revenueGrowth, costOfRevenue, grossProfit, rndExpenses, sgnaExpense, operatingExpense, operatingIncome, interestExpense, earningsBeforeTax, incomeTaxExpense, netIncomeNonInterest, netIncomeDiscontinuedOps, netIncome, preferredDividends, netIncomeComonStock, eps, epsDiluted, weightedAvgSharesOut, weightedAvgSharesOutDil, dividendPerShare, grossMargin, ebitdaMargin, ebitMargin, profitMargin, freeCashFlowMargin, ebitda, ebit, consolidatedIncome, earningsBeforeTaxMargin, netProfitMargin]
+        [revenue, costOfRevenue, grossProfit, rndExpenses, sgnaExpense, operatingExpense, operatingIncome, interestExpense, earningsBeforeTax, incomeTaxExpense, netIncomeNonInterest, netIncomeDiscontinuedOps, netIncome, preferredDividends, netIncomeComonStock, eps, epsDiluted, weightedAvgSharesOut, weightedAvgSharesOutDil, dividendPerShare, grossMargin, ebitdaMargin, ebitMargin, profitMargin, freeCashFlowMargin, ebitda, ebit, consolidatedIncome, earningsBeforeTaxMargin, netProfitMargin]
     }
     
     private enum CodingKeys: String, CodingKey {
         case date = "date"
         case revenue = "Revenue"
-        case revenueGrowth = "Revenue Growth"
         case costOfRevenue = "Cost of Revenue"
         case grossProfit = "Gross Profit"
         case rndExpenses = "R&D Expenses"
@@ -161,7 +159,6 @@ struct IncomeStatement: Codable {
 enum IncomeStatementMetricType: String, Codable {
     case date = "date"
     case revenue = "Revenue"
-    case revenueGrowth = "Revenue Growth"
     case costOfRevenue = "Cost of Revenue"
     case grossProfit = "Gross Profit"
     case rndExpenses = "R&D Expenses"
@@ -196,7 +193,6 @@ enum IncomeStatementMetricType: String, Codable {
         switch self {
         case .date: return "Date"
         case .revenue: return "Revenue"
-        case .revenueGrowth: return "Revenue growth"
         case .costOfRevenue: return "Cost of revenue"
         case .grossProfit: return "Gross profit"
         case .rndExpenses: return "R&D expenses"
@@ -231,7 +227,7 @@ enum IncomeStatementMetricType: String, Codable {
     
     var isPercentage: Bool {
         switch self {
-        case .revenueGrowth, .grossMargin, .ebitMargin, .ebitdaMargin, .netProfitMargin, .freeCashFlowMargin, .earningsBeforeTaxMargin, .profitMargin: return true
+        case .grossMargin, .ebitMargin, .ebitdaMargin, .netProfitMargin, .freeCashFlowMargin, .earningsBeforeTaxMargin, .profitMargin: return true
         default: return false
         }
     }

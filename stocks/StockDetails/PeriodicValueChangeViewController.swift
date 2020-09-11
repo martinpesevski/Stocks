@@ -64,6 +64,46 @@ class PercentChangeKeyValueView: KeyValueView {
     }
 }
 
+extension Collection where Iterator.Element == PeriodicFinancialModel {
+    var totalPercentChange: Double {
+        guard let first = first, first.value != 0.0, count > 0, let lastIndex = count-1 as? Self.Index else { return 0 }
+        return ((self[lastIndex].value - first.value) / fabs(first.value)) * 100
+    }
+    
+    var totalValueChange: Double {
+        guard let first = first, count > 0, let lastIndex = count-1 as? Self.Index else { return 0 }
+        return self[lastIndex].value - first.value
+    }
+    
+    func percentChangedFrom(item: PeriodicFinancialModel) -> Double {
+        guard let first = first, first.value != 0.0 else { return 0 }
+        return ((item.value - first.value) / fabs(first.value)) * 100
+    }
+    
+    func valueChangedFrom(item: PeriodicFinancialModel) -> Double {
+        guard let first = first else { return 0 }
+        return item.value - first.value
+    }
+    
+    var totalValuePercentChanged: String {
+        guard totalPercentChange != 0 else { return "\(totalValueChange)".roundedWithAbbreviations }
+        return "\("\(totalValueChange)".roundedWithAbbreviations)(\("\(totalPercentChange)".twoDigits)%)"
+    }
+    
+    func valuePercentChangedFrom(item: PeriodicFinancialModel) -> String {
+        guard percentChangedFrom(item: item) != 0 else { return "\(valueChangedFrom(item: item))".roundedWithAbbreviations }
+        return "\("\(valueChangedFrom(item: item))".roundedWithAbbreviations)(\("\(percentChangedFrom(item: item))".twoDigits)%)"
+    }
+    
+    var totalColor: UIColor {
+        totalValueChange > 0 ? .systemGreen : .systemRed
+    }
+    
+    func colorFrom(item: PeriodicFinancialModel) -> UIColor {
+        return valueChangedFrom(item: item) > 0 ? .systemGreen: .systemRed
+    }
+}
+
 class PeriodicValueChangeViewController: StackViewController {
     let periodicChangeAnnual: [PeriodicFinancialModel]
     let periodicChangeQuarterly: [PeriodicFinancialModel]
