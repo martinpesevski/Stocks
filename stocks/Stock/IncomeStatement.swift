@@ -21,12 +21,13 @@ protocol Metric {
     var metricSuffixType: MetricSuffixType { get }
 }
 
-struct IncomeStatementsArray: Codable {
-    var symbol: String
-    var financials: [IncomeStatement]?
+extension Collection where Iterator.Element == IncomeStatement {
+    var symbol: String {
+        self[safe: 0 as! Self.Index]?.symbol ?? ""
+    }
 
     func latestValue(metric: Metric) -> String {
-        guard let financial = financials?.sorted(by: { (first, second) -> Bool in
+        guard let financial = sorted(by: { (first, second) -> Bool in
             return first.date > second.date
         }).first else { return "" }
         
@@ -38,9 +39,9 @@ struct IncomeStatementsArray: Codable {
     }
     
     func periodicValues(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
+        let financials = sorted(by: { (first, second) -> Bool in
             return first.date < second.date
-        }) else { return [] }
+        })
         
         var mapped: [Double] = []
         for financial in financials {
@@ -53,9 +54,9 @@ struct IncomeStatementsArray: Codable {
     }
 
     func percentageIncrease(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
+        let financials = sorted(by: { (first, second) -> Bool in
             return first.date < second.date
-        }) else { return [] }
+        })
 
         var mapped: [Double] = []
         var previousValue: Double = 0
@@ -81,160 +82,120 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     var metricSuffixType: MetricSuffixType { metricType?.suffixType ?? .none }
 
     init(from decoder: Decoder) throws {
-        if decoder.codingPath.count > 2 {
-            metricType = IncomeStatementMetricType(rawValue: decoder.codingPath[2].stringValue)
+        if decoder.codingPath.count > 1 {
+            metricType = IncomeStatementMetricType(rawValue: decoder.codingPath[1].stringValue)
         }
-        doubleValue = (ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0)
+        doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
         stringValue = ""
         stringValue = (metricSuffixType == .percentage ? "\(doubleValue * 100)".twoDigits : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)").formatted(metricSuffixType)
     }
 }
 
 struct IncomeStatement: Codable {
-    var date: String
-    var revenue: IncomeStatementFinancialMetric
-    var costOfRevenue: IncomeStatementFinancialMetric
-    var grossProfit: IncomeStatementFinancialMetric
-    var rndExpenses: IncomeStatementFinancialMetric
-    var sgnaExpense: IncomeStatementFinancialMetric
-    var operatingExpense: IncomeStatementFinancialMetric
-    var operatingIncome: IncomeStatementFinancialMetric
-    var interestExpense: IncomeStatementFinancialMetric
-    var earningsBeforeTax: IncomeStatementFinancialMetric
-    var incomeTaxExpense: IncomeStatementFinancialMetric
-    var netIncomeNonInterest: IncomeStatementFinancialMetric
-    var netIncomeDiscontinuedOps: IncomeStatementFinancialMetric
-    var netIncome: IncomeStatementFinancialMetric
-    var preferredDividends: IncomeStatementFinancialMetric
-    var netIncomeComonStock: IncomeStatementFinancialMetric
-    var eps: IncomeStatementFinancialMetric
-    var epsDiluted: IncomeStatementFinancialMetric
-    var weightedAvgSharesOut: IncomeStatementFinancialMetric
-    var weightedAvgSharesOutDil: IncomeStatementFinancialMetric
-    var dividendPerShare: IncomeStatementFinancialMetric
-    var grossMargin: IncomeStatementFinancialMetric
-    var ebitdaMargin: IncomeStatementFinancialMetric
-    var ebitMargin: IncomeStatementFinancialMetric
-    var profitMargin: IncomeStatementFinancialMetric
-    var freeCashFlowMargin: IncomeStatementFinancialMetric
-    var ebitda: IncomeStatementFinancialMetric
-    var ebit: IncomeStatementFinancialMetric
-    var consolidatedIncome: IncomeStatementFinancialMetric
-    var earningsBeforeTaxMargin: IncomeStatementFinancialMetric
-    var netProfitMargin: IncomeStatementFinancialMetric
+    var date                             : String
+    var symbol                           : String
+    var revenue                          : IncomeStatementFinancialMetric
+    var costOfRevenue                    : IncomeStatementFinancialMetric
+    var grossProfit                      : IncomeStatementFinancialMetric
+    var grossProfitRatio                 : IncomeStatementFinancialMetric
+    var researchAndDevelopmentExpenses   : IncomeStatementFinancialMetric
+    var generalAndAdministrativeExpenses : IncomeStatementFinancialMetric
+    var sellingAndMarketingExpenses      : IncomeStatementFinancialMetric
+    var otherExpenses                    : IncomeStatementFinancialMetric
+    var operatingExpenses                : IncomeStatementFinancialMetric
+    var costAndExpenses                  : IncomeStatementFinancialMetric
+    var interestExpense                  : IncomeStatementFinancialMetric
+    var depreciationAndAmortization      : IncomeStatementFinancialMetric
+    var ebitda                           : IncomeStatementFinancialMetric
+    var ebitdaratio                      : IncomeStatementFinancialMetric
+    var operatingIncome                  : IncomeStatementFinancialMetric
+    var operatingIncomeRatio             : IncomeStatementFinancialMetric
+    var totalOtherIncomeExpensesNet      : IncomeStatementFinancialMetric
+    var incomeBeforeTax                  : IncomeStatementFinancialMetric
+    var incomeBeforeTaxRatio             : IncomeStatementFinancialMetric
+    var incomeTaxExpense                 : IncomeStatementFinancialMetric
+    var netIncome                        : IncomeStatementFinancialMetric
+    var netIncomeRatio                   : IncomeStatementFinancialMetric
+    var eps                              : IncomeStatementFinancialMetric
+    var epsdiluted                       : IncomeStatementFinancialMetric
+    var weightedAverageShsOut            : IncomeStatementFinancialMetric
+    var weightedAverageShsOutDil         : IncomeStatementFinancialMetric
+    var link                             : String?
     
     var metrics: [IncomeStatementFinancialMetric] {
-        [revenue, costOfRevenue, grossProfit, rndExpenses, sgnaExpense, operatingExpense, operatingIncome, interestExpense, earningsBeforeTax, incomeTaxExpense, netIncomeNonInterest, netIncomeDiscontinuedOps, netIncome, preferredDividends, netIncomeComonStock, eps, epsDiluted, weightedAvgSharesOut, weightedAvgSharesOutDil, dividendPerShare, grossMargin, ebitdaMargin, ebitMargin, profitMargin, freeCashFlowMargin, ebitda, ebit, consolidatedIncome, earningsBeforeTaxMargin, netProfitMargin]
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case date = "date"
-        case revenue = "Revenue"
-        case costOfRevenue = "Cost of Revenue"
-        case grossProfit = "Gross Profit"
-        case rndExpenses = "R&D Expenses"
-        case sgnaExpense = "SG&A Expense"
-        case operatingExpense = "Operating Expenses"
-        case operatingIncome = "Operating Income"
-        case interestExpense = "Interest Expense"
-        case earningsBeforeTax = "Earnings before Tax"
-        case incomeTaxExpense = "Income Tax Expense"
-        case netIncomeNonInterest = "Net Income - Non-Controlling int"
-        case netIncomeDiscontinuedOps = "Net Income - Discontinued ops"
-        case netIncome = "Net Income"
-        case preferredDividends = "Preferred Dividends"
-        case netIncomeComonStock = "Net Income Com"
-        case eps = "EPS"
-        case epsDiluted = "EPS Diluted"
-        case weightedAvgSharesOut = "Weighted Average Shs Out"
-        case weightedAvgSharesOutDil = "Weighted Average Shs Out (Dil)"
-        case dividendPerShare = "Dividend per Share"
-        case grossMargin = "Gross Margin"
-        case ebitdaMargin = "EBITDA Margin"
-        case ebitMargin = "EBIT Margin"
-        case profitMargin = "Profit Margin"
-        case freeCashFlowMargin = "Free Cash Flow margin"
-        case ebitda = "EBITDA"
-        case ebit = "EBIT"
-        case consolidatedIncome = "Consolidated Income"
-        case earningsBeforeTaxMargin = "Earnings Before Tax Margin"
-        case netProfitMargin = "Net Profit Margin"
+        [revenue, costOfRevenue, grossProfit, grossProfitRatio, researchAndDevelopmentExpenses, generalAndAdministrativeExpenses, sellingAndMarketingExpenses, otherExpenses, operatingExpenses, costAndExpenses, interestExpense, depreciationAndAmortization, ebitda, ebitdaratio, operatingIncome, operatingIncomeRatio, totalOtherIncomeExpensesNet, incomeBeforeTax, incomeBeforeTaxRatio, incomeTaxExpense, netIncome, netIncomeRatio, eps, epsdiluted, weightedAverageShsOut, weightedAverageShsOutDil]
     }
 }
 
 enum IncomeStatementMetricType: String, Codable {
-    case date = "date"
-    case revenue = "Revenue"
-    case costOfRevenue = "Cost of Revenue"
-    case grossProfit = "Gross Profit"
-    case rndExpenses = "R&D Expenses"
-    case sgnaExpense = "SG&A Expense"
-    case operatingExpense = "Operating Expenses"
-    case operatingIncome = "Operating Income"
-    case interestExpense = "Interest Expense"
-    case earningsBeforeTax = "Earnings before Tax"
-    case incomeTaxExpense = "Income Tax Expense"
-    case netIncomeNonInterest = "Net Income - Non-Controlling int"
-    case netIncomeDiscontinuedOps = "Net Income - Discontinued ops"
-    case netIncome = "Net Income"
-    case preferredDividends = "Preferred Dividends"
-    case netIncomeComonStock = "Net Income Com"
-    case eps = "EPS"
-    case epsDiluted = "EPS Diluted"
-    case weightedAvgSharesOut = "Weighted Average Shs Out"
-    case weightedAvgSharesOutDil = "Weighted Average Shs Out (Dil)"
-    case dividendPerShare = "Dividend per Share"
-    case grossMargin = "Gross Margin"
-    case ebitdaMargin = "EBITDA Margin"
-    case ebitMargin = "EBIT Margin"
-    case profitMargin = "Profit Margin"
-    case freeCashFlowMargin = "Free Cash Flow margin"
-    case ebitda = "EBITDA"
-    case ebit = "EBIT"
-    case consolidatedIncome = "Consolidated Income"
-    case earningsBeforeTaxMargin = "Earnings Before Tax Margin"
-    case netProfitMargin = "Net Profit Margin"
+    case date                             = "date"
+    case symbol                           = "symbol"
+    case revenue                          = "revenue"
+    case costOfRevenue                    = "costOfRevenue"
+    case grossProfit                      = "grossProfit"
+    case grossProfitRatio                 = "grossProfitRatio"
+    case researchAndDevelopmentExpenses   = "researchAndDevelopmentExpenses"
+    case generalAndAdministrativeExpenses = "generalAndAdministrativeExpenses"
+    case sellingAndMarketingExpenses      = "sellingAndMarketingExpenses"
+    case otherExpenses                    = "otherExpenses"
+    case operatingExpenses                = "operatingExpenses"
+    case costAndExpenses                  = "costAndExpenses"
+    case interestExpense                  = "interestExpense"
+    case depreciationAndAmortization      = "depreciationAndAmortization"
+    case ebitda                           = "ebitda"
+    case ebitdaratio                      = "ebitdaratio"
+    case operatingIncome                  = "operatingIncome"
+    case operatingIncomeRatio             = "operatingIncomeRatio"
+    case totalOtherIncomeExpensesNet      = "totalOtherIncomeExpensesNet"
+    case incomeBeforeTax                  = "incomeBeforeTax"
+    case incomeBeforeTaxRatio             = "incomeBeforeTaxRatio"
+    case incomeTaxExpense                 = "incomeTaxExpense"
+    case netIncome                        = "netIncome"
+    case netIncomeRatio                   = "netIncomeRatio"
+    case eps                              = "eps"
+    case epsdiluted                       = "epsdiluted"
+    case weightedAverageShsOut            = "weightedAverageShsOut"
+    case weightedAverageShsOutDil         = "weightedAverageShsOutDil"
+    case link                             = "link"
     
     var text: String {
         switch self {
-        case .date: return "Date"
-        case .revenue: return "Revenue"
-        case .costOfRevenue: return "Cost of revenue"
-        case .grossProfit: return "Gross profit"
-        case .rndExpenses: return "R&D expenses"
-        case .sgnaExpense: return "Selling, general and administrative expense"
-        case .operatingExpense: return "Operating expense"
-        case .operatingIncome: return "Operating income"
-        case .interestExpense: return "Interest expense"
-        case .earningsBeforeTax: return "Earnings before tax"
-        case .incomeTaxExpense: return "Income tax expense"
-        case .netIncomeNonInterest: return "Net income - non-controlling interest"
-        case .netIncomeDiscontinuedOps: return "Net income - discontinued operations"
-        case .netIncome: return "Net income"
-        case .preferredDividends: return "Preferred dividends"
-        case .netIncomeComonStock: return "Net income from common stock"
-        case .eps: return "Earnings per share"
-        case .epsDiluted: return "Earnings per share - diluted"
-        case .weightedAvgSharesOut: return "Weighted average shares outstanding"
-        case .weightedAvgSharesOutDil: return "Weighted average shares outstanding - diluted"
-        case .dividendPerShare: return "Dividend per share"
-        case .grossMargin: return "Gross margin"
-        case .ebitdaMargin: return "EBITDA margin"
-        case .ebitMargin: return "EBIT margin"
-        case .profitMargin: return "Profit Margin"
-        case .freeCashFlowMargin: return "Free cash flow margin"
-        case .ebitda: return "EBITDA"
-        case .ebit: return "EBIT"
-        case .consolidatedIncome: return "Consolidated income"
-        case .earningsBeforeTaxMargin: return "Earnings before tax margin"
-        case .netProfitMargin: return "Net profit margin"
+        case .date                             : return "Date"
+        case .symbol                           : return "Symbol"
+        case .revenue                          : return "Revenue"
+        case .costOfRevenue                    : return "Cost of revenue"
+        case .grossProfit                      : return "Gross profit"
+        case .grossProfitRatio                 : return "Gross margin"
+        case .researchAndDevelopmentExpenses   : return "R&D expenses"
+        case .generalAndAdministrativeExpenses : return "General/Administrative expenses"
+        case .sellingAndMarketingExpenses      : return "Selling/Marketing expenses"
+        case .otherExpenses                    : return "Other expenses"
+        case .operatingExpenses                : return "Operating expenses"
+        case .costAndExpenses                  : return "Cost and expenses"
+        case .interestExpense                  : return "Interest expense"
+        case .depreciationAndAmortization      : return "Depreciation & amortization"
+        case .ebitda                           : return "EBITDA"
+        case .ebitdaratio                      : return "EBITDA margin"
+        case .operatingIncome                  : return "Operating income"
+        case .operatingIncomeRatio             : return "Operating margin"
+        case .totalOtherIncomeExpensesNet      : return "Total other expenses"
+        case .incomeBeforeTax                  : return "Earnings before tax"
+        case .incomeBeforeTaxRatio             : return "Earnings before tax margin"
+        case .incomeTaxExpense                 : return "Income tax expense"
+        case .netIncome                        : return "Net income"
+        case .netIncomeRatio                   : return "Net margin"
+        case .eps                              : return "EPS"
+        case .epsdiluted                       : return "EPS diluted"
+        case .weightedAverageShsOut            : return "Weighted avg shs outstanding"
+        case .weightedAverageShsOutDil         : return "Weighted avg shs outstanding diluted"
+        case .link                             : return "Latest income statement"
         }
     }
     
     var suffixType: MetricSuffixType {
         switch self {
-        case .grossMargin, .ebitMargin, .ebitdaMargin, .netProfitMargin, .freeCashFlowMargin, .earningsBeforeTaxMargin, .profitMargin: return .percentage
-        case .weightedAvgSharesOut, .weightedAvgSharesOutDil, .date: return .none
+        case .operatingIncomeRatio, .incomeBeforeTaxRatio, .netIncomeRatio, .ebitdaratio, .grossProfitRatio: return .percentage
+        case .weightedAverageShsOut, .weightedAverageShsOutDil, .date, .symbol, .link: return .none
         default: return .money
         }
     }

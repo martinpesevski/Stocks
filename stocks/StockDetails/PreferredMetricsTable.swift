@@ -48,9 +48,9 @@ class PreferredMetricsTable: UIStackView {
     var stock: Stock
     lazy var defaultMetrics: [Metric] = {
         var arr: [Metric] = []
-        if let firstIncome = stock.incomeStatementsQuarterly?.financials?.first {
+        if let firstIncome = stock.incomeStatementsQuarterly?.first {
             arr.append(firstIncome.eps)
-            arr.append(firstIncome.grossMargin)
+            arr.append(firstIncome.grossProfitRatio)
         }
         
         if let firstRatios = stock.financialRatiosQuarterly?.first {

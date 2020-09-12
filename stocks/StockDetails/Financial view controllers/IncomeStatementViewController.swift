@@ -9,18 +9,18 @@
 import UIKit
 
 class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate {
-    let incomeStatementsAnnual: IncomeStatementsArray
-    let incomeStatementsQuarterly: IncomeStatementsArray
+    let incomeStatementsAnnual: [IncomeStatement]
+    let incomeStatementsQuarterly: [IncomeStatement]
 
     let metricsAnnual: [IncomeStatementFinancialMetric]
     let metricsQuarterly: [IncomeStatementFinancialMetric]
     
-    init(incomeStatementsAnnual: IncomeStatementsArray, incomeStatementsQuarterly: IncomeStatementsArray) {
+    init(incomeStatementsAnnual: [IncomeStatement], incomeStatementsQuarterly: [IncomeStatement]) {
         self.incomeStatementsAnnual = incomeStatementsAnnual
         self.incomeStatementsQuarterly = incomeStatementsQuarterly
         
-        self.metricsAnnual = incomeStatementsAnnual.financials?[safe: 0]?.metrics ?? []
-        self.metricsQuarterly = incomeStatementsQuarterly.financials?[safe: 0]?.metrics ?? []
+        self.metricsAnnual = incomeStatementsAnnual[safe: 0]?.metrics ?? []
+        self.metricsQuarterly = incomeStatementsQuarterly[safe: 0]?.metrics ?? []
         
         super.init()
         titleView.text = incomeStatementsAnnual.symbol
@@ -80,11 +80,10 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         show(vc, sender: self)
     }
     
-    func createPeriodicChange(incomeStatements: IncomeStatementsArray, metric: Metric) -> [PeriodicFinancialModel] {
-        guard let financials = incomeStatements.financials else { return [] }
+    func createPeriodicChange(incomeStatements: [IncomeStatement], metric: Metric) -> [PeriodicFinancialModel] {
         var mapped: [PeriodicFinancialModel] = []
         let percentages = incomeStatements.percentageIncrease(metric: metric)
-        for (index, financial) in financials.enumerated() {
+        for (index, financial) in incomeStatements.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.doubleValue, stringValue: mtc.stringValue, percentChange: percentages[index]))
             }
