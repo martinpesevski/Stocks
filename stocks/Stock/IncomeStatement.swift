@@ -8,11 +8,17 @@
 
 import Foundation
 
+enum MetricSuffixType: String, Codable {
+    case percentage
+    case money
+    case none
+}
+
 protocol Metric {
     var text: String { get }
     var stringValue: String { get }
     var doubleValue: Double { get }
-    var isPercentage: Bool { get }
+    var metricSuffixType: MetricSuffixType { get }
 }
 
 struct IncomeStatementsArray: Codable {
@@ -21,7 +27,7 @@ struct IncomeStatementsArray: Codable {
 
     func latestValue(metric: Metric) -> String {
         guard let financial = financials?.sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
+            return first.date > second.date
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
@@ -72,7 +78,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     var metricType: IncomeStatementMetricType?
 
     var text: String { metricType?.text ?? "" }
-    var isPercentage: Bool { metricType?.isPercentage ?? false }
+    var metricSuffixType: MetricSuffixType { metricType?.suffixType ?? .none }
 
     init(from decoder: Decoder) throws {
         if decoder.codingPath.count > 2 {
@@ -80,7 +86,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
         }
         doubleValue = (ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0)
         stringValue = ""
-        stringValue = isPercentage ? "\(doubleValue * 100)".twoDigits + "%" : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)"
+        stringValue = (metricSuffixType == .percentage ? "\(doubleValue * 100)".twoDigits : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)").formatted(metricSuffixType)
     }
 }
 
@@ -225,10 +231,11 @@ enum IncomeStatementMetricType: String, Codable {
         }
     }
     
-    var isPercentage: Bool {
+    var suffixType: MetricSuffixType {
         switch self {
-        case .grossMargin, .ebitMargin, .ebitdaMargin, .netProfitMargin, .freeCashFlowMargin, .earningsBeforeTaxMargin, .profitMargin: return true
-        default: return false
+        case .grossMargin, .ebitMargin, .ebitdaMargin, .netProfitMargin, .freeCashFlowMargin, .earningsBeforeTaxMargin, .profitMargin: return .percentage
+        case .weightedAvgSharesOut, .weightedAvgSharesOutDil, .date: return .none
+        default: return .money
         }
     }
 }

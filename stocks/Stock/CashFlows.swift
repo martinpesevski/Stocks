@@ -14,7 +14,7 @@ struct CashFlowsArray: Codable {
 
     func latestValue(metric: Metric) -> String {
         guard let financial = financials?.sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
+            return first.date > second.date
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
@@ -60,19 +60,20 @@ struct CashFlowsArray: Codable {
 }
 
 struct CashFlowFinancialMetric: Codable, Metric {
-    let stringValue: String
+    var stringValue: String
     let doubleValue: Double
     var metricType: CashFlowMetricType?
 
     var text: String { metricType?.text ?? ""}
-    var isPercentage: Bool = false
+    var metricSuffixType: MetricSuffixType  { metricType?.suffixType ?? .none }
 
     init(from decoder: Decoder) throws {
         doubleValue = ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0
-        stringValue = "\(doubleValue)".twoDigits.roundedWithAbbreviations
         if decoder.codingPath.count > 2 {
             metricType = CashFlowMetricType(rawValue: decoder.codingPath[2].stringValue)
         }
+        stringValue = ""
+        stringValue = "\(doubleValue)".twoDigits.roundedWithAbbreviations.formatted(metricSuffixType)
     }
 }
 
@@ -137,5 +138,9 @@ enum CashFlowMetricType: String, Codable {
 
     var text: String {
         return rawValue
+    }
+    
+    var suffixType: MetricSuffixType {
+        return .money
     }
 }

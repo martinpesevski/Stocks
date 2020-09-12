@@ -38,6 +38,14 @@ extension String {
             return "\(self)".twoDigits
         }
     }
+    
+    func formatted(_ metricSuffixType: MetricSuffixType) -> String {
+        switch metricSuffixType {
+        case .none: return self
+        case .money: return "$\(self)"
+        case .percentage: return "\(self)%"
+        }
+    }
 }
 class DataParser {
     static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {

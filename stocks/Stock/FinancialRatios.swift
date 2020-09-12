@@ -14,7 +14,7 @@ struct FinancialRatioFinancialMetric: Codable, Metric {
     var metricType: FinancialRatioMetricType?
 
     var text: String { metricType?.text ?? "" }
-    var isPercentage: Bool { metricType?.isPercentage ?? false }
+    var metricSuffixType: MetricSuffixType { metricType?.suffixType ?? .none }
 
     init(from decoder: Decoder) throws {
         if decoder.codingPath.count > 1 {
@@ -22,7 +22,7 @@ struct FinancialRatioFinancialMetric: Codable, Metric {
         }
         doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
         stringValue = ""
-        stringValue = isPercentage ? "\(doubleValue * 100)".twoDigits + "%" : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)"
+        stringValue = (metricSuffixType == .percentage ? "\(doubleValue * 100)".twoDigits : "\("\(doubleValue)".twoDigits.roundedWithAbbreviations)").formatted(metricSuffixType)
     }
 }
 
@@ -129,10 +129,11 @@ enum FinancialRatioMetricType: String, Codable {
         }
     }
     
-    var isPercentage: Bool {
+    var suffixType: MetricSuffixType {
         switch self {
-        case .grossProfitMargin, .operatingProfitMargin, .pretaxProfitMargin, .netProfitMargin, .effectiveTaxRate, .returnOnAssets, .returnOnEquity, .returnOnCapitalEmployed, .dividendYield: return true
-        default: return false
+        case .grossProfitMargin, .operatingProfitMargin, .pretaxProfitMargin, .netProfitMargin, .effectiveTaxRate, .returnOnAssets, .returnOnEquity, .returnOnCapitalEmployed, .dividendYield: return .percentage
+        case .cashPerShare, .freeCashFlowPerShare, .operatingCashFlowPerShare: return .money
+        default: return .none
         }
     }
 }
@@ -144,11 +145,11 @@ extension Collection where Iterator.Element == FinancialRatios {
     
     func latestValue(metric: Metric) -> String {
         guard let financial = self.sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
+            return first.date > second.date
         }).first else { return "" }
         
         for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return String(format: "%.2f", mtc.doubleValue)
+            return mtc.stringValue
         }
         
         return ""
