@@ -8,82 +8,17 @@
 
 import Foundation
 
-enum MetricSuffixType: String, Codable {
-    case percentage
-    case money
-    case none
-}
-
-protocol Metric {
-    var text: String { get }
-    var stringValue: String { get }
-    var doubleValue: Double { get }
-    var metricSuffixType: MetricSuffixType { get }
-}
-
-extension Collection where Iterator.Element == IncomeStatement {
-    var symbol: String {
-        self[safe: 0 as! Self.Index]?.symbol ?? ""
-    }
-
-    func latestValue(metric: Metric) -> String {
-        guard let financial = sorted(by: { (first, second) -> Bool in
-            return first.date > second.date
-        }).first else { return "" }
-        
-        for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return mtc.stringValue
-        }
-        
-        return ""
-    }
-    
-    func periodicValues(metric: Metric) -> [Double] {
-        let financials = sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
-        })
-        
-        var mapped: [Double] = []
-        for financial in financials {
-            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(mtc.doubleValue)
-            }
-        }
-
-        return mapped
-    }
-
-    func percentageIncrease(metric: Metric) -> [Double] {
-        let financials = sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
-        })
-
-        var mapped: [Double] = []
-        var previousValue: Double = 0
-        for financial in financials {
-            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                let value = mtc.doubleValue
-                let percentage = previousValue == 0 ? 0 : (-(previousValue - value)/previousValue) * 100
-                previousValue = value
-                mapped.append(percentage)
-            }
-        }
-
-        return mapped.reversed()
-    }
-}
-
 struct IncomeStatementFinancialMetric: Codable, Metric {
     var stringValue: String
     var doubleValue: Double
-    var metricType: IncomeStatementMetricType?
+    var metricType: AnyMetricType?
 
     var text: String { metricType?.text ?? "" }
     var metricSuffixType: MetricSuffixType { metricType?.suffixType ?? .none }
 
     init(from decoder: Decoder) throws {
         if decoder.codingPath.count > 1 {
-            metricType = IncomeStatementMetricType(rawValue: decoder.codingPath[1].stringValue)
+            metricType = AnyMetricType(IncomeStatementMetricType(rawValue: decoder.codingPath[1].stringValue) ?? IncomeStatementMetricType.date)
         }
         doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
         stringValue = ""
@@ -91,7 +26,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     }
 }
 
-struct IncomeStatement: Codable {
+struct IncomeStatement: Codable, FinancialMetric {
     var date                             : String
     var symbol                           : String
     var revenue                          : IncomeStatementFinancialMetric
@@ -122,12 +57,12 @@ struct IncomeStatement: Codable {
     var weightedAverageShsOutDil         : IncomeStatementFinancialMetric
     var link                             : String?
     
-    var metrics: [IncomeStatementFinancialMetric] {
+    var metrics: [Metric] {
         [revenue, costOfRevenue, grossProfit, grossProfitRatio, researchAndDevelopmentExpenses, generalAndAdministrativeExpenses, sellingAndMarketingExpenses, otherExpenses, operatingExpenses, costAndExpenses, interestExpense, depreciationAndAmortization, ebitda, ebitdaratio, operatingIncome, operatingIncomeRatio, totalOtherIncomeExpensesNet, incomeBeforeTax, incomeBeforeTaxRatio, incomeTaxExpense, netIncome, netIncomeRatio, eps, epsdiluted, weightedAverageShsOut, weightedAverageShsOutDil]
     }
 }
 
-enum IncomeStatementMetricType: String, Codable {
+enum IncomeStatementMetricType: String, Codable, MetricType {
     case date                             = "date"
     case symbol                           = "symbol"
     case revenue                          = "revenue"

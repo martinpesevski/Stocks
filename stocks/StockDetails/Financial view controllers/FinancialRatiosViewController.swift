@@ -19,8 +19,8 @@ class FinancialRatiosViewController: StackViewController, MetricKeyValueDelegate
         self.financialRatiosAnnual = financialRatiosAnnual
         self.financialRatiosQuarterly = financialRatiosQuarterly
         
-        self.metricsAnnual = financialRatiosAnnual[safe: 0]?.metrics ?? []
-        self.metricsQuarterly = financialRatiosQuarterly[safe: 0]?.metrics ?? []
+        self.metricsAnnual = financialRatiosAnnual[safe: 0]?.metrics as? [FinancialRatioFinancialMetric] ?? []
+        self.metricsQuarterly = financialRatiosQuarterly[safe: 0]?.metrics as? [FinancialRatioFinancialMetric] ?? []
         
         super.init()
         titleView.text = financialRatiosAnnual.symbol

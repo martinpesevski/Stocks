@@ -62,7 +62,7 @@ struct CashFlowsArray: Codable {
 struct CashFlowFinancialMetric: Codable, Metric {
     var stringValue: String
     let doubleValue: Double
-    var metricType: CashFlowMetricType?
+    var metricType: AnyMetricType?
 
     var text: String { metricType?.text ?? ""}
     var metricSuffixType: MetricSuffixType  { metricType?.suffixType ?? .none }
@@ -70,7 +70,7 @@ struct CashFlowFinancialMetric: Codable, Metric {
     init(from decoder: Decoder) throws {
         doubleValue = ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0
         if decoder.codingPath.count > 2 {
-            metricType = CashFlowMetricType(rawValue: decoder.codingPath[2].stringValue)
+            metricType = AnyMetricType(CashFlowMetricType(rawValue: decoder.codingPath[2].stringValue)!)
         }
         stringValue = ""
         stringValue = "\(doubleValue)".twoDigits.roundedWithAbbreviations.formatted(metricSuffixType)
@@ -78,63 +78,63 @@ struct CashFlowFinancialMetric: Codable, Metric {
 }
 
 struct CashFlow: Codable {
-    var date: String
-    var depreciationAmortization: CashFlowFinancialMetric
-    var stockBasedCompensation: CashFlowFinancialMetric
-    var operatincCashFlow: CashFlowFinancialMetric
-    var capitalExpenditure: CashFlowFinancialMetric
-    var acquisitionsDisposals: CashFlowFinancialMetric
-    var investmentPurchasesSales: CashFlowFinancialMetric
-    var investingCashFlow: CashFlowFinancialMetric
-    var issuanceRepaymentOfDebt: CashFlowFinancialMetric
-    var issuanceBuybackOfShares: CashFlowFinancialMetric
-    var dividentPayments: CashFlowFinancialMetric
-    var financingCashFlow: CashFlowFinancialMetric
-    var efectOfForex: CashFlowFinancialMetric
-    var netCashFlow: CashFlowFinancialMetric
-    var freeCashFlow: CashFlowFinancialMetric
-    var netCashOverMarketCap: CashFlowFinancialMetric
+    var date                     : String
+    var depreciationAmortization : CashFlowFinancialMetric
+    var stockBasedCompensation   : CashFlowFinancialMetric
+    var operatincCashFlow        : CashFlowFinancialMetric
+    var capitalExpenditure       : CashFlowFinancialMetric
+    var acquisitionsDisposals    : CashFlowFinancialMetric
+    var investmentPurchasesSales : CashFlowFinancialMetric
+    var investingCashFlow        : CashFlowFinancialMetric
+    var issuanceRepaymentOfDebt  : CashFlowFinancialMetric
+    var issuanceBuybackOfShares  : CashFlowFinancialMetric
+    var dividentPayments         : CashFlowFinancialMetric
+    var financingCashFlow        : CashFlowFinancialMetric
+    var efectOfForex             : CashFlowFinancialMetric
+    var netCashFlow              : CashFlowFinancialMetric
+    var freeCashFlow             : CashFlowFinancialMetric
+    var netCashOverMarketCap     : CashFlowFinancialMetric
 
     var metrics: [CashFlowFinancialMetric] {
         [depreciationAmortization, stockBasedCompensation, operatincCashFlow, capitalExpenditure, acquisitionsDisposals, investmentPurchasesSales, investingCashFlow, issuanceRepaymentOfDebt, issuanceBuybackOfShares, dividentPayments, financingCashFlow, efectOfForex, netCashFlow, freeCashFlow, netCashOverMarketCap]
     }
 
     private enum CodingKeys: String, CodingKey {
-        case date = "date"
+        case date                     = "date"
         case depreciationAmortization = "Depreciation & Amortization"
-        case stockBasedCompensation = "Stock-based compensation"
-        case operatincCashFlow = "Operating Cash Flow"
-        case capitalExpenditure = "Capital Expenditure"
-        case acquisitionsDisposals = "Acquisitions and disposals"
+        case stockBasedCompensation   = "Stock-based compensation"
+        case operatincCashFlow        = "Operating Cash Flow"
+        case capitalExpenditure       = "Capital Expenditure"
+        case acquisitionsDisposals    = "Acquisitions and disposals"
         case investmentPurchasesSales = "Investment purchases and sales"
-        case investingCashFlow = "Investing Cash flow"
-        case issuanceRepaymentOfDebt = "Issuance (repayment) of debt"
-        case issuanceBuybackOfShares = "Issuance (buybacks) of shares"
-        case dividentPayments = "Dividend payments"
-        case financingCashFlow = "Financing Cash Flow"
-        case efectOfForex = "Effect of forex changes on cash"
-        case netCashFlow = "Net cash flow / Change in cash"
-        case freeCashFlow = "Free Cash Flow"
-        case netCashOverMarketCap = "Net Cash/Marketcap"
+        case investingCashFlow        = "Investing Cash flow"
+        case issuanceRepaymentOfDebt  = "Issuance (repayment) of debt"
+        case issuanceBuybackOfShares  = "Issuance (buybacks) of shares"
+        case dividentPayments         = "Dividend payments"
+        case financingCashFlow        = "Financing Cash Flow"
+        case efectOfForex             = "Effect of forex changes on cash"
+        case netCashFlow              = "Net cash flow / Change in cash"
+        case freeCashFlow             = "Free Cash Flow"
+        case netCashOverMarketCap     = "Net Cash/Marketcap"
     }
 }
 
-enum CashFlowMetricType: String, Codable {
+enum CashFlowMetricType: String, Codable, MetricType {
     case depreciationAmortization = "Depreciation & Amortization"
-    case stockBasedCompensation = "Stock-based compensation"
-    case operatincCashFlow = "Operating Cash Flow"
-    case capitalExpenditure = "Capital Expenditure"
-    case acquisitionsDisposals = "Acquisitions and disposals"
+    case stockBasedCompensation   = "Stock-based compensation"
+    case operatincCashFlow        = "Operating Cash Flow"
+    case capitalExpenditure       = "Capital Expenditure"
+    case acquisitionsDisposals    = "Acquisitions and disposals"
     case investmentPurchasesSales = "Investment purchases and sales"
-    case investingCashFlow = "Investing Cash flow"
-    case issuanceRepaymentOfDebt = "Issuance (repayment) of debt"
-    case issuanceBuybackOfShares = "Issuance (buybacks) of shares"
-    case dividentPayments = "Dividend payments"
-    case financingCashFlow = "Financing Cash Flow"
-    case efectOfForex = "Effect of forex changes on cash"
-    case netCashFlow = "Net cash flow / Change in cash"
-    case freeCashFlow = "Free Cash Flow"
-    case netCashOverMarketCap = "Net Cash/Marketcap"
+    case investingCashFlow        = "Investing Cash flow"
+    case issuanceRepaymentOfDebt  = "Issuance (repayment) of debt"
+    case issuanceBuybackOfShares  = "Issuance (buybacks) of shares"
+    case dividentPayments         = "Dividend payments"
+    case financingCashFlow        = "Financing Cash Flow"
+    case efectOfForex             = "Effect of forex changes on cash"
+    case netCashFlow              = "Net cash flow / Change in cash"
+    case freeCashFlow             = "Free Cash Flow"
+    case netCashOverMarketCap     = "Net Cash/Marketcap"
 
     var text: String {
         return rawValue

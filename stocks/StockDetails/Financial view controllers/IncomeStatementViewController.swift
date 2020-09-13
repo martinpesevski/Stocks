@@ -19,8 +19,8 @@ class IncomeStatementViewController: StackViewController, MetricKeyValueDelegate
         self.incomeStatementsAnnual = incomeStatementsAnnual
         self.incomeStatementsQuarterly = incomeStatementsQuarterly
         
-        self.metricsAnnual = incomeStatementsAnnual[safe: 0]?.metrics ?? []
-        self.metricsQuarterly = incomeStatementsQuarterly[safe: 0]?.metrics ?? []
+        self.metricsAnnual = incomeStatementsAnnual[safe: 0]?.metrics as? [IncomeStatementFinancialMetric] ?? []
+        self.metricsQuarterly = incomeStatementsQuarterly[safe: 0]?.metrics as? [IncomeStatementFinancialMetric] ?? []
         
         super.init()
         titleView.text = incomeStatementsAnnual.symbol

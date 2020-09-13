@@ -8,7 +8,7 @@
 
 import Foundation
 
-let apiKey = "12021c2120cb0b11c19b88200b736b06"
+let apiKey = "ed1bdfdab063bf367b76736509bf7084"
 
 enum Endpoints {
     case tickers
