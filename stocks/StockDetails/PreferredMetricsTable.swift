@@ -61,7 +61,7 @@ class PreferredMetricsTable: UIStackView {
             arr.append(firstRatios.returnOnCapitalEmployed)
         }
         
-        if let firstBalance = stock.balanceSheetsQuarterly?.financials?.first {
+        if let firstBalance = stock.balanceSheetsQuarterly?.first {
             arr.append(firstBalance.totalCurrentAssets)
             arr.append(firstBalance.totalLiabilities)
         }

@@ -52,8 +52,8 @@ class Stock {
     var intrinsicValue: IntrinsicValue?
     var financialRatiosAnnual: [FinancialRatios]?
     var financialRatiosQuarterly: [FinancialRatios]?
-    var balanceSheetsAnnual: BalanceSheetArray?
-    var balanceSheetsQuarterly: BalanceSheetArray?
+    var balanceSheetsAnnual: [BalanceSheet]?
+    var balanceSheetsQuarterly: [BalanceSheet]?
     var incomeStatementsAnnual: [IncomeStatement]?
     var incomeStatementsQuarterly: [IncomeStatement]?
     var cashFlowsAnnual: CashFlowsArray?

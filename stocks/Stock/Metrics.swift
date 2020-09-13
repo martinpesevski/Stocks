@@ -14,6 +14,14 @@ enum MetricSuffixType: String, Codable {
     case none
 }
 
+enum FiscalPeriod: String, Codable {
+    case annual = "FY"
+    case firstQuarter = "Q1"
+    case secondQuarter = "Q2"
+    case thirdQuarter = "Q3"
+    case fourthQuarter = "Q4"
+}
+
 protocol Metric {
     var text: String { get }
     var stringValue: String { get }
@@ -37,13 +45,13 @@ struct AnyMetricType: MetricType, Codable {
     }
 }
 
-protocol FinancialMetric {
+protocol Financial {
     var date: String { get }
     var symbol: String { get }
     var metrics: [Metric] { get }
 }
 
-extension Collection where Iterator.Element: FinancialMetric {
+extension Collection where Iterator.Element: Financial {
     var symbol: String {
         self[safe: 0 as! Self.Index]?.symbol ?? ""
     }

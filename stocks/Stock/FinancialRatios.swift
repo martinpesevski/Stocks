@@ -138,7 +138,7 @@ enum FinancialRatioMetricType: String, Codable, MetricType {
     }
 }
 
-struct FinancialRatios: Codable, FinancialMetric {
+struct FinancialRatios: Codable, Financial {
     var symbol                             : String
     var date                               : String
     var currentRatio                       : FinancialRatioFinancialMetric

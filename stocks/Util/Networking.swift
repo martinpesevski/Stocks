@@ -36,7 +36,7 @@ enum Endpoints {
             return URL(string: "https://financialmodelingprep.com/api/v3/ratios/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
         case .balanceSheet(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/balance-sheet-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
         case .incomeStatement(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
             return URL(string: "https://financialmodelingprep.com/api/v3/income-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")

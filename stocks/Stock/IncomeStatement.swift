@@ -26,7 +26,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     }
 }
 
-struct IncomeStatement: Codable, FinancialMetric {
+struct IncomeStatement: Codable, Financial {
     var date                             : String
     var symbol                           : String
     var revenue                          : IncomeStatementFinancialMetric

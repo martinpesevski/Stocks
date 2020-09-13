@@ -9,18 +9,18 @@
 import UIKit
 
 class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
-    let balanceSheetsAnnual: BalanceSheetArray
-    let balanceSheetsQuarterly: BalanceSheetArray
+    let balanceSheetsAnnual: [BalanceSheet]
+    let balanceSheetsQuarterly: [BalanceSheet]
 
     let metricsAnnual: [BalanceSheetFinancialMetric]
     let metricsQuarterly: [BalanceSheetFinancialMetric]
     
-    init(balanceSheetsAnnual: BalanceSheetArray, balanceSheetsQuarterly: BalanceSheetArray) {
+    init(balanceSheetsAnnual: [BalanceSheet], balanceSheetsQuarterly: [BalanceSheet]) {
         self.balanceSheetsAnnual = balanceSheetsAnnual
         self.balanceSheetsQuarterly = balanceSheetsQuarterly
         
-        self.metricsAnnual = balanceSheetsAnnual.financials?[safe: 0]?.metrics ?? []
-        self.metricsQuarterly = balanceSheetsQuarterly.financials?[safe: 0]?.metrics ?? []
+        self.metricsAnnual = balanceSheetsAnnual[safe: 0]?.metrics as? [BalanceSheetFinancialMetric] ?? []
+        self.metricsQuarterly = balanceSheetsQuarterly[safe: 0]?.metrics as? [BalanceSheetFinancialMetric] ?? []
         
         super.init()
         titleView.text = balanceSheetsAnnual.symbol
@@ -80,11 +80,10 @@ class BalanceSheetViewController: StackViewController, MetricKeyValueDelegate {
         show(vc, sender: self)
     }
     
-    func createPeriodicChange(balanceSheet: BalanceSheetArray, metric: Metric) -> [PeriodicFinancialModel] {
-        guard let financials = balanceSheet.financials else { return [] }
+    func createPeriodicChange(balanceSheet: [BalanceSheet], metric: Metric) -> [PeriodicFinancialModel] {
         var mapped: [PeriodicFinancialModel] = []
         let percentages = balanceSheet.percentageIncrease(metric: metric)
-        for (index, financial) in financials.enumerated() {
+        for (index, financial) in balanceSheet.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.doubleValue, stringValue: mtc.stringValue, percentChange: percentages[index]))
             }
