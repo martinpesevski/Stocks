@@ -30,6 +30,32 @@ protocol Metric {
     var metricSuffixType: MetricSuffixType { get }
 }
 
+extension Metric {
+    var text: String {
+        metricType?.text ?? ""
+    }
+    
+    var metricSuffixType: MetricSuffixType {
+        metricType?.suffixType ?? .none
+    }
+}
+
+struct AnyMetric: Metric, Codable {        
+    var text: String
+    var stringValue: String
+    var doubleValue: Double
+    var metricType: AnyMetricType?
+    var metricSuffixType: MetricSuffixType
+    
+    init(_ base: Metric) {
+        self.text = base.text
+        self.stringValue = base.stringValue
+        self.doubleValue = base.doubleValue
+        self.metricType = base.metricType
+        self.metricSuffixType = base.metricSuffixType
+    }
+}
+
 protocol MetricType {
     var text: String { get }
     var suffixType: MetricSuffixType { get }
@@ -48,7 +74,19 @@ struct AnyMetricType: MetricType, Codable {
 protocol Financial {
     var date: String { get }
     var symbol: String { get }
-    var metrics: [Metric] { get }
+    var metrics: [AnyMetric] { get }
+}
+
+struct AnyFinancial: Financial, Codable {
+    var date: String
+    var symbol: String
+    var metrics: [AnyMetric]
+
+    init(_ base: Financial) {
+        self.date = base.date
+        self.symbol = base.symbol
+        self.metrics = base.metrics
+    }
 }
 
 extension Collection where Iterator.Element: Financial {

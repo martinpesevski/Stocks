@@ -41,7 +41,9 @@ class FinancialsViewController: ViewController {
     @objc func onIncomeStatement() {
         guard let incomeStatementsAnnual = stock.incomeStatementsAnnual,
             let incomeStatementsQuarterly = stock.incomeStatementsQuarterly else { return }
-        let vc = IncomeStatementViewController(incomeStatementsAnnual: incomeStatementsAnnual, incomeStatementsQuarterly:  incomeStatementsQuarterly)
+        let vc = MetricViewController(annualFinancial: incomeStatementsAnnual.map { AnyFinancial($0) },
+                                      quarterlyFinancial: incomeStatementsQuarterly.map { AnyFinancial($0) },
+                                      title: "Income statement")
         show(vc, sender: self)
     }
     
@@ -49,14 +51,18 @@ class FinancialsViewController: ViewController {
         guard let balanceSheetsAnnual = stock.balanceSheetsAnnual,
             let balanceSheetsQuarterly = stock.balanceSheetsQuarterly
             else { return }
-        let vc = BalanceSheetViewController(balanceSheetsAnnual: balanceSheetsAnnual, balanceSheetsQuarterly: balanceSheetsQuarterly)
+        let vc = MetricViewController(annualFinancial: balanceSheetsAnnual.map { AnyFinancial($0) },
+                                      quarterlyFinancial: balanceSheetsQuarterly.map { AnyFinancial($0) },
+                                      title: "Balance sheet")
         show(vc, sender: self)
     }
     
     @objc func onCashFlow() {
         guard let cashFlowsAnnual = stock.cashFlowsAnnual,
             let cashFlowsQuarterly = stock.cashFlowsQuarterly else { return }
-        let vc = CashFlowViewController(cashFlowsAnnual: cashFlowsAnnual, cashFlowsQuarterly: cashFlowsQuarterly)
+        let vc = MetricViewController(annualFinancial: cashFlowsAnnual.map { AnyFinancial($0) },
+                                      quarterlyFinancial: cashFlowsQuarterly.map { AnyFinancial($0) },
+                                      title: "Cash flow")
         show(vc, sender: self)
     }
     

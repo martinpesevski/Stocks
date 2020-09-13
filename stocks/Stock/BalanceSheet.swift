@@ -13,9 +13,6 @@ struct BalanceSheetFinancialMetric: Codable, Metric {
     let doubleValue: Double
     var metricType: AnyMetricType?
 
-    var text: String { metricType?.text ?? "" }
-    var metricSuffixType: MetricSuffixType { metricType?.suffixType ?? .none }
-
     init(from decoder: Decoder) throws {
         doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
         if decoder.codingPath.count > 1 {
@@ -169,47 +166,47 @@ struct BalanceSheet: Codable, Financial {
     var netDebt                                 : BalanceSheetFinancialMetric
     var link                                    : String?
     
-    var metrics: [Metric] {
+    var metrics: [AnyMetric] {
         [
-           cashAndCashEquivalents,
-           shortTermInvestments,
-           cashAndShortTermInvestments,
-           netReceivables,
-           inventory,
-           otherCurrentAssets,
-           totalCurrentAssets,
-           propertyPlantEquipmentNet,
-           goodwill,
-           intangibleAssets,
-           goodwillAndIntangibleAssets,
-           longTermInvestments,
-           taxAssets,
-           otherNonCurrentAssets,
-           totalNonCurrentAssets,
-           otherAssets,
-           totalAssets,
-           accountPayables,
-           shortTermDebt,
-           taxPayables,
-           deferredRevenue,
-           otherCurrentLiabilities,
-           totalCurrentLiabilities,
-           longTermDebt,
-           deferredRevenueNonCurrent,
-           deferredTaxLiabilitiesNonCurrent,
-           otherNonCurrentLiabilities,
-           totalNonCurrentLiabilities,
-           otherLiabilities,
-           totalLiabilities,
-           commonStock,
-           retainedEarnings,
-           accumulatedOtherComprehensiveIncomeLoss,
-           othertotalStockholdersEquity,
-           totalStockholdersEquity,
-           totalLiabilitiesAndStockholdersEquity,
-           totalInvestments,
-           totalDebt,
-           netDebt
+           AnyMetric(cashAndCashEquivalents),
+           AnyMetric(shortTermInvestments),
+           AnyMetric(cashAndShortTermInvestments),
+           AnyMetric(netReceivables),
+           AnyMetric(inventory),
+           AnyMetric(otherCurrentAssets),
+           AnyMetric(totalCurrentAssets),
+           AnyMetric(propertyPlantEquipmentNet),
+           AnyMetric(goodwill),
+           AnyMetric(intangibleAssets),
+           AnyMetric(goodwillAndIntangibleAssets),
+           AnyMetric(longTermInvestments),
+           AnyMetric(taxAssets),
+           AnyMetric(otherNonCurrentAssets),
+           AnyMetric(totalNonCurrentAssets),
+           AnyMetric(otherAssets),
+           AnyMetric(totalAssets),
+           AnyMetric(accountPayables),
+           AnyMetric(shortTermDebt),
+           AnyMetric(taxPayables),
+           AnyMetric(deferredRevenue),
+           AnyMetric(otherCurrentLiabilities),
+           AnyMetric(totalCurrentLiabilities),
+           AnyMetric(longTermDebt),
+           AnyMetric(deferredRevenueNonCurrent),
+           AnyMetric(deferredTaxLiabilitiesNonCurrent),
+           AnyMetric(otherNonCurrentLiabilities),
+           AnyMetric(totalNonCurrentLiabilities),
+           AnyMetric(otherLiabilities),
+           AnyMetric(totalLiabilities),
+           AnyMetric(commonStock),
+           AnyMetric(retainedEarnings),
+           AnyMetric(accumulatedOtherComprehensiveIncomeLoss),
+           AnyMetric(othertotalStockholdersEquity),
+           AnyMetric(totalStockholdersEquity),
+           AnyMetric(totalLiabilitiesAndStockholdersEquity),
+           AnyMetric(totalInvestments),
+           AnyMetric(totalDebt),
+           AnyMetric(netDebt)
         ]
     }
 }

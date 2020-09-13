@@ -13,9 +13,6 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
     var doubleValue: Double
     var metricType: AnyMetricType?
 
-    var text: String { metricType?.text ?? "" }
-    var metricSuffixType: MetricSuffixType { metricType?.suffixType ?? .none }
-
     init(from decoder: Decoder) throws {
         if decoder.codingPath.count > 1 {
             metricType = AnyMetricType(IncomeStatementMetricType(rawValue: decoder.codingPath[1].stringValue) ?? IncomeStatementMetricType.date)
@@ -58,8 +55,35 @@ struct IncomeStatement: Codable, Financial {
     var weightedAverageShsOutDil         : IncomeStatementFinancialMetric
     var link                             : String?
     
-    var metrics: [Metric] {
-        [revenue, costOfRevenue, grossProfit, grossProfitRatio, researchAndDevelopmentExpenses, generalAndAdministrativeExpenses, sellingAndMarketingExpenses, otherExpenses, operatingExpenses, costAndExpenses, interestExpense, depreciationAndAmortization, ebitda, ebitdaratio, operatingIncome, operatingIncomeRatio, totalOtherIncomeExpensesNet, incomeBeforeTax, incomeBeforeTaxRatio, incomeTaxExpense, netIncome, netIncomeRatio, eps, epsdiluted, weightedAverageShsOut, weightedAverageShsOutDil]
+    var metrics: [AnyMetric] {
+        [
+         AnyMetric(revenue),
+         AnyMetric(costOfRevenue),
+         AnyMetric(grossProfit),
+         AnyMetric(grossProfitRatio),
+         AnyMetric(researchAndDevelopmentExpenses),
+         AnyMetric(generalAndAdministrativeExpenses),
+         AnyMetric(sellingAndMarketingExpenses),
+         AnyMetric(otherExpenses),
+         AnyMetric(operatingExpenses),
+         AnyMetric(costAndExpenses),
+         AnyMetric(interestExpense),
+         AnyMetric(depreciationAndAmortization),
+         AnyMetric(ebitda),
+         AnyMetric(ebitdaratio),
+         AnyMetric(operatingIncome),
+         AnyMetric(operatingIncomeRatio),
+         AnyMetric(totalOtherIncomeExpensesNet),
+         AnyMetric(incomeBeforeTax),
+         AnyMetric(incomeBeforeTaxRatio),
+         AnyMetric(incomeTaxExpense),
+         AnyMetric(netIncome),
+         AnyMetric(netIncomeRatio),
+         AnyMetric(eps),
+         AnyMetric(epsdiluted),
+         AnyMetric(weightedAverageShsOut),
+         AnyMetric(weightedAverageShsOutDil)
+        ]
     }
 }
 

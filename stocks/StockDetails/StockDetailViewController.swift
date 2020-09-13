@@ -71,7 +71,7 @@ class StockDetailViewController: ViewController {
     
     @objc func onFinancialRatios() {
         guard let annual = stock.financialRatiosAnnual, let quarterly = stock.financialRatiosQuarterly else { return }
-        let vc = FinancialRatiosViewController(financialRatiosAnnual: annual, financialRatiosQuarterly: quarterly)
+        let vc = MetricViewController(annualFinancial: annual.map { AnyFinancial($0) }, quarterlyFinancial: quarterly.map { AnyFinancial($0) }, title: "Financial ratios")
         show(vc, sender: self)
     }
     

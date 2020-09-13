@@ -13,9 +13,6 @@ struct CashFlowFinancialMetric: Codable, Metric {
     let doubleValue: Double
     var metricType: AnyMetricType?
 
-    var text: String { metricType?.text ?? ""}
-    var metricSuffixType: MetricSuffixType  { metricType?.suffixType ?? .none }
-
     init(from decoder: Decoder) throws {
         doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
         if decoder.codingPath.count > 1 {
@@ -62,38 +59,38 @@ struct CashFlow: Codable, Financial {
     var freeCashFlow                             : CashFlowFinancialMetric
     var link                                     : String?
 
-    var metrics: [Metric] {
+    var metrics: [AnyMetric] {
         [
-            netIncome,
-            depreciationAndAmortization,
-            deferredIncomeTax,
-            stockBasedCompensation,
-            changeInWorkingCapital,
-            accountsReceivables,
-            inventory,
-            accountsPayables,
-            otherWorkingCapital,
-            otherNonCashItems,
-            netCashProvidedByOperatingActivities,
-            investmentsInPropertyPlantAndEquipment,
-            acquisitionsNet,
-            purchasesOfInvestments,
-            salesMaturitiesOfInvestments,
-            otherInvestingActivites,
-            netCashUsedForInvestingActivites,
-            debtRepayment,
-            commonStockIssued,
-            commonStockRepurchased,
-            dividendsPaid,
-            otherFinancingActivites,
-            netCashUsedProvidedByFinancingActivities,
-            effectOfForexChangesOnCash,
-            netChangeInCash,
-            cashAtEndOfPeriod,
-            cashAtBeginningOfPeriod,
-            operatingCashFlow,
-            capitalExpenditure,
-            freeCashFlow
+            AnyMetric(netIncome),
+            AnyMetric(depreciationAndAmortization),
+            AnyMetric(deferredIncomeTax),
+            AnyMetric(stockBasedCompensation),
+            AnyMetric(changeInWorkingCapital),
+            AnyMetric(accountsReceivables),
+            AnyMetric(inventory),
+            AnyMetric(accountsPayables),
+            AnyMetric(otherWorkingCapital),
+            AnyMetric(otherNonCashItems),
+            AnyMetric(netCashProvidedByOperatingActivities),
+            AnyMetric(investmentsInPropertyPlantAndEquipment),
+            AnyMetric(acquisitionsNet),
+            AnyMetric(purchasesOfInvestments),
+            AnyMetric(salesMaturitiesOfInvestments),
+            AnyMetric(otherInvestingActivites),
+            AnyMetric(netCashUsedForInvestingActivites),
+            AnyMetric(debtRepayment),
+            AnyMetric(commonStockIssued),
+            AnyMetric(commonStockRepurchased),
+            AnyMetric(dividendsPaid),
+            AnyMetric(otherFinancingActivites),
+            AnyMetric(netCashUsedProvidedByFinancingActivities),
+            AnyMetric(effectOfForexChangesOnCash),
+            AnyMetric(netChangeInCash),
+            AnyMetric(cashAtEndOfPeriod),
+            AnyMetric(cashAtBeginningOfPeriod),
+            AnyMetric(operatingCashFlow),
+            AnyMetric(capitalExpenditure),
+            AnyMetric(freeCashFlow)
         ]
     }
 }
