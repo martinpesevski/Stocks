@@ -127,7 +127,7 @@ enum BalanceSheetMetricType: String, Codable, MetricType {
 struct BalanceSheet: Codable, Financial {
     var date                                    : String
     var symbol                                  : String
-    var period                                  : String
+    var period                                  : FiscalPeriod
     var cashAndCashEquivalents                  : BalanceSheetFinancialMetric
     var shortTermInvestments                    : BalanceSheetFinancialMetric
     var cashAndShortTermInvestments             : BalanceSheetFinancialMetric

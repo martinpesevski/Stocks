@@ -9,18 +9,18 @@
 import UIKit
 
 class CashFlowViewController: StackViewController, MetricKeyValueDelegate {
-    let cashFlowsAnnual: CashFlowsArray
-    let cashFlowsQuarterly: CashFlowsArray
+    let cashFlowsAnnual: [CashFlow]
+    let cashFlowsQuarterly: [CashFlow]
     
     let metricsAnnual: [CashFlowFinancialMetric]
     let metricsQuarterly: [CashFlowFinancialMetric]
     
-    init(cashFlowsAnnual: CashFlowsArray, cashFlowsQuarterly: CashFlowsArray) {
+    init(cashFlowsAnnual: [CashFlow], cashFlowsQuarterly: [CashFlow]) {
         self.cashFlowsAnnual = cashFlowsAnnual
         self.cashFlowsQuarterly = cashFlowsQuarterly
         
-        self.metricsAnnual = cashFlowsAnnual.financials?[safe: 0]?.metrics ?? []
-        self.metricsQuarterly = cashFlowsQuarterly.financials?[safe: 0]?.metrics ?? []
+        self.metricsAnnual = cashFlowsAnnual[safe: 0]?.metrics as? [CashFlowFinancialMetric] ?? []
+        self.metricsQuarterly = cashFlowsQuarterly[safe: 0]?.metrics as? [CashFlowFinancialMetric] ?? []
         
         super.init()
         titleView.text = cashFlowsAnnual.symbol
@@ -80,11 +80,10 @@ class CashFlowViewController: StackViewController, MetricKeyValueDelegate {
         show(vc, sender: self)
     }
     
-    func createPeriodicChange(cashFlows: CashFlowsArray, metric: Metric) -> [PeriodicFinancialModel] {
-        guard let financials = cashFlows.financials else { return [] }
+    func createPeriodicChange(cashFlows: [CashFlow], metric: Metric) -> [PeriodicFinancialModel] {
         var mapped: [PeriodicFinancialModel] = []
         let percentages = cashFlows.percentageIncrease(metric: metric)
-        for (index, financial) in financials.enumerated() {
+        for (index, financial) in cashFlows.enumerated() {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
                 mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.doubleValue, stringValue: mtc.stringValue, percentChange: percentages[index]))
             }

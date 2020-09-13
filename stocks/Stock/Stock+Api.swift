@@ -146,7 +146,7 @@ extension Stock {
         group.enter()
         var completed = false
         
-        URLSession.shared.datatask(type: CashFlowsArray.self,
+        URLSession.shared.datatask(type: [CashFlow].self,
                                    url: Endpoints.cashFlow(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in
                                     guard let self = self, let data = data else {
@@ -159,7 +159,7 @@ extension Stock {
         }
         
         group.enter()
-        URLSession.shared.datatask(type: CashFlowsArray.self,
+        URLSession.shared.datatask(type: [CashFlow].self,
                                    url: Endpoints.cashFlow(ticker: ticker.symbol, isAnnual: false).url) {
                                     [weak self] data, response, error in
                                     guard let self = self, let data = data else {

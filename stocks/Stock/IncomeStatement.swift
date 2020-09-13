@@ -29,6 +29,7 @@ struct IncomeStatementFinancialMetric: Codable, Metric {
 struct IncomeStatement: Codable, Financial {
     var date                             : String
     var symbol                           : String
+    var period                           : FiscalPeriod
     var revenue                          : IncomeStatementFinancialMetric
     var costOfRevenue                    : IncomeStatementFinancialMetric
     var grossProfit                      : IncomeStatementFinancialMetric
@@ -65,6 +66,7 @@ struct IncomeStatement: Codable, Financial {
 enum IncomeStatementMetricType: String, Codable, MetricType {
     case date                             = "date"
     case symbol                           = "symbol"
+    case period                           = "period"
     case revenue                          = "revenue"
     case costOfRevenue                    = "costOfRevenue"
     case grossProfit                      = "grossProfit"
@@ -97,6 +99,7 @@ enum IncomeStatementMetricType: String, Codable, MetricType {
         switch self {
         case .date                             : return "Date"
         case .symbol                           : return "Symbol"
+        case .period                           : return "Period"
         case .revenue                          : return "Revenue"
         case .costOfRevenue                    : return "Cost of revenue"
         case .grossProfit                      : return "Gross profit"

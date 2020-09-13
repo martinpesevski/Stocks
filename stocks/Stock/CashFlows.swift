@@ -8,57 +8,6 @@
 
 import Foundation
 
-struct CashFlowsArray: Codable {
-    var symbol: String
-    var financials: [CashFlow]?
-
-    func latestValue(metric: Metric) -> String {
-        guard let financial = financials?.sorted(by: { (first, second) -> Bool in
-            return first.date > second.date
-        }).first else { return "" }
-        
-        for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-            return mtc.stringValue
-        }
-        
-        return ""
-    }
-    
-    func periodicValues(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
-        }) else { return [] }
-        
-        var mapped: [Double] = []
-        for financial in financials {
-            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(mtc.doubleValue)
-            }
-        }
-
-        return mapped
-    }
-
-    func percentageIncrease(metric: Metric) -> [Double] {
-        guard let financials = financials?.sorted(by: { (first, second) -> Bool in
-            return first.date < second.date
-        }) else { return [] }
-
-        var mapped: [Double] = []
-        var previousValue: Double = 0
-        for financial in financials {
-            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                let value = mtc.doubleValue
-                let percentage = previousValue == 0 ? 0 : (-(previousValue - value)/previousValue) * 100
-                previousValue = value
-                mapped.append(percentage)
-            }
-        }
-
-        return mapped.reversed()
-    }
-}
-
 struct CashFlowFinancialMetric: Codable, Metric {
     var stringValue: String
     let doubleValue: Double
@@ -68,76 +17,160 @@ struct CashFlowFinancialMetric: Codable, Metric {
     var metricSuffixType: MetricSuffixType  { metricType?.suffixType ?? .none }
 
     init(from decoder: Decoder) throws {
-        doubleValue = ExponentRemoverFormatter.shared.number(from: try decoder.singleValueContainer().decode(String.self))?.doubleValue ?? 0
-        if decoder.codingPath.count > 2 {
-            metricType = AnyMetricType(CashFlowMetricType(rawValue: decoder.codingPath[2].stringValue)!)
+        doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
+        if decoder.codingPath.count > 1 {
+            metricType = AnyMetricType(CashFlowMetricType(rawValue: decoder.codingPath[1].stringValue)!)
         }
         stringValue = ""
         stringValue = "\(doubleValue)".twoDigits.roundedWithAbbreviations.formatted(metricSuffixType)
     }
 }
 
-struct CashFlow: Codable {
-    var date                     : String
-    var depreciationAmortization : CashFlowFinancialMetric
-    var stockBasedCompensation   : CashFlowFinancialMetric
-    var operatincCashFlow        : CashFlowFinancialMetric
-    var capitalExpenditure       : CashFlowFinancialMetric
-    var acquisitionsDisposals    : CashFlowFinancialMetric
-    var investmentPurchasesSales : CashFlowFinancialMetric
-    var investingCashFlow        : CashFlowFinancialMetric
-    var issuanceRepaymentOfDebt  : CashFlowFinancialMetric
-    var issuanceBuybackOfShares  : CashFlowFinancialMetric
-    var dividentPayments         : CashFlowFinancialMetric
-    var financingCashFlow        : CashFlowFinancialMetric
-    var efectOfForex             : CashFlowFinancialMetric
-    var netCashFlow              : CashFlowFinancialMetric
-    var freeCashFlow             : CashFlowFinancialMetric
-    var netCashOverMarketCap     : CashFlowFinancialMetric
+struct CashFlow: Codable, Financial {
+    var date                                     : String
+    var symbol                                   : String
+    var period                                   : FiscalPeriod
+    var netIncome                                : CashFlowFinancialMetric
+    var depreciationAndAmortization              : CashFlowFinancialMetric
+    var deferredIncomeTax                        : CashFlowFinancialMetric
+    var stockBasedCompensation                   : CashFlowFinancialMetric
+    var changeInWorkingCapital                   : CashFlowFinancialMetric
+    var accountsReceivables                      : CashFlowFinancialMetric
+    var inventory                                : CashFlowFinancialMetric
+    var accountsPayables                         : CashFlowFinancialMetric
+    var otherWorkingCapital                      : CashFlowFinancialMetric
+    var otherNonCashItems                        : CashFlowFinancialMetric
+    var netCashProvidedByOperatingActivities     : CashFlowFinancialMetric
+    var investmentsInPropertyPlantAndEquipment   : CashFlowFinancialMetric
+    var acquisitionsNet                          : CashFlowFinancialMetric
+    var purchasesOfInvestments                   : CashFlowFinancialMetric
+    var salesMaturitiesOfInvestments             : CashFlowFinancialMetric
+    var otherInvestingActivites                  : CashFlowFinancialMetric
+    var netCashUsedForInvestingActivites         : CashFlowFinancialMetric
+    var debtRepayment                            : CashFlowFinancialMetric
+    var commonStockIssued                        : CashFlowFinancialMetric
+    var commonStockRepurchased                   : CashFlowFinancialMetric
+    var dividendsPaid                            : CashFlowFinancialMetric
+    var otherFinancingActivites                  : CashFlowFinancialMetric
+    var netCashUsedProvidedByFinancingActivities : CashFlowFinancialMetric
+    var effectOfForexChangesOnCash               : CashFlowFinancialMetric
+    var netChangeInCash                          : CashFlowFinancialMetric
+    var cashAtEndOfPeriod                        : CashFlowFinancialMetric
+    var cashAtBeginningOfPeriod                  : CashFlowFinancialMetric
+    var operatingCashFlow                        : CashFlowFinancialMetric
+    var capitalExpenditure                       : CashFlowFinancialMetric
+    var freeCashFlow                             : CashFlowFinancialMetric
+    var link                                     : String?
 
-    var metrics: [CashFlowFinancialMetric] {
-        [depreciationAmortization, stockBasedCompensation, operatincCashFlow, capitalExpenditure, acquisitionsDisposals, investmentPurchasesSales, investingCashFlow, issuanceRepaymentOfDebt, issuanceBuybackOfShares, dividentPayments, financingCashFlow, efectOfForex, netCashFlow, freeCashFlow, netCashOverMarketCap]
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case date                     = "date"
-        case depreciationAmortization = "Depreciation & Amortization"
-        case stockBasedCompensation   = "Stock-based compensation"
-        case operatincCashFlow        = "Operating Cash Flow"
-        case capitalExpenditure       = "Capital Expenditure"
-        case acquisitionsDisposals    = "Acquisitions and disposals"
-        case investmentPurchasesSales = "Investment purchases and sales"
-        case investingCashFlow        = "Investing Cash flow"
-        case issuanceRepaymentOfDebt  = "Issuance (repayment) of debt"
-        case issuanceBuybackOfShares  = "Issuance (buybacks) of shares"
-        case dividentPayments         = "Dividend payments"
-        case financingCashFlow        = "Financing Cash Flow"
-        case efectOfForex             = "Effect of forex changes on cash"
-        case netCashFlow              = "Net cash flow / Change in cash"
-        case freeCashFlow             = "Free Cash Flow"
-        case netCashOverMarketCap     = "Net Cash/Marketcap"
+    var metrics: [Metric] {
+        [
+            netIncome,
+            depreciationAndAmortization,
+            deferredIncomeTax,
+            stockBasedCompensation,
+            changeInWorkingCapital,
+            accountsReceivables,
+            inventory,
+            accountsPayables,
+            otherWorkingCapital,
+            otherNonCashItems,
+            netCashProvidedByOperatingActivities,
+            investmentsInPropertyPlantAndEquipment,
+            acquisitionsNet,
+            purchasesOfInvestments,
+            salesMaturitiesOfInvestments,
+            otherInvestingActivites,
+            netCashUsedForInvestingActivites,
+            debtRepayment,
+            commonStockIssued,
+            commonStockRepurchased,
+            dividendsPaid,
+            otherFinancingActivites,
+            netCashUsedProvidedByFinancingActivities,
+            effectOfForexChangesOnCash,
+            netChangeInCash,
+            cashAtEndOfPeriod,
+            cashAtBeginningOfPeriod,
+            operatingCashFlow,
+            capitalExpenditure,
+            freeCashFlow
+        ]
     }
 }
 
 enum CashFlowMetricType: String, Codable, MetricType {
-    case depreciationAmortization = "Depreciation & Amortization"
-    case stockBasedCompensation   = "Stock-based compensation"
-    case operatincCashFlow        = "Operating Cash Flow"
-    case capitalExpenditure       = "Capital Expenditure"
-    case acquisitionsDisposals    = "Acquisitions and disposals"
-    case investmentPurchasesSales = "Investment purchases and sales"
-    case investingCashFlow        = "Investing Cash flow"
-    case issuanceRepaymentOfDebt  = "Issuance (repayment) of debt"
-    case issuanceBuybackOfShares  = "Issuance (buybacks) of shares"
-    case dividentPayments         = "Dividend payments"
-    case financingCashFlow        = "Financing Cash Flow"
-    case efectOfForex             = "Effect of forex changes on cash"
-    case netCashFlow              = "Net cash flow / Change in cash"
-    case freeCashFlow             = "Free Cash Flow"
-    case netCashOverMarketCap     = "Net Cash/Marketcap"
-
+    case date                                     = "date"
+    case symbol                                   = "symbol"
+    case period                                   = "period"
+    case netIncome                                = "netIncome"
+    case depreciationAndAmortization              = "depreciationAndAmortization"
+    case deferredIncomeTax                        = "deferredIncomeTax"
+    case stockBasedCompensation                   = "stockBasedCompensation"
+    case changeInWorkingCapital                   = "changeInWorkingCapital"
+    case accountsReceivables                      = "accountsReceivables"
+    case inventory                                = "inventory"
+    case accountsPayables                         = "accountsPayables"
+    case otherWorkingCapital                      = "otherWorkingCapital"
+    case otherNonCashItems                        = "otherNonCashItems"
+    case netCashProvidedByOperatingActivities     = "netCashProvidedByOperatingActivities"
+    case investmentsInPropertyPlantAndEquipment   = "investmentsInPropertyPlantAndEquipment"
+    case acquisitionsNet                          = "acquisitionsNet"
+    case purchasesOfInvestments                   = "purchasesOfInvestments"
+    case salesMaturitiesOfInvestments             = "salesMaturitiesOfInvestments"
+    case otherInvestingActivites                  = "otherInvestingActivites"
+    case netCashUsedForInvestingActivites         = "netCashUsedForInvestingActivites"
+    case debtRepayment                            = "debtRepayment"
+    case commonStockIssued                        = "commonStockIssued"
+    case commonStockRepurchased                   = "commonStockRepurchased"
+    case dividendsPaid                            = "dividendsPaid"
+    case otherFinancingActivites                  = "otherFinancingActivites"
+    case netCashUsedProvidedByFinancingActivities = "netCashUsedProvidedByFinancingActivities"
+    case effectOfForexChangesOnCash               = "effectOfForexChangesOnCash"
+    case netChangeInCash                          = "netChangeInCash"
+    case cashAtEndOfPeriod                        = "cashAtEndOfPeriod"
+    case cashAtBeginningOfPeriod                  = "cashAtBeginningOfPeriod"
+    case operatingCashFlow                        = "operatingCashFlow"
+    case capitalExpenditure                       = "capitalExpenditure"
+    case freeCashFlow                             = "freeCashFlow"
+    case link                                     = "Latest balance sheet"
+    
     var text: String {
-        return rawValue
+        switch self {
+        case .date                                     : return "Date"
+        case .symbol                                   : return "Symbol"
+        case .period                                   : return "Period"
+        case .netIncome                                : return "Net income"
+        case .depreciationAndAmortization              : return "Depreciation & amortization"
+        case .deferredIncomeTax                        : return "Deferred income tax"
+        case .stockBasedCompensation                   : return "Stock based compensation"
+        case .changeInWorkingCapital                   : return "Change in working capital"
+        case .accountsReceivables                      : return "Accounts receivables"
+        case .inventory                                : return "Inventory"
+        case .accountsPayables                         : return "Accounts payables"
+        case .otherWorkingCapital                      : return "Other working capital"
+        case .otherNonCashItems                        : return "Other non cash items"
+        case .netCashProvidedByOperatingActivities     : return "Net cash provided by operating activities"
+        case .investmentsInPropertyPlantAndEquipment   : return "Investments in property plant & equipment"
+        case .acquisitionsNet                          : return "Acquisitions net"
+        case .purchasesOfInvestments                   : return "Purchases of investments"
+        case .salesMaturitiesOfInvestments             : return "Sales maturities of investments"
+        case .otherInvestingActivites                  : return "Other investing activites"
+        case .netCashUsedForInvestingActivites         : return "Net cash used for investing activites"
+        case .debtRepayment                            : return "Debt repayment"
+        case .commonStockIssued                        : return "Common stock issued"
+        case .commonStockRepurchased                   : return "Common stock repurchased"
+        case .dividendsPaid                            : return "Dividends paid"
+        case .otherFinancingActivites                  : return "Other financing activites"
+        case .netCashUsedProvidedByFinancingActivities : return "Net cash used provided by financing activities"
+        case .effectOfForexChangesOnCash               : return "Effect of forex changes on cash"
+        case .netChangeInCash                          : return "Net change in cash"
+        case .cashAtEndOfPeriod                        : return "Cash at end of period"
+        case .cashAtBeginningOfPeriod                  : return "Cash at beginning of period"
+        case .operatingCashFlow                        : return "Operating cash flow"
+        case .capitalExpenditure                       : return "Capital expenditure"
+        case .freeCashFlow                             : return "Free cash flow"
+        case .link                                     : return "Latest balance sheet"
+        }
     }
     
     var suffixType: MetricSuffixType {

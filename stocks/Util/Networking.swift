@@ -42,7 +42,7 @@ enum Endpoints {
             return URL(string: "https://financialmodelingprep.com/api/v3/income-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
         case .cashFlow(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/cash-flow-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
 
             switch (sector, marketCap) {
