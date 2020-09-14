@@ -47,9 +47,10 @@ enum Profitability {
 class Stock {
     var ticker: Ticker
     var quote: Quote?
-    var keyMetricsOverTime: KeyMetricsArray?
     var growthMetrics: [GrowthMetrics]?
     var intrinsicValue: IntrinsicValue?
+    var keyMetricsAnnual: [KeyMetrics]?
+    var keyMetricsQuarterly: [KeyMetrics]?
     var financialRatiosAnnual: [FinancialRatios]?
     var financialRatiosQuarterly: [FinancialRatios]?
     var balanceSheetsAnnual: [BalanceSheet]?
@@ -67,7 +68,7 @@ class Stock {
 
     var filter: Filter {
         var ftr: Filter = Filter()
-        if let profitability = keyMetricsOverTime?.profitability { ftr.profitabilityFilters = [profitability.filter] }
+        if let profitability = keyMetricsQuarterly?.profitability { ftr.profitabilityFilters = [profitability.filter] }
         ftr.capFilters = [ticker.marketCapType.filter]
         return ftr
     }
@@ -77,9 +78,9 @@ class Stock {
     }
     
     func calculateIntrinsicValue() {
-        guard let operatingCashFlow = self.keyMetricsOverTime?.metrics?[0].operatingCFPerShare.floatValue,
-            let rate = keyMetricsOverTime?.projectedFutureGrowth else { return }
+        guard let operatingCashFlow = self.keyMetricsQuarterly?[safe: 0]?.operatingCashFlowPerShare.doubleValue,
+            let rate = keyMetricsQuarterly?.projectedFutureGrowth else { return }
 
-        self.intrinsicValue = IntrinsicValue(price: ticker.price, cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
+        self.intrinsicValue = IntrinsicValue(price: Double(ticker.price), cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
     }
 }

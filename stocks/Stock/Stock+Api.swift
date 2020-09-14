@@ -10,32 +10,38 @@ import Foundation
 
 extension Stock {
     func getKeyMetrics(completion: ((Bool) -> ())? = nil) {
-        if let name = ticker.companyName,
-            let keyMetricsData = UserDefaults.standard.data(forKey: KeyMetricsArray.stockIdentifier(name)) {
-            DataParser.parseJson(type: KeyMetricsArray.self, data: keyMetricsData) { arr, error in
-                if let arr = arr {
-                    self.keyMetricsOverTime = arr
-                    self.calculateIntrinsicValue()
-                    completion?(true)
-                } else if let error = error {
-                    NSLog("key metrics load failed: \(error.localizedDescription)")
-                    completion?(false)
-                } else {
-                    completion?(false)
-                }
-            }
-        } else {
-            URLSession.shared.datatask(type: KeyMetricsArray.self,
-                                       url: Endpoints.keyMetrics(ticker: ticker.symbol, isAnnual: true).url) {
-                                        [weak self] data, response, error in
-                                        guard let self = self, let data = data else {
-                                            completion?(false)
-                                            return }
-                                        
-                                        self.keyMetricsOverTime = data
-                                        self.calculateIntrinsicValue()
-                                        completion?(error == nil)
-            }
+        let group = DispatchGroup()
+        group.enter()
+        var completed = false
+        URLSession.shared.datatask(type: [KeyMetrics].self,
+                                   url: Endpoints.keyMetrics(ticker: ticker.symbol, isAnnual: true).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.keyMetricsAnnual = data
+                                    self.calculateIntrinsicValue()
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.enter()
+        URLSession.shared.datatask(type: [KeyMetrics].self,
+                                   url: Endpoints.keyMetrics(ticker: ticker.symbol, isAnnual: false).url) {
+                                    [weak self] data, response, error in
+                                    guard let self = self, let data = data else {
+                                        group.leave()
+                                        return }
+                                    
+                                    self.keyMetricsQuarterly = data
+                                    self.calculateIntrinsicValue()
+                                    completed = error == nil
+                                    group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion?(completed)
         }
     }
     

@@ -61,7 +61,7 @@ class StockDetailViewController: ViewController {
     
     func setup(stock: Stock) {
         header.setup(stock: stock)
-        growthTable.keyMetrics = stock.keyMetricsOverTime
+        growthTable.keyMetrics = stock.keyMetricsQuarterly
     }
     
     @objc func onFinancials() {

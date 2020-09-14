@@ -140,7 +140,7 @@ class IntrinsicValueViewController: ViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        guard let growthRate = textField.text?.floatValue else { return }
+        guard let growthRate = textField.text?.doubleValue else { return }
         intrinsicValue.growthRate = growthRate / 100
         refresh()
         growthAlert.dismiss(animated: true, completion: nil)

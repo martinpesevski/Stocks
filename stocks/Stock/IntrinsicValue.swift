@@ -9,7 +9,7 @@
 import UIKit
 
 struct IntrinsicValue {
-    enum DiscountRate: Float {
+    enum DiscountRate: Double {
         case low = 0.06
         case medium = 0.075
         case high = 0.09
@@ -23,28 +23,28 @@ struct IntrinsicValue {
         }
     }
 
-    var stockPrice: Float
+    var stockPrice: Double
     var originalDiscountRate: DiscountRate {
         didSet {
             calculateValue()
         }
     }
-    var growthRate: Float = 0 {
+    var growthRate: Double = 0 {
         didSet {
             calculateValue()
         }
     }
-    var cashFlow: Float {
+    var cashFlow: Double {
         didSet {
             calculateValue()
         }
     }
-    var discountRates: [Float] = []
-    var discountedCashFlows: [Float] = []
-    var regularCashFlows: [Float] = []
-    var value: Float = 0
+    var discountRates: [Double] = []
+    var discountedCashFlows: [Double] = []
+    var regularCashFlows: [Double] = []
+    var value: Double = 0
 
-    init(price: Float, cashFlow ocf: Float, growthRate: Float, discountRate: DiscountRate) {
+    init(price: Double, cashFlow ocf: Double, growthRate: Double, discountRate: DiscountRate) {
         self.stockPrice = price
         self.originalDiscountRate = discountRate
         self.growthRate = growthRate
@@ -61,9 +61,9 @@ struct IntrinsicValue {
         value = discountedCashFlows.reduce(0, +)
     }
 
-    func calculateDiscountRates(_ originalDiscountRate: DiscountRate) -> [Float] {
+    func calculateDiscountRates(_ originalDiscountRate: DiscountRate) -> [Double] {
         var discountRate = 1 + originalDiscountRate.rawValue
-        var rates: [Float] = []
+        var rates: [Double] = []
         for i in 1...10 {
             discountRate = i == 1 ? discountRate : discountRate * (1 + originalDiscountRate.rawValue)
             rates.append(discountRate)
@@ -72,8 +72,8 @@ struct IntrinsicValue {
         return rates
     }
 
-    func calculateFutureCashFlows(cashFlow: Float, growth: Float) -> [Float] {
-        var cashFlows: [Float] = []
+    func calculateFutureCashFlows(cashFlow: Double, growth: Double) -> [Double] {
+        var cashFlows: [Double] = []
         for i in 0..<10 {
             let previousCashFlow = cashFlows.isEmpty ? abs(cashFlow) : abs(cashFlows[i - 1])
             cashFlows.append(previousCashFlow * (1 + growth))
@@ -81,8 +81,8 @@ struct IntrinsicValue {
         return cashFlows
     }
 
-    func calculateDiscountedCashFlows(cashFlows: [Float], discountRates: [Float]) -> [Float] {
-        var discountedCashFlows: [Float] = []
+    func calculateDiscountedCashFlows(cashFlows: [Double], discountRates: [Double]) -> [Double] {
+        var discountedCashFlows: [Double] = []
         for i in 0..<10 {
             let cashFlow = cashFlows[i] / discountRates[i]
             discountedCashFlows.append(cashFlow)
@@ -90,7 +90,7 @@ struct IntrinsicValue {
         return discountedCashFlows
     }
 
-    var discount: Float {
+    var discount: Double {
         return ((value - stockPrice) / value) * 100
     }
 

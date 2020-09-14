@@ -9,12 +9,12 @@
 import UIKit
 
 class GrowthTable: UIStackView {
-    var keyMetrics: KeyMetricsArray? {
+    var keyMetrics: [KeyMetrics]? {
         didSet {
-            guard let keyMetrics = keyMetrics, let metrics = keyMetrics.metrics else { return }
+            guard let keyMetrics = keyMetrics else { return }
             isHidden = false
             
-            for metric in metrics {
+            for metric in keyMetrics {
                 let cell = GrowthTableCell(metric: metric)
                 insertArrangedSubview(cell, at: arrangedSubviews.count - 2)
                 cellsArray.append(cell)
@@ -81,7 +81,7 @@ class GrowthTableCell: UIStackView {
         isLayoutMarginsRelativeArrangement = true
 
         dateLabel.text = metric.date
-        if let ocf = metric.ocf { ocfNumber.text = String(format: "$%.5f", ocf) } else { ocfNumber.text = "N/A" }
+        ocfNumber.text = String(format: "$%.5f", metric.ocf) 
     }
 
     required init(coder: NSCoder) {

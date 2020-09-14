@@ -14,8 +14,9 @@ struct FinancialRatioFinancialMetric: Codable, Metric {
     var metricType: AnyMetricType?
 
     init(from decoder: Decoder) throws {
-        if decoder.codingPath.count > 1 {
-            metricType = AnyMetricType(FinancialRatioMetricType(rawValue: decoder.codingPath[1].stringValue)!)
+        if let decoderValue = decoder.codingPath[safe: 1]?.stringValue,
+            let decodedType = FinancialRatioMetricType(rawValue: decoderValue) {
+            metricType = AnyMetricType(decodedType)
         }
         doubleValue = try decoder.singleValueContainer().decode(Double?.self) ?? 0
         stringValue = ""

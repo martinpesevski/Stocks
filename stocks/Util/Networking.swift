@@ -27,7 +27,7 @@ enum Endpoints {
         case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/stock/list?apikey=demo") ?? URL(fileURLWithPath: "")
         case .keyMetrics(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/company-key-metrics/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/key-metrics/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
         case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
         case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
         case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
