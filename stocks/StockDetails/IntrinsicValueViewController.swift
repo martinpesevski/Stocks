@@ -68,15 +68,15 @@ class IntrinsicValueViewController: ViewController, UITextFieldDelegate {
     lazy var discountRateAlert: UIAlertController = {
         let alert = UIAlertController.init(title: "Select discount rate %", message: "What is the discount rate you would like to use for this calculation?", preferredStyle: .actionSheet)
 
-        alert.addAction(UIAlertAction.init(title: "Low (\(IntrinsicValue.DiscountRate.low.percentageString))", style: .default, handler: { action in
+        alert.addAction(UIAlertAction.init(title: "Low risk (\(IntrinsicValue.DiscountRate.low.percentageString))", style: .default, handler: { action in
             self.intrinsicValue.originalDiscountRate = .low
             self.refresh()
         }))
-        alert.addAction(UIAlertAction.init(title: "Medium (\(IntrinsicValue.DiscountRate.medium.percentageString))", style: .default, handler: { action in
+        alert.addAction(UIAlertAction.init(title: "Medium risk (\(IntrinsicValue.DiscountRate.medium.percentageString))", style: .default, handler: { action in
             self.intrinsicValue.originalDiscountRate = .medium
             self.refresh()
         }))
-        alert.addAction(UIAlertAction.init(title: "High (\(IntrinsicValue.DiscountRate.high.percentageString))", style: .default, handler: { action in
+        alert.addAction(UIAlertAction.init(title: "High risk (\(IntrinsicValue.DiscountRate.high.percentageString))", style: .default, handler: { action in
             self.intrinsicValue.originalDiscountRate = .high
             self.refresh()
         }))
@@ -109,7 +109,7 @@ class IntrinsicValueViewController: ViewController, UITextFieldDelegate {
     
     func refresh() {
         discountRateButton.setTitle(intrinsicValue.originalDiscountRate.percentageString, for: .normal)
-        growthRateButton.setTitle("\(intrinsicValue.growthRate * 100)%", for: .normal)
+        growthRateButton.setTitle("\(intrinsicValue.growthRate * 100)".roundedWithAbbreviations.formatted(.percentage), for: .normal)
         stock.intrinsicValue = intrinsicValue
         header.setup(stock: stock)
     }

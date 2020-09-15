@@ -60,6 +60,8 @@
 		C71E95C32421C0E5005A2DC7 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = C71E95C12421C0E5005A2DC7 /* loading.json */; };
 		C71E95C52426BDBF005A2DC7 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */; };
 		C71E95C72426BE09005A2DC7 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95C62426BE09005A2DC7 /* AccessoryView.swift */; };
+		C71F04FF250FF150008696AD /* FinancialMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F04FE250FF14F008696AD /* FinancialMetricsViewController.swift */; };
+		C71F050125111196008696AD /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F050025111196008696AD /* UserDefaultsManager.swift */; };
 		C72461DB250DC74C005FF9E3 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72461DA250DC74C005FF9E3 /* Metrics.swift */; };
 		C72461DD250E4234005FF9E3 /* MetricController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72461DC250E4234005FF9E3 /* MetricController.swift */; };
 		C72BEB92245747D6000E7129 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72BEB91245747D6000E7129 /* Router.swift */; };
@@ -165,6 +167,8 @@
 		C71E95C12421C0E5005A2DC7 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		C71E95C42426BDBF005A2DC7 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		C71E95C62426BE09005A2DC7 /* AccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
+		C71F04FE250FF14F008696AD /* FinancialMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialMetricsViewController.swift; sourceTree = "<group>"; };
+		C71F050025111196008696AD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		C72461DA250DC74C005FF9E3 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		C72461DC250E4234005FF9E3 /* MetricController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricController.swift; sourceTree = "<group>"; };
 		C72BEB91245747D6000E7129 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				C708ED112444E6E100FC9425 /* FinancialsViewController.swift */,
+				C71F04FE250FF14F008696AD /* FinancialMetricsViewController.swift */,
 				C72461DC250E4234005FF9E3 /* MetricController.swift */,
 			);
 			path = "Financial view controllers";
@@ -455,6 +460,7 @@
 				524560CA23FDDB68003686BE /* Networking.swift */,
 				C72BEB91245747D6000E7129 /* Router.swift */,
 				52D0CC58245B009C00C36300 /* DatabaseManager.swift */,
+				C71F050025111196008696AD /* UserDefaultsManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -756,6 +762,7 @@
 				C74ABB5A245740C6002FF441 /* SubscriptionCell.swift in Sources */,
 				C72461DD250E4234005FF9E3 /* MetricController.swift in Sources */,
 				52D65F2D2433AC0C00647074 /* GrowthTable.swift in Sources */,
+				C71F050125111196008696AD /* UserDefaultsManager.swift in Sources */,
 				C71E95B42401F122005A2DC7 /* StockCell.swift in Sources */,
 				52D0CC59245B009C00C36300 /* DatabaseManager.swift in Sources */,
 				5245609923FC7685003686BE /* AppDelegate.swift in Sources */,
@@ -776,6 +783,7 @@
 				52108D282421661F000A472B /* Util.swift in Sources */,
 				C71E38762438134300E9A84B /* FilterProfitabilityViewController.swift in Sources */,
 				529B645C2433C64B00C806C0 /* StocksViewModel.swift in Sources */,
+				C71F04FF250FF150008696AD /* FinancialMetricsViewController.swift in Sources */,
 				C72BEB92245747D6000E7129 /* Router.swift in Sources */,
 				C71E38702437971C00E9A84B /* FilterCapViewController.swift in Sources */,
 				C71E95B92421BA25005A2DC7 /* LoadingViewController.swift in Sources */,

@@ -80,7 +80,7 @@ enum FinancialRatioMetricType: String, Codable, MetricType {
         case .quickRatio                         : return "Quick ratio"
         case .cashRatio                          : return "Cash ratio"
         case .daysOfSalesOutstanding             : return "Days of sales outstanding"
-        case .daysOfInventoryOutstanding         : return  "Days of inventory outstanding"
+        case .daysOfInventoryOutstanding         : return "Days of inventory outstanding"
         case .operatingCycle                     : return "Operating cycle"
         case .daysOfPayablesOutstanding          : return "Days of payables outstanding"
         case .cashConversionCycle                : return "Cash conversion cycle"

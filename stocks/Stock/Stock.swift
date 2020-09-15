@@ -83,4 +83,21 @@ class Stock {
 
         self.intrinsicValue = IntrinsicValue(price: Double(ticker.price), cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
     }
+    
+    func financial(metricType: MetricType) -> (annual: AnyMetric?, quarterly: AnyMetric?) {
+        var annual: AnyMetric?
+        var quarterly: AnyMetric?
+        if let incomeAnnual = incomeStatementsAnnual?.metric(metricType: metricType) { annual = incomeAnnual }
+        if let incomeQuarter = incomeStatementsQuarterly?.metric(metricType: metricType) { quarterly = incomeQuarter }
+        if let balanceAnnual = balanceSheetsAnnual?.metric(metricType: metricType) { annual = balanceAnnual }
+        if let balanceQuarter = balanceSheetsQuarterly?.metric(metricType: metricType) { quarterly = balanceQuarter }
+        if let cashFlowAnnual = cashFlowsAnnual?.metric(metricType: metricType) { annual = cashFlowAnnual }
+        if let cashFlowQuarter = cashFlowsQuarterly?.metric(metricType: metricType) { quarterly = cashFlowQuarter }
+        if let financialRatioAnnual = financialRatiosAnnual?.metric(metricType: metricType) { annual = financialRatioAnnual }
+        if let financialRatioQuarter = financialRatiosQuarterly?.metric(metricType: metricType) { quarterly = financialRatioQuarter }
+        if let keyMetricAnnual = keyMetricsAnnual?.metric(metricType: metricType) { annual = keyMetricAnnual }
+        if let keyMetricQuarter = keyMetricsQuarterly?.metric(metricType: metricType) { quarterly = keyMetricQuarter }
+        
+        return (annual, quarterly)
+    }
 }

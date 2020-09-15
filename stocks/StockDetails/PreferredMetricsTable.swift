@@ -8,6 +8,17 @@
 
 import UIKit
 
+let defaultMetricTypes: [AnyMetricType] = [
+    AnyMetricType(IncomeStatementMetricType.eps),
+    AnyMetricType(IncomeStatementMetricType.grossProfit),
+    AnyMetricType(FinancialRatioMetricType.priceEarningsRatio),
+    AnyMetricType(FinancialRatioMetricType.currentRatio),
+    AnyMetricType(FinancialRatioMetricType.priceToSalesRatio),
+    AnyMetricType(FinancialRatioMetricType.priceEarningsToGrowthRatio),
+    AnyMetricType(FinancialRatioMetricType.returnOnCapitalEmployed),
+    AnyMetricType(BalanceSheetMetricType.totalCurrentAssets),
+    AnyMetricType(BalanceSheetMetricType.totalLiabilities)]
+
 class PreferredMetricCell: UICollectionViewCell {
     lazy var titleLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
     lazy var valueLabel = UILabel(font: UIFont.systemFont(ofSize: 15, weight: .bold), alignment: .right)
@@ -46,41 +57,26 @@ class PreferredMetricsTable: UIStackView {
         return col
     }()
     var stock: Stock
-    lazy var defaultMetrics: [Metric] = {
-        var arr: [Metric] = []
-        if let firstIncome = stock.incomeStatementsQuarterly?.first {
-            arr.append(firstIncome.eps)
-            arr.append(firstIncome.grossProfitRatio)
-        }
-        
-        if let firstRatios = stock.financialRatiosQuarterly?.first {
-            arr.append(firstRatios.currentRatio)
-            arr.append(firstRatios.priceEarningsRatio)
-            arr.append(firstRatios.priceToSalesRatio)
-            arr.append(firstRatios.priceEarningsToGrowthRatio)
-            arr.append(firstRatios.returnOnCapitalEmployed)
-        }
-        
-        if let firstBalance = stock.balanceSheetsQuarterly?.first {
-            arr.append(firstBalance.totalCurrentAssets)
-            arr.append(firstBalance.totalLiabilities)
-        }
-        
-        return arr
-    }()
     
     let interItemSpacing: CGFloat = 8
     let cellHeight: CGFloat = 60
 
-    var metrics: [Metric] = []
+    lazy var metrics: [AnyMetric] = {
+        var arr: [AnyMetric] = []
+        let preferredMetrics = UserDefaultsManager.shared.preferredMetrics
+        for metricType in preferredMetrics {
+            if let metric = stock.financial(metricType: metricType).quarterly { arr.append(metric) }
+        }
+        return arr
+    }()
+    
     var contentHeight: CGFloat {
         (CGFloat(metrics.count) / 2).rounded(.up) * (cellHeight + interItemSpacing)
     }
         
-    init(stock: Stock, items: [Metric]?) {
+    init(stock: Stock) {
         self.stock = stock
         super.init(frame: .zero)
-        if let items = items { self.metrics = items } else { self.metrics = defaultMetrics }
         axis = .vertical
         spacing = 10
         addArrangedSubview(titleLabel)

@@ -19,15 +19,15 @@ class StockDetailViewController: ViewController {
     }
 
     lazy var financials = AccessoryView("Financials", accessoryType: .rightArrow)
-    lazy var financialratios = AccessoryView("Financial ratios", accessoryType: .rightArrow)
+    lazy var financialMetrics = AccessoryView("Financial metrics", accessoryType: .rightArrow)
     lazy var intrinsicValue = AccessoryView("Intrinsic Value", accessoryType: .rightArrow)
 
     lazy var growthTable = GrowthTable()
     lazy var header = StockInfoHeader()
-    lazy var preferredMetrics = PreferredMetricsTable(stock: stock, items: nil)
+    lazy var preferredMetrics = PreferredMetricsTable(stock: stock)
 
     lazy var stockStack: ScrollableStackView = {
-        let stack = ScrollableStackView(views: [header, financials, financialratios, intrinsicValue, preferredMetrics], alignment: .fill, spacing: 10,
+        let stack = ScrollableStackView(views: [header, financials, financialMetrics, intrinsicValue, preferredMetrics], alignment: .fill, spacing: 10,
         layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
         stack.setCustomSpacing(25, after: header)
         stack.setCustomSpacing(25, after: intrinsicValue)
@@ -50,7 +50,7 @@ class StockDetailViewController: ViewController {
         }
         
         financials.button.addTarget(self, action: #selector(onFinancials), for: .touchUpInside)
-        financialratios.button.addTarget(self, action: #selector(onFinancialRatios), for: .touchUpInside)
+        financialMetrics.button.addTarget(self, action: #selector(onFinancialMetrics), for: .touchUpInside)
         intrinsicValue.button.addTarget(self, action: #selector(onIntrinsicValue), for: .touchUpInside)
     }
     
@@ -69,9 +69,8 @@ class StockDetailViewController: ViewController {
         show(vc, sender: self)
     }
     
-    @objc func onFinancialRatios() {
-        guard let annual = stock.financialRatiosAnnual, let quarterly = stock.financialRatiosQuarterly else { return }
-        let vc = MetricViewController(annualFinancial: annual.map { AnyFinancial($0) }, quarterlyFinancial: quarterly.map { AnyFinancial($0) }, title: "Financial ratios")
+    @objc func onFinancialMetrics() {
+        let vc = FinancialMetricsViewController(stock: stock)
         show(vc, sender: self)
     }
     

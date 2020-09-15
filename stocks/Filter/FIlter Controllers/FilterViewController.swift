@@ -62,10 +62,10 @@ class FilterViewController: FilterPageViewController {
         content.addArrangedSubview(profitability)
         content.addArrangedSubview(UIView())
         
-        view.startLoading()
-        subscriptionManager.loadSubscription {
-            self.view.finishLoading()
-        }
+//        view.startLoading()
+//        subscriptionManager.loadSubscription {
+//            self.view.finishLoading()
+//        }
     }
     
     override func onDone() {

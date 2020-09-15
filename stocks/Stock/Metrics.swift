@@ -141,4 +141,13 @@ extension Collection where Iterator.Element: Financial {
 
         return mapped.reversed()
     }
+    
+    func metric(metricType: MetricType) -> AnyMetric? {
+        for statement in self {
+            if let item = statement.metrics.filter({ $0.text == metricType.text }).first {
+                return item
+            }
+        }
+        return nil
+    }
 }
