@@ -108,22 +108,38 @@ class PeriodicValueChangeViewController: StackViewController {
     let periodicChangeAnnual: [PeriodicFinancialModel]
     let periodicChangeQuarterly: [PeriodicFinancialModel]
     
+    let metric: Metric
+    
     lazy var chart = DetailedGrowthChart()
     lazy var chartDataAnnual: [(PeriodicFinancialModel, Double)] = {
         return periodicChangeAnnual.map { return ($0, $0.value) }.sorted { $0.0.timestamp ?? 0 < $1.0.timestamp ?? 0 }
     }()
     
+    lazy var addButton = UIButton()
+    
     lazy var chartDataQuarterly: [(PeriodicFinancialModel, Double)] = {
         return periodicChangeQuarterly.map { return ($0, $0.value) }.sorted { $0.0.timestamp ?? 0 < $1.0.timestamp ?? 0 }
     }()
     
-    init(ticker: String, metricType: String, periodicChangeAnnual: [PeriodicFinancialModel], periodicChangeQuarterly: [PeriodicFinancialModel]) {
+    init(ticker: String, metricType: Metric, periodicChangeAnnual: [PeriodicFinancialModel], periodicChangeQuarterly: [PeriodicFinancialModel]) {
         self.periodicChangeAnnual = periodicChangeAnnual
         self.periodicChangeQuarterly = periodicChangeQuarterly
+        self.metric = metricType
         
         super.init()
         titleView.text = ticker
-        subtitleView.text = metricType
+        subtitleView.text = metricType.text
+
+        if let metricType = metric.metricType {
+            let alreadyFavorited = UserDefaultsManager.shared.preferredMetrics.contains(metricType)
+            addButton.setImage(UIImage(named: alreadyFavorited ? "checkmark-circle" : "add")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            addButton.tintColor = alreadyFavorited ? UIColor.systemGreen : UIColor.label
+            addButton.addTarget(self, action: #selector(onAdd), for: .touchUpInside)
+            addButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            
+            titleViewStack.addArrangedSubview(addButton)
+            addButton.snp.makeConstraints { make in make.width.height.equalTo(48) }
+        }
 
         content.addArrangedSubview(picker)
         content.addArrangedSubview(chart)
@@ -132,6 +148,27 @@ class PeriodicValueChangeViewController: StackViewController {
         picker.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
         
         setupAnnual()
+    }
+    
+    @objc
+    private func onAdd() {
+        guard let metricType = metric.metricType else { return }
+
+        var preferredMetrics = UserDefaultsManager.shared.preferredMetrics
+        let alreadyFavorited = preferredMetrics.contains(metricType)
+        
+        if let firstIndex = preferredMetrics.firstIndex(of: metricType), alreadyFavorited {
+            preferredMetrics.remove(at: firstIndex)
+            addButton.setImage(UIImage(named: "add")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            addButton.tintColor = UIColor.label
+        } else {
+            preferredMetrics.append(metricType)
+            addButton.setImage(UIImage(named: "checkmark-circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            addButton.tintColor = UIColor.systemGreen
+        }
+        
+        
+        UserDefaultsManager.shared.preferredMetrics = preferredMetrics
     }
     
     @objc
@@ -162,8 +199,7 @@ class PeriodicValueChangeViewController: StackViewController {
     }
     
     private func removeMetrics() {
-        for view in content.stockStack.arrangedSubviews where
-            (view != titleView && view != subtitleView && view != picker && view != chart) {
+        for view in content.stockStack.arrangedSubviews where view.isKind(of: PercentChangeKeyValueView.self){
             view.removeFromSuperview()
         }
     }

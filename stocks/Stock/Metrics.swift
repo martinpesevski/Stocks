@@ -40,7 +40,7 @@ extension Metric {
     }
 }
 
-struct AnyMetric: Metric, Codable {        
+struct AnyMetric: Metric, Codable, Equatable {
     var text: String
     var stringValue: String
     var doubleValue: Double
@@ -61,7 +61,7 @@ protocol MetricType {
     var suffixType: MetricSuffixType { get }
 }
 
-struct AnyMetricType: MetricType, Codable {
+struct AnyMetricType: MetricType, Codable, Equatable {
     var text: String
     var suffixType: MetricSuffixType
     

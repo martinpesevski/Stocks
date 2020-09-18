@@ -31,7 +31,7 @@ class UserDefaultsManager {
         }
         
         set {
-            let data = (try? PropertyListEncoder().encode(defaultMetricTypes))
+            let data = (try? PropertyListEncoder().encode(newValue))
             defaults.set(data, forKey: kPreferredMetrics)
         }
     }

@@ -87,7 +87,7 @@ class MetricViewController: StackViewController, MetricController, MetricKeyValu
         let mappedAnual: [PeriodicFinancialModel] = createPeriodicChange(financials: annualFinancials, metric: metric)
         let mappedQuarterly: [PeriodicFinancialModel] = createPeriodicChange(financials: quarterlyFinancials, metric: metric)
         
-        let vc = PeriodicValueChangeViewController(ticker: quarterlyFinancials.symbol, metricType: metric.text, periodicChangeAnnual: mappedAnual, periodicChangeQuarterly: mappedQuarterly)
+        let vc = PeriodicValueChangeViewController(ticker: quarterlyFinancials.symbol, metricType: metric, periodicChangeAnnual: mappedAnual, periodicChangeQuarterly: mappedQuarterly)
         show(vc, sender: self)
     }
     

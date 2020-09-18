@@ -10,8 +10,7 @@ import UIKit
 
 class StackViewController: ViewController {
     lazy var titleView = UILabel(font: UIFont.systemFont(ofSize: 25, weight: .bold))
-    lazy var titleViewStack = UIStackView(views: [titleView], axis: .horizontal, distribution: .fillProportionally, spacing: 20)
-
+    lazy var titleViewStack = UIStackView(views: [titleView], axis: .horizontal, distribution: .fill, spacing: 20)
     lazy var subtitleView = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
     lazy var content = ScrollableStackView(views: [titleViewStack, subtitleView], spacing: 10, layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
     
