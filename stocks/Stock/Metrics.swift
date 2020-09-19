@@ -54,6 +54,10 @@ struct AnyMetric: Metric, Codable, Equatable {
         self.metricType = base.metricType
         self.metricSuffixType = base.metricSuffixType
     }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.text == rhs.text && lhs.metricType == rhs.metricType
+    }
 }
 
 protocol MetricType {
@@ -121,12 +125,12 @@ extension Collection where Iterator.Element: Financial {
         return mapped
     }
 
-    func percentageIncrease(metric: Metric) -> [Double] {
+    func percentageIncrease(metric: Metric) -> [PeriodicFinancialModel] {
         let financials = sorted(by: { (first, second) -> Bool in
             return first.date < second.date
         })
 
-        var mapped: [Double] = []
+        var mapped: [PeriodicFinancialModel] = []
         var previousValue: Double = 0
         for financial in financials {
             for mtc in financial.metrics where mtc.metricType?.text == metric.text {
@@ -135,7 +139,7 @@ extension Collection where Iterator.Element: Financial {
                     previousValue < 0 ? ((previousValue - value) / previousValue) * 100 :
                     (-(previousValue - value) / previousValue) * 100
                 previousValue = value
-                mapped.append(percentage)
+                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.doubleValue, stringValue: mtc.stringValue, percentChange: percentage))
             }
         }
 

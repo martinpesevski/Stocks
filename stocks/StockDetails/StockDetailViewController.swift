@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StockDetailViewController: ViewController {
+class StockDetailViewController: ViewController, PreferredMetricsDelegate, UINavigationControllerDelegate {
     var stock: Stock {
         didSet {
             stock.load { [weak self] in
@@ -25,6 +25,7 @@ class StockDetailViewController: ViewController {
     lazy var growthTable = GrowthTable()
     lazy var header = StockInfoHeader()
     lazy var preferredMetrics = PreferredMetricsTable(stock: stock)
+    var isLoading = true
 
     lazy var stockStack: ScrollableStackView = {
         let stack = ScrollableStackView(views: [header, financials, financialMetrics, intrinsicValue, preferredMetrics], alignment: .fill, spacing: 10,
@@ -41,6 +42,7 @@ class StockDetailViewController: ViewController {
         stock.load { [weak self] in
             guard let self = self else { return }
             
+            self.isLoading = false
             self.view.finishLoading()
             self.view.addSubview(self.stockStack)
             self.stockStack.snp.makeConstraints { make in
@@ -52,6 +54,7 @@ class StockDetailViewController: ViewController {
         financials.button.addTarget(self, action: #selector(onFinancials), for: .touchUpInside)
         financialMetrics.button.addTarget(self, action: #selector(onFinancialMetrics), for: .touchUpInside)
         intrinsicValue.button.addTarget(self, action: #selector(onIntrinsicValue), for: .touchUpInside)
+        navigationController?.delegate = self
     }
     
     init(stock: Stock) {
@@ -62,6 +65,7 @@ class StockDetailViewController: ViewController {
     func setup(stock: Stock) {
         header.setup(stock: stock)
         growthTable.keyMetrics = stock.keyMetricsQuarterly
+        preferredMetrics.delegate = self
     }
     
     @objc func onFinancials() {
@@ -77,6 +81,16 @@ class StockDetailViewController: ViewController {
     @objc func onIntrinsicValue() {
         let vc = IntrinsicValueViewController(stock: stock)
         show(vc, sender: self)
+    }
+    
+    func shouldShow(viewController: UIViewController) {
+        show(viewController, sender: self)
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController == self {
+            if !self.isLoading { preferredMetrics.update() }
+        }
     }
     
     required init?(coder: NSCoder) {

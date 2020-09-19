@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PreferredMetricsDelegate {
+    func shouldShow(viewController: UIViewController)
+}
+
 let defaultMetricTypes: [AnyMetricType] = [
     AnyMetricType(IncomeStatementMetricType.eps),
     AnyMetricType(IncomeStatementMetricType.grossProfit),
@@ -60,12 +64,14 @@ class PreferredMetricsTable: UIStackView {
     
     let interItemSpacing: CGFloat = 8
     let cellHeight: CGFloat = 60
+    
+    var delegate: PreferredMetricsDelegate?
 
     lazy var metrics: [AnyMetric] = {
         var arr: [AnyMetric] = []
         let preferredMetrics = UserDefaultsManager.shared.preferredMetrics
         for metricType in preferredMetrics {
-            if let metric = stock.financial(metricType: metricType).quarterly { arr.append(metric) }
+            if let metric = stock.metric(metricType: metricType).quarterly { arr.append(metric) }
         }
         return arr
     }()
@@ -84,6 +90,16 @@ class PreferredMetricsTable: UIStackView {
         collectionView.snp.makeConstraints { make in make.height.equalTo(contentHeight) }
     }
     
+    func update() {
+        var arr: [AnyMetric] = []
+        let preferredMetrics = UserDefaultsManager.shared.preferredMetrics
+        for metricType in preferredMetrics {
+            if let metric = stock.metric(metricType: metricType).quarterly { arr.append(metric) }
+        }
+        metrics = arr
+        collectionView.reloadData()
+    }
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -98,6 +114,35 @@ extension PreferredMetricsTable: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "preferredMetricCell", for: indexPath) as? PreferredMetricCell ?? PreferredMetricCell()
         cell.setup(metric: metrics[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let metric = metrics[indexPath.row]
+        let mappedAnual: [PeriodicFinancialModel]
+        let mappedQuarterly: [PeriodicFinancialModel]
+        
+        if stock.incomeStatementsAnnual?[safe: 0]?.metrics.contains(metric) ?? false {
+            mappedAnual = stock.incomeStatementsAnnual?.percentageIncrease(metric: metric) ?? []
+            mappedQuarterly = stock.incomeStatementsQuarterly?.percentageIncrease(metric: metric) ?? []
+        } else if stock.balanceSheetsAnnual?[safe: 0]?.metrics.contains(metric) ?? false {
+            mappedAnual = stock.balanceSheetsAnnual?.percentageIncrease(metric: metric) ?? []
+            mappedQuarterly = stock.balanceSheetsQuarterly?.percentageIncrease(metric: metric) ?? []
+        } else if stock.cashFlowsAnnual?[safe: 0]?.metrics.contains(metric) ?? false {
+            mappedAnual = stock.cashFlowsAnnual?.percentageIncrease(metric: metric) ?? []
+            mappedQuarterly = stock.cashFlowsQuarterly?.percentageIncrease(metric: metric) ?? []
+        } else if stock.keyMetricsAnnual?[safe: 0]?.metrics.contains(metric) ?? false {
+            mappedAnual = stock.keyMetricsAnnual?.percentageIncrease(metric: metric) ?? []
+            mappedQuarterly = stock.keyMetricsQuarterly?.percentageIncrease(metric: metric) ?? []
+        } else if stock.financialRatiosAnnual?[safe: 0]?.metrics.contains(metric) ?? false {
+            mappedAnual = stock.financialRatiosAnnual?.percentageIncrease(metric: metric) ?? []
+            mappedQuarterly = stock.financialRatiosQuarterly?.percentageIncrease(metric: metric) ?? []
+        } else {
+            return
+        }
+        
+        let vc = PeriodicValueChangeViewController(ticker: stock.ticker.symbol, metricType: metric, periodicChangeAnnual: mappedAnual, periodicChangeQuarterly: mappedQuarterly)
+        
+        delegate?.shouldShow(viewController: vc)
     }
 }
 

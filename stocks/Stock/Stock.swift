@@ -84,7 +84,7 @@ class Stock {
         self.intrinsicValue = IntrinsicValue(price: Double(ticker.price), cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)
     }
     
-    func financial(metricType: MetricType) -> (annual: AnyMetric?, quarterly: AnyMetric?) {
+    func metric(metricType: MetricType) -> (annual: AnyMetric?, quarterly: AnyMetric?) {
         var annual: AnyMetric?
         var quarterly: AnyMetric?
         if let incomeAnnual = incomeStatementsAnnual?.metric(metricType: metricType) { annual = incomeAnnual }

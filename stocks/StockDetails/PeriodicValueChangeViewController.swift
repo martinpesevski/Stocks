@@ -121,7 +121,7 @@ class PeriodicValueChangeViewController: StackViewController {
         return periodicChangeQuarterly.map { return ($0, $0.value) }.sorted { $0.0.timestamp ?? 0 < $1.0.timestamp ?? 0 }
     }()
     
-    init(ticker: String, metricType: Metric, periodicChangeAnnual: [PeriodicFinancialModel], periodicChangeQuarterly: [PeriodicFinancialModel]) {
+    init(ticker: String, metricType: Metric, periodicChangeAnnual: [PeriodicFinancialModel], periodicChangeQuarterly: [PeriodicFinancialModel], isAnnual: Bool = true) {
         self.periodicChangeAnnual = periodicChangeAnnual
         self.periodicChangeQuarterly = periodicChangeQuarterly
         self.metric = metricType
@@ -147,7 +147,13 @@ class PeriodicValueChangeViewController: StackViewController {
 
         picker.addTarget(self, action: #selector(onPeriodChanged(sender:)), for: .valueChanged)
         
-        setupAnnual()
+        if isAnnual {
+            picker.selectedSegmentIndex = 0
+            setupAnnual()
+        } else {
+            picker.selectedSegmentIndex = 1
+            setupQuarterly()
+        }
     }
     
     @objc
@@ -166,7 +172,6 @@ class PeriodicValueChangeViewController: StackViewController {
             addButton.setImage(UIImage(named: "checkmark-circle")?.withRenderingMode(.alwaysTemplate), for: .normal)
             addButton.tintColor = UIColor.systemGreen
         }
-        
         
         UserDefaultsManager.shared.preferredMetrics = preferredMetrics
     }
@@ -199,7 +204,7 @@ class PeriodicValueChangeViewController: StackViewController {
     }
     
     private func removeMetrics() {
-        for view in content.stockStack.arrangedSubviews where view.isKind(of: PercentChangeKeyValueView.self){
+        for view in content.stockStack.arrangedSubviews where view.isKind(of: PercentChangeKeyValueView.self) {
             view.removeFromSuperview()
         }
     }

@@ -77,29 +77,17 @@ class MetricViewController: StackViewController, MetricController, MetricKeyValu
     }
     
     private func removeMetrics() {
-        for view in content.stockStack.arrangedSubviews where
-            (view != titleView && view != subtitleView && view != picker) {
-                view.removeFromSuperview()
+        for view in content.stockStack.arrangedSubviews where view.isKind(of: MetricKeyValueView.self) {
+            view.removeFromSuperview()
         }
     }
     
     func didSelectMetric(_ metric: Metric) {
-        let mappedAnual: [PeriodicFinancialModel] = createPeriodicChange(financials: annualFinancials, metric: metric)
-        let mappedQuarterly: [PeriodicFinancialModel] = createPeriodicChange(financials: quarterlyFinancials, metric: metric)
+        let mappedAnual: [PeriodicFinancialModel] = annualFinancials.percentageIncrease(metric: metric)
+        let mappedQuarterly: [PeriodicFinancialModel] = quarterlyFinancials.percentageIncrease(metric: metric)
         
-        let vc = PeriodicValueChangeViewController(ticker: quarterlyFinancials.symbol, metricType: metric, periodicChangeAnnual: mappedAnual, periodicChangeQuarterly: mappedQuarterly)
+        let vc = PeriodicValueChangeViewController(ticker: quarterlyFinancials.symbol, metricType: metric, periodicChangeAnnual: mappedAnual, periodicChangeQuarterly: mappedQuarterly, isAnnual: picker.selectedSegmentIndex == 0)
         show(vc, sender: self)
-    }
-    
-    private func createPeriodicChange(financials: [AnyFinancial], metric: Metric) -> [PeriodicFinancialModel] {
-        var mapped: [PeriodicFinancialModel] = []
-        let percentages = financials.percentageIncrease(metric: metric)
-        for (index, financial) in financials.enumerated() {
-            for mtc in financial.metrics where mtc.metricType?.text == metric.text {
-                mapped.append(PeriodicFinancialModel(period: financial.date, value: mtc.doubleValue, stringValue: mtc.stringValue, percentChange: percentages[index]))
-            }
-        }
-        return mapped
     }
     
     required init?(coder: NSCoder) {
