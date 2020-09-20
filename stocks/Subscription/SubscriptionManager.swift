@@ -78,8 +78,16 @@ class SubscriptionManager: NSObject, SKPaymentTransactionObserver, SKProductsReq
         delegate?.products = response.products
     }
     
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        print("%@", error)
+    }
+    
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
+            if let error = transaction.error {
+                print("transaction failed: \(error.localizedDescription)")
+                return
+            }
             print(transaction.transactionState, transaction.payment.productIdentifier)
             switch transaction.transactionState {
             case .purchasing, .deferred: break //do nothing

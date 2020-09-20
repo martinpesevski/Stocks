@@ -62,6 +62,7 @@
 		C71E95C72426BE09005A2DC7 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E95C62426BE09005A2DC7 /* AccessoryView.swift */; };
 		C71F04FF250FF150008696AD /* FinancialMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F04FE250FF14F008696AD /* FinancialMetricsViewController.swift */; };
 		C71F050125111196008696AD /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F050025111196008696AD /* UserDefaultsManager.swift */; };
+		C71F05052516C4D3008696AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71F05042516C4D3008696AD /* StoreKit.framework */; };
 		C72461DB250DC74C005FF9E3 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72461DA250DC74C005FF9E3 /* Metrics.swift */; };
 		C72461DD250E4234005FF9E3 /* MetricController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72461DC250E4234005FF9E3 /* MetricController.swift */; };
 		C72BEB92245747D6000E7129 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72BEB91245747D6000E7129 /* Router.swift */; };
@@ -169,6 +170,7 @@
 		C71E95C62426BE09005A2DC7 /* AccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
 		C71F04FE250FF14F008696AD /* FinancialMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialMetricsViewController.swift; sourceTree = "<group>"; };
 		C71F050025111196008696AD /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		C71F05042516C4D3008696AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C72461DA250DC74C005FF9E3 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		C72461DC250E4234005FF9E3 /* MetricController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricController.swift; sourceTree = "<group>"; };
 		C72BEB91245747D6000E7129 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51007064FCD17911765E42ED /* Pods_Stocker.framework in Frameworks */,
+				C71F05052516C4D3008696AD /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +383,7 @@
 		B0D50C25142ADE2C773BFD6F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C71F05042516C4D3008696AD /* StoreKit.framework */,
 				14DC7E39EE0FBE1A9CD53BA2 /* Pods_Stocker.framework */,
 				701D4597526E59BC19DEF782 /* Pods_Stocker_StockerUITests.framework */,
 				A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */,
