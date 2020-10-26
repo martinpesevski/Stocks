@@ -10,11 +10,25 @@ import UIKit
 import FirebaseAuth
 
 class LoginViewController: ViewController {
+    lazy var image: UIImageView = {
+          let tv = UIImageView()
+          tv.image = UIImage(named: "wallpaper_welcome")
+          return tv
+    }()
+    
+    
+    
     lazy var email: UITextField = {
         let tv = UITextField()
         tv.placeholder = "Email"
         tv.delegate = self
+        tv.textAlignment = .center
+        tv.autocapitalizationType = .none
+        tv.layer.cornerRadius = 10
         tv.returnKeyType = .next
+        tv.font = UIFont(name: "San Francisco", size: 25)
+        tv.font = UIFont.systemFont(ofSize: 25)
+        
         tv.becomeFirstResponder()
         return tv
     }()
@@ -23,7 +37,10 @@ class LoginViewController: ViewController {
         let tv = UITextField()
         tv.placeholder = "Password"
         tv.isSecureTextEntry = true
+        tv.font = UIFont.systemFont(ofSize: 25)
+        tv.textAlignment = .center
         tv.textContentType = .password
+        tv.layer.cornerRadius = 10
         tv.delegate = self
         tv.returnKeyType = .done
         return tv
@@ -36,18 +53,35 @@ class LoginViewController: ViewController {
         return v
     }()
     
-    lazy var content = ScrollableStackView(views: [email, password], spacing: 10)
+    lazy var content = ScrollableStackView(views: [email, password], spacing: 40 )
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        
+        view.addSubview(image)
         view.addSubview(content)
         view.addSubview(logIn)
+        
+        image.snp.makeConstraints { (make) in
+            make.size.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+       
+        
         content.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
             make.bottom.equalTo(logIn.snp.top).inset(10)
         }
-        logIn.snp.makeConstraints { make in make.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10) }
+        
+        logIn.snp.makeConstraints { make in make.bottom.equalTo(view.safeAreaLayoutGuide).inset(100)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
+            
+        }
     }
+    
     
     @objc func onLogIn() {
         guard let email = email.text, let password = password.text else { return }
