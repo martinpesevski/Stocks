@@ -23,7 +23,7 @@ struct BalanceSheetFinancialMetric: Codable, Metric {
     }
 }
 
-enum BalanceSheetMetricType: String, Codable, MetricType {
+enum BalanceSheetMetricType: String, Codable, MetricType, CaseIterable {
     case date                                    = "date"
     case symbol                                  = "symbol"
     case period                                  = "period"

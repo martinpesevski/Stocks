@@ -92,6 +92,14 @@ class AccessoryView: UIView {
         stack.distribution = .fill
         stack.alignment = .center
         stack.spacing = 10
+        return stack
+    }()
+    
+    lazy var verticalContent: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [content])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .fill
         stack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         stack.isLayoutMarginsRelativeArrangement = true
         return stack
@@ -111,11 +119,11 @@ class AccessoryView: UIView {
         layer.cornerRadius = 8
         backgroundColor = .systemGray5
         
-        addSubview(content)
+        addSubview(verticalContent)
         addSubview(button)
         
-        content.snp.makeConstraints { make in make.edges.equalToSuperview() }
-        button.snp.makeConstraints { make in make.edges.equalToSuperview() }
+        verticalContent.snp.makeConstraints { make in make.edges.equalToSuperview() }
+        button.snp.makeConstraints { make in make.edges.equalTo(content) }
     }
     
     required init?(coder: NSCoder) {

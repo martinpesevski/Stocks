@@ -19,6 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         let auth = AuthenticationManager()
+        
+        UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
 //        let vc = WelcomeViewController()
 //        FirebaseApp.configure()
 //        let vc = FilterViewController(viewModel: StocksViewModel())

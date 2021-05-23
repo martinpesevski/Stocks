@@ -12,9 +12,10 @@ struct Filter: Equatable, Codable {
     var capFilters: [CapFilter] = []
     var profitabilityFilters: [ProfitabilityFilter] = []
     var sectorFilters: [SectorFilter] = []
+    var metricFilters: [MetricFilter] = []
 
     var isEmpty: Bool {
-        capFilters.isEmpty && profitabilityFilters.isEmpty && sectorFilters.isEmpty
+        capFilters.isEmpty && profitabilityFilters.isEmpty && sectorFilters.isEmpty && metricFilters.isEmpty
     }
     
     func isValid(_ filter: Filter) -> Bool {
@@ -30,6 +31,10 @@ struct Filter: Equatable, Codable {
         
         for sector in filter.sectorFilters where !sectorFilters.contains(sector) {
             if !sectorFilters.isEmpty { return false }
+        }
+        
+        for metric in filter.metricFilters where !metricFilters.contains(metric) {
+            if !metricFilters.isEmpty { return false }
         }
         
         return true

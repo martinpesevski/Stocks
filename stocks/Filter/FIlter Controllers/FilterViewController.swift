@@ -17,11 +17,13 @@ class FilterViewController: FilterPageViewController {
     lazy var marketCapController = FilterCapViewController(manager: subscriptionManager)
     lazy var sectorController = FilterSectorViewController()
     lazy var profitabilityController = FilterProfitabilityViewController()
+    lazy var metricController = FilterMetricViewController()
 
     lazy var marketCap = DrillDownView(filter: .marketCap(filters: filter.capFilters), delegate: self)
     lazy var sector = DrillDownView(filter: .sector(filters: filter.sectorFilters), delegate: self)
     lazy var profitability = DrillDownView(filter: .profitability(filters: filter.profitabilityFilters), delegate: self)
-    
+    lazy var metrics = DrillDownView(filter: .metric(filters: filter.metricFilters), delegate: self)
+
     weak var delegate: FilterDelegate?
 
     lazy var filterViews: [DrillDownView] = [marketCap, sector, profitability]
@@ -50,6 +52,7 @@ class FilterViewController: FilterPageViewController {
         marketCapController.delegate = self
         sectorController.delegate = self
         profitabilityController.delegate = self
+        metricController.delegate = self
     }
     
     override func viewDidLoad() {
@@ -60,6 +63,7 @@ class FilterViewController: FilterPageViewController {
         content.addArrangedSubview(marketCap)
         content.addArrangedSubview(sector)
         content.addArrangedSubview(profitability)
+        content.addArrangedSubview(metrics)
         content.addArrangedSubview(UIView())
         
         view.startLoading()
@@ -98,7 +102,7 @@ class FilterViewController: FilterPageViewController {
     }
 }
 
-extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProfitabilityDelegate, FilterSectorDelegate {
+extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProfitabilityDelegate, FilterSectorDelegate, FilterMetricDelegate {
     func didChangeSelectionCap(_ filter: CapFilter, isSelected: Bool) {
         if isSelected {
             self.filter.capFilters.append(filter)
@@ -126,6 +130,10 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
         profitability.filter = .profitability(filters: self.filter.profitabilityFilters)
     }
     
+    func didChangeSelectionMetric(_ filter: MetricFilter, isSelected: Bool) {
+
+    }
+    
     func didSelect(filter: FilterType) {
         switch filter {
         case .marketCap:
@@ -137,6 +145,9 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
         case .sector:
             sectorController.selectedSectors = self.filter.sectorFilters
             show(sectorController, sender: self)
+        case .metric:
+            metricController.selectedFilters = self.filter.metricFilters
+            show(metricController, sender: self)
         }
     }
 }

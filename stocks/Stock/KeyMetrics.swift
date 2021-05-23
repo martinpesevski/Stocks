@@ -53,7 +53,7 @@ struct KeyMetricsFinancialMetric: Codable, Metric {
     }
 }
 
-enum KeyMetricsMetricType: String, Codable, MetricType {
+enum KeyMetricsMetricType: String, Codable, MetricType, CaseIterable {
     case symbol                                 = "symbol"
     case date                                   = "date"
     case revenuePerShare                        = "revenuePerShare"

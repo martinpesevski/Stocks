@@ -95,7 +95,7 @@ struct CashFlow: Codable, Financial {
     }
 }
 
-enum CashFlowMetricType: String, Codable, MetricType {
+enum CashFlowMetricType: String, Codable, MetricType, CaseIterable {
     case date                                     = "date"
     case symbol                                   = "symbol"
     case period                                   = "period"

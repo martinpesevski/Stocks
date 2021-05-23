@@ -12,12 +12,14 @@ enum FilterType: TitleDescription {
     case marketCap(filters: [CapFilter])
     case profitability(filters: [ProfitabilityFilter])
     case sector(filters: [SectorFilter])
-    
+    case metric(filters: [MetricFilter])
+
     var title: String {
         switch self {
         case .marketCap: return "Market cap"
         case .profitability: return "Profitability"
         case .sector: return "Industry Sector"
+        case .metric: return "Select metrics"
         }
     }
 
@@ -33,6 +35,11 @@ enum FilterType: TitleDescription {
                 text += index == filters.count - 1 ? filter.title : "\(filter.title), "
             }
         case .sector(let filters):
+            for (index, filter) in filters.enumerated() {
+                text += index == filters.count - 1 ? filter.title : "\(filter.title), "
+            }
+            
+        case .metric(let filters):
             for (index, filter) in filters.enumerated() {
                 text += index == filters.count - 1 ? filter.title : "\(filter.title), "
             }

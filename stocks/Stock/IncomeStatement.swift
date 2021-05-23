@@ -87,7 +87,7 @@ struct IncomeStatement: Codable, Financial {
     }
 }
 
-enum IncomeStatementMetricType: String, Codable, MetricType {
+enum IncomeStatementMetricType: String, Codable, MetricType, CaseIterable {
     case date                             = "date"
     case symbol                           = "symbol"
     case period                           = "period"

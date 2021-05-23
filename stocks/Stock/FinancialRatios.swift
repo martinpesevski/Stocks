@@ -24,7 +24,7 @@ struct FinancialRatioFinancialMetric: Codable, Metric {
     }
 }
 
-enum FinancialRatioMetricType: String, Codable, MetricType {
+enum FinancialRatioMetricType: String, Codable, MetricType, CaseIterable {
     case currentRatio                       = "currentRatio"
     case quickRatio                         = "quickRatio"
     case cashRatio                          = "cashRatio"
