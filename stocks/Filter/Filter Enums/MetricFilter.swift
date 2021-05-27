@@ -15,16 +15,20 @@ enum MetricFilter: TitleDescription, Equatable, Codable {
     case financialRatios(metric: AnyMetricType)
     
     var title: String {
-        switch self {
-        case .incomeStatement(let metric): return "\(metric.text)"
-        case .balanceSheet(let metric): return "\(metric.text)"
-        case .cashFlows(let metric): return "\(metric.text)"
-        case .financialRatios(let metric): return "\(metric.text)"
-        }
+        return associatedValue.text
     }
 
     var explanation: String {
         return ""
+    }
+    
+    var associatedValue: AnyMetricType {
+        switch self {
+        case .incomeStatement(metric: let metric): return metric;
+        case .balanceSheet(metric: let metric): return metric;
+        case .cashFlows(metric: let metric): return metric;
+        case .financialRatios(metric: let metric): return metric;
+        }
     }
     
     // Codable

@@ -161,4 +161,12 @@ enum IncomeStatementMetricType: String, Codable, MetricType, CaseIterable {
         default: return .money
         }
     }
+    
+    var filterType: MetricFilterType {
+        switch self {
+        case .date, .symbol, .period, .link: return .none
+        case .operatingIncomeRatio, .incomeBeforeTaxRatio, .netIncomeRatio, .ebitdaratio, .grossProfitRatio: return .metric
+        default: return .percentageGrowth
+        }
+    }
 }

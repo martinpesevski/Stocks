@@ -14,6 +14,12 @@ enum MetricSuffixType: String, Codable {
     case none
 }
 
+enum MetricFilterType: String, Codable {
+    case percentageGrowth
+    case metric
+    case none
+}
+
 enum FiscalPeriod: String, Codable {
     case annual = "FY"
     case firstQuarter = "Q1"
@@ -46,7 +52,7 @@ struct AnyMetric: Metric, Codable, Equatable {
     var doubleValue: Double
     var metricType: AnyMetricType?
     var metricSuffixType: MetricSuffixType
-    
+
     init(_ base: Metric) {
         self.text = base.text
         self.stringValue = base.stringValue
@@ -63,15 +69,18 @@ struct AnyMetric: Metric, Codable, Equatable {
 protocol MetricType {
     var text: String { get }
     var suffixType: MetricSuffixType { get }
+    var filterType: MetricFilterType { get }
 }
 
 struct AnyMetricType: MetricType, Codable, Equatable {
     var text: String
     var suffixType: MetricSuffixType
-    
+    var filterType: MetricFilterType
+
     init(_ base: MetricType) {
         self.text = base.text
         self.suffixType = base.suffixType
+        self.filterType = base.filterType
     }
 }
 

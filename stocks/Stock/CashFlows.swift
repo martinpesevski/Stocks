@@ -173,4 +173,11 @@ enum CashFlowMetricType: String, Codable, MetricType, CaseIterable {
     var suffixType: MetricSuffixType {
         return .money
     }
+    
+    var filterType: MetricFilterType {
+        switch self {
+        case .date, .symbol, .period, .link: return .none
+        default: return .percentageGrowth
+        }
+    }
 }

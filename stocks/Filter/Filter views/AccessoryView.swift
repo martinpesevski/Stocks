@@ -102,6 +102,7 @@ class AccessoryView: UIView {
         stack.alignment = .fill
         stack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         stack.isLayoutMarginsRelativeArrangement = true
+        stack.spacing = 15
         return stack
     }()
     

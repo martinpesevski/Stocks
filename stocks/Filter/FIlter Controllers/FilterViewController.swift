@@ -146,7 +146,7 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
             sectorController.selectedSectors = self.filter.sectorFilters
             show(sectorController, sender: self)
         case .metric:
-            metricController.selectedFilters = self.filter.metricFilters
+//            metricController.selectedFilters = self.filter.metricFilters
             show(metricController, sender: self)
         }
     }

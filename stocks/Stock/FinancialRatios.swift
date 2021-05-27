@@ -134,6 +134,13 @@ enum FinancialRatioMetricType: String, Codable, MetricType, CaseIterable {
         default: return .none
         }
     }
+    
+    var filterType: MetricFilterType {
+        switch self {
+        case .grossProfitMargin, .operatingProfitMargin, .pretaxProfitMargin, .netProfitMargin, .effectiveTaxRate, .returnOnAssets, .returnOnEquity, .returnOnCapitalEmployed, .dividendYield, .cashPerShare, .freeCashFlowPerShare, .operatingCashFlowPerShare: return .percentageGrowth
+        default: return .metric
+        }
+    }
 }
 
 struct FinancialRatios: Codable, Financial {

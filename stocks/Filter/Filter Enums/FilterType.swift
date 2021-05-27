@@ -13,7 +13,7 @@ enum FilterType: TitleDescription {
     case profitability(filters: [ProfitabilityFilter])
     case sector(filters: [SectorFilter])
     case metric(filters: [MetricFilter])
-
+    
     var title: String {
         switch self {
         case .marketCap: return "Market cap"

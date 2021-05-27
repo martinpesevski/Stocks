@@ -178,6 +178,13 @@ enum KeyMetricsMetricType: String, Codable, MetricType, CaseIterable {
     var suffixType: MetricSuffixType {
         return .money
     }
+    
+    var filterType: MetricFilterType {
+        switch self {
+        case .date, .symbol: return.none
+        default: return .metric
+        }
+    }
 }
 
 struct KeyMetrics: Codable, Financial {

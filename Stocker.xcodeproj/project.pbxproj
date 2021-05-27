@@ -81,6 +81,7 @@
 		C76E611126585100005D5FB9 /* MetricFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E611026585100005D5FB9 /* MetricFilter.swift */; };
 		C76E61192658545D005D5FB9 /* FilterMetricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E61182658545D005D5FB9 /* FilterMetricViewController.swift */; };
 		C76E611E265854CF005D5FB9 /* MetricFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E611D265854CF005D5FB9 /* MetricFilterView.swift */; };
+		C76E6123265B5B87005D5FB9 /* SelectedFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */; };
 		C7A22BC624F9B744007F93D3 /* FinancialRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */; };
 		D113D12B1AD8894724938DB3 /* Pods_StockerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */; };
 /* End PBXBuildFile section */
@@ -192,6 +193,7 @@
 		C76E611026585100005D5FB9 /* MetricFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricFilter.swift; sourceTree = "<group>"; };
 		C76E61182658545D005D5FB9 /* FilterMetricViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMetricViewController.swift; sourceTree = "<group>"; };
 		C76E611D265854CF005D5FB9 /* MetricFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricFilterView.swift; sourceTree = "<group>"; };
+		C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFilterView.swift; sourceTree = "<group>"; };
 		C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatios.swift; sourceTree = "<group>"; };
 		E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.release.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.release.xcconfig"; sourceTree = "<group>"; };
 		F07714A4AFC2055CABEB9ADF /* Pods-StockerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockerTests.release.xcconfig"; path = "Target Support Files/Pods-StockerTests/Pods-StockerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				C71E3871243800BB00E9A84B /* FilterView.swift */,
 				C71BBCFF24393D4B00486528 /* SectorFilterView.swift */,
 				C76E611D265854CF005D5FB9 /* MetricFilterView.swift */,
+				C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */,
 				C71E3873243801BF00E9A84B /* DrillDownView.swift */,
 			);
 			path = "Filter views";
@@ -778,6 +781,7 @@
 				52D65F2D2433AC0C00647074 /* GrowthTable.swift in Sources */,
 				C71F050125111196008696AD /* UserDefaultsManager.swift in Sources */,
 				C71E95B42401F122005A2DC7 /* StockCell.swift in Sources */,
+				C76E6123265B5B87005D5FB9 /* SelectedFilterView.swift in Sources */,
 				52D0CC59245B009C00C36300 /* DatabaseManager.swift in Sources */,
 				5245609923FC7685003686BE /* AppDelegate.swift in Sources */,
 				524560C923FDD7FC003686BE /* Stock.swift in Sources */,
