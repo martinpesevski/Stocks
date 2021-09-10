@@ -9,7 +9,7 @@
 import UIKit
 import StoreKit
  
-protocol SubscriptionViewControllerDelegate: class {
+protocol SubscriptionViewControllerDelegate: AnyObject {
     func didDismiss()
 }
 

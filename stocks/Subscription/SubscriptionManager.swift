@@ -10,7 +10,7 @@ import Foundation
 import StoreKit
 import FirebaseDatabase
 
-protocol SubscriptionManagerDelegate: class {
+protocol SubscriptionManagerDelegate: AnyObject {
     var products: [SKProduct]? { get set }
     func didFinishPurchasing()
     func didFinishRestoring()

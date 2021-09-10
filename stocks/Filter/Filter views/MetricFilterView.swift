@@ -19,7 +19,7 @@ enum MetricFilterCompareSign: String {
     case lessThan = "<"
 }
 
-protocol MetricFilterViewDelegate: class {
+protocol MetricFilterViewDelegate: AnyObject {
     func didChangeSelection(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String))
 }
 
@@ -87,7 +87,7 @@ class MetricFilterView: FilterView {
     lazy var filterOptionsView: UIStackView = {
         let stack = UIStackView()
         
-        switch metricFilter.associatedValue.filterType {
+        switch metricFilter.associatedValueMetric.filterType {
         case .percentageGrowth:
             stack.addArrangedSubview(periodPicker)
             stack.addArrangedSubview(comparer)
@@ -169,7 +169,7 @@ class MetricFilterView: FilterView {
     }
     
     func callDelegateIfNeeded() {
-        switch metricFilter.associatedValue.filterType {
+        switch metricFilter.associatedValueMetric.filterType {
         case .percentageGrowth:
             if let period = period, let compareSign = compareSign, let value = value {
                 explanation.text = period.rawValue + " " + compareSign.rawValue + " " + value

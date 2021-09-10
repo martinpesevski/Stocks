@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SortViewDelegate: class {
+protocol SortViewDelegate: AnyObject {
     func didSelect(sort: Sort)
 }
 

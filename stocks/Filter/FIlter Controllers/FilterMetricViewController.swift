@@ -10,7 +10,7 @@ import Foundation
 
 import UIKit
 
-protocol FilterMetricDelegate: class {
+protocol FilterMetricDelegate: AnyObject {
     func didChangeSelectionMetric(_ filter: MetricFilter, isSelected: Bool)
 }
 
@@ -21,7 +21,7 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var incomeStatementViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in IncomeStatementMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .incomeStatement(metric: AnyMetricType(metric)), delegate: self))
+            arr.append(MetricFilterView(filter: .incomeStatement(metric: AnyMetricType(metric), filters: nil), delegate: self))
         }
         return arr
     }()
@@ -29,7 +29,7 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var balanceSheetViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in BalanceSheetMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .balanceSheet(metric: AnyMetricType(metric)), delegate: self))
+            arr.append(MetricFilterView(filter: .balanceSheet(metric: AnyMetricType(metric), filters: nil), delegate: self))
         }
         return arr
     }()
@@ -37,7 +37,7 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var cashFlowViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in CashFlowMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .cashFlows(metric: AnyMetricType(metric)), delegate: self))
+            arr.append(MetricFilterView(filter: .cashFlows(metric: AnyMetricType(metric), filters: nil), delegate: self))
         }
         return arr
     }()
@@ -45,7 +45,7 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var financialRatiosViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in FinancialRatioMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .financialRatios(metric: AnyMetricType(metric)), delegate: self))
+            arr.append(MetricFilterView(filter: .financialRatios(metric: AnyMetricType(metric), filters: nil), delegate: self))
         }
         return arr
     }()
@@ -77,15 +77,19 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     func didChangeSelection(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String)) {
         var periodText = ""
         if let period = filters.period?.rawValue { periodText = period + " " }
-        let text = view.metricFilter.associatedValue.text + " " + periodText + filters.compareSign.rawValue + " " + filters.value
+        let text = view.metricFilter.associatedValueMetric.text + " " + periodText + filters.compareSign.rawValue + " " + filters.value
         let filterV = SelectedFilterView(filter: view, text: text, delegate: self)
         
         if !selectedFilters.contains(view) {
             selectedFilters.append(view)
             content.stockStack.insertArrangedSubview(filterV, at: 2)
         } else {
-            if let index = content.stockStack.arrangedSubviews.firstIndex(of: filterV) {
-                (content.stockStack.arrangedSubviews[index] as? SelectedFilterView)?.titleLabel.text = text
+            content.stockStack.arrangedSubviews.forEach {
+                if ($0 as? SelectedFilterView)?.filterType.metricFilter.associatedValueMetric == filterV.filterType.metricFilter.associatedValueMetric {
+                    if let index = content.stockStack.arrangedSubviews.firstIndex(of: $0) {
+                        (content.stockStack.arrangedSubviews[index] as? SelectedFilterView)?.titleLabel.text = text
+                    }
+                }
             }
         }
     }
@@ -121,5 +125,10 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
         default:
             return
         }
+    }
+    
+    override func onDone() {
+//        delegate?.didChangeSelectionMetric(<#T##filter: MetricFilter##MetricFilter#>, isSelected: <#T##Bool#>)
+        super.onDone()
     }
 }

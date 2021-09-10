@@ -43,7 +43,7 @@ class StackViewController: ViewController {
     }
 }
 
-protocol MetricKeyValueDelegate: class {
+protocol MetricKeyValueDelegate: AnyObject {
     func didSelectMetric(_ metric: Metric)
 }
 

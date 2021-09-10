@@ -9,7 +9,7 @@
 import UIKit
 import StoreKit
 
-protocol FilterDelegate: class {
+protocol FilterDelegate: AnyObject {
     func didFinishFiltering()
 }
 
@@ -26,7 +26,6 @@ class FilterViewController: FilterPageViewController {
 
     weak var delegate: FilterDelegate?
 
-    lazy var filterViews: [DrillDownView] = [marketCap, sector, profitability]
     lazy var filter: Filter = {
         if let ftrData = UserDefaults.standard.object(forKey: "filter") as? Data,
             let ftr = try? JSONDecoder().decode(Filter.self, from: ftrData) {
@@ -36,6 +35,7 @@ class FilterViewController: FilterPageViewController {
             ftr.capFilters = [.largeCap]
             ftr.sectorFilters = [.tech]
             ftr.profitabilityFilters = [.profitable]
+            ftr.metricFilters = [.financialRatios(metric: AnyMetricType(FinancialRatioMetricType.priceEarningsRatio), filters: nil)]
             return ftr
         }
     }()

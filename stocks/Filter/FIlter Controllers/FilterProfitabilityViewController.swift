@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FilterProfitabilityDelegate: class {
+protocol FilterProfitabilityDelegate: AnyObject {
     func didChangeSelectionProfitability(_ filter: ProfitabilityFilter, isSelected: Bool)
 }
 

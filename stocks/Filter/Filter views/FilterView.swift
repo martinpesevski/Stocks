@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-protocol FilterViewDelegate: class {
+protocol FilterViewDelegate: AnyObject {
     func didChangeSelection(view: FilterView, isSelected: Bool, isLocked: Bool)
 }
 

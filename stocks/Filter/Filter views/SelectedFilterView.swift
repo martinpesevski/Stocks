@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SelectedFilterViewDelegate: class {
+protocol SelectedFilterViewDelegate: AnyObject {
     func onClearSelected(filter: SelectedFilterView)
 }
 
