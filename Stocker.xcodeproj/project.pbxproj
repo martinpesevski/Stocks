@@ -39,6 +39,10 @@
 		C708ED0E2444AFDD00FC9425 /* BalanceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */; };
 		C708ED122444E6E100FC9425 /* FinancialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED112444E6E100FC9425 /* FinancialsViewController.swift */; };
 		C708ED142445E60500FC9425 /* IncomeStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED132445E60500FC9425 /* IncomeStatement.swift */; };
+		C712952E26FACFB700F666D0 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712952D26FACFB700F666D0 /* ContainerViewController.swift */; };
+		C712953026FAD05300F666D0 /* ResearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712952F26FAD05300F666D0 /* ResearchViewController.swift */; };
+		C712953226FAD09200F666D0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712953126FAD09200F666D0 /* ProfileViewController.swift */; };
+		C712953426FAD0B300F666D0 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712953326FAD0B300F666D0 /* WatchlistViewController.swift */; };
 		C71BBD0024393D4B00486528 /* SectorFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71BBCFF24393D4B00486528 /* SectorFilterView.swift */; };
 		C71BBD03243A68F000486528 /* ListViewController+SortFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */; };
 		C71E38702437971C00E9A84B /* FilterCapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E386F2437971C00E9A84B /* FilterCapViewController.swift */; };
@@ -146,6 +150,10 @@
 		C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceSheet.swift; sourceTree = "<group>"; };
 		C708ED112444E6E100FC9425 /* FinancialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialsViewController.swift; sourceTree = "<group>"; };
 		C708ED132445E60500FC9425 /* IncomeStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatement.swift; sourceTree = "<group>"; };
+		C712952D26FACFB700F666D0 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		C712952F26FAD05300F666D0 /* ResearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResearchViewController.swift; sourceTree = "<group>"; };
+		C712953126FAD09200F666D0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C712953326FAD0B300F666D0 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
 		C71BBCFF24393D4B00486528 /* SectorFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorFilterView.swift; sourceTree = "<group>"; };
 		C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController+SortFilter.swift"; sourceTree = "<group>"; };
 		C71E386F2437971C00E9A84B /* FilterCapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCapViewController.swift; sourceTree = "<group>"; };
@@ -434,6 +442,10 @@
 				C72BEB96245763AC000E7129 /* LoginViewController.swift */,
 				C72BEB9824576518000E7129 /* SignUpViewController.swift */,
 				C72BEB9E245774C3000E7129 /* AuthenticationManager.swift */,
+				C712952D26FACFB700F666D0 /* ContainerViewController.swift */,
+				C712952F26FAD05300F666D0 /* ResearchViewController.swift */,
+				C712953126FAD09200F666D0 /* ProfileViewController.swift */,
+				C712953326FAD0B300F666D0 /* WatchlistViewController.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -613,10 +625,12 @@
 			files = (
 				C708ED0E2444AFDD00FC9425 /* BalanceSheet.swift in Sources */,
 				C71E95C72426BE09005A2DC7 /* AccessoryView.swift in Sources */,
+				C712952E26FACFB700F666D0 /* ContainerViewController.swift in Sources */,
 				C764584424F30EDC00E332C0 /* IntrinsicValueViewController.swift in Sources */,
 				52D9B1BB24292CCF00E67BF2 /* Profile.swift in Sources */,
 				C71E38842438312200E9A84B /* FilterType.swift in Sources */,
 				52D0CC502447577300C36300 /* SimpleGrowthChart.swift in Sources */,
+				C712953026FAD05300F666D0 /* ResearchViewController.swift in Sources */,
 				52108CDB241FCA7C000A472B /* GrowthMetrics.swift in Sources */,
 				C708ED122444E6E100FC9425 /* FinancialsViewController.swift in Sources */,
 				C71BBD03243A68F000486528 /* ListViewController+SortFilter.swift in Sources */,
@@ -639,12 +653,14 @@
 				C72461DD250E4234005FF9E3 /* MetricController.swift in Sources */,
 				52D65F2D2433AC0C00647074 /* GrowthTable.swift in Sources */,
 				C71F050125111196008696AD /* UserDefaultsManager.swift in Sources */,
+				C712953426FAD0B300F666D0 /* WatchlistViewController.swift in Sources */,
 				C71E95B42401F122005A2DC7 /* StockCell.swift in Sources */,
 				C76E6123265B5B87005D5FB9 /* SelectedFilterView.swift in Sources */,
 				52D0CC59245B009C00C36300 /* DatabaseManager.swift in Sources */,
 				5245609923FC7685003686BE /* AppDelegate.swift in Sources */,
 				524560C923FDD7FC003686BE /* Stock.swift in Sources */,
 				C71BBD0024393D4B00486528 /* SectorFilterView.swift in Sources */,
+				C712953226FAD09200F666D0 /* ProfileViewController.swift in Sources */,
 				C71E95C52426BDBF005A2DC7 /* FilterViewController.swift in Sources */,
 				C76E61192658545D005D5FB9 /* FilterMetricViewController.swift in Sources */,
 				C72461DB250DC74C005FF9E3 /* Metrics.swift in Sources */,

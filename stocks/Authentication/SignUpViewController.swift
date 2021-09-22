@@ -72,7 +72,7 @@ class SignUpViewController: ViewController {
                                "subscribed": false,
                                "subscriptionEndDate": ""])
 
-                self.navigationController?.viewControllers = [FilterViewController(viewModel: StocksViewModel())]
+                self.navigationController?.viewControllers = [ContainerViewController()]
             }
         }
     }

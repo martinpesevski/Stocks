@@ -55,7 +55,8 @@ class FilterPageViewController: ViewController {
             make.bottom.equalTo(button)
         }
         button.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view.layoutMarginsGuide)
+            make.leading.trailing.equalTo(view.layoutMarginsGuide)
+            make.bottom.equalTo(view.layoutMarginsGuide).inset(20)
             make.height.equalTo(70)
         }
     }

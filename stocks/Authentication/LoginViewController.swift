@@ -57,7 +57,7 @@ class LoginViewController: ViewController {
           if let error = error {
               print("error sign up: \(error.localizedDescription)")
           } else if authResult != nil {
-              self.navigationController?.viewControllers = [FilterViewController(viewModel: StocksViewModel())]
+              self.navigationController?.viewControllers = [ContainerViewController()]
           }
         }
     }

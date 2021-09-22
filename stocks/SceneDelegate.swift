@@ -18,15 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let auth = AuthenticationManager()
         
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
-//        let vc = WelcomeViewController()
-//        FirebaseApp.configure()
-//        let vc = FilterViewController(viewModel: StocksViewModel())
-//        let nav = NavigationController(rootViewController: vc)
-        window?.rootViewController = auth.authViewController
-//        window?.rootViewController = nav
+        AuthenticationManager.configure()
+        window?.rootViewController = AuthenticationManager.authViewController
         window?.makeKeyAndVisible()
     }
 
@@ -57,7 +52,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 

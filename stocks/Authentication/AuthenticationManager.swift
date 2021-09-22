@@ -10,24 +10,27 @@ import UIKit
 import FirebaseAuth
 
 class AuthenticationManager: NSObject {
-    override init() {
+    static func configure() {
         FirebaseApp.configure()
         let userDefaults = UserDefaults.standard
         if !userDefaults.bool(forKey: "hasRunBefore") {
             try? Auth.auth().signOut()
             userDefaults.set(true, forKey: "hasRunBefore")
         }
-        super.init()
     }
     
-    var authViewController: UINavigationController? {
+    static func logOut() {
+        try? Auth.auth().signOut()
+    }
+    
+    static var authViewController: UINavigationController? {
         guard Auth.auth().currentUser != nil else {
             let welcome = WelcomeViewController()
             let nav = UINavigationController(rootViewController: welcome)
             return nav
         }
 
-        let list = FilterViewController()
+        let list = ContainerViewController()
         let nav = UINavigationController(rootViewController: list)
         return nav
     }
