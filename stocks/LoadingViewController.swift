@@ -9,11 +9,11 @@
 import UIKit
 import Lottie
 
-class LoadingViewController: ViewController {
+class LoadingViewController: ViewController { //unused
     var tickers: [Ticker] = []
     var stocks: [Stock] = []
 
-    @IBOutlet var animationView: AnimationView!
+    var animationView: AnimationView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,17 +22,9 @@ class LoadingViewController: ViewController {
         animationView.animation = Animation.named("loading")
         animationView.loopMode = .loop
         animationView.play()
+        view.addSubview(animationView)
 
-//        guard let data = UserDefaults.standard.object(forKey: "tickerData") as? Data else {
             load()
-//            return
-//        }
-//
-//        DispatchQueue.global(qos: .background).async {
-//            DataParser.parseJson(type: TickerArray.self, data: data) { array, error in
-//                guard let array = array else { return }
-//                self.setupStocks(data: array)
-//            }
         }
 
     
@@ -40,11 +32,14 @@ class LoadingViewController: ViewController {
         URLSession.shared.dataTask(with: Endpoints.stockScreener(sector: "tech", marketCap: "marketCapLowerThan=1000000000").url) {
             [weak self] data, response, error in
             guard let self = self, let data = data else { return }
-
+            self.animationView.stop()
+            
             UserDefaults.standard.set(data, forKey: "tickerData")
             DataParser.parseJson(type: [Ticker].self, data: data) { array, error in
                 if let array = array { self.setupStocks(data: array)}
-                if let error = error { NSLog("error loading tickers: " + error.localizedDescription) }
+                if let error = error {
+                    self.showOKAlert(title: "Error loading tickers", message: error.localizedDescription)
+                    NSLog("error loading tickers: " + error.localizedDescription) }
             }
         }.resume()
     }

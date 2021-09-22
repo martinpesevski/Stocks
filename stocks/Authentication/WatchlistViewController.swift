@@ -8,6 +8,6 @@
 
 import UIKit
 
-class WatchlistViewController: ViewController {
+class WatchlistViewController: ListViewController {
     
 }

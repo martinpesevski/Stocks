@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfileViewController: ViewController {
     lazy var profileImage: UIImageView = {
@@ -14,7 +15,7 @@ class ProfileViewController: ViewController {
         return l
     }()
     
-    lazy var nameLabel = UILabel(text: "Martin", font: UIFont.boldSystemFont(ofSize: 20), alignment: .center, color: .label)
+    lazy var nameLabel = UILabel(text: AuthenticationManager.username, font: UIFont.boldSystemFont(ofSize: 20), alignment: .center, color: .label)
     lazy var signOutButton: UIButton = {
        let l = UIButton()
         l.setTitle("Log out", for: .normal)

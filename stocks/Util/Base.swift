@@ -23,6 +23,25 @@ class NavigationController: UINavigationController {
     }
 }
 
+class StyledTextField: UITextField {
+    init() {
+        super.init(frame: .zero)
+        let border = UIView()
+        border.backgroundColor = .systemGreen
+        addSubview(border)
+        border.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        snp.makeConstraints { make in make.height.equalTo(50) }
+        tintColor = .systemGreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class KeyValueView: UIStackView {
     lazy var keyLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
     lazy var valueLabel = UILabel(font: UIFont.systemFont(ofSize: 15), alignment: .right)
@@ -74,7 +93,8 @@ class ScrollableStackView: UIStackView {
         scroll.addSubview(stockStack)
         scroll.alwaysBounceVertical = true
         stockStack.snp.makeConstraints { make in
-            make.edges.width.equalToSuperview()
+            make.edges.equalTo(scroll.contentLayoutGuide)
+            make.width.equalToSuperview()
         }
         return scroll
     }()
@@ -86,7 +106,7 @@ class ScrollableStackView: UIStackView {
         
         axis = .vertical
         addSubview(scrollview)
-        scrollview.snp.makeConstraints { make in make.edges.equalToSuperview() }
+        scrollview.snp.makeConstraints { make in make.edges.equalTo(layoutMarginsGuide) }
     }
     
     override func setCustomSpacing(_ spacing: CGFloat, after arrangedSubview: UIView) {

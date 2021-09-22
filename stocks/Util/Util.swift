@@ -159,6 +159,14 @@ extension UIView {
     }
 }
 
+extension UIViewController {
+    func showOKAlert(title: String, message: String?) {
+        let l = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        l.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(l, animated: true, completion: nil)
+    }
+}
+
 class ExponentRemoverFormatter: NumberFormatter {
     static var shared = ExponentRemoverFormatter()
 

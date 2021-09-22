@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>548243889408-7meh75n45gq0qg9hesu29qstsce7kaf8.apps.googleusercontent.com</string>
+	<string>548243889408-mn3ghs0tk030t589b8o1omsk0n4v2btt.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.548243889408-7meh75n45gq0qg9hesu29qstsce7kaf8</string>
+	<string>com.googleusercontent.apps.548243889408-mn3ghs0tk030t589b8o1omsk0n4v2btt</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBlXvAxnlnsSmd8A8UW7NPBEChHvYGRHU0</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mpeshevski.stocker</string>
+	<string>com.wolfware.stocker</string>
 	<key>PROJECT_ID</key>
 	<string>stocker-dcbca</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:548243889408:ios:4ebaef12dd80a03620a7e5</string>
+	<string>1:548243889408:ios:890e88a4bb226f8d20a7e5</string>
 	<key>DATABASE_URL</key>
 	<string>https://stocker-dcbca.firebaseio.com</string>
 </dict>

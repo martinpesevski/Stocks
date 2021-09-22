@@ -23,6 +23,11 @@ class AuthenticationManager: NSObject {
         try? Auth.auth().signOut()
     }
     
+    static var username: String {
+        guard let currentUser = Auth.auth().currentUser else { return "" }
+        return currentUser.displayName ?? (currentUser.email ?? "")
+    }
+    
     static var authViewController: UINavigationController? {
         guard Auth.auth().currentUser != nil else {
             let welcome = WelcomeViewController()
