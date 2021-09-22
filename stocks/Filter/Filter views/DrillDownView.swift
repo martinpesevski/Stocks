@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-protocol DrillDownDelegate: class {
+protocol DrillDownDelegate: AnyObject {
     func didSelect(filter: FilterType)
 }
 

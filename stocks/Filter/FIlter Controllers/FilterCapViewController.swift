@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FilterCapDelegate: class {
+protocol FilterCapDelegate: AnyObject {
     func didChangeSelectionCap(_ filter: CapFilter, isSelected: Bool)
 }
 

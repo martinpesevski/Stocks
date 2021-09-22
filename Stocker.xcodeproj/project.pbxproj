@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		51007064FCD17911765E42ED /* Pods_Stocker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DC7E39EE0FBE1A9CD53BA2 /* Pods_Stocker.framework */; };
 		52108CD9241FCA39000A472B /* KeyMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52108CD8241FCA39000A472B /* KeyMetrics.swift */; };
 		52108CDB241FCA7C000A472B /* GrowthMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52108CDA241FCA7C000A472B /* GrowthMetrics.swift */; };
 		52108CDD241FCB5E000A472B /* Stock+Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52108CDC241FCB5E000A472B /* Stock+Api.swift */; };
@@ -37,7 +36,6 @@
 		52D9B1C724294C2F00E67BF2 /* profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1C624294C2F00E67BF2 /* profile.json */; };
 		52D9B1CD242955B000E67BF2 /* key-metrics.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1CC242955B000E67BF2 /* key-metrics.json */; };
 		52D9B1CF2429592900E67BF2 /* growth-metrics.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1CE2429592900E67BF2 /* growth-metrics.json */; };
-		B209D754A59F455057E088C7 /* Pods_Stocker_StockerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 701D4597526E59BC19DEF782 /* Pods_Stocker_StockerUITests.framework */; };
 		C708ED0E2444AFDD00FC9425 /* BalanceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */; };
 		C708ED122444E6E100FC9425 /* FinancialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED112444E6E100FC9425 /* FinancialsViewController.swift */; };
 		C708ED142445E60500FC9425 /* IncomeStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED132445E60500FC9425 /* IncomeStatement.swift */; };
@@ -83,7 +81,13 @@
 		C76E611E265854CF005D5FB9 /* MetricFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E611D265854CF005D5FB9 /* MetricFilterView.swift */; };
 		C76E6123265B5B87005D5FB9 /* SelectedFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */; };
 		C7A22BC624F9B744007F93D3 /* FinancialRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */; };
-		D113D12B1AD8894724938DB3 /* Pods_StockerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */; };
+		C7E4EEB226EBCB4800890C42 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEB126EBCB4800890C42 /* SnapKit */; };
+		C7E4EEB526EBCBC800890C42 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEB426EBCBC800890C42 /* Charts */; };
+		C7E4EEB826EBCCA600890C42 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEB726EBCCA600890C42 /* FirebaseAnalytics */; };
+		C7E4EEBA26EBCCA600890C42 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEB926EBCCA600890C42 /* FirebaseCrashlytics */; };
+		C7E4EEBC26EBCCA600890C42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEBB26EBCCA600890C42 /* FirebaseAuth */; };
+		C7E4EEBE26EBCCA600890C42 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEBD26EBCCA600890C42 /* FirebaseDatabase */; };
+		C7E4EEC126EBCD2000890C42 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEC026EBCD2000890C42 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,11 +108,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		14DC7E39EE0FBE1A9CD53BA2 /* Pods_Stocker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stocker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		231B21C151FA2EE10854E6BF /* Pods-Stocker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stocker.release.xcconfig"; path = "Target Support Files/Pods-Stocker/Pods-Stocker.release.xcconfig"; sourceTree = "<group>"; };
-		3D03DF0C366514A8ABF83A06 /* Pods-stocks-stocksUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-stocksUITests.release.xcconfig"; path = "Target Support Files/Pods-stocks-stocksUITests/Pods-stocks-stocksUITests.release.xcconfig"; sourceTree = "<group>"; };
-		45A2574688D447315D2D89D6 /* Pods-Stocker-StockerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stocker-StockerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		4B8A75072056E05202B1FD64 /* Pods-Stocker-StockerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stocker-StockerUITests.release.xcconfig"; path = "Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		52108CD8241FCA39000A472B /* KeyMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMetrics.swift; sourceTree = "<group>"; };
 		52108CDA241FCA7C000A472B /* GrowthMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthMetrics.swift; sourceTree = "<group>"; };
 		52108CDC241FCB5E000A472B /* Stock+Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+Api.swift"; sourceTree = "<group>"; };
@@ -144,12 +143,6 @@
 		52D9B1C624294C2F00E67BF2 /* profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
 		52D9B1CC242955B000E67BF2 /* key-metrics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "key-metrics.json"; sourceTree = "<group>"; };
 		52D9B1CE2429592900E67BF2 /* growth-metrics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "growth-metrics.json"; sourceTree = "<group>"; };
-		54B16BC799C59D4AD48E7138 /* Pods-stocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks.release.xcconfig"; path = "Target Support Files/Pods-stocks/Pods-stocks.release.xcconfig"; sourceTree = "<group>"; };
-		5601BB24DE801047FACEF69C /* Pods-Stocker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stocker.debug.xcconfig"; path = "Target Support Files/Pods-Stocker/Pods-Stocker.debug.xcconfig"; sourceTree = "<group>"; };
-		5EDB18D3CFC466D51413DDD1 /* Pods-stocks-stocksUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-stocksUITests.debug.xcconfig"; path = "Target Support Files/Pods-stocks-stocksUITests/Pods-stocks-stocksUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		6E0C904E4B027EAAE4395C5B /* Pods-stocksTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.debug.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.debug.xcconfig"; sourceTree = "<group>"; };
-		701D4597526E59BC19DEF782 /* Pods_Stocker_StockerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stocker_StockerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceSheet.swift; sourceTree = "<group>"; };
 		C708ED112444E6E100FC9425 /* FinancialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialsViewController.swift; sourceTree = "<group>"; };
 		C708ED132445E60500FC9425 /* IncomeStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatement.swift; sourceTree = "<group>"; };
@@ -195,10 +188,6 @@
 		C76E611D265854CF005D5FB9 /* MetricFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricFilterView.swift; sourceTree = "<group>"; };
 		C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFilterView.swift; sourceTree = "<group>"; };
 		C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatios.swift; sourceTree = "<group>"; };
-		E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocksTests.release.xcconfig"; path = "Target Support Files/Pods-stocksTests/Pods-stocksTests.release.xcconfig"; sourceTree = "<group>"; };
-		F07714A4AFC2055CABEB9ADF /* Pods-StockerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockerTests.release.xcconfig"; path = "Target Support Files/Pods-StockerTests/Pods-StockerTests.release.xcconfig"; sourceTree = "<group>"; };
-		F14FA1D88A985D5EF8E765CD /* Pods-stocks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks.debug.xcconfig"; path = "Target Support Files/Pods-stocks/Pods-stocks.debug.xcconfig"; sourceTree = "<group>"; };
-		F20D1D09FBAF3157FD30F77D /* Pods-StockerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockerTests.debug.xcconfig"; path = "Target Support Files/Pods-StockerTests/Pods-StockerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,8 +195,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51007064FCD17911765E42ED /* Pods_Stocker.framework in Frameworks */,
 				C71F05052516C4D3008696AD /* StoreKit.framework in Frameworks */,
+				C7E4EEBC26EBCCA600890C42 /* FirebaseAuth in Frameworks */,
+				C7E4EEB526EBCBC800890C42 /* Charts in Frameworks */,
+				C7E4EEBA26EBCCA600890C42 /* FirebaseCrashlytics in Frameworks */,
+				C7E4EEB826EBCCA600890C42 /* FirebaseAnalytics in Frameworks */,
+				C7E4EEBE26EBCCA600890C42 /* FirebaseDatabase in Frameworks */,
+				C7E4EEB226EBCB4800890C42 /* SnapKit in Frameworks */,
+				C7E4EEC126EBCD2000890C42 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,7 +210,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D113D12B1AD8894724938DB3 /* Pods_StockerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,32 +217,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B209D754A59F455057E088C7 /* Pods_Stocker_StockerUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		41DF0AEAA64B7647E7801EC2 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F14FA1D88A985D5EF8E765CD /* Pods-stocks.debug.xcconfig */,
-				54B16BC799C59D4AD48E7138 /* Pods-stocks.release.xcconfig */,
-				5EDB18D3CFC466D51413DDD1 /* Pods-stocks-stocksUITests.debug.xcconfig */,
-				3D03DF0C366514A8ABF83A06 /* Pods-stocks-stocksUITests.release.xcconfig */,
-				6E0C904E4B027EAAE4395C5B /* Pods-stocksTests.debug.xcconfig */,
-				E3D1FFD4B80293787542E2E0 /* Pods-stocksTests.release.xcconfig */,
-				5601BB24DE801047FACEF69C /* Pods-Stocker.debug.xcconfig */,
-				231B21C151FA2EE10854E6BF /* Pods-Stocker.release.xcconfig */,
-				45A2574688D447315D2D89D6 /* Pods-Stocker-StockerUITests.debug.xcconfig */,
-				4B8A75072056E05202B1FD64 /* Pods-Stocker-StockerUITests.release.xcconfig */,
-				F20D1D09FBAF3157FD30F77D /* Pods-StockerTests.debug.xcconfig */,
-				F07714A4AFC2055CABEB9ADF /* Pods-StockerTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		5245608C23FC7685003686BE = {
 			isa = PBXGroup;
 			children = (
@@ -257,7 +231,6 @@
 				524560AE23FC7687003686BE /* stocksTests */,
 				524560B923FC7687003686BE /* stocksUITests */,
 				5245609623FC7685003686BE /* Products */,
-				41DF0AEAA64B7647E7801EC2 /* Pods */,
 				B0D50C25142ADE2C773BFD6F /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -392,9 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				C71F05042516C4D3008696AD /* StoreKit.framework */,
-				14DC7E39EE0FBE1A9CD53BA2 /* Pods_Stocker.framework */,
-				701D4597526E59BC19DEF782 /* Pods_Stocker_StockerUITests.framework */,
-				A939D96A39E6E627F4E28267 /* Pods_StockerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -498,17 +468,24 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 524560BF23FC7687003686BE /* Build configuration list for PBXNativeTarget "Stocker" */;
 			buildPhases = (
-				A284F6166C05FD383EDEDFC0 /* [CP] Check Pods Manifest.lock */,
 				5245609123FC7685003686BE /* Sources */,
 				5245609223FC7685003686BE /* Frameworks */,
 				5245609323FC7685003686BE /* Resources */,
-				DD5FF929456AE47CAA634ED7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Stocker;
+			packageProductDependencies = (
+				C7E4EEB126EBCB4800890C42 /* SnapKit */,
+				C7E4EEB426EBCBC800890C42 /* Charts */,
+				C7E4EEB726EBCCA600890C42 /* FirebaseAnalytics */,
+				C7E4EEB926EBCCA600890C42 /* FirebaseCrashlytics */,
+				C7E4EEBB26EBCCA600890C42 /* FirebaseAuth */,
+				C7E4EEBD26EBCCA600890C42 /* FirebaseDatabase */,
+				C7E4EEC026EBCD2000890C42 /* Lottie */,
+			);
 			productName = stocks;
 			productReference = 5245609523FC7685003686BE /* Stocker.app */;
 			productType = "com.apple.product-type.application";
@@ -517,11 +494,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 524560C223FC7687003686BE /* Build configuration list for PBXNativeTarget "StockerTests" */;
 			buildPhases = (
-				D7F6CA3FB7FB92FE878D9343 /* [CP] Check Pods Manifest.lock */,
 				524560A723FC7687003686BE /* Sources */,
 				524560A823FC7687003686BE /* Frameworks */,
 				524560A923FC7687003686BE /* Resources */,
-				EED52D78262392040FCE4D2A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -537,11 +512,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 524560C523FC7687003686BE /* Build configuration list for PBXNativeTarget "StockerUITests" */;
 			buildPhases = (
-				55DCA7BE4E62608E24BDBFE9 /* [CP] Check Pods Manifest.lock */,
 				524560B223FC7687003686BE /* Sources */,
 				524560B323FC7687003686BE /* Frameworks */,
 				524560B423FC7687003686BE /* Resources */,
-				99928BEC8F17E6E38DD43E49 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -560,7 +533,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Martin Peshevski";
 				TargetAttributes = {
 					5245609423FC7685003686BE = {
@@ -585,6 +558,12 @@
 				Base,
 			);
 			mainGroup = 5245608C23FC7685003686BE;
+			packageReferences = (
+				C7E4EEB026EBCB4800890C42 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C7E4EEB326EBCBC800890C42 /* XCRemoteSwiftPackageReference "Charts" */,
+				C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C7E4EEBF26EBCD1F00890C42 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 5245609623FC7685003686BE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -626,126 +605,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		55DCA7BE4E62608E24BDBFE9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Stocker-StockerUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		99928BEC8F17E6E38DD43E49 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stocker-StockerUITests/Pods-Stocker-StockerUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A284F6166C05FD383EDEDFC0 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Stocker-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D7F6CA3FB7FB92FE878D9343 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-StockerTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DD5FF929456AE47CAA634ED7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker/Pods-Stocker-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stocker/Pods-Stocker-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stocker/Pods-Stocker-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EED52D78262392040FCE4D2A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StockerTests/Pods-StockerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StockerTests/Pods-StockerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StockerTests/Pods-StockerTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5245609123FC7685003686BE /* Sources */ = {
@@ -877,6 +736,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -937,6 +797,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -967,7 +828,6 @@
 		};
 		524560C023FC7687003686BE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5601BB24DE801047FACEF69C /* Pods-Stocker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -977,7 +837,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mpeshevski.stocker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wolfware.stocker;
 				PRODUCT_NAME = Stocker;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -986,7 +846,6 @@
 		};
 		524560C123FC7687003686BE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 231B21C151FA2EE10854E6BF /* Pods-Stocker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -996,7 +855,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mpeshevski.stocker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wolfware.stocker;
 				PRODUCT_NAME = Stocker;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1005,7 +864,6 @@
 		};
 		524560C323FC7687003686BE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F20D1D09FBAF3157FD30F77D /* Pods-StockerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1028,7 +886,6 @@
 		};
 		524560C423FC7687003686BE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F07714A4AFC2055CABEB9ADF /* Pods-StockerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1051,7 +908,6 @@
 		};
 		524560C623FC7687003686BE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 45A2574688D447315D2D89D6 /* Pods-Stocker-StockerUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1072,7 +928,6 @@
 		};
 		524560C723FC7687003686BE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B8A75072056E05202B1FD64 /* Pods-Stocker-StockerUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1131,6 +986,79 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C7E4EEB026EBCB4800890C42 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		C7E4EEB326EBCBC800890C42 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+		C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.7.0;
+			};
+		};
+		C7E4EEBF26EBCD1F00890C42 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C7E4EEB126EBCB4800890C42 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEB026EBCB4800890C42 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		C7E4EEB426EBCBC800890C42 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEB326EBCBC800890C42 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		C7E4EEB726EBCCA600890C42 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		C7E4EEB926EBCCA600890C42 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		C7E4EEBB26EBCCA600890C42 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		C7E4EEBD26EBCCA600890C42 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		C7E4EEC026EBCD2000890C42 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7E4EEBF26EBCD1F00890C42 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5245608D23FC7685003686BE /* Project object */;
 }

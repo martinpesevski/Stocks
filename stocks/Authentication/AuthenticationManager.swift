@@ -6,7 +6,7 @@
 //  Copyright © 2020 Martin Peshevski. All rights reserved.
 //
 import Firebase
-import Foundation
+import UIKit
 import FirebaseAuth
 
 class AuthenticationManager: NSObject {

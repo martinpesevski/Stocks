@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol StockDataDelegate: class {
+protocol StockDataDelegate: AnyObject {
     func didFinishDownloading(_ stock: Stock)
 }
 

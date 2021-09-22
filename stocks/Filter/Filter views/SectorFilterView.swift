@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SectorFilterViewDelegate: class {
+protocol SectorFilterViewDelegate: AnyObject {
     func didChangeSelection(view: SectorFilterView, isSelected: Bool)
 }
 

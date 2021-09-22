@@ -8,7 +8,7 @@
 
 import Foundation
 
-let apiKey = "ed1bdfdab063bf367b76736509bf7084"
+let apiKey = "4cfc166ecb7b4b5f40361b8980dd4d82"
 
 enum Endpoints {
     case tickers
@@ -24,25 +24,25 @@ enum Endpoints {
 
     var url: URL {
         switch self {
-        case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/stock/list?apikey=demo") ?? URL(fileURLWithPath: "")
+        case .tickers: return URL(string: "https://financialmodelingprep.com/api/v3/stock/list?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .keyMetrics(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/key-metrics/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
-        case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
-        case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
-        case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)?apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/key-metrics/\(ticker)?\(annual)apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .growthMetrics(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/financial-statement-growth/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .quote(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/profile/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
+        case .intrinsicValue(ticker: let ticker): return URL(string: "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/\(ticker)?apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case.financialRatios(ticker: let ticker, isAnnual: let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/ratios/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/ratios/\(ticker)?\(annual)apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .balanceSheet(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/balance-sheet-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/balance-sheet-statement/\(ticker)?\(annual)apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .incomeStatement(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/income-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/income-statement/\(ticker)?\(annual)apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .cashFlow(ticker: let ticker, let isAnnual):
             let annual = isAnnual ? "" : "period=quarter&"
-            return URL(string: "https://financialmodelingprep.com/api/v3/cash-flow-statement/\(ticker)?\(annual)apikey=demo") ?? URL(fileURLWithPath: "")
+            return URL(string: "https://financialmodelingprep.com/api/v3/cash-flow-statement/\(ticker)?\(annual)apikey=\(apiKey)") ?? URL(fileURLWithPath: "")
         case .stockScreener(sector: let sector, marketCap: let marketCap):
 
             switch (sector, marketCap) {

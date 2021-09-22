@@ -1,6 +1,0 @@
-framework module Pods_Stocker {
-  umbrella header "Pods-Stocker-umbrella.h"
-
-  export *
-  module * { export * }
-}

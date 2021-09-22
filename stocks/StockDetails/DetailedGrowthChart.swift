@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class DetailedGrowthChart: UIStackView, IAxisValueFormatter, ChartViewDelegate, UIGestureRecognizerDelegate {
+class DetailedGrowthChart: UIStackView, AxisValueFormatter, ChartViewDelegate, UIGestureRecognizerDelegate {
 
     lazy var selectedValueLabel = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold))
     lazy var percentChangeView = UILabel(font: UIFont.systemFont(ofSize: 15))
