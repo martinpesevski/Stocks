@@ -57,7 +57,7 @@ class StocksViewModel {
                         return
                     }
                     if let error = error {
-                        NSLog("error loading tickers" + error.localizedDescription)
+                        NSLog("error loading tickers: " + error.localizedDescription)
                         group.leave()
                     }
                 }

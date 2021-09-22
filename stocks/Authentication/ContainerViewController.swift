@@ -13,14 +13,20 @@ class ContainerViewController: UITabBarController {
         super.viewDidLoad()
         
         setViewControllers([ResearchViewController(), WatchlistViewController(), ProfileViewController()], animated: true)
-        
+
         tabBar.items?[0].image = UIImage(named: "research")
         tabBar.items?[1].image = UIImage(named: "watchlist")
         tabBar.items?[2].image = UIImage(named: "profile")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     func onLogOut() {
         AuthenticationManager.logOut()
         navigationController?.viewControllers = [WelcomeViewController()]
+        navigationController?.navigationBar.isHidden = false
     }
 }

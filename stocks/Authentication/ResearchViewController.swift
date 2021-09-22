@@ -11,6 +11,10 @@ import UIKit
 class ResearchViewController: UINavigationController {
     override func viewDidLoad() {
         addChild(FilterViewController(viewModel: StocksViewModel()))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationBar.isHidden = true
     }
 }

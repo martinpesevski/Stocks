@@ -57,6 +57,11 @@ class StockDetailViewController: ViewController, PreferredMetricsDelegate, UINav
         navigationController?.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     init(stock: Stock) {
         self.stock = stock
         super.init(nibName: nil, bundle: nil)
