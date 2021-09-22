@@ -28,10 +28,10 @@ class StockDetailViewController: ViewController, PreferredMetricsDelegate, UINav
     var isLoading = true
 
     lazy var stockStack: ScrollableStackView = {
-        let stack = ScrollableStackView(views: [header, financials, financialMetrics, intrinsicValue, preferredMetrics], alignment: .fill, spacing: 10,
+        let stack = ScrollableStackView(views: [header, financials, financialMetrics, preferredMetrics], alignment: .fill, spacing: 10,
         layoutInsets: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
         stack.setCustomSpacing(25, after: header)
-        stack.setCustomSpacing(25, after: intrinsicValue)
+        stack.setCustomSpacing(25, after: financialMetrics)
         return stack
     }()
 
@@ -59,7 +59,6 @@ class StockDetailViewController: ViewController, PreferredMetricsDelegate, UINav
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
     }
     
     init(stock: Stock) {
