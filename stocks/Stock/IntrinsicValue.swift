@@ -54,11 +54,12 @@ struct IntrinsicValue {
     }
     
     mutating func calculateValue() {
-        discountRates = calculateDiscountRates(self.originalDiscountRate)
-        regularCashFlows = calculateFutureCashFlows(cashFlow: self.cashFlow, growth: self.growthRate)
-        discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
-
-        value = discountedCashFlows.reduce(0, +)
+//        discountRates = calculateDiscountRates(self.originalDiscountRate)
+//        regularCashFlows = calculateFutureCashFlows(cashFlow: self.cashFlow, growth: self.growthRate)
+//        discountedCashFlows = calculateDiscountedCashFlows(cashFlows: regularCashFlows, discountRates: discountRates)
+//
+//        value = discountedCashFlows.reduce(0, +)
+        value = 100
     }
 
     func calculateDiscountRates(_ originalDiscountRate: DiscountRate) -> [Double] {

@@ -130,8 +130,9 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
         profitability.filter = .profitability(filters: self.filter.profitabilityFilters)
     }
     
-    func didChangeSelectionMetric(_ filter: MetricFilter, isSelected: Bool) {
-
+    func didChangeSelection(selectedFilters: [MetricFilter]) {
+        self.filter.metricFilters = selectedFilters
+        metrics.filter = .metric(filters: selectedFilters)
     }
     
     func didSelect(filter: FilterType) {
@@ -146,7 +147,7 @@ extension FilterViewController: FilterCapDelegate, DrillDownDelegate, FilterProf
             sectorController.selectedSectors = self.filter.sectorFilters
             show(sectorController, sender: self)
         case .metric:
-//            metricController.selectedFilters = self.filter.metricFilters
+            metricController.selectedFilters = self.filter.metricFilters
             show(metricController, sender: self)
         }
     }

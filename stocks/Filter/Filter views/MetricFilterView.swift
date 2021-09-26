@@ -20,7 +20,7 @@ enum MetricFilterCompareSign: String {
 }
 
 protocol MetricFilterViewDelegate: AnyObject {
-    func didChangeSelection(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String))
+    func didChangeSelectionMetric(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String))
 }
 
 class MetricFilterView: FilterView {
@@ -29,19 +29,34 @@ class MetricFilterView: FilterView {
     var isExpanded: Bool = false
     override var isSelected: Bool {
         didSet {
-            if !isSelected {
-                periodPicker.selectedSegmentIndex = UISegmentedControl.noSegment
-                comparer.selectedSegmentIndex = UISegmentedControl.noSegment
-                percentagePicker.selectedSegmentIndex = UISegmentedControl.noSegment
-                valuePicker.selectedSegmentIndex = UISegmentedControl.noSegment
-                layer.borderWidth = 0
-                isExpanded = false
-                explanation.isHidden = true
-                period = nil
-                compareSign = nil
-                value = nil
-                animateInOut()
-            }
+            onSelectedChanged(isSelected)
+        }
+    }
+    
+    override func onSelectedChanged(_ selected: Bool) {
+        if selected {
+            period = metricFilter.period
+            compareSign = metricFilter.compareSign
+            value = metricFilter.value
+            periodPicker.selectSegmentWithTitle(metricFilter.period?.rawValue)
+            comparer.selectSegmentWithTitle(metricFilter.compareSign?.rawValue)
+            percentagePicker.selectSegmentWithTitle(value)
+            valuePicker.selectSegmentWithTitle(value)
+            isExpanded = true
+            animateSelected()
+            animateInOut()
+        } else {
+            periodPicker.selectedSegmentIndex = UISegmentedControl.noSegment
+            comparer.selectedSegmentIndex = UISegmentedControl.noSegment
+            percentagePicker.selectedSegmentIndex = UISegmentedControl.noSegment
+            valuePicker.selectedSegmentIndex = UISegmentedControl.noSegment
+            layer.borderWidth = 0
+            isExpanded = false
+            explanation.isHidden = true
+            period = nil
+            compareSign = nil
+            value = nil
+            animateInOut()
         }
     }
     
@@ -175,14 +190,14 @@ class MetricFilterView: FilterView {
                 explanation.text = period.rawValue + " " + compareSign.rawValue + " " + value
                 animateSelected()
                 
-                metricViewDelegate?.didChangeSelection(view: self, filters: (period: period, compareSign: compareSign, value: value))
+                metricViewDelegate?.didChangeSelectionMetric(view: self, filters: (period: period, compareSign: compareSign, value: value))
             }
         case .metric:
             if let compareSign = compareSign, let value = value {
                 explanation.text = compareSign.rawValue + " " + value
                 animateSelected()
                 
-                metricViewDelegate?.didChangeSelection(view: self, filters: (period: nil, compareSign: compareSign, value: value))
+                metricViewDelegate?.didChangeSelectionMetric(view: self, filters: (period: nil, compareSign: compareSign, value: value))
             }
         case .none: break
         }

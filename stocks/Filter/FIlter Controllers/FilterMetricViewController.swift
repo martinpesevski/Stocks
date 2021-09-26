@@ -11,17 +11,26 @@ import Foundation
 import UIKit
 
 protocol FilterMetricDelegate: AnyObject {
-    func didChangeSelectionMetric(_ filter: MetricFilter, isSelected: Bool)
+    func didChangeSelection(selectedFilters: [MetricFilter])
 }
 
 class FilterMetricViewController: FilterPageViewController, MetricFilterViewDelegate, SelectedFilterViewDelegate {
     weak var delegate: FilterMetricDelegate?
-    var selectedFilters: [MetricFilterView] = []
-    
+    var selectedFilterviews: [MetricFilterView] = []
+    var selectedFilters: [MetricFilter] = []
+
     lazy var incomeStatementViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in IncomeStatementMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .incomeStatement(metric: AnyMetricType(metric), filters: nil), delegate: self))
+            let selectedMetrics = selectedFilters.map { $0.associatedValueMetric }
+            let index = selectedMetrics.firstIndex(of: AnyMetricType(metric))
+            var filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String)?
+            if let index = index, let compareSign = selectedFilters[index].compareSign, let value = selectedFilters[index].value {
+                filters = (period: selectedFilters[index].period, compareSign: compareSign, value: value)
+            }
+            let metricView = MetricFilterView(filter: .incomeStatement(metric: AnyMetricType(metric), filters: filters ), delegate: self)
+            metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
+            arr.append(metricView)
         }
         return arr
     }()
@@ -29,7 +38,9 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var balanceSheetViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in BalanceSheetMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .balanceSheet(metric: AnyMetricType(metric), filters: nil), delegate: self))
+            let metricView = MetricFilterView(filter: .balanceSheet(metric: AnyMetricType(metric), filters: nil), delegate: self)
+            metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
+            arr.append(metricView)
         }
         return arr
     }()
@@ -37,7 +48,9 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var cashFlowViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in CashFlowMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .cashFlows(metric: AnyMetricType(metric), filters: nil), delegate: self))
+            let metricView = MetricFilterView(filter: .cashFlows(metric: AnyMetricType(metric), filters: nil), delegate: self)
+            metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
+            arr.append(metricView)
         }
         return arr
     }()
@@ -45,7 +58,9 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var financialRatiosViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in FinancialRatioMetricType.allCases where metric.filterType != .none {
-            arr.append(MetricFilterView(filter: .financialRatios(metric: AnyMetricType(metric), filters: nil), delegate: self))
+            let metricView = MetricFilterView(filter: .financialRatios(metric: AnyMetricType(metric), filters: nil), delegate: self)
+            metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
+            arr.append(metricView)
         }
         return arr
     }()
@@ -74,15 +89,16 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
         content.addArrangedSubview(UIView())
     }
     
-    func didChangeSelection(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String)) {
+    func didChangeSelectionMetric(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String)) {
         var periodText = ""
         if let period = filters.period?.rawValue { periodText = period + " " }
         let text = view.metricFilter.associatedValueMetric.text + " " + periodText + filters.compareSign.rawValue + " " + filters.value
         let filterV = SelectedFilterView(filter: view, text: text, delegate: self)
         
-        if !selectedFilters.contains(view) {
-            selectedFilters.append(view)
+        if !selectedFilterviews.contains(view) {
+            selectedFilterviews.append(view)
             content.stockStack.insertArrangedSubview(filterV, at: 2)
+            selectedFilters.append(view.metricFilter)
         } else {
             content.stockStack.arrangedSubviews.forEach {
                 if ($0 as? SelectedFilterView)?.filterType.metricFilter.associatedValueMetric == filterV.filterType.metricFilter.associatedValueMetric {
@@ -95,19 +111,23 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     }
     
     func onClearSelected(filter: SelectedFilterView) {
-        if let index = selectedFilters.firstIndex(of: filter.filterType) { selectedFilters.remove(at: index) }
+        if let index = selectedFilterviews.firstIndex(of: filter.filterType) {
+            selectedFilterviews.remove(at: index)
+            if let filterIndex = selectedFilters.firstIndex(of: filter.filterType.metricFilter) { selectedFilters.remove(at: filterIndex) }
+        }
+        
+        self.incomeStatementViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
+        self.balanceSheetViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
+        self.cashFlowViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
+        self.financialRatiosViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
+        
         UIView.animate(withDuration: 0.2, animations: {
             filter.alpha = 0
         }, completion: { _ in
             UIView.animate(withDuration: 0.2) {
                 filter.isHidden = true
-            } completion: { [weak self] _ in
-                guard let self = self else { return }
+            } completion: { _ in
                 filter.removeFromSuperview()
-                self.incomeStatementViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-                self.balanceSheetViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-                self.cashFlowViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-                self.financialRatiosViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
             }
         })
     }
@@ -128,7 +148,7 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     }
     
     override func onDone() {
-//        delegate?.didChangeSelectionMetric(<#T##filter: MetricFilter##MetricFilter#>, isSelected: <#T##Bool#>)
+        delegate?.didChangeSelection(selectedFilters: selectedFilters)
         super.onDone()
     }
 }

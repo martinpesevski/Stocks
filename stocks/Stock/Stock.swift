@@ -70,6 +70,9 @@ class Stock {
         var ftr: Filter = Filter()
         if let profitability = keyMetricsQuarterly?.profitability { ftr.profitabilityFilters = [profitability.filter] }
         ftr.capFilters = [ticker.marketCapType.filter]
+        if let sector = quote?.sector {
+            ftr.sectorFilters = [sector]
+        }
         return ftr
     }
 

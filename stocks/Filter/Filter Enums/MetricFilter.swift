@@ -28,10 +28,37 @@ enum MetricFilter: TitleDescription, Equatable, Codable {
     
     var associatedValueMetric: AnyMetricType {
         switch self {
-        case .incomeStatement(metric: let metric, _): return metric;
-        case .balanceSheet(metric: let metric, _): return metric;
-        case .cashFlows(metric: let metric, _): return metric;
-        case .financialRatios(metric: let metric, _): return metric;
+        case .incomeStatement(metric: let metric, _): return metric
+        case .balanceSheet(metric: let metric, _): return metric
+        case .cashFlows(metric: let metric, _): return metric
+        case .financialRatios(metric: let metric, _): return metric
+        }
+    }
+    
+    var period: MetricFilterPeriod? {
+        switch self {
+        case .incomeStatement(_, let filters): return filters?.period
+        case .balanceSheet(_, let filters): return filters?.period
+        case .cashFlows(_, let filters): return filters?.period
+        case .financialRatios(_, let filters): return filters?.period
+        }
+    }
+    
+    var compareSign: MetricFilterCompareSign? {
+        switch self {
+        case .incomeStatement(_, let filters): return filters?.compareSign
+        case .balanceSheet(_, let filters): return filters?.compareSign
+        case .cashFlows(_, let filters): return filters?.compareSign
+        case .financialRatios(_, let filters): return filters?.compareSign
+        }
+    }
+    
+    var value: String? {
+        switch self {
+        case .incomeStatement(_, let filters): return filters?.value
+        case .balanceSheet(_, let filters): return filters?.value
+        case .cashFlows(_, let filters): return filters?.value
+        case .financialRatios(_, let filters): return filters?.value
         }
     }
     

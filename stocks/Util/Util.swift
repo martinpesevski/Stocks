@@ -167,6 +167,21 @@ extension UIViewController {
     }
 }
 
+extension UISegmentedControl {
+    func selectSegmentWithTitle(_ title: String?) {
+        guard let title = title else {
+            selectedSegmentIndex = UISegmentedControl.noSegment
+            return
+        }
+        
+        for i in 0..<numberOfSegments where titleForSegment(at: i) == title {
+            selectedSegmentIndex = i
+            return
+        }
+        selectedSegmentIndex = UISegmentedControl.noSegment
+    }
+}
+
 class ExponentRemoverFormatter: NumberFormatter {
     static var shared = ExponentRemoverFormatter()
 

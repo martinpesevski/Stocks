@@ -21,6 +21,10 @@ struct Quote: Codable, StockIdentifiable {
 
         return MarketCap.fromValue(marketCap)
     }
+    
+    var sector: SectorFilter? {
+        return SectorFilter(rawValue: profile.sector ?? "")
+    }
 }
 
 struct Profile: Codable {

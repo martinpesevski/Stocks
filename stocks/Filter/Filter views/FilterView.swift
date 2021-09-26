@@ -11,8 +11,12 @@ class FilterView: AccessoryView {
     
     var isSelected = false {
         didSet {
-            accessoryType = isSelected ? .checkboxFull : .checkboxEmpty
+            onSelectedChanged(isSelected)
         }
+    }
+    
+    func onSelectedChanged(_ selected: Bool) {
+        accessoryType = isSelected ? .checkboxFull : .checkboxEmpty
     }
     
     var isLocked: Bool
