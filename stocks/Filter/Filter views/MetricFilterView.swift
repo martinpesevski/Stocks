@@ -8,13 +8,13 @@
 
 import UIKit
 
-enum MetricFilterPeriod: String {
+enum MetricFilterPeriod: String, Codable {
     case yearOverYear = "Year over year growth"
     case quarterOverQuarter = "Quarter over quarter growth"
     case last5Years = "Last 5 years growth per year"
 }
 
-enum MetricFilterCompareSign: String {
+enum MetricFilterCompareSign: String, Codable {
     case greaterThan = ">"
     case lessThan = "<"
 }
@@ -27,11 +27,6 @@ class MetricFilterView: FilterView {
     var metricFilter: MetricFilter
     weak var metricViewDelegate: MetricFilterViewDelegate?
     var isExpanded: Bool = false
-    override var isSelected: Bool {
-        didSet {
-            onSelectedChanged(isSelected)
-        }
-    }
     
     override func onSelectedChanged(_ selected: Bool) {
         if selected {

@@ -21,14 +21,16 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
 
     lazy var incomeStatementViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
+
         for metric in IncomeStatementMetricType.allCases where metric.filterType != .none {
-            let selectedMetrics = selectedFilters.map { $0.associatedValueMetric }
-            let index = selectedMetrics.firstIndex(of: AnyMetricType(metric))
-            var filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String)?
-            if let index = index, let compareSign = selectedFilters[index].compareSign, let value = selectedFilters[index].value {
-                filters = (period: selectedFilters[index].period, compareSign: compareSign, value: value)
+            var metricView = MetricFilterView(filter: MetricFilter(associatedValueMetric: AnyMetricType(metric), period: nil, compareSign: nil, value: nil), delegate: self)
+
+            for (index, filter) in selectedFilters.enumerated() {
+                if filter.associatedValueMetric == AnyMetricType(metric) {
+                    metricView = MetricFilterView(filter: filter, delegate: self)
+                }
             }
-            let metricView = MetricFilterView(filter: .incomeStatement(metric: AnyMetricType(metric), filters: filters ), delegate: self)
+
             metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
             arr.append(metricView)
         }
@@ -38,7 +40,13 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var balanceSheetViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in BalanceSheetMetricType.allCases where metric.filterType != .none {
-            let metricView = MetricFilterView(filter: .balanceSheet(metric: AnyMetricType(metric), filters: nil), delegate: self)
+            var metricView = MetricFilterView(filter: MetricFilter(associatedValueMetric: AnyMetricType(metric), period: nil, compareSign: nil, value: nil), delegate: self)
+
+            for (index, filter) in selectedFilters.enumerated() {
+                if filter.associatedValueMetric == AnyMetricType(metric) {
+                    metricView = MetricFilterView(filter: filter, delegate: self)
+                }
+            }
             metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
             arr.append(metricView)
         }
@@ -48,7 +56,14 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var cashFlowViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in CashFlowMetricType.allCases where metric.filterType != .none {
-            let metricView = MetricFilterView(filter: .cashFlows(metric: AnyMetricType(metric), filters: nil), delegate: self)
+            var metricView = MetricFilterView(filter: MetricFilter(associatedValueMetric: AnyMetricType(metric), period: nil, compareSign: nil, value: nil), delegate: self)
+
+            for (index, filter) in selectedFilters.enumerated() {
+                if filter.associatedValueMetric == AnyMetricType(metric) {
+                    metricView = MetricFilterView(filter: filter, delegate: self)
+                }
+            }
+
             metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
             arr.append(metricView)
         }
@@ -58,7 +73,14 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
     lazy var financialRatiosViews: [MetricFilterView] = {
         var arr: [MetricFilterView] = []
         for metric in FinancialRatioMetricType.allCases where metric.filterType != .none {
-            let metricView = MetricFilterView(filter: .financialRatios(metric: AnyMetricType(metric), filters: nil), delegate: self)
+            var metricView = MetricFilterView(filter: MetricFilter(associatedValueMetric: AnyMetricType(metric), period: nil, compareSign: nil, value: nil), delegate: self)
+
+            for (index, filter) in selectedFilters.enumerated() {
+                if filter.associatedValueMetric == AnyMetricType(metric) {
+                    metricView = MetricFilterView(filter: filter, delegate: self)
+                }
+            }
+
             metricView.isSelected = selectedFilters.map { $0.associatedValueMetric }.contains(metricView.metricFilter.associatedValueMetric)
             arr.append(metricView)
         }
