@@ -16,7 +16,6 @@ protocol FilterMetricDelegate: AnyObject {
 
 class FilterMetricViewController: FilterPageViewController, MetricFilterViewDelegate, SelectedFilterViewDelegate {
     weak var delegate: FilterMetricDelegate?
-    var selectedFilterviews: [MetricFilterView] = []
     var selectedFilters: [MetricFilter] = []
 
     lazy var incomeStatementViews: [MetricFilterView] = {
@@ -107,23 +106,31 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
         for view in incomeStatementViews {
             content.addArrangedSubview(view)
         }
+        
+        setupSelectedViews()
 
         content.addArrangedSubview(UIView())
+    }
+    
+    func setupSelectedViews() {
+        for filter in selectedFilters {
+            let selectedFilterView = SelectedFilterView(filter: filter, text: filter.text, delegate: self)
+            content.stockStack.insertArrangedSubview(selectedFilterView, at: 2)
+        }
     }
     
     func didChangeSelectionMetric(view: MetricFilterView, filters: (period: MetricFilterPeriod?, compareSign: MetricFilterCompareSign, value: String)) {
         var periodText = ""
         if let period = filters.period?.rawValue { periodText = period + " " }
         let text = view.metricFilter.associatedValueMetric.text + " " + periodText + filters.compareSign.rawValue + " " + filters.value
-        let filterV = SelectedFilterView(filter: view, text: text, delegate: self)
+        let filterV = SelectedFilterView(filter: view.metricFilter, text: text, delegate: self)
         
-        if !selectedFilterviews.contains(view) {
-            selectedFilterviews.append(view)
-            content.stockStack.insertArrangedSubview(filterV, at: 2)
+        if !selectedFilters.contains(view.metricFilter) {
             selectedFilters.append(view.metricFilter)
+            content.stockStack.insertArrangedSubview(filterV, at: 2)
         } else {
             content.stockStack.arrangedSubviews.forEach {
-                if ($0 as? SelectedFilterView)?.filterType.metricFilter.associatedValueMetric == filterV.filterType.metricFilter.associatedValueMetric {
+                if ($0 as? SelectedFilterView)?.filter.associatedValueMetric == filterV.filter.associatedValueMetric {
                     if let index = content.stockStack.arrangedSubviews.firstIndex(of: $0) {
                         (content.stockStack.arrangedSubviews[index] as? SelectedFilterView)?.titleLabel.text = text
                     }
@@ -132,26 +139,13 @@ class FilterMetricViewController: FilterPageViewController, MetricFilterViewDele
         }
     }
     
-    func onClearSelected(filter: SelectedFilterView) {
-        if let index = selectedFilterviews.firstIndex(of: filter.filterType) {
-            selectedFilterviews.remove(at: index)
-            if let filterIndex = selectedFilters.firstIndex(of: filter.filterType.metricFilter) { selectedFilters.remove(at: filterIndex) }
-        }
-        
-        self.incomeStatementViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-        self.balanceSheetViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-        self.cashFlowViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-        self.financialRatiosViews.forEach { if filter.filterType == $0 { $0.isSelected = false } }
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            filter.alpha = 0
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.2) {
-                filter.isHidden = true
-            } completion: { _ in
-                filter.removeFromSuperview()
-            }
-        })
+    func onClearSelected(filter: MetricFilter) {
+        if let filterIndex = selectedFilters.firstIndex(of: filter) { selectedFilters.remove(at: filterIndex) }
+
+        self.incomeStatementViews.forEach { if filter == $0.metricFilter { $0.isSelected = false } }
+        self.balanceSheetViews.forEach { if filter == $0.metricFilter { $0.isSelected = false } }
+        self.cashFlowViews.forEach { if filter == $0.metricFilter { $0.isSelected = false } }
+        self.financialRatiosViews.forEach { if filter == $0.metricFilter { $0.isSelected = false } }
     }
     
     @objc func onSegmentChange(sender: UISegmentedControl)

@@ -9,12 +9,12 @@
 import UIKit
 
 protocol SelectedFilterViewDelegate: AnyObject {
-    func onClearSelected(filter: SelectedFilterView)
+    func onClearSelected(filter: MetricFilter)
 }
 
 class SelectedFilterView: UIView {
     var delegate: SelectedFilterViewDelegate?
-    var filterType: MetricFilterView
+    var filter: MetricFilter
     
     lazy var titleLabel:UILabel = {
         let label = UILabel(text: nil, font: UIFont.systemFont(ofSize: 14), alignment: .left, color: .label)
@@ -41,8 +41,8 @@ class SelectedFilterView: UIView {
         return stack
     }()
     
-    init(filter: MetricFilterView, text: String, delegate: SelectedFilterViewDelegate) {
-        self.filterType = filter
+    init(filter: MetricFilter, text: String, delegate: SelectedFilterViewDelegate) {
+        self.filter = filter
         self.delegate = delegate
         
         super.init(frame: .zero)
@@ -58,7 +58,16 @@ class SelectedFilterView: UIView {
     }
     
     @objc func onClose() {
-        delegate?.onClearSelected(filter: self)
+        UIView.animate(withDuration: 0.2, animations: { [unowned self] in
+            self.alpha = 0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.2) { [unowned self] in
+                self.isHidden = true
+            } completion: { _ in
+                self.removeFromSuperview()
+            }
+        })
+        delegate?.onClearSelected(filter: filter)
     }
     
     required init?(coder: NSCoder) {

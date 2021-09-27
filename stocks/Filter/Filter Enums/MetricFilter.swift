@@ -36,32 +36,6 @@ struct MetricFilter: TitleDescription, Equatable, Codable {
     var compareSign: MetricFilterCompareSign?
     
     var value: String?
-    
-//    // Codable
-//    private enum CodingKeys: String, CodingKey { case incomeStatement, balanceSheet, cashFlows, financialRatios }
-//
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        if let value = try? container.decode(AnyMetricType.self, forKey: .incomeStatement) {
-//            self = .incomeStatement(metric: value, filters: nil)
-//        } else  if let value = try? container.decode(AnyMetricType.self, forKey: .balanceSheet) {
-//            self = .balanceSheet(metric: value, filters: nil)
-//        } else  if let value = try? container.decode(AnyMetricType.self, forKey: .cashFlows) {
-//            self = .cashFlows(metric: value, filters: nil)
-//        } else if let value = try? container.decode(AnyMetricType.self, forKey: .financialRatios) {
-//            self = .financialRatios(metric: value, filters: nil)
-//        } else {
-//            throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: container.codingPath, debugDescription: "Data doesn't match"))
-//        }
-//    }
-//
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        switch self {
-//        case .incomeStatement(let metric, _): try container.encode(metric, forKey: .incomeStatement)
-//        case .balanceSheet(let metric, _): try container.encode(metric, forKey: .balanceSheet)
-//        case .cashFlows(let metric, _): try container.encode(metric, forKey: .cashFlows)
-//        case .financialRatios(let metric, _): try container.encode(metric, forKey: .financialRatios)
-//        }
-//    }
+
+    var text: String { associatedValueMetric.text + " " + (period?.rawValue ?? "") + (compareSign?.rawValue ?? "") + " " + (value ?? "") }
 }
