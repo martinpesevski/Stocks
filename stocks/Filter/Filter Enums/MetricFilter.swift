@@ -16,7 +16,6 @@ enum MetricFilterTab {
 }
 
 struct MetricFilter: TitleDescription, Equatable, Codable {
-    
     static func == (lhs: MetricFilter, rhs: MetricFilter) -> Bool {
         return lhs.associatedValueMetric == rhs.associatedValueMetric
     }
@@ -35,7 +34,13 @@ struct MetricFilter: TitleDescription, Equatable, Codable {
     
     var compareSign: MetricFilterCompareSign?
     
-    var value: String?
+    var value: String? {
+        didSet {
+            guard let value = value else { return }
+            doubleValue = Double(value)
+        }
+    }
+    var doubleValue: Double?
 
     var text: String { associatedValueMetric.text + " " + (period?.rawValue ?? "") + (compareSign?.rawValue ?? "") + " " + (value ?? "") }
 }

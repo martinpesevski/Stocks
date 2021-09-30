@@ -35,7 +35,6 @@
 		52D9B1C22429351500E67BF2 /* SortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1C12429351500E67BF2 /* SortView.swift */; };
 		52D9B1C724294C2F00E67BF2 /* profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1C624294C2F00E67BF2 /* profile.json */; };
 		52D9B1CD242955B000E67BF2 /* key-metrics.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1CC242955B000E67BF2 /* key-metrics.json */; };
-		52D9B1CF2429592900E67BF2 /* growth-metrics.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1CE2429592900E67BF2 /* growth-metrics.json */; };
 		C708ED0E2444AFDD00FC9425 /* BalanceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */; };
 		C708ED122444E6E100FC9425 /* FinancialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED112444E6E100FC9425 /* FinancialsViewController.swift */; };
 		C708ED142445E60500FC9425 /* IncomeStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED132445E60500FC9425 /* IncomeStatement.swift */; };
@@ -44,6 +43,12 @@
 		C712953226FAD09200F666D0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712953126FAD09200F666D0 /* ProfileViewController.swift */; };
 		C712953426FAD0B300F666D0 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712953326FAD0B300F666D0 /* WatchlistViewController.swift */; };
 		C712953626FB969E00F666D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C712953526FB969D00F666D0 /* GoogleService-Info.plist */; };
+		C712953F2705410D00F666D0 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = C712953E2705410D00F666D0 /* Quick */; };
+		C71295412705412000F666D0 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = C71295402705412000F666D0 /* Nimble */; };
+		C712954F27054EC200F666D0 /* income-statements-annual.json in Resources */ = {isa = PBXBuildFile; fileRef = C712954C27054EC200F666D0 /* income-statements-annual.json */; };
+		C712955027054EC200F666D0 /* cash-flows-annual.json in Resources */ = {isa = PBXBuildFile; fileRef = C712954D27054EC200F666D0 /* cash-flows-annual.json */; };
+		C712955127054EC200F666D0 /* balance-sheets-annual.json in Resources */ = {isa = PBXBuildFile; fileRef = C712954E27054EC200F666D0 /* balance-sheets-annual.json */; };
+		C7129553270577FF00F666D0 /* ticker.json in Resources */ = {isa = PBXBuildFile; fileRef = C7129552270577FF00F666D0 /* ticker.json */; };
 		C71BBD0024393D4B00486528 /* SectorFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71BBCFF24393D4B00486528 /* SectorFilterView.swift */; };
 		C71BBD03243A68F000486528 /* ListViewController+SortFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */; };
 		C71E38702437971C00E9A84B /* FilterCapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E386F2437971C00E9A84B /* FilterCapViewController.swift */; };
@@ -146,7 +151,6 @@
 		52D9B1C12429351500E67BF2 /* SortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortView.swift; sourceTree = "<group>"; };
 		52D9B1C624294C2F00E67BF2 /* profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
 		52D9B1CC242955B000E67BF2 /* key-metrics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "key-metrics.json"; sourceTree = "<group>"; };
-		52D9B1CE2429592900E67BF2 /* growth-metrics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "growth-metrics.json"; sourceTree = "<group>"; };
 		C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceSheet.swift; sourceTree = "<group>"; };
 		C708ED112444E6E100FC9425 /* FinancialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialsViewController.swift; sourceTree = "<group>"; };
 		C708ED132445E60500FC9425 /* IncomeStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatement.swift; sourceTree = "<group>"; };
@@ -155,6 +159,10 @@
 		C712953126FAD09200F666D0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C712953326FAD0B300F666D0 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
 		C712953526FB969D00F666D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C712954C27054EC200F666D0 /* income-statements-annual.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "income-statements-annual.json"; sourceTree = "<group>"; };
+		C712954D27054EC200F666D0 /* cash-flows-annual.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cash-flows-annual.json"; sourceTree = "<group>"; };
+		C712954E27054EC200F666D0 /* balance-sheets-annual.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "balance-sheets-annual.json"; sourceTree = "<group>"; };
+		C7129552270577FF00F666D0 /* ticker.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ticker.json; sourceTree = "<group>"; };
 		C71BBCFF24393D4B00486528 /* SectorFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorFilterView.swift; sourceTree = "<group>"; };
 		C71BBD02243A68F000486528 /* ListViewController+SortFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController+SortFilter.swift"; sourceTree = "<group>"; };
 		C71E386F2437971C00E9A84B /* FilterCapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCapViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +226,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C712953F2705410D00F666D0 /* Quick in Frameworks */,
+				C71295412705412000F666D0 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,7 +374,10 @@
 			children = (
 				52D9B1C624294C2F00E67BF2 /* profile.json */,
 				52D9B1CC242955B000E67BF2 /* key-metrics.json */,
-				52D9B1CE2429592900E67BF2 /* growth-metrics.json */,
+				C7129552270577FF00F666D0 /* ticker.json */,
+				C712954E27054EC200F666D0 /* balance-sheets-annual.json */,
+				C712954D27054EC200F666D0 /* cash-flows-annual.json */,
+				C712954C27054EC200F666D0 /* income-statements-annual.json */,
 			);
 			path = "JSON data";
 			sourceTree = "<group>";
@@ -516,6 +529,10 @@
 				524560AD23FC7687003686BE /* PBXTargetDependency */,
 			);
 			name = StockerTests;
+			packageProductDependencies = (
+				C712953E2705410D00F666D0 /* Quick */,
+				C71295402705412000F666D0 /* Nimble */,
+			);
 			productName = stocksTests;
 			productReference = 524560AB23FC7687003686BE /* StockerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -575,6 +592,8 @@
 				C7E4EEB326EBCBC800890C42 /* XCRemoteSwiftPackageReference "Charts" */,
 				C7E4EEB626EBCCA600890C42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C7E4EEBF26EBCD1F00890C42 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				C712953727053E7800F666D0 /* XCRemoteSwiftPackageReference "Nimble" */,
+				C712953D2705410C00F666D0 /* XCRemoteSwiftPackageReference "Quick" */,
 			);
 			productRefGroup = 5245609623FC7685003686BE /* Products */;
 			projectDirPath = "";
@@ -603,8 +622,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52D9B1CF2429592900E67BF2 /* growth-metrics.json in Resources */,
 				52D9B1C724294C2F00E67BF2 /* profile.json in Resources */,
+				C712955027054EC200F666D0 /* cash-flows-annual.json in Resources */,
+				C712954F27054EC200F666D0 /* income-statements-annual.json in Resources */,
+				C7129553270577FF00F666D0 /* ticker.json in Resources */,
+				C712955127054EC200F666D0 /* balance-sheets-annual.json in Resources */,
 				52D9B1CD242955B000E67BF2 /* key-metrics.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1004,6 +1026,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C712953727053E7800F666D0 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.1;
+			};
+		};
+		C712953D2705410C00F666D0 /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		C7E4EEB026EBCB4800890C42 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1039,6 +1077,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C712953E2705410D00F666D0 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C712953D2705410C00F666D0 /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		C71295402705412000F666D0 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C712953727053E7800F666D0 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
 		C7E4EEB126EBCB4800890C42 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C7E4EEB026EBCB4800890C42 /* XCRemoteSwiftPackageReference "SnapKit" */;

@@ -61,6 +61,14 @@ struct AnyMetric: Metric, Codable, Equatable {
         self.metricSuffixType = base.metricSuffixType
     }
     
+    init(text: String, doubleValue: Double, metricType: AnyMetricType, metricSuffixType: MetricSuffixType) {
+        self.text = text
+        self.doubleValue = doubleValue
+        self.stringValue = "\(doubleValue)"
+        self.metricType = metricType
+        self.metricSuffixType = metricSuffixType
+    }
+    
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.text == rhs.text && lhs.metricType == rhs.metricType
     }
@@ -82,12 +90,82 @@ struct AnyMetricType: MetricType, Codable, Equatable {
         self.suffixType = base.suffixType
         self.filterType = base.filterType
     }
+    
+    init(text: String, suffixType: MetricSuffixType, filterType: MetricFilterType) {
+        self.text = text
+        self.suffixType = suffixType
+        self.filterType = filterType
+    }
 }
 
 protocol Financial {
     var date: String { get }
     var symbol: String { get }
     var metrics: [AnyMetric] { get }
+    
+    func isValid(metricFilter: MetricFilter) -> Bool
+}
+
+extension Financial {
+    func isValid(metricFilter: MetricFilter) -> Bool {
+        if let index = metrics.map({ $0.metricType }).firstIndex(of:metricFilter.associatedValueMetric),
+           let metric = metrics[safe: index] {
+            guard let metricFilterValue = metricFilter.doubleValue else { return false }
+            
+            switch metricFilter.compareSign {
+            case .greaterThan:
+                return metric.doubleValue > metricFilterValue
+            case .lessThan:
+                return metric.doubleValue < metricFilterValue
+            case .none:
+                return false
+            }
+        }
+        return false
+    }
+    
+    func isValidPeriod(metricFilter: MetricFilter, startingFinancial: AnyFinancial) -> Bool {
+        if let index = metrics.map({ $0.metricType }).firstIndex(of:metricFilter.associatedValueMetric),
+           let metric = metrics[safe: index],
+           let olderIndex = startingFinancial.metrics.map({ $0.metricType }).firstIndex(of:metricFilter.associatedValueMetric),
+           let olderMetric = startingFinancial.metrics[safe: olderIndex] {
+            guard let metricFilterValue = metricFilter.doubleValue else { return false }
+            
+            let previousValue = olderMetric.doubleValue
+            let value = metric.doubleValue
+            
+            switch metricFilter.compareSign {
+            case .greaterThan:
+                switch metric.metricSuffixType {
+                case .money:
+                    let percentage = previousValue == 0 ? 0 :
+                        previousValue < 0 ? ((previousValue - value) / previousValue) * 100 :
+                        (-(previousValue - value) / previousValue) * 100
+                    return percentage > metricFilterValue
+                case .percentage:
+                    return value - previousValue > metricFilterValue / 100
+                case .none:
+                    return value > metricFilterValue
+                }
+            case .lessThan:
+                switch metric.metricSuffixType {
+                case .money:
+
+                    let percentage = previousValue == 0 ? 0 :
+                        previousValue < 0 ? ((previousValue - value) / previousValue) * 100 :
+                        (-(previousValue - value) / previousValue) * 100
+                    return percentage < metricFilterValue
+                case .percentage:
+                    return value - previousValue < metricFilterValue / 100
+                case .none:
+                    return value < metricFilterValue
+                }
+            case .none:
+                return false
+            }
+        }
+        return false
+    }
 }
 
 struct AnyFinancial: Financial, Codable {
@@ -117,6 +195,31 @@ extension Collection where Iterator.Element: Financial {
         }
         
         return ""
+    }
+    
+    var previousQuarter: Financial? {
+        self[safe: 1 as! Self.Index]
+    }
+    
+    var fivePeriodsBack: Financial? {
+        self[safe: Swift.min(count, 4) as! Self.Index]
+    }
+    
+    func filterPreviousQuarter(metricFilter: MetricFilter) -> Bool {
+        if let previousQuarter = previousQuarter, let first = self[safe: 0 as! Self.Index] {
+           return first.isValidPeriod(metricFilter: metricFilter, startingFinancial: AnyFinancial(previousQuarter))
+        }
+        
+        return true
+    }
+    
+    func filterFivePeriodsBack(metricFilter: MetricFilter) -> Bool {
+        if let fivePeriodsBack = fivePeriodsBack, let first = self[safe: 0 as! Self.Index],
+           first.isValidPeriod(metricFilter: metricFilter, startingFinancial: AnyFinancial(fivePeriodsBack)) == false {
+            return false
+        }
+        
+        return true
     }
     
     func periodicValues(metric: Metric) -> [Double] {

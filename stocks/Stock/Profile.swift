@@ -23,7 +23,8 @@ struct Quote: Codable, StockIdentifiable {
     }
     
     var sector: SectorFilter? {
-        return SectorFilter(rawValue: profile.sector ?? "")
+        guard let name = profile.sector else { return nil }
+        return SectorFilter.sectorForName(name)
     }
 }
 

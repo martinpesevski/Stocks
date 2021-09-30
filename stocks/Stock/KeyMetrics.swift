@@ -176,12 +176,16 @@ enum KeyMetricsMetricType: String, Codable, MetricType, CaseIterable {
     }
     
     var suffixType: MetricSuffixType {
-        return .money
+        switch self {
+        case .inventoryTurnover, .payablesTurnover, .receivablesTurnover, .investedCapital, .netCurrentAssetValue, .tangibleAssetValue, .workingCapital, .enterpriseValue, .marketCap, .revenuePerShare, .netIncomePerShare, .operatingCashFlowPerShare, .freeCashFlowPerShare, .cashPerShare, .bookValuePerShare, .tangibleBookValuePerShare: return .money
+        case .roic, .earningsYield, .dividendYield, .freeCashFlowYield : return .percentage
+        default: return .none
+        }
     }
     
     var filterType: MetricFilterType {
         switch self {
-        case .date, .symbol: return.none
+        case .date, .symbol: return .none
         default: return .metric
         }
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SectorFilter: String, TitleDescription, Equatable, Codable {
+enum SectorFilter: String, TitleDescription, Equatable, Codable, CaseIterable {
     case energy
     case basicMaterials
     case industrials
@@ -46,11 +46,18 @@ enum SectorFilter: String, TitleDescription, Equatable, Codable {
         case .consumerDefensive: return "Consumer Defensive"
         case .healthcare: return "Healthcare"
         case .financial: return "Financial"
-        case .tech: return "Tech"
+        case .tech: return "Technology"
         case .communicationServices: return "Communication Services"
         case .utilities: return "Utilities"
         case .realEstate: return "Real Estate"
         }
+    }
+    
+    static func sectorForName(_ name: String) -> SectorFilter? {
+        for sector in SectorFilter.allCases {
+            if sector.title == name { return sector }
+        }
+        return nil
     }
 
     var explanation: String {

@@ -36,7 +36,7 @@ class FilterViewController: FilterPageViewController {
             ftr.sectorFilters = [.tech]
             ftr.profitabilityFilters = [.profitable]
             ftr.metricFilters = [MetricFilter(associatedValueMetric: AnyMetricType(FinancialRatioMetricType.priceEarningsRatio),
-                                              period: .yearOverYear, compareSign: .lessThan, value: "10")]
+                                              period: .lastQuarter, compareSign: .lessThan, value: "10")]
             return ftr
         }
     }()

@@ -1,0 +1,8 @@
+{
+  "symbol" : "SPY",
+  "name" : "SPDR S&P 500 ETF Trust",
+  "price" : 434.45,
+  "exchange" : "New York Stock Exchange Arca",
+  "exchangeShortName" : "NYSE",
+  "type" : "etf"
+}

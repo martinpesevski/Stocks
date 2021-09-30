@@ -9,7 +9,7 @@
 import UIKit
 
 enum MetricFilterPeriod: String, Codable {
-    case yearOverYear = "Year over year growth"
+    case lastQuarter = "Last quarter growth"
     case quarterOverQuarter = "Quarter over quarter growth"
     case last5Years = "Last 5 years growth per year"
 }
@@ -30,13 +30,13 @@ class MetricFilterView: FilterView {
     
     override func onSelectedChanged(_ selected: Bool) {
         if selected {
-            period = metricFilter.period
-            compareSign = metricFilter.compareSign
-            value = metricFilter.value
+            metricFilter.period = metricFilter.period
+            metricFilter.compareSign = metricFilter.compareSign
+            metricFilter.value = metricFilter.value
             periodPicker.selectSegmentWithTitle(metricFilter.period?.rawValue)
             comparer.selectSegmentWithTitle(metricFilter.compareSign?.rawValue)
-            percentagePicker.selectSegmentWithTitle(value)
-            valuePicker.selectSegmentWithTitle(value)
+            percentagePicker.selectSegmentWithTitle(metricFilter.value)
+            valuePicker.selectSegmentWithTitle(metricFilter.value)
             isExpanded = true
             animateSelected()
             animateInOut()
@@ -48,19 +48,15 @@ class MetricFilterView: FilterView {
             layer.borderWidth = 0
             isExpanded = false
             explanation.isHidden = true
-            period = nil
-            compareSign = nil
-            value = nil
+            metricFilter.period = nil
+            metricFilter.compareSign = nil
+            metricFilter.value = nil
             animateInOut()
         }
     }
     
-    var period: MetricFilterPeriod?
-    var compareSign: MetricFilterCompareSign?
-    var value: String?
-    
     lazy var periodPicker: UISegmentedControl = {
-        let seg = UISegmentedControl(items: [MetricFilterPeriod.yearOverYear.rawValue, MetricFilterPeriod.quarterOverQuarter.rawValue, MetricFilterPeriod.last5Years.rawValue])
+        let seg = UISegmentedControl(items: [MetricFilterPeriod.lastQuarter.rawValue, MetricFilterPeriod.quarterOverQuarter.rawValue, MetricFilterPeriod.last5Years.rawValue])
         seg.addTarget(self, action: #selector(onValueChange(sender:)), for: .valueChanged)
         seg.snp.makeConstraints { make in
             make.height.equalTo(40)
@@ -165,14 +161,14 @@ class MetricFilterView: FilterView {
     @objc func onValueChange(sender: UISegmentedControl) {
         if sender == periodPicker {
             guard let title = sender.titleForSegment(at: sender.selectedSegmentIndex) else { return }
-            period = MetricFilterPeriod.init(rawValue: title)
+            metricFilter.period = MetricFilterPeriod.init(rawValue: title)
         } else if sender == comparer {
             guard let title = sender.titleForSegment(at: sender.selectedSegmentIndex) else { return }
-            compareSign = MetricFilterCompareSign.init(rawValue: title)
+            metricFilter.compareSign = MetricFilterCompareSign.init(rawValue: title)
         } else if sender == percentagePicker {
-            value = sender.titleForSegment(at: sender.selectedSegmentIndex)
+            metricFilter.value = sender.titleForSegment(at: sender.selectedSegmentIndex)
         } else if sender == valuePicker {
-            value = sender.titleForSegment(at: sender.selectedSegmentIndex)
+            metricFilter.value = sender.titleForSegment(at: sender.selectedSegmentIndex)
         }
         
         callDelegateIfNeeded()
@@ -181,14 +177,14 @@ class MetricFilterView: FilterView {
     func callDelegateIfNeeded() {
         switch metricFilter.associatedValueMetric.filterType {
         case .percentageGrowth:
-            if let period = period, let compareSign = compareSign, let value = value {
+            if let period = metricFilter.period, let compareSign = metricFilter.compareSign, let value = metricFilter.value {
                 explanation.text = period.rawValue + " " + compareSign.rawValue + " " + value
                 animateSelected()
                 
                 metricViewDelegate?.didChangeSelectionMetric(view: self, filters: (period: period, compareSign: compareSign, value: value))
             }
         case .metric:
-            if let compareSign = compareSign, let value = value {
+            if let compareSign = metricFilter.compareSign, let value = metricFilter.value {
                 explanation.text = compareSign.rawValue + " " + value
                 animateSelected()
                 
