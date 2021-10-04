@@ -61,26 +61,23 @@ class Stock {
     var cashFlowsQuarterly: [CashFlow]?
 
     func isValid(filter: Filter) -> Bool {
-        var isMetricFilterValid = true
+        var isMetricFilterValid = false
         for metricFilter in filter.metricFilters {
-            switch metricFilter.period {
-            case .last5Years:
-                if balanceSheetsAnnual?.filterFivePeriodsBack(metricFilter: metricFilter) == false { isMetricFilterValid = false }
-                if incomeStatementsAnnual?.filterFivePeriodsBack(metricFilter: metricFilter) == false { isMetricFilterValid = false }
-                if cashFlowsAnnual?.filterFivePeriodsBack(metricFilter: metricFilter) == false { isMetricFilterValid = false }
-                if keyMetricsAnnual?.filterFivePeriodsBack(metricFilter: metricFilter) == false { isMetricFilterValid = false }
-            case .lastQuarter:
-                if let balanceSheetsQuarterly = balanceSheetsQuarterly, !balanceSheetsQuarterly.filterPreviousQuarter(metricFilter: metricFilter) { isMetricFilterValid = false }
-                if let incomeStatementsQuarterly = incomeStatementsQuarterly, !incomeStatementsQuarterly.filterPreviousQuarter(metricFilter: metricFilter){ isMetricFilterValid = false }
-                if let cashFlowsQuarterly = cashFlowsQuarterly, !cashFlowsQuarterly.filterPreviousQuarter(metricFilter: metricFilter) { isMetricFilterValid = false }
-                if let keyMetricsQuarterly = keyMetricsQuarterly, !keyMetricsQuarterly.filterPreviousQuarter(metricFilter: metricFilter) { isMetricFilterValid = false }
-            case .quarterOverQuarter:
-                if let balanceSheetsQuarterly = balanceSheetsQuarterly, !balanceSheetsQuarterly.filterFivePeriodsBack(metricFilter: metricFilter) { isMetricFilterValid = false }
-                if let incomeStatementsQuarterly = incomeStatementsQuarterly, !incomeStatementsQuarterly.filterFivePeriodsBack(metricFilter: metricFilter) { isMetricFilterValid = false }
-                if let cashFlowsQuarterly = cashFlowsQuarterly, !cashFlowsQuarterly.filterFivePeriodsBack(metricFilter: metricFilter) { isMetricFilterValid = false }
-                if let keyMetricsQuarterly = keyMetricsQuarterly, !keyMetricsQuarterly.filterFivePeriodsBack(metricFilter: metricFilter) { isMetricFilterValid = false }
-            case .none:
-                break
+            if let ba = balanceSheetsAnnual, ba.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = ba.filterFivePeriodsBack(metricFilter: metricFilter) }
+            if let ia = incomeStatementsAnnual, ia.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = ia.filterFivePeriodsBack(metricFilter: metricFilter) }
+            if let cfa = cashFlowsAnnual, cfa.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = cfa.filterFivePeriodsBack(metricFilter: metricFilter) }
+            if let kma = keyMetricsAnnual, kma.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = kma.filterFivePeriodsBack(metricFilter: metricFilter) }
+            
+            if let bq = balanceSheetsQuarterly, bq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = bq.filterFivePeriodsBack(metricFilter: metricFilter) }
+            if let iq = incomeStatementsQuarterly, iq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = iq.filterFivePeriodsBack(metricFilter: metricFilter) }
+            if let cfq = cashFlowsQuarterly, cfq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = cfq.filterFivePeriodsBack(metricFilter: metricFilter) }
+            if let kmq = keyMetricsQuarterly, kmq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = kmq.filterFivePeriodsBack(metricFilter: metricFilter) }
+            
+            if !isMetricFilterValid {
+                if let bsq = balanceSheetsQuarterly, bsq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = bsq.filterPreviousQuarter(metricFilter: metricFilter) }
+                if let isq = incomeStatementsQuarterly, isq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = isq.filterPreviousQuarter(metricFilter: metricFilter) }
+                if let cfq = cashFlowsQuarterly, cfq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = cfq.filterPreviousQuarter(metricFilter: metricFilter) }
+                if let kmq = keyMetricsQuarterly, kmq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = kmq.filterPreviousQuarter(metricFilter: metricFilter) } 
             }
         }
         

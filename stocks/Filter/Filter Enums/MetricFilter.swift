@@ -34,13 +34,11 @@ struct MetricFilter: TitleDescription, Equatable, Codable {
     
     var compareSign: MetricFilterCompareSign?
     
-    var value: String? {
-        didSet {
-            guard let value = value else { return }
-            doubleValue = Double(value)
-        }
+    var value: String?
+    
+    var doubleValue: Double? {
+        value?.digits.doubleValue
     }
-    var doubleValue: Double?
 
     var text: String { associatedValueMetric.text + " " + (period?.rawValue ?? "") + (compareSign?.rawValue ?? "") + " " + (value ?? "") }
 }

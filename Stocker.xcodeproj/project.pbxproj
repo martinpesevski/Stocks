@@ -34,7 +34,7 @@
 		52D9B1BF242932F300E67BF2 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1BE242932F300E67BF2 /* SortViewController.swift */; };
 		52D9B1C22429351500E67BF2 /* SortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9B1C12429351500E67BF2 /* SortView.swift */; };
 		52D9B1C724294C2F00E67BF2 /* profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1C624294C2F00E67BF2 /* profile.json */; };
-		52D9B1CD242955B000E67BF2 /* key-metrics.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1CC242955B000E67BF2 /* key-metrics.json */; };
+		52D9B1CD242955B000E67BF2 /* key-metrics-annual.json in Resources */ = {isa = PBXBuildFile; fileRef = 52D9B1CC242955B000E67BF2 /* key-metrics-annual.json */; };
 		C708ED0E2444AFDD00FC9425 /* BalanceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */; };
 		C708ED122444E6E100FC9425 /* FinancialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED112444E6E100FC9425 /* FinancialsViewController.swift */; };
 		C708ED142445E60500FC9425 /* IncomeStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C708ED132445E60500FC9425 /* IncomeStatement.swift */; };
@@ -89,6 +89,10 @@
 		C76E61192658545D005D5FB9 /* FilterMetricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E61182658545D005D5FB9 /* FilterMetricViewController.swift */; };
 		C76E611E265854CF005D5FB9 /* MetricFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E611D265854CF005D5FB9 /* MetricFilterView.swift */; };
 		C76E6123265B5B87005D5FB9 /* SelectedFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */; };
+		C79237A12706A240000DDFF5 /* income-statements-quarterly.json in Resources */ = {isa = PBXBuildFile; fileRef = C79237A02706A240000DDFF5 /* income-statements-quarterly.json */; };
+		C79237A32706A254000DDFF5 /* cash-flows-quarterly.json in Resources */ = {isa = PBXBuildFile; fileRef = C79237A22706A254000DDFF5 /* cash-flows-quarterly.json */; };
+		C79237A72706A27C000DDFF5 /* key-metrics-quarterly.json in Resources */ = {isa = PBXBuildFile; fileRef = C79237A62706A27C000DDFF5 /* key-metrics-quarterly.json */; };
+		C79237A92706A296000DDFF5 /* balance-sheets-quarterly.json in Resources */ = {isa = PBXBuildFile; fileRef = C79237A82706A296000DDFF5 /* balance-sheets-quarterly.json */; };
 		C7A22BC624F9B744007F93D3 /* FinancialRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */; };
 		C7E4EEB226EBCB4800890C42 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEB126EBCB4800890C42 /* SnapKit */; };
 		C7E4EEB526EBCBC800890C42 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C7E4EEB426EBCBC800890C42 /* Charts */; };
@@ -150,7 +154,7 @@
 		52D9B1BE242932F300E67BF2 /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		52D9B1C12429351500E67BF2 /* SortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortView.swift; sourceTree = "<group>"; };
 		52D9B1C624294C2F00E67BF2 /* profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
-		52D9B1CC242955B000E67BF2 /* key-metrics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "key-metrics.json"; sourceTree = "<group>"; };
+		52D9B1CC242955B000E67BF2 /* key-metrics-annual.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "key-metrics-annual.json"; sourceTree = "<group>"; };
 		C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceSheet.swift; sourceTree = "<group>"; };
 		C708ED112444E6E100FC9425 /* FinancialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialsViewController.swift; sourceTree = "<group>"; };
 		C708ED132445E60500FC9425 /* IncomeStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeStatement.swift; sourceTree = "<group>"; };
@@ -203,6 +207,10 @@
 		C76E61182658545D005D5FB9 /* FilterMetricViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMetricViewController.swift; sourceTree = "<group>"; };
 		C76E611D265854CF005D5FB9 /* MetricFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricFilterView.swift; sourceTree = "<group>"; };
 		C76E6122265B5B87005D5FB9 /* SelectedFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFilterView.swift; sourceTree = "<group>"; };
+		C79237A02706A240000DDFF5 /* income-statements-quarterly.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "income-statements-quarterly.json"; sourceTree = "<group>"; };
+		C79237A22706A254000DDFF5 /* cash-flows-quarterly.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "cash-flows-quarterly.json"; sourceTree = "<group>"; };
+		C79237A62706A27C000DDFF5 /* key-metrics-quarterly.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "key-metrics-quarterly.json"; sourceTree = "<group>"; };
+		C79237A82706A296000DDFF5 /* balance-sheets-quarterly.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "balance-sheets-quarterly.json"; sourceTree = "<group>"; };
 		C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialRatios.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -373,11 +381,15 @@
 			isa = PBXGroup;
 			children = (
 				52D9B1C624294C2F00E67BF2 /* profile.json */,
-				52D9B1CC242955B000E67BF2 /* key-metrics.json */,
+				52D9B1CC242955B000E67BF2 /* key-metrics-annual.json */,
+				C79237A62706A27C000DDFF5 /* key-metrics-quarterly.json */,
 				C7129552270577FF00F666D0 /* ticker.json */,
 				C712954E27054EC200F666D0 /* balance-sheets-annual.json */,
+				C79237A82706A296000DDFF5 /* balance-sheets-quarterly.json */,
 				C712954D27054EC200F666D0 /* cash-flows-annual.json */,
+				C79237A22706A254000DDFF5 /* cash-flows-quarterly.json */,
 				C712954C27054EC200F666D0 /* income-statements-annual.json */,
+				C79237A02706A240000DDFF5 /* income-statements-quarterly.json */,
 			);
 			path = "JSON data";
 			sourceTree = "<group>";
@@ -623,11 +635,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D9B1C724294C2F00E67BF2 /* profile.json in Resources */,
+				C79237A12706A240000DDFF5 /* income-statements-quarterly.json in Resources */,
 				C712955027054EC200F666D0 /* cash-flows-annual.json in Resources */,
 				C712954F27054EC200F666D0 /* income-statements-annual.json in Resources */,
+				C79237A72706A27C000DDFF5 /* key-metrics-quarterly.json in Resources */,
 				C7129553270577FF00F666D0 /* ticker.json in Resources */,
 				C712955127054EC200F666D0 /* balance-sheets-annual.json in Resources */,
-				52D9B1CD242955B000E67BF2 /* key-metrics.json in Resources */,
+				C79237A32706A254000DDFF5 /* cash-flows-quarterly.json in Resources */,
+				C79237A92706A296000DDFF5 /* balance-sheets-quarterly.json in Resources */,
+				52D9B1CD242955B000E67BF2 /* key-metrics-annual.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

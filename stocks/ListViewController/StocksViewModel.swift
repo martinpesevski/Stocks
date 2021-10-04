@@ -17,7 +17,7 @@ class StocksViewModel {
     func filter(filter: Filter, shouldSearch: Bool = true) {
         self.filter = filter
         filteredStocks = stocks.filter { $0.isValid(filter: filter) }
-        filteredStocks.sort { $0.intrinsicValue!.discount > $1.intrinsicValue!.discount }
+        filteredStocks.sort { $0.ticker.symbol < $1.ticker.symbol }
         if shouldSearch { search(searchText, shouldFilter: false) }
     }
 
@@ -78,7 +78,9 @@ class StocksViewModel {
         for stock in self.stocks {
             group.enter()
             stock.getKeyMetrics() { _ in
-                group.leave()
+                stock.load {
+                    group.leave()
+                }
             }
         }
         group.notify(queue: .main) {

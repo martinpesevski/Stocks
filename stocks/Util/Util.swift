@@ -46,6 +46,10 @@ extension String {
         case .percentage: return "\(self)%"
         }
     }
+    
+    var digits: String {
+        components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+    }
 }
 class DataParser {
     static func parseJson<T: Codable>(type: T.Type, data: Data, completion: @escaping (T?, Error?) -> ()) {

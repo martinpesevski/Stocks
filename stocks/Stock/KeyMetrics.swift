@@ -194,6 +194,7 @@ enum KeyMetricsMetricType: String, Codable, MetricType, CaseIterable {
 struct KeyMetrics: Codable, Financial {
     var symbol                                 : String
     var date                                   : String
+    var period                                 : FiscalPeriod
     var revenuePerShare                        : KeyMetricsFinancialMetric
     var netIncomePerShare                      : KeyMetricsFinancialMetric
     var operatingCashFlowPerShare              : KeyMetricsFinancialMetric

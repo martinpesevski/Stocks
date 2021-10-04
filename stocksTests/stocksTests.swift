@@ -25,17 +25,33 @@ class StockSpec: QuickSpec {
                 let profileData = try? Data(contentsOf: URL(fileURLWithPath: profilePath), options: .mappedIfSafe) else { return }
             stock.quote = DataParser.parseTJson(type: Quote.self, data: profileData)
 
-            guard let keyMetricsPath = bundle.path(forResource: "key-metrics", ofType: "json"),
+            guard let keyMetricsPath = bundle.path(forResource: "key-metrics-quarterly", ofType: "json"),
                 let keyMetricsData = try? Data(contentsOf: URL(fileURLWithPath: keyMetricsPath), options: .mappedIfSafe) else { return }
             stock.keyMetricsQuarterly = DataParser.parseTJson(type: [KeyMetrics].self, data: keyMetricsData)
+            
+            guard let keyMetricsQPath = bundle.path(forResource: "key-metrics-annual", ofType: "json"),
+                let keyMetricsQData = try? Data(contentsOf: URL(fileURLWithPath: keyMetricsQPath), options: .mappedIfSafe) else { return }
+            stock.keyMetricsAnnual = DataParser.parseTJson(type: [KeyMetrics].self, data: keyMetricsQData)
+            
+            guard let incomeStatementsQPath = bundle.path(forResource: "income-statements-quarterly", ofType: "json"),
+                let incomeStatementsQData = try? Data(contentsOf: URL(fileURLWithPath: incomeStatementsQPath), options: .mappedIfSafe) else { return }
+            stock.incomeStatementsQuarterly = DataParser.parseTJson(type: [IncomeStatement].self, data: incomeStatementsQData)
             
             guard let incomeStatementsPath = bundle.path(forResource: "income-statements-annual", ofType: "json"),
                 let incomeStatementsData = try? Data(contentsOf: URL(fileURLWithPath: incomeStatementsPath), options: .mappedIfSafe) else { return }
             stock.incomeStatementsAnnual = DataParser.parseTJson(type: [IncomeStatement].self, data: incomeStatementsData)
             
+            guard let balanceSheetsQPath = bundle.path(forResource: "balance-sheets-quarterly", ofType: "json"),
+                let balanceSheetsQData = try? Data(contentsOf: URL(fileURLWithPath: balanceSheetsQPath), options: .mappedIfSafe) else { return }
+            stock.balanceSheetsQuarterly = DataParser.parseTJson(type: [BalanceSheet].self, data: balanceSheetsQData)
+            
             guard let balanceSheetsPath = bundle.path(forResource: "balance-sheets-annual", ofType: "json"),
                 let balanceSheetsData = try? Data(contentsOf: URL(fileURLWithPath: balanceSheetsPath), options: .mappedIfSafe) else { return }
             stock.balanceSheetsAnnual = DataParser.parseTJson(type: [BalanceSheet].self, data: balanceSheetsData)
+            
+            guard let cashFlowsQPath = bundle.path(forResource: "cash-flows-quarterly", ofType: "json"),
+                let cashFlowsQData = try? Data(contentsOf: URL(fileURLWithPath: cashFlowsQPath), options: .mappedIfSafe) else { return }
+            stock.cashFlowsQuarterly = DataParser.parseTJson(type: [CashFlow].self, data: cashFlowsQData)
             
             guard let cashFlowsPath = bundle.path(forResource: "cash-flows-annual", ofType: "json"),
                 let cashFlowsData = try? Data(contentsOf: URL(fileURLWithPath: cashFlowsPath), options: .mappedIfSafe) else { return }
@@ -68,39 +84,40 @@ class StockSpec: QuickSpec {
             it("filters by sector") {
                 expect(stock.filter.sectorFilters).to(equal([SectorFilter.tech]))
             }
-//            it("filters by greater than quarterly non-suffix metrics") {
-//                var filter = Stocker.Filter()
-//                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].peRatio).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "10", doubleValue: 10)]
-//                expect(stock.isValid(filter: filter)).to(beTrue())
-//            }
-//
-//            it("filters by greater than quarterly dollar metrics") {
-//                var filter = Stocker.Filter()
-//                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2%", doubleValue: 2)]
-//                expect(stock.isValid(filter: filter)).to(beTrue())
-//            }
             
-//            it("filters by less than quarterly dollar metrics") {
-//                var filter = Stocker.Filter()
-//                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .lastQuarter, compareSign: .lessThan, value: "15%", doubleValue: 15)]
-//                expect(stock.isValid(filter: filter)).to(beTrue())
-//            }
-            
-//            it("filters by greater than quarterly percent metrics") {
-//                var filter = Stocker.Filter()
-//                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].roic).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2", doubleValue: 2)]
-//                expect(stock.isValid(filter: filter)).to(beTrue())
-//            }
-//
-//            it("filters by greater than QoQ dollar metrics") {
-//                var filter = Stocker.Filter()
-//                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "7", doubleValue: 7)]
-//                expect(stock.isValid(filter: filter)).to(beTrue())
-//            }
-            
+            it("filters by greater than quarterly non-suffix metrics") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].peRatio).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "10")]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("filters by greater than quarterly dollar metrics") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2%")]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("filters by less than quarterly dollar metrics") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .lastQuarter, compareSign: .lessThan, value: "15%")]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("filters by greater than quarterly percent metrics") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].roic).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2")]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
             it("filters by greater than QoQ dollar metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "7", doubleValue: 7)]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "7")]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("filters by greater than QoQ dollar metrics") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "3%")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
             }
             
@@ -109,16 +126,20 @@ class StockSpec: QuickSpec {
         
         describe("Data Parsing") {
             it("parses data correctly") {
-                expect(stock.keyMetricsQuarterly).toNot(beNil())
                 expect(stock.incomeStatementsAnnual).toNot(beNil())
                 expect(stock.balanceSheetsAnnual).toNot(beNil())
                 expect(stock.cashFlowsAnnual).toNot(beNil())
+                expect(stock.keyMetricsAnnual).toNot(beNil())
+                expect(stock.cashFlowsQuarterly).toNot(beNil())
+                expect(stock.incomeStatementsQuarterly).toNot(beNil())
+                expect(stock.balanceSheetsQuarterly).toNot(beNil())
+                expect(stock.keyMetricsQuarterly).toNot(beNil())
             }
         }
 
         describe("Key metrics") {
             it("parses key metrics correctly") {
-                expect(stock.keyMetricsQuarterly?.count).to(equal(41))
+                expect(stock.keyMetricsQuarterly?.count).to(equal(10))
             }
 
             it("calculates profitability correctly") {

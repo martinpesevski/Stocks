@@ -146,6 +146,7 @@ enum FinancialRatioMetricType: String, Codable, MetricType, CaseIterable {
 struct FinancialRatios: Codable, Financial {
     var symbol                             : String
     var date                               : String
+    var period                             : FiscalPeriod
     var currentRatio                       : FinancialRatioFinancialMetric
     var quickRatio                         : FinancialRatioFinancialMetric
     var cashRatio                          : FinancialRatioFinancialMetric
