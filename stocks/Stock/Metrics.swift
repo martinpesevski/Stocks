@@ -146,9 +146,13 @@ extension Financial {
             case .greaterThan:
                 switch metric.metricSuffixType {
                 case .money:
-                    let percentage = previousValue == 0 ? 0 :
-                        previousValue < 0 ? ((previousValue - value) / previousValue) * 100 :
-                        (-(previousValue - value) / previousValue) * 100
+
+                    let olderIndexDouble = (Double(olderIndex) == 0 ? 1 : Double(olderIndex))
+                    let positivePercentage = (((previousValue - value) / previousValue) * 100) / (metricFilter.period == .last5Years ? olderIndexDouble : 1)
+                    let negativePercentage = ((-(previousValue - value) / previousValue) * 100) / (metricFilter.period == .last5Years ? olderIndexDouble : 1)
+                    
+                    let percentage = previousValue == 0 ? 0 : (previousValue < 0 ? positivePercentage : negativePercentage )
+                    
                     return percentage > metricFilterValue
                 case .percentage:
                     return value - previousValue > metricFilterValue / 100

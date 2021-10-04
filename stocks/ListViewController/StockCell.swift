@@ -13,9 +13,8 @@ class StockCell: UITableViewCell {
     lazy var tickerName = UILabel(font: UIFont.systemFont(ofSize: 15))
     
     lazy var tickerStack = UIStackView(views: [tickerLabel, tickerName], axis: .vertical, alignment: .leading, spacing: 5)
-    lazy var intrinsicValueLabel = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold))
-    lazy var priceLabel = UILabel(font: UIFont.systemFont(ofSize: 15))
-    lazy var numbersStack = UIStackView(views: [intrinsicValueLabel, priceLabel], axis: .vertical, alignment: .trailing, spacing: 5)
+    lazy var priceLabel = UILabel(font: UIFont.systemFont(ofSize: 20, weight: .bold))
+    lazy var numbersStack = UIStackView(views: [priceLabel], axis: .vertical, alignment: .trailing, spacing: 5)
 
     lazy var contentStack = UIStackView(views: [tickerStack, numbersStack], axis: .horizontal,
                                    distribution: .fillEqually,
@@ -48,14 +47,14 @@ class StockCell: UITableViewCell {
     func setup(stock: Stock) {
         tickerLabel.text = stock.ticker.symbol
         tickerName.text = stock.ticker.companyName
-        priceLabel.text = String(format:"%.02f", stock.ticker.price)
-        
-        if let iv = stock.intrinsicValue {
-            intrinsicValueLabel.text = String(format: "%.02f", iv.value)
-            intrinsicValueLabel.textColor = iv.color
-        } else {
-            intrinsicValueLabel.text = "N/A"
-        }
+        priceLabel.text = String(format: "%.02f", stock.ticker.price)
+
+//        if let iv = stock.intrinsicValue {
+//            priceLabel.text = String(format: "%.02f", stock.ticker.price)
+//            priceLabel.textColor = iv.color
+//        } else {
+//            priceLabel.text = "N/A"
+//        }
     }
     
     required init?(coder: NSCoder) {

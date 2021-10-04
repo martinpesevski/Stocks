@@ -23,7 +23,7 @@ class FilterViewController: FilterPageViewController {
     lazy var sector = DrillDownView(filter: .sector(filters: filter.sectorFilters), delegate: self)
     lazy var profitability = DrillDownView(filter: .profitability(filters: filter.profitabilityFilters), delegate: self)
     lazy var metrics = DrillDownView(filter: .metric(filters: filter.metricFilters), delegate: self)
-
+    
     weak var delegate: FilterDelegate?
 
     lazy var filter: Filter = {
@@ -82,19 +82,33 @@ class FilterViewController: FilterPageViewController {
         
         self.viewModel.filter = filter
         button.startLoading()
+        
+        if viewModel.didLoadOnce {
+            viewModel.filter(filter: filter)
+            showList()
+        } else {
+            loadViewModel()
+        }
+    }
+    
+    func loadViewModel() {
         viewModel.load { [weak self] in
             guard let self = self else { return }
             self.button.finishLoading()
             self.viewModel.filter(filter: self.filter)
             DispatchQueue.main.async {
-                if self.isModal {
-                    self.delegate?.didFinishFiltering()
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    let listVC = ListViewController(viewModel: self.viewModel)
-                    self.show(listVC, sender: self)
-                }
+                self.showList()
             }
+        }
+    }
+    
+    func showList() {
+        if isModal {
+            delegate?.didFinishFiltering()
+            dismiss(animated: true, completion: nil)
+        } else {
+            let listVC = ListViewController(viewModel: viewModel)
+            show(listVC, sender: self)
         }
     }
     

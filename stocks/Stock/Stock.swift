@@ -60,6 +60,20 @@ class Stock {
     var cashFlowsAnnual: [CashFlow]?
     var cashFlowsQuarterly: [CashFlow]?
 
+    var isLoaded: Bool {
+        quote != nil &&
+        keyMetricsAnnual != nil &&
+        keyMetricsQuarterly != nil &&
+        financialRatiosAnnual != nil &&
+        financialRatiosQuarterly != nil &&
+        balanceSheetsAnnual != nil &&
+        balanceSheetsQuarterly != nil &&
+        incomeStatementsAnnual != nil &&
+        incomeStatementsQuarterly != nil &&
+        cashFlowsAnnual != nil &&
+        cashFlowsQuarterly != nil
+    }
+    
     func isValid(filter: Filter) -> Bool {
         var isMetricFilterValid = false
         for metricFilter in filter.metricFilters {
@@ -79,6 +93,7 @@ class Stock {
                 if let cfq = cashFlowsQuarterly, cfq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = cfq.filterPreviousQuarter(metricFilter: metricFilter) }
                 if let kmq = keyMetricsQuarterly, kmq.isEligibleForFilter(metricFilter: metricFilter) { isMetricFilterValid = kmq.filterPreviousQuarter(metricFilter: metricFilter) } 
             }
+            if !isMetricFilterValid { break }
         }
         
         return filter.isValid(self.filter) && isMetricFilterValid
@@ -98,7 +113,7 @@ class Stock {
     }
     
     func calculateIntrinsicValue() {
-        guard let operatingCashFlow = self.keyMetricsQuarterly?[safe: 0]?.operatingCashFlowPerShare.doubleValue,
+        guard let operatingCashFlow = self.keyMetricsQuarterly?[safe: 0]?.operatingCashFlowPerShare?.doubleValue,
             let rate = keyMetricsQuarterly?.projectedFutureGrowth else { return }
 
         self.intrinsicValue = IntrinsicValue(price: Double(ticker.price), cashFlow: operatingCashFlow, growthRate: rate, discountRate: .low)

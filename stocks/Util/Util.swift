@@ -56,8 +56,23 @@ class DataParser {
         do {
             let object: T = try JSONDecoder().decode(T.self, from: data)
             completion(object, nil)
-        } catch let error as NSError {
-            completion(nil, error)
+        } catch DecodingError.dataCorrupted(let context) {
+            print(context)
+            completion(nil, DecodingError.dataCorrupted(context))
+        } catch DecodingError.keyNotFound(let key, let context) {
+            print("Key '\(key)' not found:", context.debugDescription)
+            print("codingPath:", context.codingPath)
+            completion(nil, DecodingError.keyNotFound(key, context))
+        } catch DecodingError.valueNotFound(let value, let context) {
+            print("Value '\(value)' not found:", context.debugDescription)
+            print("codingPath:", context.codingPath)
+            completion(nil, DecodingError.valueNotFound(value, context))
+        } catch DecodingError.typeMismatch(let type, let context) {
+            print("Type '\(type)' mismatch:", context.debugDescription)
+            print("codingPath:", context.codingPath)
+            completion(nil, DecodingError.typeMismatch(type, context))
+        } catch {
+            print("error: ", error)
         }
     }
 

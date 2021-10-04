@@ -84,44 +84,76 @@ class StockSpec: QuickSpec {
             it("filters by sector") {
                 expect(stock.filter.sectorFilters).to(equal([SectorFilter.tech]))
             }
-            
+
             it("filters by greater than quarterly non-suffix metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].peRatio).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "10")]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].peRatio!).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "10")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("greater than quarterly non-suffix metrics failed") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].peRatio!).metricType!, period: .lastQuarter, compareSign: .lessThan, value: "10")]
+                expect(stock.isValid(filter: filter)).to(beFalse())
             }
 
             it("filters by greater than quarterly dollar metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2%")]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare!).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2%")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
             }
 
             it("filters by less than quarterly dollar metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .lastQuarter, compareSign: .lessThan, value: "15%")]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare!).metricType!, period: .lastQuarter, compareSign: .lessThan, value: "15%")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
             }
 
             it("filters by greater than quarterly percent metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].roic).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2")]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].roic!).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "2")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
             }
 
             it("filters by greater than QoQ dollar metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "7")]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare!).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "7")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
             }
 
-            it("filters by greater than QoQ dollar metrics") {
+            it("filters by greater than last 5 years dollar metrics") {
                 var filter = Stocker.Filter()
-                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "3%")]
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare!).metricType!, period: .last5Years, compareSign: .greaterThan, value: "10%")]
                 expect(stock.isValid(filter: filter)).to(beTrue())
             }
             
-            //TODO: negative growth, zero values, 5 year growth
+            it("filters by greater than last 5 years dollar metrics") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [MetricFilter(associatedValueMetric: AnyMetric(stock.cashFlowsAnnual![0].commonStockRepurchased).metricType!, period: .last5Years, compareSign: .lessThan, value: "0%")]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("multiple true metric filters") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [
+                    MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare!).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "3%"),
+                    MetricFilter(associatedValueMetric: AnyMetric(stock.balanceSheetsAnnual![0].cashAndCashEquivalents).metricType!, period: .last5Years, compareSign: .greaterThan, value: "3%"),
+                    MetricFilter(associatedValueMetric: AnyMetric(stock.incomeStatementsAnnual![0].grossProfit).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "10%")
+                ]
+                expect(stock.isValid(filter: filter)).to(beTrue())
+            }
+
+            it("multiple true metric filters, one failed") {
+                var filter = Stocker.Filter()
+                filter.metricFilters = [
+                    MetricFilter(associatedValueMetric: AnyMetric(stock.keyMetricsQuarterly![0].netIncomePerShare!).metricType!, period: .quarterOverQuarter, compareSign: .greaterThan, value: "3%"),
+                    MetricFilter(associatedValueMetric: AnyMetric(stock.balanceSheetsAnnual![0].commonStock).metricType!, period: .last5Years, compareSign: .lessThan, value: "5%"),
+                    MetricFilter(associatedValueMetric: AnyMetric(stock.incomeStatementsAnnual![0].grossProfit).metricType!, period: .lastQuarter, compareSign: .greaterThan, value: "10%")
+                ]
+                expect(stock.isValid(filter: filter)).to(beFalse())
+            }
+            
+            //TODO: nill values?
         }
         
         describe("Data Parsing") {

@@ -13,6 +13,7 @@ class StocksViewModel {
     var searchText = ""
     var stocks: [Stock] = []
     var filteredStocks: [Stock] = []
+    var didLoadOnce = false
 
     func filter(filter: Filter, shouldSearch: Bool = true) {
         self.filter = filter
@@ -52,6 +53,7 @@ class StocksViewModel {
                 DataParser.parseJson(type: [Ticker].self, data: data) { array, error in
                     if let array = array {
                         self.setupStocks(data: array) {
+                            self.didLoadOnce = true
                             group.leave()
                         }
                         return

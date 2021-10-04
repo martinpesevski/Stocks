@@ -365,6 +365,7 @@
 				52A5E016242BDCDF00C25872 /* IntrinsicValue.swift */,
 				52108CDC241FCB5E000A472B /* Stock+Api.swift */,
 				52108CD8241FCA39000A472B /* KeyMetrics.swift */,
+				52108CDA241FCA7C000A472B /* GrowthMetrics.swift */,
 				C7A22BC524F9B744007F93D3 /* FinancialRatios.swift */,
 				C708ED0D2444AFDD00FC9425 /* BalanceSheet.swift */,
 				C708ED132445E60500FC9425 /* IncomeStatement.swift */,
@@ -372,7 +373,6 @@
 				C72461DA250DC74C005FF9E3 /* Metrics.swift */,
 				52D9B1BA24292CCF00E67BF2 /* Profile.swift */,
 				52D9B1B824292C9700E67BF2 /* Ticker.swift */,
-				52108CDA241FCA7C000A472B /* GrowthMetrics.swift */,
 			);
 			path = Stock;
 			sourceTree = "<group>";

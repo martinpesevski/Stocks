@@ -27,7 +27,7 @@ extension Collection where Iterator.Element == KeyMetrics {
         guard !isEmpty else { return nil }
 
         var netIncomeAverage: Double = 0
-        let netIncomes = compactMap { $0.netIncomePerShare.doubleValue }
+        let netIncomes = compactMap { $0.netIncomePerShare?.doubleValue }
         for value in netIncomes {
             netIncomeAverage += value
         }
@@ -195,116 +195,115 @@ struct KeyMetrics: Codable, Financial {
     var symbol                                 : String
     var date                                   : String
     var period                                 : FiscalPeriod
-    var revenuePerShare                        : KeyMetricsFinancialMetric
-    var netIncomePerShare                      : KeyMetricsFinancialMetric
-    var operatingCashFlowPerShare              : KeyMetricsFinancialMetric
-    var freeCashFlowPerShare                   : KeyMetricsFinancialMetric
-    var cashPerShare                           : KeyMetricsFinancialMetric
-    var bookValuePerShare                      : KeyMetricsFinancialMetric
-    var tangibleBookValuePerShare              : KeyMetricsFinancialMetric
-    var shareholdersEquityPerShare             : KeyMetricsFinancialMetric
-    var interestDebtPerShare                   : KeyMetricsFinancialMetric
-    var marketCap                              : KeyMetricsFinancialMetric
-    var enterpriseValue                        : KeyMetricsFinancialMetric
-    var peRatio                                : KeyMetricsFinancialMetric
-    var priceToSalesRatio                      : KeyMetricsFinancialMetric
-    var pocfratio                              : KeyMetricsFinancialMetric
-    var pfcfRatio                              : KeyMetricsFinancialMetric
-    var pbRatio                                : KeyMetricsFinancialMetric
-    var evToSales                              : KeyMetricsFinancialMetric
-    var enterpriseValueOverEBITDA              : KeyMetricsFinancialMetric
-    var evToOperatingCashFlow                  : KeyMetricsFinancialMetric
-    var evToFreeCashFlow                       : KeyMetricsFinancialMetric
-    var earningsYield                          : KeyMetricsFinancialMetric
-    var freeCashFlowYield                      : KeyMetricsFinancialMetric
-    var debtToEquity                           : KeyMetricsFinancialMetric
-    var debtToAssets                           : KeyMetricsFinancialMetric
-    var netDebtToEBITDA                        : KeyMetricsFinancialMetric
-    var currentRatio                           : KeyMetricsFinancialMetric
+    var revenuePerShare                        : KeyMetricsFinancialMetric?
+    var netIncomePerShare                      : KeyMetricsFinancialMetric?
+    var operatingCashFlowPerShare              : KeyMetricsFinancialMetric?
+    var freeCashFlowPerShare                   : KeyMetricsFinancialMetric?
+    var cashPerShare                           : KeyMetricsFinancialMetric?
+    var bookValuePerShare                      : KeyMetricsFinancialMetric?
+    var tangibleBookValuePerShare              : KeyMetricsFinancialMetric?
+    var shareholdersEquityPerShare             : KeyMetricsFinancialMetric?
+    var interestDebtPerShare                   : KeyMetricsFinancialMetric?
+    var marketCap                              : KeyMetricsFinancialMetric?
+    var enterpriseValue                        : KeyMetricsFinancialMetric?
+    var peRatio                                : KeyMetricsFinancialMetric?
+    var priceToSalesRatio                      : KeyMetricsFinancialMetric?
+    var pocfratio                              : KeyMetricsFinancialMetric?
+    var pfcfRatio                              : KeyMetricsFinancialMetric?
+    var pbRatio                                : KeyMetricsFinancialMetric?
+    var evToSales                              : KeyMetricsFinancialMetric?
+    var enterpriseValueOverEBITDA              : KeyMetricsFinancialMetric?
+    var evToOperatingCashFlow                  : KeyMetricsFinancialMetric?
+    var evToFreeCashFlow                       : KeyMetricsFinancialMetric?
+    var earningsYield                          : KeyMetricsFinancialMetric?
+    var freeCashFlowYield                      : KeyMetricsFinancialMetric?
+    var debtToEquity                           : KeyMetricsFinancialMetric?
+    var debtToAssets                           : KeyMetricsFinancialMetric?
+    var netDebtToEBITDA                        : KeyMetricsFinancialMetric?
+    var currentRatio                           : KeyMetricsFinancialMetric?
     var interestCoverage                       : KeyMetricsFinancialMetric?
-    var incomeQuality                          : KeyMetricsFinancialMetric
+    var incomeQuality                          : KeyMetricsFinancialMetric?
     var dividendYield                          : KeyMetricsFinancialMetric?
-    var payoutRatio                            : KeyMetricsFinancialMetric
-    var salesGeneralAndAdministrativeToRevenue : KeyMetricsFinancialMetric
-    var researchAndDdevelopementToRevenue      : KeyMetricsFinancialMetric
-    var intangiblesToTotalAssets               : KeyMetricsFinancialMetric
-    var capexToOperatingCashFlow               : KeyMetricsFinancialMetric
-    var capexToRevenue                         : KeyMetricsFinancialMetric
-    var capexToDepreciation                    : KeyMetricsFinancialMetric
-    var stockBasedCompensationToRevenue        : KeyMetricsFinancialMetric
-    var grahamNumber                           : KeyMetricsFinancialMetric
-    var roic                                   : KeyMetricsFinancialMetric
-    var grahamNetNet                           : KeyMetricsFinancialMetric
-    var workingCapital                         : KeyMetricsFinancialMetric
+    var payoutRatio                            : KeyMetricsFinancialMetric?
+    var salesGeneralAndAdministrativeToRevenue : KeyMetricsFinancialMetric?
+    var researchAndDdevelopementToRevenue      : KeyMetricsFinancialMetric?
+    var intangiblesToTotalAssets               : KeyMetricsFinancialMetric?
+    var capexToOperatingCashFlow               : KeyMetricsFinancialMetric?
+    var capexToRevenue                         : KeyMetricsFinancialMetric?
+    var capexToDepreciation                    : KeyMetricsFinancialMetric?
+    var stockBasedCompensationToRevenue        : KeyMetricsFinancialMetric?
+    var grahamNumber                           : KeyMetricsFinancialMetric?
+    var roic                                   : KeyMetricsFinancialMetric?
+    var grahamNetNet                           : KeyMetricsFinancialMetric?
+    var workingCapital                         : KeyMetricsFinancialMetric?
     var tangibleAssetValue                     : KeyMetricsFinancialMetric?
-    var netCurrentAssetValue                   : KeyMetricsFinancialMetric
+    var netCurrentAssetValue                   : KeyMetricsFinancialMetric?
     var investedCapital                        : KeyMetricsFinancialMetric?
-    var averageReceivables                     : KeyMetricsFinancialMetric
-    var averagePayables                        : KeyMetricsFinancialMetric
-    var averageInventory                       : KeyMetricsFinancialMetric
-    var daysSalesOutstanding                   : KeyMetricsFinancialMetric
-    var daysPayablesOutstanding                : KeyMetricsFinancialMetric
-    var daysOfInventoryOnHand                  : KeyMetricsFinancialMetric
-    var receivablesTurnover                    : KeyMetricsFinancialMetric
-    var payablesTurnover                       : KeyMetricsFinancialMetric
-    var inventoryTurnover                      : KeyMetricsFinancialMetric
-    var roe                                    : KeyMetricsFinancialMetric
-    var capexPerShare                          : KeyMetricsFinancialMetric
+    var averageReceivables                     : KeyMetricsFinancialMetric?
+    var averagePayables                        : KeyMetricsFinancialMetric?
+    var averageInventory                       : KeyMetricsFinancialMetric?
+    var daysSalesOutstanding                   : KeyMetricsFinancialMetric?
+    var daysPayablesOutstanding                : KeyMetricsFinancialMetric?
+    var daysOfInventoryOnHand                  : KeyMetricsFinancialMetric?
+    var receivablesTurnover                    : KeyMetricsFinancialMetric?
+    var payablesTurnover                       : KeyMetricsFinancialMetric?
+    var inventoryTurnover                      : KeyMetricsFinancialMetric?
+    var roe                                    : KeyMetricsFinancialMetric?
+    var capexPerShare                          : KeyMetricsFinancialMetric?
     
     var metrics: [AnyMetric] {
-        let arr: NSMutableArray = [
-            AnyMetric(revenuePerShare),
-            AnyMetric(netIncomePerShare),
-            AnyMetric(operatingCashFlowPerShare),
-            AnyMetric(freeCashFlowPerShare),
-            AnyMetric(cashPerShare),
-            AnyMetric(bookValuePerShare),
-            AnyMetric(tangibleBookValuePerShare),
-            AnyMetric(shareholdersEquityPerShare),
-            AnyMetric(interestDebtPerShare),
-            AnyMetric(marketCap),
-            AnyMetric(enterpriseValue),
-            AnyMetric(peRatio),
-            AnyMetric(priceToSalesRatio),
-            AnyMetric(pocfratio),
-            AnyMetric(pfcfRatio),
-            AnyMetric(pbRatio),
-            AnyMetric(evToSales),
-            AnyMetric(enterpriseValueOverEBITDA),
-            AnyMetric(evToOperatingCashFlow),
-            AnyMetric(evToFreeCashFlow),
-            AnyMetric(earningsYield),
-            AnyMetric(freeCashFlowYield),
-            AnyMetric(debtToEquity),
-            AnyMetric(debtToAssets),
-            AnyMetric(netDebtToEBITDA),
-            AnyMetric(currentRatio),
-            AnyMetric(incomeQuality),
-            AnyMetric(payoutRatio),
-            AnyMetric(salesGeneralAndAdministrativeToRevenue),
-            AnyMetric(researchAndDdevelopementToRevenue),
-            AnyMetric(intangiblesToTotalAssets),
-            AnyMetric(capexToOperatingCashFlow),
-            AnyMetric(capexToRevenue),
-            AnyMetric(capexToDepreciation),
-            AnyMetric(stockBasedCompensationToRevenue),
-            AnyMetric(grahamNumber),
-            AnyMetric(roic),
-            AnyMetric(grahamNetNet),
-            AnyMetric(workingCapital),
-            AnyMetric(netCurrentAssetValue),
-            AnyMetric(averageReceivables),
-            AnyMetric(averagePayables),
-            AnyMetric(averageInventory),
-            AnyMetric(daysSalesOutstanding),
-            AnyMetric(daysPayablesOutstanding),
-            AnyMetric(daysOfInventoryOnHand),
-            AnyMetric(receivablesTurnover),
-            AnyMetric(payablesTurnover),
-            AnyMetric(inventoryTurnover),
-            AnyMetric(roe),
-            AnyMetric(capexPerShare),
-        ]
+        let arr: NSMutableArray = []
+        
+        if let revenuePerShare = revenuePerShare { arr.add(AnyMetric(revenuePerShare)) }
+        if let netIncomePerShare = netIncomePerShare { arr.add(AnyMetric(netIncomePerShare)) }
+        if let operatingCashFlowPerShare = operatingCashFlowPerShare { arr.add(AnyMetric(operatingCashFlowPerShare)) }
+        if let freeCashFlowPerShare = freeCashFlowPerShare { arr.add(AnyMetric(freeCashFlowPerShare)) }
+        if let cashPerShare = cashPerShare { arr.add(AnyMetric(cashPerShare)) }
+        if let bookValuePerShare = bookValuePerShare { arr.add(AnyMetric(bookValuePerShare)) }
+        if let tangibleBookValuePerShare = tangibleBookValuePerShare { arr.add(AnyMetric(tangibleBookValuePerShare)) }
+        if let shareholdersEquityPerShare = shareholdersEquityPerShare { arr.add(AnyMetric(shareholdersEquityPerShare)) }
+        if let interestDebtPerShare = interestDebtPerShare { arr.add(AnyMetric(interestDebtPerShare)) }
+        if let enterpriseValue = enterpriseValue { arr.add(AnyMetric(enterpriseValue)) }
+        if let peRatio = peRatio { arr.add(AnyMetric(peRatio)) }
+        if let priceToSalesRatio = priceToSalesRatio { arr.add(AnyMetric(priceToSalesRatio)) }
+        if let pfcfRatio = pfcfRatio { arr.add(AnyMetric(pfcfRatio)) }
+        if let pbRatio = pbRatio { arr.add(AnyMetric(pbRatio)) }
+        if let evToSales = evToSales { arr.add(AnyMetric(evToSales)) }
+        if let enterpriseValueOverEBITDA = enterpriseValueOverEBITDA { arr.add(AnyMetric(enterpriseValueOverEBITDA)) }
+        if let evToFreeCashFlow = evToFreeCashFlow { arr.add(AnyMetric(evToFreeCashFlow)) }
+        if let earningsYield = earningsYield { arr.add(AnyMetric(earningsYield)) }
+        if let freeCashFlowYield = freeCashFlowYield { arr.add(AnyMetric(freeCashFlowYield)) }
+        if let debtToEquity = debtToEquity { arr.add(AnyMetric(debtToEquity)) }
+        if let debtToAssets = debtToAssets { arr.add(AnyMetric(debtToAssets)) }
+        if let netDebtToEBITDA = netDebtToEBITDA { arr.add(AnyMetric(netDebtToEBITDA)) }
+        if let currentRatio = currentRatio { arr.add(AnyMetric(currentRatio)) }
+        if let incomeQuality = incomeQuality { arr.add(AnyMetric(incomeQuality)) }
+        if let payoutRatio = payoutRatio { arr.add(AnyMetric(payoutRatio)) }
+        if let salesGeneralAndAdministrativeToRevenue = salesGeneralAndAdministrativeToRevenue { arr.add(AnyMetric(salesGeneralAndAdministrativeToRevenue)) }
+        if let researchAndDdevelopementToRevenue = researchAndDdevelopementToRevenue { arr.add(AnyMetric(researchAndDdevelopementToRevenue)) }
+        if let intangiblesToTotalAssets = intangiblesToTotalAssets { arr.add(AnyMetric(intangiblesToTotalAssets)) }
+        if let capexToOperatingCashFlow = capexToOperatingCashFlow { arr.add(AnyMetric(capexToOperatingCashFlow)) }
+        if let capexToRevenue = capexToRevenue { arr.add(AnyMetric(capexToRevenue)) }
+        if let capexToDepreciation = capexToDepreciation { arr.add(AnyMetric(capexToDepreciation)) }
+        if let stockBasedCompensationToRevenue = stockBasedCompensationToRevenue { arr.add(AnyMetric(stockBasedCompensationToRevenue)) }
+        if let grahamNumber = grahamNumber { arr.add(AnyMetric(grahamNumber)) }
+        if let roic = roic { arr.add(AnyMetric(roic)) }
+        if let grahamNetNet = grahamNetNet { arr.add(AnyMetric(grahamNetNet)) }
+        if let workingCapital = workingCapital { arr.add(AnyMetric(workingCapital)) }
+        if let netCurrentAssetValue = netCurrentAssetValue { arr.add(AnyMetric(netCurrentAssetValue)) }
+        if let averagePayables = averagePayables { arr.add(AnyMetric(averagePayables)) }
+        if let daysSalesOutstanding = daysSalesOutstanding { arr.add(AnyMetric(daysSalesOutstanding)) }
+        if let daysPayablesOutstanding = daysPayablesOutstanding { arr.add(AnyMetric(daysPayablesOutstanding)) }
+        if let daysOfInventoryOnHand = daysOfInventoryOnHand { arr.add(AnyMetric(daysOfInventoryOnHand)) }
+        if let receivablesTurnover = receivablesTurnover { arr.add(AnyMetric(receivablesTurnover)) }
+        if let payablesTurnover = payablesTurnover { arr.add(AnyMetric(payablesTurnover)) }
+        if let roe = roe { arr.add(AnyMetric(roe)) }
+        if let capexPerShare = capexPerShare { arr.add(AnyMetric(capexPerShare)) }
+        if let pocfratio = pocfratio { arr.add(AnyMetric(pocfratio)) }
+        if let evToOperatingCashFlow = evToOperatingCashFlow { arr.add(AnyMetric(evToOperatingCashFlow)) }
+        if let averageReceivables = averageReceivables { arr.add(AnyMetric(averageReceivables)) }
+        if let inventoryTurnover = inventoryTurnover { arr.add(AnyMetric(inventoryTurnover)) }
+        if let averageInventory = averageInventory { arr.add(AnyMetric(averageInventory)) }
         if let interestCoverage = interestCoverage { arr.add(AnyMetric(interestCoverage)) }
         if let dividendYield = dividendYield { arr.add(AnyMetric(dividendYield)) }
         if let tangibleAssetValue = tangibleAssetValue { arr.add(AnyMetric(tangibleAssetValue)) }
@@ -313,7 +312,7 @@ struct KeyMetrics: Codable, Financial {
         return arr as? [AnyMetric] ?? []
     }
     
-    var ocf: Double {
-        return operatingCashFlowPerShare.doubleValue
+    var ocf: Double? {
+        return operatingCashFlowPerShare?.doubleValue
     }
 }

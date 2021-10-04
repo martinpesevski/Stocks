@@ -81,7 +81,7 @@ class GrowthTableCell: UIStackView {
         isLayoutMarginsRelativeArrangement = true
 
         dateLabel.text = metric.date
-        ocfNumber.text = String(format: "$%.5f", metric.ocf) 
+        ocfNumber.text = String(format: "$%.5f", metric.ocf ?? 0) 
     }
 
     required init(coder: NSCoder) {
