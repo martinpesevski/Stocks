@@ -13,6 +13,7 @@ extension Stock {
         let group = DispatchGroup()
         group.enter()
         var completed = false
+    
         URLSession.shared.datatask(type: [KeyMetrics].self,
                                    url: Endpoints.keyMetrics(ticker: ticker.symbol, isAnnual: true).url) {
                                     [weak self] data, response, error in

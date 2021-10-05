@@ -65,15 +65,29 @@ extension URLSession {
     func datatask<T: Codable>(type: T.Type,
                               url: URL,
                               completion: @escaping (T?, URLResponse?, Error?) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else { return completion(nil, response, error) }
-
-            DataParser.parseJson(type: T.self, data: data) { data, error in
-                switch (data, error) {
-                case (let data, nil): completion(data, response, error)
-                default: completion(nil, response, error)
+        
+        if let localData = UserDefaults.standard.data(forKey: url.absoluteString) {
+            DataParser.parseJson(type: T.self, data: localData) { result, error in
+                switch (result, error) {
+                case (let result, nil):
+                    completion(result, nil, error)
+                default: completion(nil, nil, error)
                 }
             }
-        }.resume()
+        } else {
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data else { return completion(nil, response, error) }
+                            
+                DataParser.parseJson(type: T.self, data: data) { result, error in
+                    switch (result, error) {
+                    case (let result, nil):
+                        UserDefaults.standard.setValue(data, forKey: url.absoluteString)
+                        completion(result, response, error)
+                    default: completion(nil, response, error)
+                    }
+                }
+            }.resume()
+        }
+        
     }
 }

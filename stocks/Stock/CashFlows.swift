@@ -27,71 +27,73 @@ struct CashFlow: Codable, Financial {
     var date                                     : String
     var symbol                                   : String
     var period                                   : FiscalPeriod
-    var netIncome                                : CashFlowFinancialMetric
-    var depreciationAndAmortization              : CashFlowFinancialMetric
-    var deferredIncomeTax                        : CashFlowFinancialMetric
-    var stockBasedCompensation                   : CashFlowFinancialMetric
-    var changeInWorkingCapital                   : CashFlowFinancialMetric
-    var accountsReceivables                      : CashFlowFinancialMetric
-    var inventory                                : CashFlowFinancialMetric
-    var accountsPayables                         : CashFlowFinancialMetric
-    var otherWorkingCapital                      : CashFlowFinancialMetric
-    var otherNonCashItems                        : CashFlowFinancialMetric
-    var netCashProvidedByOperatingActivities     : CashFlowFinancialMetric
-    var investmentsInPropertyPlantAndEquipment   : CashFlowFinancialMetric
-    var acquisitionsNet                          : CashFlowFinancialMetric
-    var purchasesOfInvestments                   : CashFlowFinancialMetric
-    var salesMaturitiesOfInvestments             : CashFlowFinancialMetric
-    var otherInvestingActivites                  : CashFlowFinancialMetric
-    var netCashUsedForInvestingActivites         : CashFlowFinancialMetric
-    var debtRepayment                            : CashFlowFinancialMetric
-    var commonStockIssued                        : CashFlowFinancialMetric
-    var commonStockRepurchased                   : CashFlowFinancialMetric
-    var dividendsPaid                            : CashFlowFinancialMetric
-    var otherFinancingActivites                  : CashFlowFinancialMetric
-    var netCashUsedProvidedByFinancingActivities : CashFlowFinancialMetric
-    var effectOfForexChangesOnCash               : CashFlowFinancialMetric
-    var netChangeInCash                          : CashFlowFinancialMetric
-    var cashAtEndOfPeriod                        : CashFlowFinancialMetric
-    var cashAtBeginningOfPeriod                  : CashFlowFinancialMetric
-    var operatingCashFlow                        : CashFlowFinancialMetric
-    var capitalExpenditure                       : CashFlowFinancialMetric
-    var freeCashFlow                             : CashFlowFinancialMetric
+    var netIncome                                : CashFlowFinancialMetric?
+    var depreciationAndAmortization              : CashFlowFinancialMetric?
+    var deferredIncomeTax                        : CashFlowFinancialMetric?
+    var stockBasedCompensation                   : CashFlowFinancialMetric?
+    var changeInWorkingCapital                   : CashFlowFinancialMetric?
+    var accountsReceivables                      : CashFlowFinancialMetric?
+    var inventory                                : CashFlowFinancialMetric?
+    var accountsPayables                         : CashFlowFinancialMetric?
+    var otherWorkingCapital                      : CashFlowFinancialMetric?
+    var otherNonCashItems                        : CashFlowFinancialMetric?
+    var netCashProvidedByOperatingActivities     : CashFlowFinancialMetric?
+    var investmentsInPropertyPlantAndEquipment   : CashFlowFinancialMetric?
+    var acquisitionsNet                          : CashFlowFinancialMetric?
+    var purchasesOfInvestments                   : CashFlowFinancialMetric?
+    var salesMaturitiesOfInvestments             : CashFlowFinancialMetric?
+    var otherInvestingActivites                  : CashFlowFinancialMetric?
+    var netCashUsedForInvestingActivites         : CashFlowFinancialMetric?
+    var debtRepayment                            : CashFlowFinancialMetric?
+    var commonStockIssued                        : CashFlowFinancialMetric?
+    var commonStockRepurchased                   : CashFlowFinancialMetric?
+    var dividendsPaid                            : CashFlowFinancialMetric?
+    var otherFinancingActivites                  : CashFlowFinancialMetric?
+    var netCashUsedProvidedByFinancingActivities : CashFlowFinancialMetric?
+    var effectOfForexChangesOnCash               : CashFlowFinancialMetric?
+    var netChangeInCash                          : CashFlowFinancialMetric?
+    var cashAtEndOfPeriod                        : CashFlowFinancialMetric?
+    var cashAtBeginningOfPeriod                  : CashFlowFinancialMetric?
+    var operatingCashFlow                        : CashFlowFinancialMetric?
+    var capitalExpenditure                       : CashFlowFinancialMetric?
+    var freeCashFlow                             : CashFlowFinancialMetric?
     var link                                     : String?
 
     var metrics: [AnyMetric] {
-        [
-            AnyMetric(netIncome),
-            AnyMetric(depreciationAndAmortization),
-            AnyMetric(deferredIncomeTax),
-            AnyMetric(stockBasedCompensation),
-            AnyMetric(changeInWorkingCapital),
-            AnyMetric(accountsReceivables),
-            AnyMetric(inventory),
-            AnyMetric(accountsPayables),
-            AnyMetric(otherWorkingCapital),
-            AnyMetric(otherNonCashItems),
-            AnyMetric(netCashProvidedByOperatingActivities),
-            AnyMetric(investmentsInPropertyPlantAndEquipment),
-            AnyMetric(acquisitionsNet),
-            AnyMetric(purchasesOfInvestments),
-            AnyMetric(salesMaturitiesOfInvestments),
-            AnyMetric(otherInvestingActivites),
-            AnyMetric(netCashUsedForInvestingActivites),
-            AnyMetric(debtRepayment),
-            AnyMetric(commonStockIssued),
-            AnyMetric(commonStockRepurchased),
-            AnyMetric(dividendsPaid),
-            AnyMetric(otherFinancingActivites),
-            AnyMetric(netCashUsedProvidedByFinancingActivities),
-            AnyMetric(effectOfForexChangesOnCash),
-            AnyMetric(netChangeInCash),
-            AnyMetric(cashAtEndOfPeriod),
-            AnyMetric(cashAtBeginningOfPeriod),
-            AnyMetric(operatingCashFlow),
-            AnyMetric(capitalExpenditure),
-            AnyMetric(freeCashFlow)
-        ]
+        let arr: NSMutableArray = []
+        
+        if let netIncome                                = netIncome { arr.add(AnyMetric(netIncome)) }
+        if let depreciationAndAmortization              = depreciationAndAmortization { arr.add(AnyMetric(depreciationAndAmortization)) }
+        if let deferredIncomeTax                        = deferredIncomeTax { arr.add(AnyMetric(deferredIncomeTax)) }
+        if let stockBasedCompensation                   = stockBasedCompensation { arr.add(AnyMetric(stockBasedCompensation)) }
+        if let changeInWorkingCapital                   = changeInWorkingCapital { arr.add(AnyMetric(changeInWorkingCapital)) }
+        if let accountsReceivables                      = accountsReceivables { arr.add(AnyMetric(accountsReceivables)) }
+        if let inventory                                = inventory { arr.add(AnyMetric(inventory)) }
+        if let accountsPayables                         = accountsPayables { arr.add(AnyMetric(accountsPayables)) }
+        if let otherWorkingCapital                      = otherWorkingCapital { arr.add(AnyMetric(otherWorkingCapital)) }
+        if let otherNonCashItems                        = otherNonCashItems { arr.add(AnyMetric(otherNonCashItems)) }
+        if let netCashProvidedByOperatingActivities     = netCashProvidedByOperatingActivities { arr.add(AnyMetric(netCashProvidedByOperatingActivities)) }
+        if let investmentsInPropertyPlantAndEquipment   = investmentsInPropertyPlantAndEquipment { arr.add(AnyMetric(investmentsInPropertyPlantAndEquipment)) }
+        if let acquisitionsNet                          = acquisitionsNet { arr.add(AnyMetric(acquisitionsNet)) }
+        if let purchasesOfInvestments                   = purchasesOfInvestments { arr.add(AnyMetric(purchasesOfInvestments)) }
+        if let salesMaturitiesOfInvestments             = salesMaturitiesOfInvestments { arr.add(AnyMetric(salesMaturitiesOfInvestments)) }
+        if let otherInvestingActivites                  = otherInvestingActivites { arr.add(AnyMetric(otherInvestingActivites)) }
+        if let netCashUsedForInvestingActivites         = netCashUsedForInvestingActivites { arr.add(AnyMetric(netCashUsedForInvestingActivites)) }
+        if let debtRepayment                            = debtRepayment { arr.add(AnyMetric(debtRepayment)) }
+        if let commonStockIssued                        = commonStockIssued { arr.add(AnyMetric(commonStockIssued)) }
+        if let commonStockRepurchased                   = commonStockRepurchased { arr.add(AnyMetric(commonStockRepurchased)) }
+        if let dividendsPaid                            = dividendsPaid { arr.add(AnyMetric(dividendsPaid)) }
+        if let otherFinancingActivites                  = otherFinancingActivites { arr.add(AnyMetric(otherFinancingActivites)) }
+        if let netCashUsedProvidedByFinancingActivities = netCashUsedProvidedByFinancingActivities { arr.add(AnyMetric(netCashUsedProvidedByFinancingActivities)) }
+        if let effectOfForexChangesOnCash               = effectOfForexChangesOnCash { arr.add(AnyMetric(effectOfForexChangesOnCash)) }
+        if let netChangeInCash                          = netChangeInCash { arr.add(AnyMetric(netChangeInCash)) }
+        if let cashAtEndOfPeriod                        = cashAtEndOfPeriod { arr.add(AnyMetric(cashAtEndOfPeriod)) }
+        if let cashAtBeginningOfPeriod                  = cashAtBeginningOfPeriod { arr.add(AnyMetric(cashAtBeginningOfPeriod)) }
+        if let operatingCashFlow                        = operatingCashFlow { arr.add(AnyMetric(operatingCashFlow)) }
+        if let capitalExpenditure                       = capitalExpenditure { arr.add(AnyMetric(capitalExpenditure)) }
+        if let freeCashFlow                             = freeCashFlow { arr.add(AnyMetric(freeCashFlow)) }
+        
+        return arr as? [AnyMetric] ?? []
     }
 }
 

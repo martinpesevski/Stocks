@@ -132,88 +132,90 @@ struct BalanceSheet: Codable, Financial {
     var date                                    : String
     var symbol                                  : String
     var period                                  : FiscalPeriod
-    var cashAndCashEquivalents                  : BalanceSheetFinancialMetric
-    var shortTermInvestments                    : BalanceSheetFinancialMetric
-    var cashAndShortTermInvestments             : BalanceSheetFinancialMetric
-    var netReceivables                          : BalanceSheetFinancialMetric
-    var inventory                               : BalanceSheetFinancialMetric
-    var otherCurrentAssets                      : BalanceSheetFinancialMetric
-    var totalCurrentAssets                      : BalanceSheetFinancialMetric
-    var propertyPlantEquipmentNet               : BalanceSheetFinancialMetric
-    var goodwill                                : BalanceSheetFinancialMetric
-    var intangibleAssets                        : BalanceSheetFinancialMetric
-    var goodwillAndIntangibleAssets             : BalanceSheetFinancialMetric
-    var longTermInvestments                     : BalanceSheetFinancialMetric
-    var taxAssets                               : BalanceSheetFinancialMetric
-    var otherNonCurrentAssets                   : BalanceSheetFinancialMetric
-    var totalNonCurrentAssets                   : BalanceSheetFinancialMetric
-    var otherAssets                             : BalanceSheetFinancialMetric
-    var totalAssets                             : BalanceSheetFinancialMetric
-    var accountPayables                         : BalanceSheetFinancialMetric
-    var shortTermDebt                           : BalanceSheetFinancialMetric
-    var taxPayables                             : BalanceSheetFinancialMetric
-    var deferredRevenue                         : BalanceSheetFinancialMetric
-    var otherCurrentLiabilities                 : BalanceSheetFinancialMetric
-    var totalCurrentLiabilities                 : BalanceSheetFinancialMetric
-    var longTermDebt                            : BalanceSheetFinancialMetric
-    var deferredRevenueNonCurrent               : BalanceSheetFinancialMetric
-    var deferredTaxLiabilitiesNonCurrent        : BalanceSheetFinancialMetric
-    var otherNonCurrentLiabilities              : BalanceSheetFinancialMetric
-    var totalNonCurrentLiabilities              : BalanceSheetFinancialMetric
-    var otherLiabilities                        : BalanceSheetFinancialMetric
-    var totalLiabilities                        : BalanceSheetFinancialMetric
-    var commonStock                             : BalanceSheetFinancialMetric
-    var retainedEarnings                        : BalanceSheetFinancialMetric
-    var accumulatedOtherComprehensiveIncomeLoss : BalanceSheetFinancialMetric
-    var othertotalStockholdersEquity            : BalanceSheetFinancialMetric
-    var totalStockholdersEquity                 : BalanceSheetFinancialMetric
-    var totalLiabilitiesAndStockholdersEquity   : BalanceSheetFinancialMetric
-    var totalInvestments                        : BalanceSheetFinancialMetric
-    var totalDebt                               : BalanceSheetFinancialMetric
-    var netDebt                                 : BalanceSheetFinancialMetric
+    var cashAndCashEquivalents                  : BalanceSheetFinancialMetric?
+    var shortTermInvestments                    : BalanceSheetFinancialMetric?
+    var cashAndShortTermInvestments             : BalanceSheetFinancialMetric?
+    var netReceivables                          : BalanceSheetFinancialMetric?
+    var inventory                               : BalanceSheetFinancialMetric?
+    var otherCurrentAssets                      : BalanceSheetFinancialMetric?
+    var totalCurrentAssets                      : BalanceSheetFinancialMetric?
+    var propertyPlantEquipmentNet               : BalanceSheetFinancialMetric?
+    var goodwill                                : BalanceSheetFinancialMetric?
+    var intangibleAssets                        : BalanceSheetFinancialMetric?
+    var goodwillAndIntangibleAssets             : BalanceSheetFinancialMetric?
+    var longTermInvestments                     : BalanceSheetFinancialMetric?
+    var taxAssets                               : BalanceSheetFinancialMetric?
+    var otherNonCurrentAssets                   : BalanceSheetFinancialMetric?
+    var totalNonCurrentAssets                   : BalanceSheetFinancialMetric?
+    var otherAssets                             : BalanceSheetFinancialMetric?
+    var totalAssets                             : BalanceSheetFinancialMetric?
+    var accountPayables                         : BalanceSheetFinancialMetric?
+    var shortTermDebt                           : BalanceSheetFinancialMetric?
+    var taxPayables                             : BalanceSheetFinancialMetric?
+    var deferredRevenue                         : BalanceSheetFinancialMetric?
+    var otherCurrentLiabilities                 : BalanceSheetFinancialMetric?
+    var totalCurrentLiabilities                 : BalanceSheetFinancialMetric?
+    var longTermDebt                            : BalanceSheetFinancialMetric?
+    var deferredRevenueNonCurrent               : BalanceSheetFinancialMetric?
+    var deferredTaxLiabilitiesNonCurrent        : BalanceSheetFinancialMetric?
+    var otherNonCurrentLiabilities              : BalanceSheetFinancialMetric?
+    var totalNonCurrentLiabilities              : BalanceSheetFinancialMetric?
+    var otherLiabilities                        : BalanceSheetFinancialMetric?
+    var totalLiabilities                        : BalanceSheetFinancialMetric?
+    var commonStock                             : BalanceSheetFinancialMetric?
+    var retainedEarnings                        : BalanceSheetFinancialMetric?
+    var accumulatedOtherComprehensiveIncomeLoss : BalanceSheetFinancialMetric?
+    var othertotalStockholdersEquity            : BalanceSheetFinancialMetric?
+    var totalStockholdersEquity                 : BalanceSheetFinancialMetric?
+    var totalLiabilitiesAndStockholdersEquity   : BalanceSheetFinancialMetric?
+    var totalInvestments                        : BalanceSheetFinancialMetric?
+    var totalDebt                               : BalanceSheetFinancialMetric?
+    var netDebt                                 : BalanceSheetFinancialMetric?
     var link                                    : String?
     
     var metrics: [AnyMetric] {
-        [
-           AnyMetric(cashAndCashEquivalents),
-           AnyMetric(shortTermInvestments),
-           AnyMetric(cashAndShortTermInvestments),
-           AnyMetric(netReceivables),
-           AnyMetric(inventory),
-           AnyMetric(otherCurrentAssets),
-           AnyMetric(totalCurrentAssets),
-           AnyMetric(propertyPlantEquipmentNet),
-           AnyMetric(goodwill),
-           AnyMetric(intangibleAssets),
-           AnyMetric(goodwillAndIntangibleAssets),
-           AnyMetric(longTermInvestments),
-           AnyMetric(taxAssets),
-           AnyMetric(otherNonCurrentAssets),
-           AnyMetric(totalNonCurrentAssets),
-           AnyMetric(otherAssets),
-           AnyMetric(totalAssets),
-           AnyMetric(accountPayables),
-           AnyMetric(shortTermDebt),
-           AnyMetric(taxPayables),
-           AnyMetric(deferredRevenue),
-           AnyMetric(otherCurrentLiabilities),
-           AnyMetric(totalCurrentLiabilities),
-           AnyMetric(longTermDebt),
-           AnyMetric(deferredRevenueNonCurrent),
-           AnyMetric(deferredTaxLiabilitiesNonCurrent),
-           AnyMetric(otherNonCurrentLiabilities),
-           AnyMetric(totalNonCurrentLiabilities),
-           AnyMetric(otherLiabilities),
-           AnyMetric(totalLiabilities),
-           AnyMetric(commonStock),
-           AnyMetric(retainedEarnings),
-           AnyMetric(accumulatedOtherComprehensiveIncomeLoss),
-           AnyMetric(othertotalStockholdersEquity),
-           AnyMetric(totalStockholdersEquity),
-           AnyMetric(totalLiabilitiesAndStockholdersEquity),
-           AnyMetric(totalInvestments),
-           AnyMetric(totalDebt),
-           AnyMetric(netDebt)
-        ]
+        let arr: NSMutableArray = []
+        
+        if let cashAndCashEquivalents                  = cashAndCashEquivalents { arr.add(AnyMetric(cashAndCashEquivalents)) }
+        if let shortTermInvestments                    = shortTermInvestments { arr.add(AnyMetric(shortTermInvestments)) }
+        if let cashAndShortTermInvestments             = cashAndShortTermInvestments { arr.add(AnyMetric(cashAndShortTermInvestments)) }
+        if let netReceivables                          = netReceivables { arr.add(AnyMetric(netReceivables)) }
+        if let inventory                               = inventory { arr.add(AnyMetric(inventory)) }
+        if let otherCurrentAssets                      = otherCurrentAssets { arr.add(AnyMetric(otherCurrentAssets)) }
+        if let totalCurrentAssets                      = totalCurrentAssets { arr.add(AnyMetric(totalCurrentAssets)) }
+        if let propertyPlantEquipmentNet               = propertyPlantEquipmentNet { arr.add(AnyMetric(propertyPlantEquipmentNet)) }
+        if let goodwill                                = goodwill { arr.add(AnyMetric(goodwill)) }
+        if let intangibleAssets                        = intangibleAssets { arr.add(AnyMetric(intangibleAssets)) }
+        if let goodwillAndIntangibleAssets             = goodwillAndIntangibleAssets { arr.add(AnyMetric(goodwillAndIntangibleAssets)) }
+        if let longTermInvestments                     = longTermInvestments { arr.add(AnyMetric(longTermInvestments)) }
+        if let taxAssets                               = taxAssets { arr.add(AnyMetric(taxAssets)) }
+        if let otherNonCurrentAssets                   = otherNonCurrentAssets { arr.add(AnyMetric(otherNonCurrentAssets)) }
+        if let totalNonCurrentAssets                   = totalNonCurrentAssets { arr.add(AnyMetric(totalNonCurrentAssets)) }
+        if let otherAssets                             = otherAssets { arr.add(AnyMetric(otherAssets)) }
+        if let totalAssets                             = totalAssets { arr.add(AnyMetric(totalAssets)) }
+        if let accountPayables                         = accountPayables { arr.add(AnyMetric(accountPayables)) }
+        if let shortTermDebt                           = shortTermDebt { arr.add(AnyMetric(shortTermDebt)) }
+        if let taxPayables                             = taxPayables { arr.add(AnyMetric(taxPayables)) }
+        if let deferredRevenue                         = deferredRevenue { arr.add(AnyMetric(deferredRevenue)) }
+        if let otherCurrentLiabilities                 = otherCurrentLiabilities { arr.add(AnyMetric(otherCurrentLiabilities)) }
+        if let totalCurrentLiabilities                 = totalCurrentLiabilities { arr.add(AnyMetric(totalCurrentLiabilities)) }
+        if let longTermDebt                            = longTermDebt { arr.add(AnyMetric(longTermDebt)) }
+        if let deferredRevenueNonCurrent               = deferredRevenueNonCurrent { arr.add(AnyMetric(deferredRevenueNonCurrent)) }
+        if let deferredTaxLiabilitiesNonCurrent        = deferredTaxLiabilitiesNonCurrent { arr.add(AnyMetric(deferredTaxLiabilitiesNonCurrent)) }
+        if let otherNonCurrentLiabilities              = otherNonCurrentLiabilities { arr.add(AnyMetric(otherNonCurrentLiabilities)) }
+        if let totalNonCurrentLiabilities              = totalNonCurrentLiabilities { arr.add(AnyMetric(totalNonCurrentLiabilities)) }
+        if let otherLiabilities                        = otherLiabilities { arr.add(AnyMetric(otherLiabilities)) }
+        if let totalLiabilities                        = totalLiabilities { arr.add(AnyMetric(totalLiabilities)) }
+        if let commonStock                             = commonStock { arr.add(AnyMetric(commonStock)) }
+        if let retainedEarnings                        = retainedEarnings { arr.add(AnyMetric(retainedEarnings)) }
+        if let accumulatedOtherComprehensiveIncomeLoss = accumulatedOtherComprehensiveIncomeLoss { arr.add(AnyMetric(accumulatedOtherComprehensiveIncomeLoss)) }
+        if let othertotalStockholdersEquity            = othertotalStockholdersEquity { arr.add(AnyMetric(othertotalStockholdersEquity)) }
+        if let totalStockholdersEquity                 = totalStockholdersEquity { arr.add(AnyMetric(totalStockholdersEquity)) }
+        if let totalLiabilitiesAndStockholdersEquity   = totalLiabilitiesAndStockholdersEquity { arr.add(AnyMetric(totalLiabilitiesAndStockholdersEquity)) }
+        if let totalInvestments                        = totalInvestments { arr.add(AnyMetric(totalInvestments)) }
+        if let totalDebt                               = totalDebt { arr.add(AnyMetric(totalDebt)) }
+        if let netDebt                                 = netDebt { arr.add(AnyMetric(netDebt)) }
+        
+        return arr as? [AnyMetric] ?? []
     }
 }

@@ -147,107 +147,105 @@ struct FinancialRatios: Codable, Financial {
     var symbol                             : String
     var date                               : String
     var period                             : FiscalPeriod
-    var currentRatio                       : FinancialRatioFinancialMetric
-    var quickRatio                         : FinancialRatioFinancialMetric
-    var cashRatio                          : FinancialRatioFinancialMetric
-    var daysOfSalesOutstanding             : FinancialRatioFinancialMetric
-    var daysOfInventoryOutstanding         : FinancialRatioFinancialMetric
-    var operatingCycle                     : FinancialRatioFinancialMetric
-    var daysOfPayablesOutstanding          : FinancialRatioFinancialMetric
-    var cashConversionCycle                : FinancialRatioFinancialMetric
-    var grossProfitMargin                  : FinancialRatioFinancialMetric
-    var operatingProfitMargin              : FinancialRatioFinancialMetric
-    var pretaxProfitMargin                 : FinancialRatioFinancialMetric
-    var netProfitMargin                    : FinancialRatioFinancialMetric
-    var effectiveTaxRate                   : FinancialRatioFinancialMetric
-    var returnOnAssets                     : FinancialRatioFinancialMetric
-    var returnOnEquity                     : FinancialRatioFinancialMetric
-    var returnOnCapitalEmployed            : FinancialRatioFinancialMetric
-    var debtRatio                          : FinancialRatioFinancialMetric
-    var debtEquityRatio                    : FinancialRatioFinancialMetric
+    var currentRatio                       : FinancialRatioFinancialMetric?
+    var quickRatio                         : FinancialRatioFinancialMetric?
+    var cashRatio                          : FinancialRatioFinancialMetric?
+    var daysOfSalesOutstanding             : FinancialRatioFinancialMetric?
+    var daysOfInventoryOutstanding         : FinancialRatioFinancialMetric?
+    var operatingCycle                     : FinancialRatioFinancialMetric?
+    var daysOfPayablesOutstanding          : FinancialRatioFinancialMetric?
+    var cashConversionCycle                : FinancialRatioFinancialMetric?
+    var grossProfitMargin                  : FinancialRatioFinancialMetric?
+    var operatingProfitMargin              : FinancialRatioFinancialMetric?
+    var pretaxProfitMargin                 : FinancialRatioFinancialMetric?
+    var netProfitMargin                    : FinancialRatioFinancialMetric?
+    var effectiveTaxRate                   : FinancialRatioFinancialMetric?
+    var returnOnAssets                     : FinancialRatioFinancialMetric?
+    var returnOnEquity                     : FinancialRatioFinancialMetric?
+    var returnOnCapitalEmployed            : FinancialRatioFinancialMetric?
+    var debtRatio                          : FinancialRatioFinancialMetric?
+    var debtEquityRatio                    : FinancialRatioFinancialMetric?
     var longTermDebtToCapitalization       : FinancialRatioFinancialMetric?
     var totalDebtToCapitalization          : FinancialRatioFinancialMetric?
     var interestCoverage                   : FinancialRatioFinancialMetric?
     var cashFlowToDebtRatio                : FinancialRatioFinancialMetric?
-    var companyEquityMultiplier            : FinancialRatioFinancialMetric
-    var receivablesTurnover                : FinancialRatioFinancialMetric
-    var payablesTurnover                   : FinancialRatioFinancialMetric
-    var inventoryTurnover                  : FinancialRatioFinancialMetric
-    var fixedAssetTurnover                 : FinancialRatioFinancialMetric
-    var assetTurnover                      : FinancialRatioFinancialMetric
-    var operatingCashFlowPerShare          : FinancialRatioFinancialMetric
-    var freeCashFlowPerShare               : FinancialRatioFinancialMetric
-    var cashPerShare                       : FinancialRatioFinancialMetric
+    var companyEquityMultiplier            : FinancialRatioFinancialMetric?
+    var receivablesTurnover                : FinancialRatioFinancialMetric?
+    var payablesTurnover                   : FinancialRatioFinancialMetric?
+    var inventoryTurnover                  : FinancialRatioFinancialMetric?
+    var fixedAssetTurnover                 : FinancialRatioFinancialMetric?
+    var assetTurnover                      : FinancialRatioFinancialMetric?
+    var operatingCashFlowPerShare          : FinancialRatioFinancialMetric?
+    var freeCashFlowPerShare               : FinancialRatioFinancialMetric?
+    var cashPerShare                       : FinancialRatioFinancialMetric?
     var payoutRatio                        : FinancialRatioFinancialMetric?
-    var operatingCashFlowSalesRatio        : FinancialRatioFinancialMetric
-    var freeCashFlowOperatingCashFlowRatio : FinancialRatioFinancialMetric
+    var operatingCashFlowSalesRatio        : FinancialRatioFinancialMetric?
+    var freeCashFlowOperatingCashFlowRatio : FinancialRatioFinancialMetric?
     var cashFlowCoverageRatios             : FinancialRatioFinancialMetric?
     var shortTermCoverageRatios            : FinancialRatioFinancialMetric?
-    var capitalExpenditureCoverageRatio    : FinancialRatioFinancialMetric
+    var capitalExpenditureCoverageRatio    : FinancialRatioFinancialMetric?
     var dividendPaidAndCapexCoverageRatio  : FinancialRatioFinancialMetric?
-    var priceToBookRatio                   : FinancialRatioFinancialMetric
-    var priceToSalesRatio                  : FinancialRatioFinancialMetric
-    var priceEarningsRatio                 : FinancialRatioFinancialMetric
-    var priceToFreeCashFlowsRatio          : FinancialRatioFinancialMetric
-    var priceToOperatingCashFlowsRatio     : FinancialRatioFinancialMetric
-    var priceCashFlowRatio                 : FinancialRatioFinancialMetric
-    var priceEarningsToGrowthRatio         : FinancialRatioFinancialMetric
+    var priceToBookRatio                   : FinancialRatioFinancialMetric?
+    var priceToSalesRatio                  : FinancialRatioFinancialMetric?
+    var priceEarningsRatio                 : FinancialRatioFinancialMetric?
+    var priceToFreeCashFlowsRatio          : FinancialRatioFinancialMetric?
+    var priceToOperatingCashFlowsRatio     : FinancialRatioFinancialMetric?
+    var priceCashFlowRatio                 : FinancialRatioFinancialMetric?
+    var priceEarningsToGrowthRatio         : FinancialRatioFinancialMetric?
     var dividendYield                      : FinancialRatioFinancialMetric?
-    var enterpriseValueMultiple            : FinancialRatioFinancialMetric
-    var priceFairValue                     : FinancialRatioFinancialMetric
+    var enterpriseValueMultiple            : FinancialRatioFinancialMetric?
+    var priceFairValue                     : FinancialRatioFinancialMetric?
     
     var metrics: [AnyMetric] {
-        let arr: NSMutableArray = [
-            AnyMetric(currentRatio),
-            AnyMetric(quickRatio),
-            AnyMetric(cashRatio),
-            AnyMetric(daysOfSalesOutstanding),
-            AnyMetric(daysOfInventoryOutstanding),
-            AnyMetric(operatingCycle),
-            AnyMetric(daysOfPayablesOutstanding),
-            AnyMetric(cashConversionCycle),
-            AnyMetric(grossProfitMargin),
-            AnyMetric(operatingProfitMargin),
-            AnyMetric(pretaxProfitMargin),
-            AnyMetric(netProfitMargin),
-            AnyMetric(effectiveTaxRate),
-            AnyMetric(returnOnAssets),
-            AnyMetric(returnOnEquity),
-            AnyMetric(returnOnCapitalEmployed),
-            AnyMetric(debtRatio),
-            AnyMetric(debtEquityRatio),
-            AnyMetric(companyEquityMultiplier),
-            AnyMetric(receivablesTurnover),
-            AnyMetric(payablesTurnover),
-            AnyMetric(inventoryTurnover),
-            AnyMetric(fixedAssetTurnover),
-            AnyMetric(assetTurnover),
-            AnyMetric(operatingCashFlowPerShare),
-            AnyMetric(freeCashFlowPerShare),
-            AnyMetric(cashPerShare),
-            AnyMetric(operatingCashFlowSalesRatio),
-            AnyMetric(freeCashFlowOperatingCashFlowRatio),
-            AnyMetric(capitalExpenditureCoverageRatio),
-            AnyMetric(priceToBookRatio),
-            AnyMetric(priceToSalesRatio),
-            AnyMetric(priceEarningsRatio),
-            AnyMetric(priceToFreeCashFlowsRatio),
-            AnyMetric(priceToOperatingCashFlowsRatio),
-            AnyMetric(priceCashFlowRatio),
-            AnyMetric(priceEarningsToGrowthRatio),
-            AnyMetric(enterpriseValueMultiple),
-            AnyMetric(priceFairValue)
-        ]
+        let arr: NSMutableArray = []
         
-        if let payoutRatio = payoutRatio { arr.add(AnyMetric(payoutRatio)) }
-        if let dividendPaidAndCapexCoverageRatio = dividendPaidAndCapexCoverageRatio { arr.add(AnyMetric(dividendPaidAndCapexCoverageRatio)) }
-        if let dividendYield = dividendYield { arr.add(AnyMetric(dividendYield)) }
-        if let cashFlowCoverageRatios = cashFlowCoverageRatios { arr.add(AnyMetric(cashFlowCoverageRatios)) }
-        if let shortTermCoverageRatios = shortTermCoverageRatios { arr.add(AnyMetric(shortTermCoverageRatios)) }
-        if let cashFlowToDebtRatio = cashFlowToDebtRatio { arr.add(AnyMetric(cashFlowToDebtRatio)) }
-        if let interestCoverage = interestCoverage { arr.add(AnyMetric(interestCoverage)) }
-        if let totalDebtToCapitalization = totalDebtToCapitalization { arr.add(AnyMetric(totalDebtToCapitalization)) }
-        if let longTermDebtToCapitalization = longTermDebtToCapitalization { arr.add(AnyMetric(longTermDebtToCapitalization)) }
+        if let priceFairValue                     = priceFairValue { arr.add(AnyMetric(priceFairValue)) }
+        if let enterpriseValueMultiple            = enterpriseValueMultiple { arr.add(AnyMetric(enterpriseValueMultiple)) }
+        if let priceEarningsToGrowthRatio         = priceEarningsToGrowthRatio { arr.add(AnyMetric(priceEarningsToGrowthRatio)) }
+        if let priceCashFlowRatio                 = priceCashFlowRatio { arr.add(AnyMetric(priceCashFlowRatio)) }
+        if let priceToOperatingCashFlowsRatio     = priceToOperatingCashFlowsRatio { arr.add(AnyMetric(priceToOperatingCashFlowsRatio)) }
+        if let priceToFreeCashFlowsRatio          = priceToFreeCashFlowsRatio { arr.add(AnyMetric(priceToFreeCashFlowsRatio)) }
+        if let priceEarningsRatio                 = priceEarningsRatio { arr.add(AnyMetric(priceEarningsRatio)) }
+        if let priceToSalesRatio                  = priceToSalesRatio { arr.add(AnyMetric(priceToSalesRatio)) }
+        if let priceToBookRatio                   = priceToBookRatio { arr.add(AnyMetric(priceToBookRatio)) }
+        if let capitalExpenditureCoverageRatio    = capitalExpenditureCoverageRatio { arr.add(AnyMetric(capitalExpenditureCoverageRatio)) }
+        if let freeCashFlowOperatingCashFlowRatio = freeCashFlowOperatingCashFlowRatio { arr.add(AnyMetric(freeCashFlowOperatingCashFlowRatio)) }
+        if let operatingCashFlowSalesRatio        = operatingCashFlowSalesRatio { arr.add(AnyMetric(operatingCashFlowSalesRatio)) }
+        if let freeCashFlowPerShare               = freeCashFlowPerShare { arr.add(AnyMetric(freeCashFlowPerShare)) }
+        if let operatingCashFlowPerShare          = operatingCashFlowPerShare { arr.add(AnyMetric(operatingCashFlowPerShare)) }
+        if let assetTurnover                      = assetTurnover { arr.add(AnyMetric(assetTurnover)) }
+        if let fixedAssetTurnover                 = fixedAssetTurnover { arr.add(AnyMetric(fixedAssetTurnover)) }
+        if let inventoryTurnover                  = inventoryTurnover { arr.add(AnyMetric(inventoryTurnover)) }
+        if let payablesTurnover                   = payablesTurnover { arr.add(AnyMetric(payablesTurnover)) }
+        if let receivablesTurnover                = receivablesTurnover { arr.add(AnyMetric(receivablesTurnover)) }
+        if let companyEquityMultiplier            = companyEquityMultiplier { arr.add(AnyMetric(companyEquityMultiplier)) }
+        if let debtEquityRatio                    = debtEquityRatio { arr.add(AnyMetric(debtEquityRatio)) }
+        if let debtRatio                          = debtRatio { arr.add(AnyMetric(debtRatio)) }
+        if let returnOnCapitalEmployed            = returnOnCapitalEmployed { arr.add(AnyMetric(returnOnCapitalEmployed)) }
+        if let returnOnEquity                     = returnOnEquity { arr.add(AnyMetric(returnOnEquity)) }
+        if let returnOnAssets                     = returnOnAssets { arr.add(AnyMetric(returnOnAssets)) }
+        if let effectiveTaxRate                   = effectiveTaxRate { arr.add(AnyMetric(effectiveTaxRate)) }
+        if let netProfitMargin                    = netProfitMargin { arr.add(AnyMetric(netProfitMargin)) }
+        if let pretaxProfitMargin                 = pretaxProfitMargin { arr.add(AnyMetric(pretaxProfitMargin)) }
+        if let operatingProfitMargin              = operatingProfitMargin { arr.add(AnyMetric(operatingProfitMargin)) }
+        if let grossProfitMargin                  = grossProfitMargin { arr.add(AnyMetric(grossProfitMargin)) }
+        if let cashConversionCycle                = cashConversionCycle { arr.add(AnyMetric(cashConversionCycle)) }
+        if let daysOfPayablesOutstanding          = daysOfPayablesOutstanding { arr.add(AnyMetric(daysOfPayablesOutstanding)) }
+        if let operatingCycle                     = operatingCycle { arr.add(AnyMetric(operatingCycle)) }
+        if let daysOfInventoryOutstanding         = daysOfInventoryOutstanding { arr.add(AnyMetric(daysOfInventoryOutstanding)) }
+        if let daysOfSalesOutstanding             = daysOfSalesOutstanding { arr.add(AnyMetric(daysOfSalesOutstanding)) }
+        if let cashRatio                          = cashRatio { arr.add(AnyMetric(cashRatio)) }
+        if let quickRatio                         = quickRatio { arr.add(AnyMetric(quickRatio)) }
+        if let currentRatio                       = currentRatio { arr.add(AnyMetric(currentRatio)) }
+        if let payoutRatio                        = payoutRatio { arr.add(AnyMetric(payoutRatio)) }
+        if let dividendPaidAndCapexCoverageRatio  = dividendPaidAndCapexCoverageRatio { arr.add(AnyMetric(dividendPaidAndCapexCoverageRatio)) }
+        if let dividendYield                      = dividendYield { arr.add(AnyMetric(dividendYield)) }
+        if let cashFlowCoverageRatios             = cashFlowCoverageRatios { arr.add(AnyMetric(cashFlowCoverageRatios)) }
+        if let shortTermCoverageRatios            = shortTermCoverageRatios { arr.add(AnyMetric(shortTermCoverageRatios)) }
+        if let cashFlowToDebtRatio                = cashFlowToDebtRatio { arr.add(AnyMetric(cashFlowToDebtRatio)) }
+        if let interestCoverage                   = interestCoverage { arr.add(AnyMetric(interestCoverage)) }
+        if let totalDebtToCapitalization          = totalDebtToCapitalization { arr.add(AnyMetric(totalDebtToCapitalization)) }
+        if let longTermDebtToCapitalization       = longTermDebtToCapitalization { arr.add(AnyMetric(longTermDebtToCapitalization)) }
         
         return arr as? [AnyMetric] ?? []
     }

@@ -27,63 +27,64 @@ struct IncomeStatement: Codable, Financial {
     var date                             : String
     var symbol                           : String
     var period                           : FiscalPeriod
-    var revenue                          : IncomeStatementFinancialMetric
-    var costOfRevenue                    : IncomeStatementFinancialMetric
-    var grossProfit                      : IncomeStatementFinancialMetric
-    var grossProfitRatio                 : IncomeStatementFinancialMetric
-    var researchAndDevelopmentExpenses   : IncomeStatementFinancialMetric
-    var generalAndAdministrativeExpenses : IncomeStatementFinancialMetric
-    var sellingAndMarketingExpenses      : IncomeStatementFinancialMetric
-    var otherExpenses                    : IncomeStatementFinancialMetric
-    var operatingExpenses                : IncomeStatementFinancialMetric
-    var costAndExpenses                  : IncomeStatementFinancialMetric
-    var interestExpense                  : IncomeStatementFinancialMetric
-    var depreciationAndAmortization      : IncomeStatementFinancialMetric
-    var ebitda                           : IncomeStatementFinancialMetric
-    var ebitdaratio                      : IncomeStatementFinancialMetric
-    var operatingIncome                  : IncomeStatementFinancialMetric
-    var operatingIncomeRatio             : IncomeStatementFinancialMetric
-    var totalOtherIncomeExpensesNet      : IncomeStatementFinancialMetric
-    var incomeBeforeTax                  : IncomeStatementFinancialMetric
-    var incomeBeforeTaxRatio             : IncomeStatementFinancialMetric
-    var incomeTaxExpense                 : IncomeStatementFinancialMetric
-    var netIncome                        : IncomeStatementFinancialMetric
-    var netIncomeRatio                   : IncomeStatementFinancialMetric
-    var eps                              : IncomeStatementFinancialMetric
-    var epsdiluted                       : IncomeStatementFinancialMetric
-    var weightedAverageShsOut            : IncomeStatementFinancialMetric
-    var weightedAverageShsOutDil         : IncomeStatementFinancialMetric
+    var revenue                          : IncomeStatementFinancialMetric?
+    var costOfRevenue                    : IncomeStatementFinancialMetric?
+    var grossProfit                      : IncomeStatementFinancialMetric?
+    var grossProfitRatio                 : IncomeStatementFinancialMetric?
+    var researchAndDevelopmentExpenses   : IncomeStatementFinancialMetric?
+    var generalAndAdministrativeExpenses : IncomeStatementFinancialMetric?
+    var sellingAndMarketingExpenses      : IncomeStatementFinancialMetric?
+    var otherExpenses                    : IncomeStatementFinancialMetric?
+    var operatingExpenses                : IncomeStatementFinancialMetric?
+    var costAndExpenses                  : IncomeStatementFinancialMetric?
+    var interestExpense                  : IncomeStatementFinancialMetric?
+    var depreciationAndAmortization      : IncomeStatementFinancialMetric?
+    var ebitda                           : IncomeStatementFinancialMetric?
+    var ebitdaratio                      : IncomeStatementFinancialMetric?
+    var operatingIncome                  : IncomeStatementFinancialMetric?
+    var operatingIncomeRatio             : IncomeStatementFinancialMetric?
+    var totalOtherIncomeExpensesNet      : IncomeStatementFinancialMetric?
+    var incomeBeforeTax                  : IncomeStatementFinancialMetric?
+    var incomeBeforeTaxRatio             : IncomeStatementFinancialMetric?
+    var incomeTaxExpense                 : IncomeStatementFinancialMetric?
+    var netIncome                        : IncomeStatementFinancialMetric?
+    var netIncomeRatio                   : IncomeStatementFinancialMetric?
+    var eps                              : IncomeStatementFinancialMetric?
+    var epsdiluted                       : IncomeStatementFinancialMetric?
+    var weightedAverageShsOut            : IncomeStatementFinancialMetric?
+    var weightedAverageShsOutDil         : IncomeStatementFinancialMetric?
     var link                             : String?
     
     var metrics: [AnyMetric] {
-        [
-         AnyMetric(revenue),
-         AnyMetric(costOfRevenue),
-         AnyMetric(grossProfit),
-         AnyMetric(grossProfitRatio),
-         AnyMetric(researchAndDevelopmentExpenses),
-         AnyMetric(generalAndAdministrativeExpenses),
-         AnyMetric(sellingAndMarketingExpenses),
-         AnyMetric(otherExpenses),
-         AnyMetric(operatingExpenses),
-         AnyMetric(costAndExpenses),
-         AnyMetric(interestExpense),
-         AnyMetric(depreciationAndAmortization),
-         AnyMetric(ebitda),
-         AnyMetric(ebitdaratio),
-         AnyMetric(operatingIncome),
-         AnyMetric(operatingIncomeRatio),
-         AnyMetric(totalOtherIncomeExpensesNet),
-         AnyMetric(incomeBeforeTax),
-         AnyMetric(incomeBeforeTaxRatio),
-         AnyMetric(incomeTaxExpense),
-         AnyMetric(netIncome),
-         AnyMetric(netIncomeRatio),
-         AnyMetric(eps),
-         AnyMetric(epsdiluted),
-         AnyMetric(weightedAverageShsOut),
-         AnyMetric(weightedAverageShsOutDil)
-        ]
+        let arr: NSMutableArray = []
+        
+        if let revenue                          = revenue { arr.add(AnyMetric(revenue)) }
+        if let costOfRevenue                    = costOfRevenue { arr.add(AnyMetric(costOfRevenue)) }
+        if let grossProfit                      = grossProfit { arr.add(AnyMetric(grossProfit)) }
+        if let grossProfitRatio                 = grossProfitRatio { arr.add(AnyMetric(grossProfitRatio)) }
+        if let researchAndDevelopmentExpenses   = researchAndDevelopmentExpenses { arr.add(AnyMetric(researchAndDevelopmentExpenses)) }
+        if let generalAndAdministrativeExpenses = generalAndAdministrativeExpenses { arr.add(AnyMetric(generalAndAdministrativeExpenses)) }
+        if let sellingAndMarketingExpenses      = sellingAndMarketingExpenses { arr.add(AnyMetric(sellingAndMarketingExpenses)) }
+        if let otherExpenses                    = otherExpenses { arr.add(AnyMetric(otherExpenses)) }
+        if let operatingExpenses                = operatingExpenses { arr.add(AnyMetric(operatingExpenses)) }
+        if let costAndExpenses                  = costAndExpenses { arr.add(AnyMetric(costAndExpenses)) }
+        if let interestExpense                  = interestExpense { arr.add(AnyMetric(interestExpense)) }
+        if let depreciationAndAmortization      = depreciationAndAmortization { arr.add(AnyMetric(depreciationAndAmortization)) }
+        if let ebitda                           = ebitda { arr.add(AnyMetric(ebitda)) }
+        if let ebitdaratio                      = ebitdaratio { arr.add(AnyMetric(ebitdaratio)) }
+        if let operatingIncome                  = operatingIncome { arr.add(AnyMetric(operatingIncome)) }
+        if let operatingIncomeRatio             = operatingIncomeRatio { arr.add(AnyMetric(operatingIncomeRatio)) }
+        if let totalOtherIncomeExpensesNet      = totalOtherIncomeExpensesNet { arr.add(AnyMetric(totalOtherIncomeExpensesNet)) }
+        if let incomeBeforeTax                  = incomeBeforeTax { arr.add(AnyMetric(incomeBeforeTax)) }
+        if let incomeBeforeTaxRatio             = incomeBeforeTaxRatio { arr.add(AnyMetric(incomeBeforeTaxRatio)) }
+        if let incomeTaxExpense                 = incomeTaxExpense { arr.add(AnyMetric(incomeTaxExpense)) }
+        if let netIncome                        = netIncome { arr.add(AnyMetric(netIncome)) }
+        if let netIncomeRatio                   = netIncomeRatio { arr.add(AnyMetric(netIncomeRatio)) }
+        if let eps                              = eps { arr.add(AnyMetric(eps)) }
+        if let epsdiluted                       = epsdiluted { arr.add(AnyMetric(epsdiluted)) }
+        if let weightedAverageShsOut            = weightedAverageShsOut { arr.add(AnyMetric(weightedAverageShsOut)) }
+
+        return arr as? [AnyMetric] ?? []
     }
 }
 
